@@ -323,6 +323,27 @@
   @media (min-width: 1024px) { .card-title { font-size: 2.15rem; min-height: 3em; } }
   @media (min-width: 1280px) { .card-title { font-size: 2.4rem; min-height: 2.9em; } }
 
+  .card-practice {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: var(--black);
+    text-wrap: balance;
+    hyphens: none;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    transition: color 0.1s;
+  }
+  @media (min-width: 640px) { .card-practice { font-size: 1.0625rem; } }
+  @media (min-width: 768px) { .card-practice { font-size: 1.125rem; } }
+
+  /* Hover: invierte color junto con el resto de la card */
+  .card:hover .card-practice { color: var(--white); }
+
+  /* En la sección #filosofia (fondo negro) el color base se invierte */
+  #filosofia .card .card-practice { color: var(--white); }
+  #filosofia .card:hover .card-practice { color: var(--black); }
+
   .card-quote-wrap {
     display: flex;
     flex-direction: column;
@@ -461,23 +482,26 @@
       <div class="cards-grid">
         <article class="card">
           <div class="card-num">01</div>
-          <h3 class="card-title" id="card1Title">APALANCAMIENTO</h3>
+          <h3 class="card-title" id="card1Title">CREATIVIDAD</h3>
+          <p class="card-practice" id="card1Practice">Conecto ideas de campos distintos con necesidades reales.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card1Quote">"Código y contenido son apalancamiento sin permiso."</p>
-            <p class="card-author">— Naval Ravikant</p>
+            <p class="card-quote" id="card1Quote">"Para tener una buena idea, ten muchas ideas."</p>
+            <p class="card-author">— Linus Pauling</p>
           </div>
         </article>
         <article class="card">
           <div class="card-num">02</div>
           <h3 class="card-title" id="card2Title">SIMPLICIDAD RADICAL</h3>
+          <p class="card-practice" id="card2Practice">Construyo lo mínimo que funciona. Lo justo, ni más ni menos.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card2Quote">"La simplicidad es la sofisticación suprema."</p>
-            <p class="card-author">— Leonardo da Vinci</p>
+            <p class="card-quote" id="card2Quote">"Todo debe hacerse tan simple como sea posible, pero no más simple."</p>
+            <p class="card-author">— Albert Einstein</p>
           </div>
         </article>
         <article class="card">
           <div class="card-num">03</div>
           <h3 class="card-title" id="card3Title">JUST SHIP</h3>
+          <p class="card-practice" id="card3Practice">Lanzo pronto y mejoro en público.</p>
           <div class="card-quote-wrap">
             <p class="card-quote" id="card3Quote">"Si no has lanzado, estás perdiendo el tiempo."</p>
             <p class="card-author">— Pieter Levels</p>
@@ -515,11 +539,14 @@
       scrollHint: "[ SOBRE MÍ ] ↓",
       philosophyTitle: "DISEÑO Y CONSTRUYO PRODUCTOS DIGITALES IMPULSADOS POR IA",
       philosophySub: "Bajo esta filosofía:",
-      card1Title: "APALANCAMIENTO",
-      card1Quote: '"Código y contenido son apalancamiento sin permiso."',
+      card1Title: "CREATIVIDAD",
+      card1Practice: "Conecto ideas de campos distintos con necesidades reales.",
+      card1Quote: '"Para tener una buena idea, ten muchas ideas."',
       card2Title: "SIMPLICIDAD RADICAL",
-      card2Quote: '"La simplicidad es la sofisticación suprema."',
+      card2Practice: "Construyo lo mínimo que funciona. Lo justo, ni más ni menos.",
+      card2Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
       card3Title: "JUST SHIP",
+      card3Practice: "Lanzo pronto y mejoro en público.",
       card3Quote: '"Si no has lanzado, estás perdiendo el tiempo."',
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
@@ -530,11 +557,14 @@
       scrollHint: "[ ABOUT ME ] ↓",
       philosophyTitle: "I DESIGN AND BUILD DIGITAL PRODUCTS POWERED BY AI",
       philosophySub: "Under this philosophy:",
-      card1Title: "LEVERAGE",
-      card1Quote: '"Code and media are permissionless leverage."',
+      card1Title: "CREATIVITY",
+      card1Practice: "I connect ideas from distant fields with real needs.",
+      card1Quote: '"The best way to have a good idea is to have lots of ideas."',
       card2Title: "RADICAL SIMPLICITY",
-      card2Quote: '"Simplicity is the ultimate sophistication."',
+      card2Practice: "I build the minimum that works. Just right, nothing more.",
+      card2Quote: '"Everything should be made as simple as possible, but not simpler."',
       card3Title: "JUST SHIP",
+      card3Practice: "I launch early and improve in public.",
       card3Quote: '"If you haven\'t launched yet, you\'re wasting time."',
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
@@ -591,10 +621,13 @@
     document.getElementById('philosophyTitle').textContent = d.philosophyTitle;
     document.getElementById('philosophySub').textContent = d.philosophySub;
     document.getElementById('card1Title').textContent = d.card1Title;
+    document.getElementById('card1Practice').textContent = d.card1Practice;
     document.getElementById('card1Quote').textContent = d.card1Quote;
     document.getElementById('card2Title').textContent = d.card2Title;
+    document.getElementById('card2Practice').textContent = d.card2Practice;
     document.getElementById('card2Quote').textContent = d.card2Quote;
     document.getElementById('card3Title').textContent = d.card3Title;
+    document.getElementById('card3Practice').textContent = d.card3Practice;
     document.getElementById('card3Quote').textContent = d.card3Quote;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
@@ -620,6 +653,7 @@
   // ============================================
   // Init
   // ============================================
+  applyLang();
   typewriter();
 </script>
 
