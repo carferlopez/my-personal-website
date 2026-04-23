@@ -70,6 +70,21 @@
   .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
   @media (min-width: 768px) { .container { padding: 0 3rem; } }
 
+  /* Bandas alternas: hero claro → bloque oscuro → claro → oscuro */
+  .section-band--light {
+    background: var(--white);
+    color: var(--black);
+  }
+  .section-band--light .subheading { color: var(--gray); }
+  .section-band--dark {
+    background: var(--black);
+    color: var(--white);
+  }
+  .section-band--dark .big-heading { color: var(--white); }
+  .section-band--dark .subheading { color: var(--gray-mid); }
+  .section-band--dark .projects-note { color: var(--gray-mid); }
+  .section-band--dark .contact-sub { color: var(--gray-mid); }
+
   /* ==================== HERO ==================== */
   .hero {
     min-height: 100svh;
@@ -267,11 +282,7 @@
   @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
 
   /* ==================== PHILOSOPHY CARDS ==================== */
-  #filosofia {
-    background: var(--black);
-    color: var(--white);
-  }
-  #filosofia .subheading { color: var(--gray-mid); text-transform: none; }
+  #filosofia .subheading { text-transform: none; }
   #filosofia .big-heading { word-break: normal; overflow-wrap: normal; }
 
   .cards-grid {
@@ -441,6 +452,16 @@
   .contact-box:hover { background: var(--black); color: var(--white); }
   .contact-box:hover .contact-sub { color: var(--gray-light); }
 
+  #contacto.section-band--dark .contact-box {
+    border-color: var(--white);
+    color: var(--white);
+  }
+  #contacto.section-band--dark .contact-box:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+  #contacto.section-band--dark .contact-box:hover .contact-sub { color: var(--gray); }
+
   .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
@@ -463,10 +484,6 @@
   .contact-btn:hover { background: var(--white); color: var(--black); }
 
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
-  .projects-section {
-    background: var(--white);
-    border-top: 4px solid var(--black);
-  }
   .projects-strap {
     margin-top: 1.25rem;
   }
@@ -558,17 +575,16 @@
     width: 100%;
     height: 100%;
     border: 4px solid var(--black);
-    background: var(--black);
+    background: #121212;
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 0.75rem;
-    padding-top: 0.5rem;
+    align-items: stretch;
+    justify-content: flex-end;
+    padding: 0;
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
   }
-  @media (min-width: 640px) { .project-poster-inner { border-width: 6px; padding: 1rem; } }
+  @media (min-width: 640px) { .project-poster-inner { border-width: 6px; } }
   @media (prefers-reduced-motion: reduce) {
     .project-poster-inner { transition: none; }
   }
@@ -597,107 +613,65 @@
     outline-offset: 2px;
   }
 
-  .project-poster--placeholder .project-poster-bg {
+  /* Miniatura “en obras”: capa difuminada + candado (sin título en la carátula) */
+  .project-poster-blurstack {
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      -45deg,
-      #1a1a1a 0 8px,
-      #2d2d2d 8px 16px
-    );
-    opacity: 0.9;
+    overflow: hidden;
   }
-  .project-poster--coming .project-poster-bg {
+  .project-poster-blur-blob {
     position: absolute;
-    inset: 0;
-    background: linear-gradient(160deg, #111 0%, #2a2a2a 50%, #111 100%);
+    left: -25%;
+    top: -20%;
+    width: 150%;
+    height: 150%;
+    background: conic-gradient(from 200deg, #1e1e1e, #0a0a0a, #2d2d2d, #151515, #0f0f0f);
+    filter: blur(22px);
   }
-  .project-poster-bg--fallback {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(165deg, #0a0a0a 0%, #252525 45%, #111 100%) !important;
+  @media (prefers-reduced-motion: reduce) {
+    .project-poster-blur-blob { filter: blur(0); opacity: 0.85; }
   }
-  .project-poster--live .project-poster-bg {
+  .project-poster-blur-grid {
     position: absolute;
     inset: 0;
-    background: #1a1a1a;
-    background-size: cover;
-    background-position: center;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 4px);
+    filter: blur(1px);
+    opacity: 0.5;
   }
-  .project-poster--live .project-poster-bg--img {
+  .project-poster-veil {
     position: absolute;
     inset: 0;
-    background-size: cover;
-    background-position: center;
-  }
-  .project-poster--live .project-poster-vignette {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%);
+    z-index: 1;
+    background: rgba(0, 0, 0, 0.42);
     pointer-events: none;
   }
-
-  .project-poster-top {
+  .project-poster-lock {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     flex: 1;
-    min-height: 0;
+    min-height: 4rem;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .project-poster-initial {
-    font-size: clamp(2.5rem, 12vw, 3.5rem);
-    font-weight: 900;
-    line-height: 1;
-    color: rgba(255,255,255,0.35);
-    letter-spacing: -0.05em;
-    text-transform: uppercase;
+  .project-poster-lock-icon {
+    width: 2.8rem;
+    height: 2.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
   }
-  .project-poster-titles {
+  @media (min-width: 640px) { .project-poster-lock-icon { width: 3.1rem; height: 3.1rem; } }
+
+  .project-poster-badge-wrap {
     position: relative;
-    z-index: 1;
-    width: 100%;
+    z-index: 2;
+    padding: 0.5rem 0.4rem 0.65rem;
     text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex-shrink: 0;
   }
-  .project-poster-name {
-    position: relative;
-    z-index: 1;
-    font-size: 0.7rem;
-    font-weight: 800;
-    line-height: 1.2;
-    color: var(--white);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    text-wrap: pretty;
-    word-break: normal;
-    overflow-wrap: normal;
-    max-width: 100%;
-  }
-  @media (min-width: 640px) { .project-poster-name { font-size: 0.8rem; } }
-  .project-poster-beneath {
-    position: relative;
-    z-index: 1;
-    margin-top: 0.35rem;
-    font-size: 0.65rem;
-    font-weight: 500;
-    line-height: 1.3;
-    color: rgba(255,255,255,0.75);
-    text-align: center;
-    text-wrap: pretty;
-  }
-  @media (min-width: 640px) { .project-poster-beneath { font-size: 0.7rem; } }
 
   .project-poster-badge {
     position: relative;
-    z-index: 1;
     display: inline-block;
-    margin-top: 0.6rem;
-    flex-shrink: 0;
     padding: 0.2rem 0.45rem;
     font-size: 0.55rem;
     font-weight: 800;
@@ -713,6 +687,31 @@
     color: var(--black);
     border-color: var(--red);
   }
+  .project-poster-badge--float {
+    position: absolute;
+    top: 0.45rem;
+    right: 0.45rem;
+    z-index: 4;
+    margin: 0;
+  }
+
+  /* Proyecto publicado: solo carátula (sin candado) + badge */
+  .project-poster-inner--live-poster {
+    padding: 0;
+  }
+  .project-poster--live .project-poster-bg--img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .project-poster--live .project-poster-vignette {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.78) 100%);
+    pointer-events: none;
+  }
 </style>
 </head>
 <body>
@@ -720,7 +719,7 @@
 <main>
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero">
+  <section class="hero section-band--light">
     <div class="hero-inner">
       <header>
         <div class="header-top">
@@ -759,7 +758,7 @@
   </section>
 
   <!-- ==================== PHILOSOPHY ==================== -->
-  <section id="filosofia" class="section-pad">
+  <section id="filosofia" class="section-pad section-band--dark">
     <div class="container">
       <p class="big-heading"><span id="philosophyTitle">DISEÑO Y CONSTRUYO PRODUCTOS Y SISTEMAS DIGITALES DE PRINCIPIO A FIN CON LA IA COMO PALANCA</span><span class="red">.</span></p>
       <p class="subheading" id="philosophySub">Aplicando estos principios:</p>
@@ -797,7 +796,7 @@
   </section>
 
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
-  <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
+  <section id="proyectos" class="section-pad section-band--light projects-section" aria-labelledby="projectsTitle">
     <div class="container">
       <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
       <p class="subheading projects-strap" id="projectsStrap">Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.</p>
@@ -814,7 +813,7 @@
   </section>
 
   <!-- ==================== CONTACT ==================== -->
-  <section id="contacto" class="section-pad">
+  <section id="contacto" class="section-pad section-band--dark">
     <div class="container">
       <div class="contact-box">
         <h2 class="big-heading"><span id="contactTitle">¿EN QUÉ PUEDO AYUDARTE</span><span class="red" id="contactMark">?</span></h2>
@@ -947,54 +946,52 @@
     return null;
   }
 
+  const PROJECT_LOCK_SVG = '<svg class="project-poster-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+  const PROJECT_BLUR_LAYERS = '<div class="project-poster-blurstack" aria-hidden="true"><div class="project-poster-blur-blob"></div><div class="project-poster-blur-grid"></div></div><div class="project-poster-veil" aria-hidden="true"></div>';
+
+  function buildLockedCardHtml(badgeHtml) {
+    return `<div class="project-poster-inner">
+      ${PROJECT_BLUR_LAYERS}
+      <div class="project-poster-lock">${PROJECT_LOCK_SVG}</div>
+      <div class="project-poster-badge-wrap">${badgeHtml}</div>
+    </div>`;
+  }
+
+  function buildLiveCardHtml(posterUrl, badgeLiveHtml) {
+    return `<div class="project-poster-inner project-poster-inner--live-poster project-poster--live">
+      <div class="project-poster-bg--img" style="background-image: url(${JSON.stringify(posterUrl)})" aria-hidden="true"></div>
+      <div class="project-poster-vignette" aria-hidden="true"></div>
+      <span class="project-poster-badge project-poster-badge--live project-poster-badge--float">${badgeLiveHtml}</span>
+    </div>`;
+  }
+
   function renderProjects() {
     const d = t[lang];
     const track = document.getElementById('projectsTrack');
     if (!track) return;
 
     const parts = projectsCatalog.map((p) => {
-      const title = escapeHtml(p.title[lang] || p.title.es);
-      const blurb = escapeHtml(p.blurb[lang] || p.blurb.es);
-      const initial = (p.title[lang] || p.title.es || '?').trim().charAt(0).toUpperCase();
       const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
       const poster = safePosterUrl(p.poster);
+      const titlePlain = p.title[lang] || p.title.es;
       const badgeComing = escapeHtml(d.projectBadgeComing);
       const badgeLive = escapeHtml(d.projectBadgeLive);
-      const aria = escapeHtml(`${title}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ' — ' + (lang === 'es' ? 'en construcción' : 'under construction')}`);
+      const aria = escapeHtml(`${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ' — ' + (lang === 'es' ? 'en obras' : 'in the works')}`);
 
-      const innerCore = isLive
-        ? (poster
-            ? `<div class="project-poster-bg" aria-hidden="true"><div class="project-poster-bg--img" style="background-image: url(${JSON.stringify(poster)})"></div><div class="project-poster-vignette" aria-hidden="true"></div></div>`
-            : `<div class="project-poster-bg project-poster-bg--fallback" aria-hidden="true"></div>`)
-        : `<div class="project-poster-bg" aria-hidden="true"></div>`;
-
-      const initialBlock = isLive && poster
-        ? ''
-        : `<div class="project-poster-top"><span class="project-poster-initial" aria-hidden="true">${escapeHtml(initial)}</span></div>`;
-
-      const badge = isLive
-        ? `<span class="project-poster-badge project-poster-badge--live">${badgeLive}</span>`
-        : `<span class="project-poster-badge">${badgeComing}</span>`;
-
-      const body = `
-        <div class="project-poster-inner ${isLive ? 'project-poster--live' : 'project-poster--coming'}">
-          ${innerCore}
-          ${initialBlock}
-          <div class="project-poster-titles">
-            <span class="project-poster-name">${title}</span>
-            <span class="project-poster-beneath">${blurb}</span>
-          </div>
-          ${badge}
-        </div>`;
+      let body;
+      if (isLive && poster) {
+        body = buildLiveCardHtml(poster, badgeLive);
+      } else {
+        const badge = isLive
+          ? '<span class="project-poster-badge project-poster-badge--live">' + badgeLive + '</span>'
+          : '<span class="project-poster-badge">' + badgeComing + '</span>';
+        body = buildLockedCardHtml(badge);
+      }
 
       if (isLive) {
-        return `<li class="project-poster" role="listitem">
-          <a class="project-poster-link" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer" aria-label="${aria}">${body}</a>
-        </li>`;
+        return '<li class="project-poster" role="listitem"><a class="project-poster-link" href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + aria + '">' + body + '</a></li>';
       }
-      return `<li class="project-poster" role="listitem">
-        <div class="project-poster-dummy" tabindex="0" aria-label="${aria}">${body}</div>
-      </li>`;
+      return '<li class="project-poster" role="listitem"><div class="project-poster-dummy" tabindex="0" aria-label="' + aria + '">' + body + '</div></li>';
     });
 
     track.innerHTML = parts.join('');
