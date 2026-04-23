@@ -160,7 +160,8 @@
     transition: background-color 0.1s, color 0.1s;
   }
   @media (min-width: 640px) { nav a { padding: 0.5rem; } }
-  nav a:hover { background: var(--black); color: var(--white); }
+  /* Iconos en negro al hover (fondo claro para que se vea el trazo) */
+  nav a:hover { background: var(--gray-light); color: var(--black); }
   nav svg { width: 1rem; height: 1rem; display: block; }
   @media (min-width: 640px) { nav svg { width: 1.25rem; height: 1.25rem; } }
   @media (min-width: 768px) { nav svg { width: 1.5rem; height: 1.5rem; } }
@@ -488,6 +489,11 @@
   @media (min-width: 768px) { .contact-btn { font-size: 1.875rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 2.25rem; } }
   .contact-btn:hover { background: var(--white); color: var(--black); }
+  /* Caja ya en hover (fondo blanco): el botón debe rellenarse en negro, no en blanco */
+  #contacto.section-band--dark .contact-box:hover .contact-btn:hover {
+    background: var(--black);
+    color: var(--white);
+  }
 
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
