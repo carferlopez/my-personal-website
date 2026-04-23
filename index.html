@@ -186,7 +186,7 @@
     min-height: 40vh;
     text-wrap: balance;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
   }
   @media (min-width: 640px) { .hero-title { font-size: 11vw; } }
@@ -241,9 +241,9 @@
     letter-spacing: -0.05em;
     line-height: 0.9;
     text-transform: uppercase;
-    text-wrap: balance;
+    text-wrap: pretty;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
   }
   @media (min-width: 640px) { .big-heading { font-size: 7vw; } }
@@ -257,9 +257,9 @@
     color: var(--gray);
     margin-top: 2.5rem;
     line-height: 1.6;
-    text-wrap: balance;
+    text-wrap: pretty;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
   }
   @media (min-width: 640px) { .subheading { font-size: 1.125rem; } }
@@ -272,7 +272,7 @@
     color: var(--white);
   }
   #filosofia .subheading { color: var(--gray-mid); text-transform: none; }
-  #filosofia .big-heading { word-break: normal; overflow-wrap: break-word; }
+  #filosofia .big-heading { word-break: normal; overflow-wrap: normal; }
 
   .cards-grid {
     display: grid;
@@ -321,13 +321,18 @@
     letter-spacing: -0.03em;
     line-height: 1.08;
     text-transform: uppercase;
-    /* Misma caja de título en las 3 cards (2–3 líneas según ancho) */
+    /* Caja fija: sin forzar 2+ líneas con “balance” (evitaba CREATIVIDAD cortada) */
     min-height: 3.4em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
-    text-wrap: balance;
+    line-break: auto;
+    text-wrap: wrap;
+  }
+  /* Títulos en bloque: no partir palabras; si hace falta, bajamos ligeramente el cuerpo en móvil */
+  @media (max-width: 480px) {
+    .card-title { font-size: min(1.4rem, 4.1vw + 0.5rem); }
   }
   @media (min-width: 640px) { .card-title { font-size: 1.75rem; min-height: 3.2em; } }
   @media (min-width: 768px) { .card-title { font-size: 1.95rem; min-height: 3.1em; } }
@@ -343,7 +348,8 @@
     text-wrap: pretty;
     hyphens: none;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
+    line-break: auto;
     transition: color 0.1s;
   }
   @media (min-width: 640px) { .card-practice { font-size: 1.25rem; line-height: 1.48; } }
@@ -396,8 +402,9 @@
     transition: color 0.1s;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
+    line-break: auto;
     text-wrap: pretty;
   }
   @media (min-width: 640px) { .card-quote { font-size: 0.9375rem; line-height: 1.48; } }
@@ -411,7 +418,7 @@
     transition: color 0.1s;
     line-height: 1.35;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
   }
   @media (min-width: 640px) { .card-author { font-size: 0.8125rem; } }
@@ -434,7 +441,7 @@
   .contact-box:hover { background: var(--black); color: var(--white); }
   .contact-box:hover .contact-sub { color: var(--gray-light); }
 
-  .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: break-word; hyphens: none; }
+  .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
 
