@@ -1,0 +1,589 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Carlos Fernández — AI Consultant & Indie Maker</title>
+<meta name="description" content="Consultor de IA y creador independiente. Diseño y construyo productos digitales impulsados por inteligencia artificial.">
+<meta name="author" content="Carlos Fernández">
+
+<!-- Open Graph / Facebook / LinkedIn -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://carlosmakes.com/">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta property="og:title" content="Carlos Fernández — AI Consultant & Indie Maker">
+<meta property="og:description" content="Diseño y construyo productos digitales impulsados por inteligencia artificial.">
+<meta property="og:image" content="https://carlosmakes.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Carlos Fernández — carlosmakes.com">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Carlos Fernández — AI Consultant & Indie Maker">
+<meta name="twitter:description" content="Diseño y construyo productos digitales impulsados por inteligencia artificial.">
+<meta name="twitter:image" content="https://carlosmakes.com/og.png">
+<meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
+
+<!-- Favicon (SVG inline, sin archivo extra) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22black%22/><circle cx=%2278%22 cy=%2278%22 r=%2210%22 fill=%22%23ef4444%22/></svg>">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
+
+  :root {
+    --black: #000;
+    --white: #fff;
+    --gray: #6b7280;
+    --gray-light: #e5e7eb;
+    --gray-mid: #9ca3af;
+    --red: #ef4444;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+    background: var(--white);
+    color: var(--black);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  ::selection { background: var(--black); color: var(--white); }
+
+  a { color: inherit; text-decoration: none; }
+
+  button { font-family: inherit; background: none; border: none; cursor: pointer; }
+
+  /* ==================== LAYOUT ==================== */
+  .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
+  @media (min-width: 768px) { .container { padding: 0 3rem; } }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .hero-inner {
+    padding: 1.5rem 1.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    max-width: 72rem;
+    margin: 0 auto;
+    width: 100%;
+  }
+  @media (min-width: 768px) { .hero-inner { padding: 1.5rem 3rem 3rem; } }
+
+  header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .logo { font-size: 1.125rem; font-weight: 900; white-space: nowrap; }
+  @media (min-width: 640px) { .logo { font-size: 1.25rem; } }
+  @media (min-width: 768px) { .logo { font-size: 1.5rem; } }
+  .logo .gray { color: var(--gray); }
+  .logo .red { color: var(--red); }
+
+  .nav-group { display: flex; gap: 0.75rem; align-items: center; }
+  @media (min-width: 640px) { .nav-group { gap: 1.5rem; } }
+  @media (min-width: 768px) { .nav-group { gap: 2rem; } }
+
+  nav { display: flex; gap: 0.5rem; align-items: center; }
+  @media (min-width: 640px) { nav { gap: 1rem; } }
+  @media (min-width: 768px) { nav { gap: 1.25rem; } }
+
+  nav a {
+    padding: 0.375rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { nav a { padding: 0.5rem; } }
+  nav a:hover { background: var(--black); color: var(--white); }
+  nav svg { width: 1rem; height: 1rem; display: block; }
+  @media (min-width: 640px) { nav svg { width: 1.25rem; height: 1.25rem; } }
+  @media (min-width: 768px) { nav svg { width: 1.5rem; height: 1.5rem; } }
+
+  .lang-toggle {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    margin-left: 0.25rem;
+  }
+  @media (min-width: 640px) { .lang-toggle { font-size: 0.75rem; margin-left: 0.5rem; } }
+  .lang-toggle > span { display: flex; align-items: center; gap: 0.25rem; transition: color 0.1s; }
+  .lang-toggle .inactive { color: var(--gray-mid); }
+  .lang-toggle .inactive:hover { color: #4b5563; }
+  .lang-toggle .flag { font-size: 0.75rem; transition: filter 0.2s, opacity 0.2s; line-height: 1; }
+  @media (min-width: 640px) { .lang-toggle .flag { font-size: 0.875rem; } }
+  .lang-toggle .inactive .flag { filter: grayscale(1); opacity: 0.4; }
+  .lang-toggle .inactive:hover .flag { filter: grayscale(0); opacity: 1; }
+  .lang-toggle .sep { color: var(--gray-light); font-weight: 400; }
+
+  .hero-title-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 1rem; }
+  @media (min-width: 768px) { .hero-title-wrap { margin-top: 2rem; } }
+
+  .hero-title {
+    font-size: 12vw;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    min-height: 40vh;
+    text-wrap: balance;
+  }
+  @media (min-width: 640px) { .hero-title { font-size: 11vw; } }
+  @media (min-width: 768px) { .hero-title { font-size: 10vw; min-height: 50vh; } }
+  @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
+  @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
+  .hero-title .red { color: var(--red); }
+
+  .cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.9em;
+    background: var(--black);
+    margin-left: 0.5rem;
+    transform: translateY(0.1em);
+    animation: blink 1s step-end infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    pointer-events: none;
+  }
+  .scroll-hint a {
+    display: inline-block;
+    padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
+    font-weight: 700;
+    letter-spacing: 0.5em;
+    color: var(--gray);
+    pointer-events: auto;
+    animation: float 3s ease-in-out infinite;
+    font-size: 0.875rem;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { .scroll-hint a { font-size: 1rem; } }
+  @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
+  @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
+  .scroll-hint a:hover { background: var(--black); color: var(--white); }
+  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
+
+  /* ==================== SECTIONS ==================== */
+  .section-pad { padding: 4rem 0; }
+  @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
+
+  .big-heading {
+    font-size: 7.5vw;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.9;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  @media (min-width: 640px) { .big-heading { font-size: 7vw; } }
+  @media (min-width: 768px) { .big-heading { font-size: 6.5vw; } }
+  @media (min-width: 1024px) { .big-heading { font-size: 6vw; } }
+  @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
+  .big-heading .red { color: var(--red); }
+
+  .subheading {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-top: 2.5rem;
+    line-height: 1.6;
+  }
+  @media (min-width: 640px) { .subheading { font-size: 1.125rem; } }
+  @media (min-width: 768px) { .subheading { font-size: 1.25rem; } }
+  @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
+
+  /* ==================== PHILOSOPHY CARDS ==================== */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 3rem;
+  }
+  @media (min-width: 768px) { .cards-grid { grid-template-columns: 1fr 1fr; gap: 2rem; } }
+  @media (min-width: 1024px) { .cards-grid { grid-template-columns: 1fr 1fr 1fr; } }
+
+  .card {
+    border: 4px solid var(--black);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background: var(--white);
+    color: var(--black);
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { .card { border-width: 8px; padding: 2rem; gap: 1.5rem; } }
+  .card:hover { background: var(--black); color: var(--white); }
+  .card:hover .card-quote, .card:hover .card-author { color: var(--white); }
+
+  .card-num { font-size: 1.875rem; font-weight: 900; }
+  @media (min-width: 640px) { .card-num { font-size: 2.25rem; } }
+  @media (min-width: 768px) { .card-num { font-size: 3rem; } }
+  @media (min-width: 1024px) { .card-num { font-size: 3.75rem; } }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+    word-break: break-word;
+  }
+  @media (min-width: 640px) { .card-title { font-size: 1.875rem; } }
+  @media (min-width: 768px) { .card-title { font-size: 2.25rem; } }
+  @media (min-width: 1024px) { .card-title { font-size: 3rem; } }
+
+  .card-quote-wrap { display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto; }
+  .card-quote { font-style: italic; color: var(--gray); line-height: 1.6; font-size: 1rem; transition: color 0.1s; }
+  @media (min-width: 640px) { .card-quote { font-size: 1.125rem; } }
+  @media (min-width: 768px) { .card-quote { font-size: 1.25rem; } }
+  @media (min-width: 1024px) { .card-quote { font-size: 1.5rem; } }
+  .card-author { font-size: 0.875rem; font-weight: 700; color: var(--black); transition: color 0.1s; }
+  @media (min-width: 640px) { .card-author { font-size: 1rem; } }
+  @media (min-width: 768px) { .card-author { font-size: 1.125rem; } }
+
+  /* ==================== PROJECTS ==================== */
+  .project-box {
+    border: 4px solid var(--black);
+    padding: 2rem;
+    min-height: 300px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { .project-box { border-width: 8px; padding: 3rem; min-height: 400px; } }
+  @media (min-width: 768px) { .project-box { padding: 5rem; } }
+  .project-box:hover { background: var(--black); color: var(--white); }
+  .project-box:hover .project-text { color: var(--gray-light); }
+
+  .project-title {
+    font-size: 1.25rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 1;
+    margin-bottom: 1.5rem;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    text-transform: uppercase;
+    flex-wrap: wrap;
+  }
+  @media (min-width: 640px) { .project-title { font-size: 1.5rem; } }
+  @media (min-width: 768px) { .project-title { font-size: 1.875rem; } }
+  @media (min-width: 1024px) { .project-title { font-size: 2.25rem; } }
+
+  .project-text { color: var(--gray); max-width: 48rem; line-height: 1.6; font-size: 1rem; transition: color 0.1s; }
+  @media (min-width: 640px) { .project-text { font-size: 1.125rem; } }
+  @media (min-width: 768px) { .project-text { font-size: 1.25rem; } }
+  @media (min-width: 1024px) { .project-text { font-size: 1.5rem; } }
+
+  /* ==================== CONTACT ==================== */
+  .contact-box {
+    border: 8px solid var(--black);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 400px;
+    overflow: hidden;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { .contact-box { padding: 3rem; gap: 3rem; min-height: 500px; } }
+  @media (min-width: 768px) { .contact-box { padding: 5rem; } }
+  .contact-box:hover { background: var(--black); color: var(--white); }
+  .contact-box:hover .contact-sub { color: var(--gray-light); }
+
+  .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; }
+  @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
+  @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
+
+  .contact-buttons { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1rem; }
+  @media (min-width: 640px) { .contact-buttons { gap: 2rem; margin-top: 2rem; } }
+
+  .contact-btn {
+    border: 4px solid currentColor;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 900;
+    text-transform: capitalize;
+    display: inline-block;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  @media (min-width: 640px) { .contact-btn { padding: 1rem 2rem; font-size: 1.25rem; } }
+  @media (min-width: 768px) { .contact-btn { font-size: 1.875rem; } }
+  @media (min-width: 1024px) { .contact-btn { font-size: 2.25rem; } }
+  .contact-btn:hover { background: var(--white); color: var(--black); }
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-inner">
+      <header>
+        <div class="logo">Carlos <span class="gray">Fernández</span><span class="red">.</span></div>
+
+        <div class="nav-group">
+          <nav>
+            <a href="mailto:hola@carlosmakes.com" aria-label="E-mail">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+            </a>
+            <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/carlosferlop/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+          </nav>
+          <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma">
+            <span id="esLabel"><span class="flag">🇪🇸</span>ES</span>
+            <span class="sep">/</span>
+            <span id="enLabel" class="inactive"><span class="flag">🇺🇸</span>EN</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="hero-title-wrap">
+        <h1 class="hero-title">
+          <span id="typewriter"></span><span class="cursor"></span>
+        </h1>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <a href="#filosofia" id="scrollHint">[ SOBRE MÍ ] ↓</a>
+    </div>
+  </section>
+
+  <!-- ==================== PHILOSOPHY ==================== -->
+  <section id="filosofia" class="section-pad">
+    <div class="container">
+      <p class="big-heading"><span id="philosophyTitle">DISEÑO Y CONSTRUYO PRODUCTOS DIGITALES IMPULSADOS POR IA</span><span class="red">.</span></p>
+      <p class="subheading" id="philosophySub">Bajo esta filosofía:</p>
+
+      <div class="cards-grid">
+        <article class="card">
+          <div class="card-num">01</div>
+          <h3 class="card-title" id="card1Title">USABILIDAD</h3>
+          <div class="card-quote-wrap">
+            <p class="card-quote" id="card1Quote">"No me hagas pensar."</p>
+            <p class="card-author">— Steve Krug</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-num">02</div>
+          <h3 class="card-title" id="card2Title">OBSESIÓN POR EL DETALLE</h3>
+          <div class="card-quote-wrap">
+            <p class="card-quote" id="card2Quote">"Los detalles no son los detalles. Ellos hacen el diseño."</p>
+            <p class="card-author">— Charles Eames</p>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-num">03</div>
+          <h3 class="card-title" id="card3Title">CREATIVIDAD</h3>
+          <div class="card-quote-wrap">
+            <p class="card-quote" id="card3Quote">"La creatividad es simplemente conectar cosas."</p>
+            <p class="card-author">— Steve Jobs</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PROJECTS ==================== -->
+  <section id="proyectos" class="section-pad">
+    <div class="container">
+      <h2 class="big-heading"><span id="projectsTitle">PROYECTOS</span><span class="red">.</span></h2>
+
+      <div class="project-box">
+        <h3 class="project-title">
+          <span>🚧</span>
+          <span id="projectPlaceholder">EN CONSTRUCCIÓN</span>
+          <span>🚧</span>
+        </h3>
+        <p class="project-text" id="projectText">La IA y yo ya estamos construyendo cosas. Muy pronto las podrás ver.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== CONTACT ==================== -->
+  <section id="contacto" class="section-pad">
+    <div class="container">
+      <div class="contact-box">
+        <h2 class="big-heading"><span id="contactTitle">¿PUEDO AYUDARTE EN ALGO</span><span class="red" id="contactMark">?</span></h2>
+        <p class="contact-sub" id="contactSub">Contáctame a través de cualquiera de estos canales:</p>
+
+        <div class="contact-buttons">
+          <a href="mailto:hola@carlosmakes.com" class="contact-btn">e-mail</a>
+          <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" class="contact-btn">x</a>
+          <a href="https://www.linkedin.com/in/carlosferlop/" target="_blank" rel="noopener noreferrer" class="contact-btn">linkedin</a>
+          <a href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer" class="contact-btn">instagram</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ============================================
+  // Traducciones centralizadas
+  // ============================================
+  const t = {
+    es: {
+      typewriter: ["CONSULTOR DE IA.", "CREADOR INDEPENDIENTE."],
+      scrollHint: "[ SOBRE MÍ ] ↓",
+      philosophyTitle: "DISEÑO Y CONSTRUYO PRODUCTOS DIGITALES IMPULSADOS POR IA",
+      philosophySub: "Bajo esta filosofía:",
+      card1Title: "USABILIDAD",
+      card1Quote: '"No me hagas pensar."',
+      card2Title: "OBSESIÓN POR EL DETALLE",
+      card2Quote: '"Los detalles no son los detalles. Ellos hacen el diseño."',
+      card3Title: "CREATIVIDAD",
+      card3Quote: '"La creatividad es simplemente conectar cosas."',
+      projectsTitle: "PROYECTOS",
+      projectPlaceholder: "EN CONSTRUCCIÓN",
+      projectText: "La IA y yo ya estamos construyendo cosas. Muy pronto las podrás ver.",
+      contactTitle: "¿PUEDO AYUDARTE EN ALGO",
+      contactMark: "?",
+      contactSub: "Contáctame a través de cualquiera de estos canales:"
+    },
+    en: {
+      typewriter: ["AI CONSULTANT.", "INDIE MAKER."],
+      scrollHint: "[ ABOUT ME ] ↓",
+      philosophyTitle: "I DESIGN AND BUILD DIGITAL PRODUCTS POWERED BY AI",
+      philosophySub: "Under this philosophy:",
+      card1Title: "USABILITY",
+      card1Quote: '"Don\'t make me think."',
+      card2Title: "OBSESSION WITH DETAIL",
+      card2Quote: '"The details are not the details. They make the design."',
+      card3Title: "CREATIVITY",
+      card3Quote: '"Creativity is just connecting things."',
+      projectsTitle: "PROJECTS",
+      projectPlaceholder: "UNDER CONSTRUCTION",
+      projectText: "AI and I are already building things. You will see them very soon.",
+      contactTitle: "CAN I HELP YOU WITH ANYTHING",
+      contactMark: "?",
+      contactSub: "Contact me through any of these channels:"
+    }
+  };
+
+  let lang = 'es';
+
+  // ============================================
+  // Typewriter
+  // ============================================
+  const typeEl = document.getElementById('typewriter');
+  let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
+
+  function renderTypewriter(text) {
+    if (text.endsWith('.')) {
+      typeEl.innerHTML = text.slice(0, -1) + '<span class="red" style="color: var(--red)">.</span>';
+    } else {
+      typeEl.textContent = text;
+    }
+  }
+
+  function typewriter() {
+    const words = t[lang].typewriter;
+    const currentWord = words[wordIndex];
+    if (isDeleting) charIndex--; else charIndex++;
+    renderTypewriter(currentWord.substring(0, charIndex));
+
+    let speed = isDeleting ? 30 : 70;
+    if (!isDeleting && charIndex === currentWord.length) {
+      speed = 2500; isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      wordIndex = (wordIndex + 1) % words.length;
+      speed = 500;
+    }
+    typeTimeout = setTimeout(typewriter, speed);
+  }
+
+  function restartTypewriter() {
+    clearTimeout(typeTimeout);
+    wordIndex = 0; charIndex = 0; isDeleting = false;
+    typewriter();
+  }
+
+  // ============================================
+  // Idioma
+  // ============================================
+  function applyLang() {
+    const d = t[lang];
+    document.documentElement.lang = lang;
+    document.getElementById('scrollHint').textContent = d.scrollHint;
+    document.getElementById('philosophyTitle').textContent = d.philosophyTitle;
+    document.getElementById('philosophySub').textContent = d.philosophySub;
+    document.getElementById('card1Title').textContent = d.card1Title;
+    document.getElementById('card1Quote').textContent = d.card1Quote;
+    document.getElementById('card2Title').textContent = d.card2Title;
+    document.getElementById('card2Quote').textContent = d.card2Quote;
+    document.getElementById('card3Title').textContent = d.card3Title;
+    document.getElementById('card3Quote').textContent = d.card3Quote;
+    document.getElementById('projectsTitle').textContent = d.projectsTitle;
+    document.getElementById('projectPlaceholder').textContent = d.projectPlaceholder;
+    document.getElementById('projectText').textContent = d.projectText;
+    document.getElementById('contactTitle').textContent = d.contactTitle;
+    document.getElementById('contactMark').textContent = d.contactMark;
+    document.getElementById('contactSub').textContent = d.contactSub;
+
+    const esLabel = document.getElementById('esLabel');
+    const enLabel = document.getElementById('enLabel');
+    if (lang === 'es') {
+      esLabel.classList.remove('inactive');
+      enLabel.classList.add('inactive');
+    } else {
+      enLabel.classList.remove('inactive');
+      esLabel.classList.add('inactive');
+    }
+  }
+
+  document.getElementById('langToggle').addEventListener('click', () => {
+    lang = lang === 'es' ? 'en' : 'es';
+    applyLang();
+    restartTypewriter();
+  });
+
+  // ============================================
+  // Init
+  // ============================================
+  typewriter();
+</script>
+
+</body>
+</html>
