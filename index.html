@@ -461,6 +461,258 @@
   @media (min-width: 768px) { .contact-btn { font-size: 1.875rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 2.25rem; } }
   .contact-btn:hover { background: var(--white); color: var(--black); }
+
+  /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
+  .projects-section {
+    background: var(--white);
+    border-top: 4px solid var(--black);
+  }
+  .projects-strap {
+    margin-top: 1.25rem;
+  }
+  .projects-note {
+    font-size: 0.875rem;
+    color: var(--gray);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+    max-width: 40rem;
+  }
+  @media (min-width: 640px) { .projects-note { font-size: 0.9375rem; } }
+
+  .projects-chevron-wrap {
+    position: relative;
+    margin-top: 2.5rem;
+  }
+  .projects-chev {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+    color: var(--white);
+    border: 2px solid var(--black);
+    font-size: 1.25rem;
+    line-height: 1;
+    transition: background 0.15s, color 0.15s, opacity 0.15s;
+  }
+  .projects-chev:hover { background: var(--red); color: var(--white); }
+  .projects-chev:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+  .projects-chev:disabled { opacity: 0.3; cursor: not-allowed; }
+  .projects-chev--off { visibility: hidden; pointer-events: none; opacity: 0; }
+  .projects-chev--prev { left: -0.25rem; }
+  .projects-chev--next { right: -0.25rem; }
+  @media (max-width: 767px) {
+    .projects-chev { display: none; }
+  }
+
+  .projects-row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--black) var(--gray-light);
+    padding: 0.5rem 0 1rem;
+    margin: 0 -0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    touch-action: pan-x;
+  }
+  .projects-row::-webkit-scrollbar { height: 6px; }
+  .projects-row::-webkit-scrollbar-track { background: var(--gray-light); }
+  .projects-row::-webkit-scrollbar-thumb { background: var(--black); }
+  @media (prefers-reduced-motion: reduce) {
+    .projects-row { scroll-behavior: auto; }
+  }
+
+  ul.projects-track {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.75rem;
+    width: max-content;
+    min-height: 0;
+  }
+  @media (min-width: 640px) { ul.projects-track { gap: 1rem; } }
+  @media (min-width: 1024px) { ul.projects-track { gap: 1.25rem; } }
+
+  .project-poster {
+    flex: 0 0 auto;
+    width: min(40vw, 10rem);
+    scroll-snap-align: start;
+  }
+  @media (min-width: 480px) { .project-poster { width: min(32vw, 11rem); } }
+  @media (min-width: 640px) { .project-poster { width: min(24vw, 12rem); } }
+  @media (min-width: 1024px) { .project-poster { width: 13.5rem; } }
+
+  .project-poster-inner {
+    position: relative;
+    aspect-ratio: 2 / 3;
+    width: 100%;
+    height: 100%;
+    border: 4px solid var(--black);
+    background: var(--black);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    padding-top: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  @media (min-width: 640px) { .project-poster-inner { border-width: 6px; padding: 1rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    .project-poster-inner { transition: none; }
+  }
+
+  li.project-poster { display: list-item; }
+  .project-poster-link, .project-poster-dummy {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  li.project-poster:hover .project-poster-inner,
+  li.project-poster:focus-within .project-poster-inner {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+  }
+  .project-poster-dummy { cursor: default; }
+  .project-poster-dummy:focus { outline: none; }
+  .project-poster-dummy:focus-visible .project-poster-inner {
+    outline: 3px solid var(--red);
+    outline-offset: 2px;
+  }
+  .project-poster-link:focus { outline: none; }
+  .project-poster-link:focus-visible .project-poster-inner {
+    outline: 3px solid var(--red);
+    outline-offset: 2px;
+  }
+
+  .project-poster--placeholder .project-poster-bg {
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      #1a1a1a 0 8px,
+      #2d2d2d 8px 16px
+    );
+    opacity: 0.9;
+  }
+  .project-poster--coming .project-poster-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #111 0%, #2a2a2a 50%, #111 100%);
+  }
+  .project-poster-bg--fallback {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(165deg, #0a0a0a 0%, #252525 45%, #111 100%) !important;
+  }
+  .project-poster--live .project-poster-bg {
+    position: absolute;
+    inset: 0;
+    background: #1a1a1a;
+    background-size: cover;
+    background-position: center;
+  }
+  .project-poster--live .project-poster-bg--img {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .project-poster--live .project-poster-vignette {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.85) 100%);
+    pointer-events: none;
+  }
+
+  .project-poster-top {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .project-poster-initial {
+    font-size: clamp(2.5rem, 12vw, 3.5rem);
+    font-weight: 900;
+    line-height: 1;
+    color: rgba(255,255,255,0.35);
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+  }
+  .project-poster-titles {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .project-poster-name {
+    position: relative;
+    z-index: 1;
+    font-size: 0.7rem;
+    font-weight: 800;
+    line-height: 1.2;
+    color: var(--white);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-wrap: pretty;
+    word-break: normal;
+    overflow-wrap: normal;
+    max-width: 100%;
+  }
+  @media (min-width: 640px) { .project-poster-name { font-size: 0.8rem; } }
+  .project-poster-beneath {
+    position: relative;
+    z-index: 1;
+    margin-top: 0.35rem;
+    font-size: 0.65rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: rgba(255,255,255,0.75);
+    text-align: center;
+    text-wrap: pretty;
+  }
+  @media (min-width: 640px) { .project-poster-beneath { font-size: 0.7rem; } }
+
+  .project-poster-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-block;
+    margin-top: 0.6rem;
+    flex-shrink: 0;
+    padding: 0.2rem 0.45rem;
+    font-size: 0.55rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--white);
+    background: var(--red);
+    border: 2px solid var(--white);
+  }
+  @media (min-width: 640px) { .project-poster-badge { font-size: 0.6rem; padding: 0.25rem 0.5rem; } }
+  .project-poster-badge--live {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--red);
+  }
 </style>
 </head>
 <body>
@@ -544,6 +796,23 @@
     </div>
   </section>
 
+  <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
+  <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
+    <div class="container">
+      <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
+      <p class="subheading projects-strap" id="projectsStrap">Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.</p>
+      <p class="projects-note" id="projectsNote">La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.</p>
+
+      <div class="projects-chevron-wrap">
+        <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
+        <div class="projects-row" id="projectsRow" data-projects-scroll>
+          <ul class="projects-track" id="projectsTrack" role="list"></ul>
+        </div>
+        <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
+      </div>
+    </div>
+  </section>
+
   <!-- ==================== CONTACT ==================== -->
   <section id="contacto" class="section-pad">
     <div class="container">
@@ -583,7 +852,15 @@
       card3Quote: '"Si no has lanzado, estás perdiendo el tiempo."',
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
-      contactSub: "Contáctame a través de cualquiera de estos canales:"
+      contactSub: "Contáctame a través de cualquiera de estos canales:",
+      projectsTitle: "PROYECTOS Y APPS",
+      projectsStrap: "Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.",
+      projectsNote: "La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.",
+      projectBadgeComing: "EN OBRA",
+      projectBadgeLive: "EN VIVO",
+      projectChevPrev: "Anterior",
+      projectChevNext: "Siguiente",
+      projectsRowLabel: "Carrusel de proyectos y aplicaciones"
     },
     en: {
       typewriter: ["AI CONSULTANT.", "INDIE MAKER."],
@@ -601,11 +878,161 @@
       card3Quote: '"If you haven\'t launched yet, you\'re wasting time."',
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
-      contactSub: "Contact me through any of these channels:"
+      contactSub: "Contact me through any of these channels:",
+      projectsTitle: "PROJECTS & APPS",
+      projectsStrap: "Gallery under construction: poster-style covers for everything I ship will live here.",
+      projectsNote: "This row will update (image, link, status) as each project goes live in production.",
+      projectBadgeComing: "IN THE WORKS",
+      projectBadgeLive: "LIVE",
+      projectChevPrev: "Previous",
+      projectChevNext: "Next",
+      projectsRowLabel: "Projects and apps carousel"
     }
   };
 
   let lang = 'es';
+
+  /**
+   * Catálogo de proyectos / apps.
+   * Cuando algo pase a producción: status 'live', url pública, poster (opcional, ruta a imagen carátula).
+   * Ejemplo live: { status: 'live', url: 'https://…', poster: '/covers/mi-app.png' }
+   */
+  const projectsCatalog = [
+    {
+      id: 'p1',
+      status: 'coming',
+      title: { es: 'App interna de flujos con IA', en: 'Internal AI flow app' },
+      blurb: { es: 'Orquestación de agentes y tareas en equipo.', en: 'Agent and task orchestration for teams.' },
+      url: null,
+      poster: null
+    },
+    {
+      id: 'p2',
+      status: 'coming',
+      title: { es: 'Kit de producto reutilizable', en: 'Reusable product kit' },
+      blurb: { es: 'Plantillas y conectores para lanzar más rápido.', en: 'Templates and connectors to ship faster.' },
+      url: null,
+      poster: null
+    },
+    {
+      id: 'p3',
+      status: 'coming',
+      title: { es: 'Análisis de feedback con LLM', en: 'LLM feedback analysis' },
+      blurb: { es: 'Resumen y clustering asistido por lenguaje.', en: 'Language-assisted summarization and clustering.' },
+      url: null,
+      poster: null
+    },
+    {
+      id: 'p4',
+      status: 'coming',
+      title: { es: 'Micro-SaaS en validación', en: 'Micro-SaaS in validation' },
+      blurb: { es: 'Hipótesis de negocio por confirmar; carátula al lanzar.', en: 'Business hypothesis TBD; cover on launch.' },
+      url: null,
+      poster: null
+    }
+  ];
+
+  function escapeHtml(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  function safePosterUrl(u) {
+    if (!u || typeof u !== 'string') return null;
+    const t = u.trim();
+    if (t.startsWith('/') || t.startsWith('https://') || t.startsWith('http://')) return t;
+    return null;
+  }
+
+  function renderProjects() {
+    const d = t[lang];
+    const track = document.getElementById('projectsTrack');
+    if (!track) return;
+
+    const parts = projectsCatalog.map((p) => {
+      const title = escapeHtml(p.title[lang] || p.title.es);
+      const blurb = escapeHtml(p.blurb[lang] || p.blurb.es);
+      const initial = (p.title[lang] || p.title.es || '?').trim().charAt(0).toUpperCase();
+      const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
+      const poster = safePosterUrl(p.poster);
+      const badgeComing = escapeHtml(d.projectBadgeComing);
+      const badgeLive = escapeHtml(d.projectBadgeLive);
+      const aria = escapeHtml(`${title}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ' — ' + (lang === 'es' ? 'en construcción' : 'under construction')}`);
+
+      const innerCore = isLive
+        ? (poster
+            ? `<div class="project-poster-bg" aria-hidden="true"><div class="project-poster-bg--img" style="background-image: url(${JSON.stringify(poster)})"></div><div class="project-poster-vignette" aria-hidden="true"></div></div>`
+            : `<div class="project-poster-bg project-poster-bg--fallback" aria-hidden="true"></div>`)
+        : `<div class="project-poster-bg" aria-hidden="true"></div>`;
+
+      const initialBlock = isLive && poster
+        ? ''
+        : `<div class="project-poster-top"><span class="project-poster-initial" aria-hidden="true">${escapeHtml(initial)}</span></div>`;
+
+      const badge = isLive
+        ? `<span class="project-poster-badge project-poster-badge--live">${badgeLive}</span>`
+        : `<span class="project-poster-badge">${badgeComing}</span>`;
+
+      const body = `
+        <div class="project-poster-inner ${isLive ? 'project-poster--live' : 'project-poster--coming'}">
+          ${innerCore}
+          ${initialBlock}
+          <div class="project-poster-titles">
+            <span class="project-poster-name">${title}</span>
+            <span class="project-poster-beneath">${blurb}</span>
+          </div>
+          ${badge}
+        </div>`;
+
+      if (isLive) {
+        return `<li class="project-poster" role="listitem">
+          <a class="project-poster-link" href="${escapeHtml(p.url)}" target="_blank" rel="noopener noreferrer" aria-label="${aria}">${body}</a>
+        </li>`;
+      }
+      return `<li class="project-poster" role="listitem">
+        <div class="project-poster-dummy" tabindex="0" aria-label="${aria}">${body}</div>
+      </li>`;
+    });
+
+    track.innerHTML = parts.join('');
+  }
+
+  function updateProjectsChevrons() {
+    const row = document.getElementById('projectsRow');
+    const prev = document.getElementById('projectsPrev');
+    const next = document.getElementById('projectsNext');
+    if (!row || !prev || !next) return;
+    const wide = window.matchMedia('(min-width: 768px)').matches;
+    const can = row.scrollWidth > row.clientWidth + 1;
+    const show = wide && can;
+    prev.classList.toggle('projects-chev--off', !show);
+    next.classList.toggle('projects-chev--off', !show);
+    if (!show) {
+      prev.disabled = true;
+      next.disabled = true;
+      return;
+    }
+    prev.disabled = row.scrollLeft <= 1;
+    next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
+  }
+
+  function initProjectsCarousel() {
+    const row = document.getElementById('projectsRow');
+    const prev = document.getElementById('projectsPrev');
+    const next = document.getElementById('projectsNext');
+    if (!row || !prev || !next) return;
+    if (row.dataset.ready) return;
+    row.dataset.ready = '1';
+
+    const step = () => Math.max(1, row.clientWidth * 0.72);
+    prev.addEventListener('click', () => { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
+    next.addEventListener('click', () => { row.scrollBy({ left: step(), behavior: 'smooth' }); });
+    row.addEventListener('scroll', () => requestAnimationFrame(updateProjectsChevrons), { passive: true });
+    window.addEventListener('resize', () => { requestAnimationFrame(updateProjectsChevrons); });
+  }
 
   // ============================================
   // Typewriter
@@ -665,6 +1092,18 @@
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
+    document.getElementById('projectsTitle').textContent = d.projectsTitle;
+    document.getElementById('projectsStrap').textContent = d.projectsStrap;
+    document.getElementById('projectsNote').textContent = d.projectsNote;
+    const projectsRow = document.getElementById('projectsRow');
+    if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
+    const projectsPrev = document.getElementById('projectsPrev');
+    const projectsNext = document.getElementById('projectsNext');
+    if (projectsPrev) projectsPrev.setAttribute('aria-label', d.projectChevPrev);
+    if (projectsNext) projectsNext.setAttribute('aria-label', d.projectChevNext);
+    renderProjects();
+    initProjectsCarousel();
+    requestAnimationFrame(updateProjectsChevrons);
 
     const esLabel = document.getElementById('esLabel');
     const enLabel = document.getElementById('enLabel');
