@@ -82,7 +82,6 @@
   }
   .section-band--dark .big-heading { color: var(--white); }
   .section-band--dark .subheading { color: var(--gray-mid); }
-  .section-band--dark .projects-note { color: var(--gray-mid); }
   .section-band--dark .contact-sub { color: var(--gray-mid); }
 
   /* ==================== HERO ==================== */
@@ -487,15 +486,6 @@
   .projects-strap {
     margin-top: 1.25rem;
   }
-  .projects-note {
-    font-size: 0.875rem;
-    color: var(--gray);
-    margin-top: 0.5rem;
-    line-height: 1.5;
-    max-width: 40rem;
-  }
-  @media (min-width: 640px) { .projects-note { font-size: 0.9375rem; } }
-
   .projects-chevron-wrap {
     position: relative;
     margin-top: 2.5rem;
@@ -799,8 +789,7 @@
   <section id="proyectos" class="section-pad section-band--light projects-section" aria-labelledby="projectsTitle">
     <div class="container">
       <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
-      <p class="subheading projects-strap" id="projectsStrap">Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.</p>
-      <p class="projects-note" id="projectsNote">La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.</p>
+      <p class="subheading projects-strap" id="projectsStrap">Por aquí publicaré todos mis proyectos: las carátulas de lo que vaya publicando.</p>
 
       <div class="projects-chevron-wrap">
         <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
@@ -853,10 +842,7 @@
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
       projectsTitle: "PROYECTOS Y APPS",
-      projectsStrap: "Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.",
-      projectsNote: "La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.",
-      projectBadgeComing: "EN OBRA",
-      projectBadgeLive: "EN VIVO",
+      projectsStrap: "Por aquí publicaré todos mis proyectos: las carátulas de lo que vaya publicando.",
       projectChevPrev: "Anterior",
       projectChevNext: "Siguiente",
       projectsRowLabel: "Carrusel de proyectos y aplicaciones"
@@ -879,10 +865,7 @@
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
       projectsTitle: "PROJECTS & APPS",
-      projectsStrap: "Gallery under construction: poster-style covers for everything I ship will live here.",
-      projectsNote: "This row will update (image, link, status) as each project goes live in production.",
-      projectBadgeComing: "IN THE WORKS",
-      projectBadgeLive: "LIVE",
+      projectsStrap: "Here I’ll publish all my projects: poster covers for everything I release.",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
       projectsRowLabel: "Projects and apps carousel"
@@ -966,25 +949,25 @@
   }
 
   function renderProjects() {
-    const d = t[lang];
     const track = document.getElementById('projectsTrack');
     if (!track) return;
 
-    const parts = projectsCatalog.map((p) => {
+    const parts = projectsCatalog.map((p, i) => {
+      const n = i + 1;
+      const numLabel = escapeHtml(lang === 'es' ? 'PROYECTO ' + n : 'PROJECT ' + n);
       const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
       const poster = safePosterUrl(p.poster);
       const titlePlain = p.title[lang] || p.title.es;
-      const badgeComing = escapeHtml(d.projectBadgeComing);
-      const badgeLive = escapeHtml(d.projectBadgeLive);
-      const aria = escapeHtml(`${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ' — ' + (lang === 'es' ? 'en obras' : 'in the works')}`);
+      const aria = escapeHtml(`${numLabel} — ${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ''}`);
+
+      const badge = isLive
+        ? '<span class="project-poster-badge project-poster-badge--live">' + numLabel + '</span>'
+        : '<span class="project-poster-badge">' + numLabel + '</span>';
 
       let body;
       if (isLive && poster) {
-        body = buildLiveCardHtml(poster, badgeLive);
+        body = buildLiveCardHtml(poster, numLabel);
       } else {
-        const badge = isLive
-          ? '<span class="project-poster-badge project-poster-badge--live">' + badgeLive + '</span>'
-          : '<span class="project-poster-badge">' + badgeComing + '</span>';
         body = buildLockedCardHtml(badge);
       }
 
@@ -1091,7 +1074,6 @@
     document.getElementById('contactSub').textContent = d.contactSub;
     document.getElementById('projectsTitle').textContent = d.projectsTitle;
     document.getElementById('projectsStrap').textContent = d.projectsStrap;
-    document.getElementById('projectsNote').textContent = d.projectsNote;
     const projectsRow = document.getElementById('projectsRow');
     if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
     const projectsPrev = document.getElementById('projectsPrev');
