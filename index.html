@@ -460,6 +460,11 @@
     color: var(--black);
   }
   #contacto.section-band--dark .contact-box:hover .contact-sub { color: var(--gray); }
+  /* Sobre .section-band--dark .big-heading, que fija el título en blanco */
+  #contacto.section-band--dark .contact-box:hover .big-heading,
+  #contacto.section-band--dark .contact-box:hover .big-heading .red {
+    color: var(--black);
+  }
 
   .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
