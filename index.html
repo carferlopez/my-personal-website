@@ -336,7 +336,7 @@
     .card { padding-left: 2.35rem; padding-right: 2.35rem; }
   }
   @media (min-width: 1280px) {
-    .card { padding-left: 2.75rem; padding-right: 2.75rem; }
+    .card { padding-left: 3rem; padding-right: 3rem; }
   }
   /* Misma altura mínima en móvil (una columna) */
   @media (max-width: 767px) {
@@ -383,11 +383,10 @@
     min-height: 3.4em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
     line-break: auto;
     text-wrap: wrap;
-    box-sizing: border-box;
   }
   /* Títulos en bloque: no partir palabras; si hace falta, bajamos ligeramente el cuerpo en móvil */
   @media (max-width: 480px) {
@@ -395,8 +394,11 @@
   }
   @media (min-width: 640px) { .card-title { font-size: 1.75rem; min-height: 3.2em; } }
   @media (min-width: 768px) { .card-title { font-size: 1.95rem; min-height: 3.1em; } }
-  @media (min-width: 1024px) { .card-title { font-size: 2.15rem; min-height: 3em; } }
-  @media (min-width: 1280px) { .card-title { font-size: 2.4rem; min-height: 2.9em; } }
+  @media (min-width: 1024px) { .card-title { font-size: 2.1rem; min-height: 3em; } }
+  /* 3 col: columna más estrecha; sin overflow-wrap: break-word (rompe a mitad de palabra) */
+  @media (min-width: 1280px) {
+    .card-title { font-size: clamp(1.7rem, 0.6rem + 0.9vw, 1.9rem); min-height: 2.9em; }
+  }
 
   /* Frase en primera persona: cuerpo principal, más grande que cita y autor */
   .card-practice {
