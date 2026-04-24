@@ -576,15 +576,6 @@
     width: 100%;
     max-width: 100%;
   }
-  .contact-form__lead {
-    margin-top: 2rem;
-    color: var(--gray);
-    font-size: 0.95rem;
-    line-height: 1.5;
-    max-width: 42rem;
-  }
-  @media (min-width: 640px) { .contact-form__lead { font-size: 1rem; } }
-  .contact-box:hover .contact-form__lead { color: var(--gray-light); }
   .contact-form {
     margin-top: 1.25rem;
     display: flex;
@@ -1015,7 +1006,6 @@
         <p class="contact-sub" id="contactSub">Cuéntamelo aquí.</p>
 
         <div class="contact-form-wrap" id="contactFormBlock">
-          <p class="contact-form__lead" id="contactFormLead"></p>
           <form id="contactForm" class="contact-form" novalidate>
             <input type="hidden" name="startedAt" id="cf-started-at" value="">
             <div class="contact-form__row">
@@ -1095,7 +1085,6 @@
       contactMark: "?",
       contactSub: "Cuéntamelo aquí.",
       contactAltLabel: "O si prefieres:",
-      contactFormLead: "O escríbeme aquí. El mensaje llega a mi buzón (nada de formularios de terceros; Resend y un trasto en el servidor).",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Tema",
@@ -1143,7 +1132,6 @@
       contactMark: "?",
       contactSub: "Tell me here.",
       contactAltLabel: "Or if you prefer:",
-      contactFormLead: "Or drop me a line here. The message goes to my inbox (no third-party form vendors—Resend and a small server).",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
@@ -1405,10 +1393,6 @@
       esLabel.classList.add('inactive');
     }
 
-    if (d.contactFormLead) {
-      const lead = document.getElementById('contactFormLead');
-      if (lead) lead.textContent = d.contactFormLead;
-    }
     const lname = document.getElementById('label-cf-name');
     if (lname) lname.textContent = d.contactFormName;
     const lem = document.getElementById('label-cf-email');
