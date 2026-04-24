@@ -375,24 +375,29 @@
   }
 
   .card-title {
+    /* min-width:0 + width:100% = el flex/grid permite salto de línea dentro del padding */
+    display: block;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
     /* Siempre > .card-practice: peso 900 y tamaño mínimo por encima del cuerpo */
     font-size: 1.9rem; /* sin container queries */
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1.12;
     text-transform: uppercase;
     min-height: 2.2em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
     line-break: auto;
     text-wrap: wrap;
   }
   @supports (font-size: 1cqi) {
     .card-title {
-      /* max(): el título nunca queda por debajo del cuerpo aunque la tarjeta sea estrecha (3 col) */
-      font-size: max(1.6rem, min(3.3rem, 0.2rem + 5.1cqi));
+      /* Máx. moderado para que quepa en 2–3 líneas; piso > cuerpo (.card-practice) */
+      font-size: max(1.65rem, min(2.75rem, 0.18rem + 4.6cqi));
     }
   }
   @supports not (font-size: 1cqi) {
@@ -837,7 +842,7 @@
       <div class="cards-grid">
         <article class="card">
           <div class="card-num">01</div>
-          <h3 class="card-title" id="card1Title">CREATIVIDAD&#160;+&#160;CRITERIO</h3>
+          <h3 class="card-title" id="card1Title">CREATIVIDAD + CRITERIO</h3>
           <p class="card-practice" id="card1Practice">Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.</p>
           <div class="card-quote-wrap">
             <p class="card-quote" id="card1Quote">"Si quieres tener ideas originales, necesitas vivir una vida original."</p>
@@ -916,7 +921,7 @@
       philosophyTitle: "SI QUEREMOS RESULTADOS DISTINTOS, NO PODEMOS SEGUIR HACIENDO LO MISMO, ",
       philosophyEndBlack: "¿VERDAD",
       philosophySub: "Diseño, construyo y gestiono productos y sistemas digitales con un enfoque distinto al tradicional:",
-      card1Title: "CREATIVIDAD\u00A0+\u00A0CRITERIO",
+      card1Title: "CREATIVIDAD + CRITERIO",
       card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.",
       card1Quote: '"Si quieres tener ideas originales, necesitas vivir una vida original."',
       card2Title: "LANZAMIENTO TEMPRANO",
@@ -948,10 +953,10 @@
       philosophyTitle: "IF WE WANT DIFFERENT RESULTS, WE CAN'T KEEP DOING THE SAME, ",
       philosophyEndBlack: "RIGHT",
       philosophySub: "I design, build, and manage digital products and systems with an approach that differs from the traditional one:",
-      card1Title: "CREATIVITY\u00A0+\u00A0JUDGMENT",
+      card1Title: "CREATIVITY + JUDGMENT",
       card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions worth building.",
       card1Quote: '"If you want to have original ideas, you need to live an original life."',
-      card2Title: "SHIP\u00A0&\u00A0ITERATE",
+      card2Title: "SHIP & ITERATE",
       card2Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
       card2Quote: '"People don\'t know what they want until you show it to them."',
       card2Author: "— Steve Jobs",
