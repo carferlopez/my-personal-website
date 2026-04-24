@@ -95,7 +95,7 @@
   <div class="score"><span id="labelPts">Puntos</span> <span id="scoreN">0</span></div>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
-    <canvas id="game" width="800" height="520" role="img" aria-label="Mini juego de canasta"></canvas>
+    <canvas id="game" width="640" height="820" role="img" aria-label="Mini juego de canasta"></canvas>
   </div>
   <p class="lang">
     <a href="encestar.html" id="aEs">ES</a> · <a href="encestar.html?en" id="aEn">EN</a>
@@ -125,34 +125,35 @@
   const W = canvas.width;
   const H = canvas.height;
   const g = 0.42;
-  // Más altura de lienzo: más espacio arriba para parábolas realistas
+  // Lienzo poco ancho y alto: más aire arriba para la parábola; x crece a la → (soporte a la derecha)
   const groundY = H - 50;
   const ballR = 14;
-  const startX = 100;
+  const startX = 72;
   const startY = groundY - ballR;
   const angle = -0.68;
   const maxSpeed = 24;
-  // Aro: ancho interior ~1.4× el diámetro de la pelota (proporción razonable en vista lateral)
+  // Aro: ancho interior ~1.4× el diámetro de la pelota (vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
-  const backboardL = W - 90;
+  const backboardL = W - 85;
   const backboardW = 7;
-  const backboardT = 158;
-  const backboardB = 312;
+  const backboardT = 272;
+  const backboardB = 430;
   const backboardR = backboardL + backboardW;
-  const rimY = 248;
-  const rimR = backboardL - 12;
+  const rimY = 350;
+  const rimR = backboardL - 8;
   const rimL = rimR - innerRimW;
   const rimCx = (rimL + rimR) * 0.5;
-  // Red: ancho arriba = aro, abajo más estrecho (cónica hacia adelante)
-  const netD = 58;
-  const netBotW = innerRimW * 0.36;
+  // Red: boca = ancho del aro; abajo claramente más estrecho (cónica)
+  const netD = 64;
+  const netBotW = innerRimW * 0.28;
   const netBotL = rimCx - netBotW * 0.5;
   const netBotR = rimCx + netBotW * 0.5;
-  // Poste detrás del tablero (lado +x)
-  const poleW = 10;
-  const poleL = backboardR + 8;
-  const yArm = backboardB - 20;
+  // Soporte: solo a la derecha del tablero (+x), separado y visible
+  const poleW = 12;
+  const poleL = backboardR + 26;
+  const poleYTop = 248;
+  const yArm = backboardB - 22;
   // Zona de anotación: bajo el aro
   const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
 
@@ -176,18 +177,24 @@
     ctx.fillRect(0, groundY, W, 3);
     ctx.fillStyle = '#1f1f1f';
     ctx.fillRect(0, groundY + 3, W, H - groundY - 3);
-    // Poste detrás del tablero (+x) y brazo hacia el reverso del tablero
-    const poleH = yArm - groundY + 6;
-    ctx.fillStyle = '#374151';
-    ctx.fillRect(poleL, groundY, poleW, poleH);
-    const armH = 5;
-    const armL = backboardR;
-    const armR = poleL;
-    if (armR > armL) {
-      ctx.fillStyle = '#374151';
-      ctx.fillRect(armL, yArm, armR - armL, armH);
-    }
+    // Soporte: poste vertical a la DERECHA del tablero (mayor x); altura > 0, de poleYTop al suelo
     ctx.fillStyle = '#4b5563';
+    const poleH = groundY - poleYTop;
+    if (poleH > 0) {
+      const poleGr = ctx.createLinearGradient(poleL, poleYTop, poleL + poleW, groundY);
+      poleGr.addColorStop(0, '#4b5563');
+      poleGr.addColorStop(0.45, '#6b7280');
+      poleGr.addColorStop(1, '#374151');
+      ctx.fillStyle = poleGr;
+      ctx.fillRect(poleL, poleYTop, poleW, poleH);
+    }
+    // Brazo horizontal: del reverso del tablero hacia el poste (derecha)
+    const strutH = 6;
+    if (poleL > backboardR) {
+      ctx.fillStyle = '#4b5563';
+      ctx.fillRect(backboardR, yArm, poleL - backboardR, strutH);
+    }
+    ctx.fillStyle = '#1f2937';
     ctx.fillRect(poleL - 1, groundY, poleW + 2, 4);
     // Tablero
     ctx.fillStyle = '#e5e7eb';
@@ -263,8 +270,8 @@
     let x = startX;
     let y = startY;
     const pts = [{ x, y }];
-    const maxIter = 130;
-    const showSteps = 28;
+    const maxIter = 150;
+    const showSteps = 36;
     for (let i = 0; i < maxIter; i++) {
       vy += g;
       x += vx;
