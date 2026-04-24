@@ -95,7 +95,7 @@
   <div class="score"><span id="labelPts">Puntos</span> <span id="scoreN">0</span></div>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
-    <canvas id="game" width="640" height="820" role="img" aria-label="Mini juego de canasta"></canvas>
+    <canvas id="game" width="640" height="640" role="img" aria-label="Mini juego de canasta"></canvas>
   </div>
   <p class="lang">
     <a href="encestar.html" id="aEs">ES</a> · <a href="encestar.html?en" id="aEn">EN</a>
@@ -125,34 +125,34 @@
   const W = canvas.width;
   const H = canvas.height;
   const g = 0.42;
-  // Lienzo poco ancho y alto: más aire arriba para la parábola; x crece a la → (soporte a la derecha)
+  // Lienzo 1:1; cancha, tablero y aro reescalados a la misma unidad
   const groundY = H - 50;
   const ballR = 14;
-  const startX = 72;
+  const startX = 70;
   const startY = groundY - ballR;
   const angle = -0.68;
   const maxSpeed = 24;
   // Aro: ancho interior ~1.4× el diámetro de la pelota (vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
-  const backboardL = W - 85;
+  const backboardL = W - 86;
   const backboardW = 7;
-  const backboardT = 272;
-  const backboardB = 430;
+  const backboardT = 198;
+  const backboardB = 350;
   const backboardR = backboardL + backboardW;
-  const rimY = 350;
+  const rimY = 278;
   const rimR = backboardL - 8;
   const rimL = rimR - innerRimW;
   const rimCx = (rimL + rimR) * 0.5;
-  // Red: boca = ancho del aro; abajo claramente más estrecho (cónica)
-  const netD = 64;
+  // Red: boca = aro, abajo más estrecho
+  const netD = 50;
   const netBotW = innerRimW * 0.28;
   const netBotL = rimCx - netBotW * 0.5;
   const netBotR = rimCx + netBotW * 0.5;
-  // Soporte: solo a la derecha del tablero (+x), separado y visible
+  // Soporte: derecha del tablero (+x)
   const poleW = 12;
   const poleL = backboardR + 26;
-  const poleYTop = 248;
+  const poleYTop = 180;
   const yArm = backboardB - 22;
   // Zona de anotación: bajo el aro
   const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
@@ -269,28 +269,41 @@
     let vy = Math.sin(angle) * s;
     let x = startX;
     let y = startY;
+    // Sólo se dibuja ~mitad de camino a la canasta: hasta mitad de pantalla o 50% en X hacia el aro (lo que corta antes)
+    const xEnd = Math.min(W * 0.5, startX + (rimCx - startX) * 0.5);
     const pts = [{ x, y }];
-    const maxIter = 150;
-    const showSteps = 36;
+    const maxIter = 220;
     for (let i = 0; i < maxIter; i++) {
       vy += g;
+      const px = x, py = y;
       x += vx;
       y += vy;
-      if (i < showSteps) pts.push({ x, y });
       if (y + ballR > groundY) break;
+      if (x > xEnd) {
+        if (x !== px) {
+          const t = (xEnd - px) / (x - px);
+          if (t >= 0 && t <= 1) {
+            const iy = py + t * (y - py);
+            if (iy + ballR <= groundY) pts.push({ x: xEnd, y: iy });
+          }
+        }
+        break;
+      }
+      pts.push({ x, y });
     }
     if (pts.length < 2) return;
+    const last = pts[pts.length - 1];
     ctx.save();
     ctx.setLineDash([4, 7]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.24)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.26)';
     ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(pts[0].x, pts[0].y);
     for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
     ctx.stroke();
-    const last = pts[pts.length - 1];
+    // Punto final del tramo "visible" (~mitad de pantalla / mitad hacia el aro); hacia canasta: imaginario
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.fillStyle = 'rgba(255,255,255,0.22)';
     ctx.beginPath();
     ctx.arc(last.x, last.y, 2, 0, Math.PI * 2);
     ctx.fill();
@@ -300,31 +313,50 @@
   function drawBall() {
     const bx = ball.active ? ball.x : startX;
     const by = ball.active ? ball.y : startY;
-    const grd = ctx.createRadialGradient(bx - 4, by - 4, 2, bx, by, ballR);
+    const r = ballR;
+    const grd = ctx.createRadialGradient(bx - 4, by - 4, 2, bx, by, r);
     grd.addColorStop(0, '#fdba74');
     grd.addColorStop(1, '#ea580c');
     ctx.beginPath();
-    ctx.arc(bx, by, ballR, 0, Math.PI * 2);
+    ctx.arc(bx, by, r, 0, Math.PI * 2);
     ctx.fillStyle = grd;
     ctx.fill();
-    // Costuras tipo balón (elipses perpendiculares)
+    // Costuras típicas: ecuador recto + dos curvas (Bezier) que se cruzan, sin elipses
     ctx.save();
-    ctx.translate(bx, by);
-    ctx.strokeStyle = 'rgba(40, 16, 7, 0.9)';
-    ctx.lineWidth = 1.1;
-    for (let r = 0; r < 2; r++) {
-      ctx.save();
-      ctx.rotate((r * Math.PI) / 2 + 0.1);
-      ctx.beginPath();
-      ctx.ellipse(0, 0, ballR * 0.96, ballR * 0.33, 0, 0, Math.PI * 2);
-      ctx.stroke();
-      ctx.restore();
-    }
+    ctx.beginPath();
+    ctx.arc(bx, by, r - 0.3, 0, Math.PI * 2);
+    ctx.clip();
+    ctx.strokeStyle = 'rgba(32, 12, 5, 0.92)';
+    ctx.lineWidth = 1.15;
+    ctx.lineCap = 'round';
+    const k = 0.88;
+    // Eje horizontal (círculo máximo = línea de costura)
+    ctx.beginPath();
+    ctx.moveTo(bx - r * k, by);
+    ctx.lineTo(bx + r * k, by);
+    ctx.stroke();
+    // Dos trazos en S (costuras de panel opuestas)
+    ctx.beginPath();
+    ctx.moveTo(bx - r * 0.2, by - r * 0.72);
+    ctx.bezierCurveTo(
+      bx - r * 0.7, by - r * 0.25,
+      bx - r * 0.5, by + r * 0.35,
+      bx - r * 0.1, by + r * 0.7
+    );
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(bx + r * 0.2, by - r * 0.72);
+    ctx.bezierCurveTo(
+      bx + r * 0.7, by - r * 0.25,
+      bx + r * 0.5, by + r * 0.35,
+      bx + r * 0.1, by + r * 0.7
+    );
+    ctx.stroke();
     ctx.restore();
-    ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+    ctx.strokeStyle = 'rgba(0,0,0,0.32)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.arc(bx, by, ballR, 0, Math.PI * 2);
+    ctx.arc(bx, by, r, 0, Math.PI * 2);
     ctx.stroke();
   }
 
@@ -434,6 +466,16 @@
         ball.vx *= 0.9;
         if (Math.abs(ball.vy) < 0.4) ball.vy = 0;
         if (Math.abs(ball.vx) < 0.2) ball.vx = 0;
+      }
+      // Cada tiro: al quedar en el suelo, volver al origen
+      if (
+        ball.y + ballR >= groundY - 0.5 &&
+        Math.abs(ball.vx) < 0.11 &&
+        Math.abs(ball.vy) < 0.11
+      ) {
+        resetBall();
+        draw();
+        return;
       }
       if (ball.x - ballR > W + 40 || ball.x + ballR < -40 || ball.y - ballR > H + 20) {
         resetBall();
