@@ -809,20 +809,20 @@
         </article>
         <article class="card">
           <div class="card-num">02</div>
-          <h3 class="card-title" id="card2Title">SIMPLICIDAD RADICAL</h3>
-          <p class="card-practice" id="card2Practice">Construyo lo mínimo que demuestra resultados. Sin florituras innecesarias.</p>
+          <h3 class="card-title" id="card2Title">SHIP &amp; ITERATE</h3>
+          <p class="card-practice" id="card2Practice">Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card2Quote">"Todo debe hacerse tan simple como sea posible, pero no más simple."</p>
-            <p class="card-author">— Albert Einstein</p>
+            <p class="card-quote" id="card2Quote">"Los clientes no saben lo que quieren hasta que se lo enseñas."</p>
+            <p class="card-author" id="card2Author">— Steve Jobs</p>
           </div>
         </article>
         <article class="card">
           <div class="card-num">03</div>
-          <h3 class="card-title" id="card3Title">SHIP &amp; ITERATE</h3>
-          <p class="card-practice" id="card3Practice">Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.</p>
+          <h3 class="card-title" id="card3Title">SIMPLICIDAD RADICAL</h3>
+          <p class="card-practice" id="card3Practice">Construyo lo mínimo que demuestra resultados. Sin florituras innecesarias.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card3Quote">"Los clientes no saben lo que quieren hasta que se lo enseñas."</p>
-            <p class="card-author" id="card3Author">— Steve Jobs</p>
+            <p class="card-quote" id="card3Quote">"Todo debe hacerse tan simple como sea posible, pero no más simple."</p>
+            <p class="card-author" id="card3Author">— Albert Einstein</p>
           </div>
         </article>
       </div>
@@ -882,13 +882,14 @@
       card1Title: "CREATIVIDAD + CRITERIO",
       card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.",
       card1Quote: '"Si quieres tener ideas originales, necesitas vivir una vida original."',
-      card2Title: "SIMPLICIDAD RADICAL",
-      card2Practice: "Construyo lo mínimo que demuestra resultados. Sin florituras innecesarias.",
-      card2Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
-      card3Title: "SHIP & ITERATE",
-      card3Practice: "Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.",
-      card3Quote: '"Los clientes no saben lo que quieren hasta que se lo enseñas."',
-      card3Author: "— Steve Jobs",
+      card2Title: "SHIP & ITERATE",
+      card2Practice: "Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.",
+      card2Quote: '"Los clientes no saben lo que quieren hasta que se lo enseñas."',
+      card2Author: "— Steve Jobs",
+      card3Title: "SIMPLICIDAD RADICAL",
+      card3Practice: "Construyo lo mínimo que demuestra resultados. Sin florituras innecesarias.",
+      card3Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
+      card3Author: "— Albert Einstein",
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
@@ -912,13 +913,14 @@
       card1Title: "CREATIVITY + JUDGMENT",
       card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions worth building.",
       card1Quote: '"If you want to have original ideas, you need to live an original life."',
-      card2Title: "RADICAL SIMPLICITY",
-      card2Practice: "I build the minimum that proves results. No unnecessary frills.",
-      card2Quote: '"Everything should be made as simple as possible, but not simpler."',
-      card3Title: "SHIP & ITERATE",
-      card3Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
-      card3Quote: '"People don\'t know what they want until you show it to them."',
-      card3Author: "— Steve Jobs",
+      card2Title: "SHIP & ITERATE",
+      card2Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
+      card2Quote: '"People don\'t know what they want until you show it to them."',
+      card2Author: "— Steve Jobs",
+      card3Title: "RADICAL SIMPLICITY",
+      card3Practice: "I build the minimum that proves results. No unnecessary frills.",
+      card3Quote: '"Everything should be made as simple as possible, but not simpler."',
+      card3Author: "— Albert Einstein",
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
@@ -1131,6 +1133,8 @@
     document.getElementById('card2Title').textContent = d.card2Title;
     document.getElementById('card2Practice').textContent = d.card2Practice;
     document.getElementById('card2Quote').textContent = d.card2Quote;
+    const card2AuthorEl = document.getElementById('card2Author');
+    if (card2AuthorEl && d.card2Author) card2AuthorEl.textContent = d.card2Author;
     document.getElementById('card3Title').textContent = d.card3Title;
     document.getElementById('card3Practice').textContent = d.card3Practice;
     document.getElementById('card3Quote').textContent = d.card3Quote;
