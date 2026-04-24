@@ -267,71 +267,87 @@
     }
   }
 
-  // HUD: larger 7-seg + label so scores read clearly on small screens
-  const HUD = {
-    dw: 22,
-    gap: 4,
-    dh: 40,
-    tw: 3.2,
-    padX: 10,
-    padY: 7,
-    labY: 2,
-    boxOff: 14,
-    labelFont: "600 10px Inter, system-ui, sans-serif",
-    labelPad: 16,
-  };
-
-  function hudPanelWidth(label, n) {
-    const display = segValStr(n);
-    const { dw, gap, padX, labelFont, labelPad } = HUD;
-    const inner = padX * 2 + display.length * dw + (display.length - 1) * gap;
-    ctx.save();
-    ctx.font = labelFont;
-    const lw = ctx.measureText(label).width;
-    ctx.restore();
-    return Math.max(inner, lw + labelPad);
-  }
-
-  function drawHudPanel(label, n, x0, y0, onCol, offCol, segGlow) {
-    const display = segValStr(n);
-    const { dw, gap, dh, tw, padX, padY, labY, boxOff, labelFont, labelPad } = HUD;
-    ctx.save();
-    ctx.font = labelFont;
-    ctx.textBaseline = 'top';
-    ctx.fillStyle = 'rgba(255, 200, 200, 0.88)';
-    ctx.fillText(label, x0, y0 + labY);
-    const boxTop = y0 + boxOff;
-    const innerW = padX * 2 + display.length * dw + (display.length - 1) * gap;
-    const lw = ctx.measureText(label).width;
-    const boxW = Math.max(innerW, lw + labelPad);
-    const boxH = padY * 2 + dh + 2;
-    ctx.fillStyle = 'rgba(8, 2, 2, 0.94)';
-    ctx.strokeStyle = 'rgba(200, 45, 45, 0.6)';
-    ctx.lineWidth = 1.5;
-    if (typeof ctx.roundRect === 'function') {
-      ctx.beginPath();
-      ctx.roundRect(x0, boxTop, boxW, boxH, 5);
-      ctx.fill();
-      ctx.stroke();
-    } else {
-      ctx.fillRect(x0, boxTop, boxW, boxH);
-      ctx.strokeRect(x0, boxTop, boxW, boxH);
-    }
-    const iy = boxTop + padY;
-    const ix = x0 + (boxW - innerW) * 0.5 + padX;
-    draw7SegString(display, ix, iy, dw, gap, dh, tw, onCol, offCol, segGlow);
-    ctx.restore();
-    return boxW;
-  }
-
+  /** Puntuación: banda a todo el ancho del canvas; fila 1 = etiquetas, fila 2 = 7 seg (columnas 50% / 50%). */
   function drawDigitalScore() {
-    const y0 = 6;
+    const m = 10;
+    const barW = W - 2 * m;
+    const colW = barW * 0.5;
+    const y0 = 4;
     const on = '#ff3b3b';
     const off = 'rgba(40, 8, 8, 0.38)';
     const segGlow = 'rgba(255, 35, 35, 0.4)';
-    const wRight = hudPanelWidth(T.hudAllTime, historicMax);
-    drawHudPanel(T.hudYours, score, 8, y0, on, off, segGlow);
-    drawHudPanel(T.hudAllTime, historicMax, W - 8 - wRight, y0, on, off, segGlow);
+
+    const topPad = 8;
+    const labelSize = 22;
+    const labelH = 28;
+    const labelToDigits = 10;
+    const boxPadY = 10;
+    const bottomPad = 8;
+    const innerSidePad = 6;
+    const segGap = 5;
+
+    const dLeft = segValStr(score);
+    const dRight = segValStr(historicMax);
+    const maxSlots = 3;
+    const maxInnerW = colW - innerSidePad * 2;
+    let dw = Math.floor((maxInnerW - segGap * (maxSlots - 1)) / maxSlots);
+    dw = Math.min(72, Math.max(36, dw));
+    const dh = Math.round(dw * 1.52);
+    const tw = Math.max(3.4, dw * 0.12);
+
+    const topLabelY = y0 + topPad;
+    const boxTop = topLabelY + labelH + labelToDigits;
+    const boxH = boxPadY * 2 + dh + 4;
+    const stripH = (boxTop - y0) + boxH + bottomPad;
+    const midX = m + colW;
+
+    ctx.save();
+    ctx.fillStyle = 'rgba(8, 2, 2, 0.92)';
+    ctx.strokeStyle = 'rgba(200, 45, 45, 0.55)';
+    ctx.lineWidth = 2;
+    if (typeof ctx.roundRect === 'function') {
+      ctx.beginPath();
+      ctx.roundRect(m, y0, barW, stripH, 8);
+      ctx.fill();
+      ctx.stroke();
+    } else {
+      ctx.fillRect(m, y0, barW, stripH);
+      ctx.strokeRect(m, y0, barW, stripH);
+    }
+
+    ctx.fillStyle = 'rgba(14, 4, 4, 0.88)';
+    if (typeof ctx.roundRect === 'function') {
+      ctx.beginPath();
+      ctx.roundRect(m + 4, boxTop, barW - 8, boxH, 5);
+      ctx.fill();
+    } else {
+      ctx.fillRect(m + 4, boxTop, barW - 8, boxH);
+    }
+
+    ctx.font = `600 ${labelSize}px Inter, system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'top';
+    ctx.fillStyle = 'rgba(255, 210, 210, 0.96)';
+    const cxL = m + colW * 0.5;
+    const cxR = m + colW * 1.5;
+    ctx.fillText(T.hudYours, cxL, topLabelY);
+    ctx.fillText(T.hudAllTime, cxR, topLabelY);
+
+    ctx.strokeStyle = 'rgba(200, 45, 45, 0.45)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(midX, boxTop + 5);
+    ctx.lineTo(midX, boxTop + boxH - 5);
+    ctx.stroke();
+
+    const iy = boxTop + boxPadY;
+    const innerL = dLeft.length * dw + (dLeft.length - 1) * segGap;
+    const innerR = dRight.length * dw + (dRight.length - 1) * segGap;
+    const ixL = m + (colW - innerL) * 0.5;
+    const ixR = m + colW + (colW - innerR) * 0.5;
+    draw7SegString(dLeft, ixL, iy, dw, segGap, dh, tw, on, off, segGlow);
+    draw7SegString(dRight, ixR, iy, dw, segGap, dh, tw, on, off, segGlow);
+    ctx.restore();
   }
 
   function drawSceneBack() {
