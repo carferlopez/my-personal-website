@@ -542,6 +542,14 @@
   .projects-strap {
     margin-top: 1.25rem;
   }
+  .projects-strap a {
+    color: var(--red);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+  }
+  .projects-strap a:hover { color: var(--black); }
+  .projects-strap a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
   .projects-chevron-wrap {
     position: relative;
     margin-top: 2.5rem;
@@ -845,7 +853,7 @@
   <section id="proyectos" class="section-pad section-band--light projects-section" aria-labelledby="projectsTitle">
     <div class="container">
       <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
-      <p class="subheading projects-strap" id="projectsStrap">🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos y creaciones</p>
+      <p class="subheading projects-strap" id="projectsStrap">🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos y creaciones. Mientras tanto, puedes jugar a encestar la pelota <a href="encestar.html">aquí</a>.</p>
 
       <div class="projects-chevron-wrap">
         <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
@@ -904,7 +912,7 @@
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
       projectsTitle: "PROYECTOS Y APPS",
-      projectsStrap: "🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos y creaciones",
+      projectsStrap: "🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos y creaciones. Mientras tanto, puedes jugar a encestar la pelota <a href=\"encestar.html\">aquí</a>.",
       projectChevPrev: "Anterior",
       projectChevNext: "Siguiente",
       projectsRowLabel: "Carrusel de proyectos y aplicaciones"
@@ -933,7 +941,7 @@
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
       projectsTitle: "PROJECTS & APPS",
-      projectsStrap: "🚧 UNDER CONSTRUCTION 🚧 Very soon you’ll be able to see all my work and creations",
+      projectsStrap: "🚧 UNDER CONSTRUCTION 🚧 Very soon you’ll be able to see all my work and creations. Meanwhile, you can play basket shot <a href=\"encestar.html?en\">here</a>.",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
       projectsRowLabel: "Projects and apps carousel"
@@ -1143,7 +1151,8 @@
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
     document.getElementById('projectsTitle').textContent = d.projectsTitle;
-    document.getElementById('projectsStrap').textContent = d.projectsStrap;
+    const projectsStrapEl = document.getElementById('projectsStrap');
+    if (projectsStrapEl) projectsStrapEl.innerHTML = d.projectsStrap;
     const projectsRow = document.getElementById('projectsRow');
     if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
     const projectsPrev = document.getElementById('projectsPrev');

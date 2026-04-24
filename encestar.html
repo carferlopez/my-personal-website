@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encestar — carlosmakes.com</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: #9ca3af; text-decoration: none; }
+  a:hover { color: #fff; }
+  .top {
+    width: 100%;
+    max-width: 42rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+  }
+  .top a.back { color: #ef4444; }
+  .top a.back:hover { color: #fff; }
+  h1 {
+    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  .hint {
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.875rem;
+    max-width: 28rem;
+    margin-bottom: 1rem;
+    line-height: 1.45;
+  }
+  .score {
+    font-size: 2rem;
+    font-weight: 900;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 0.5rem;
+  }
+  .bar-wrap {
+    width: min(100%, 36rem);
+    height: 6px;
+    background: #1f2937;
+    margin-bottom: 0.75rem;
+    overflow: hidden;
+  }
+  .bar {
+    height: 100%;
+    width: 0%;
+    background: #ef4444;
+    transition: width 0.05s linear;
+  }
+  .canvas-wrap {
+    width: 100%;
+    max-width: 42rem;
+    border: 3px solid #fff;
+    background: #0a0a0a;
+  }
+  canvas { display: block; width: 100%; height: auto; cursor: pointer; }
+  .lang {
+    margin-top: 1.25rem;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  .lang a { color: #9ca3af; }
+  .lang a:hover { color: #ef4444; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <a class="back" id="backLink" href="index.html">← <span id="backLabel">Inicio</span></a>
+    <span id="subtle">carlosmakes</span>
+  </div>
+  <h1 id="gameTitle">ENCESTAR</h1>
+  <p class="hint" id="gameHint">Mantén pulsado, clic o barra espaciadora para cargar. Suelta para lanzar. Pelota naranja, canasta a la derecha.</p>
+  <div class="score"><span id="labelPts">Puntos</span> <span id="scoreN">0</span></div>
+  <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
+  <div class="canvas-wrap">
+    <canvas id="game" width="800" height="400" role="img" aria-label="Mini juego de canasta"></canvas>
+  </div>
+  <p class="lang">
+    <a href="encestar.html" id="aEs">ES</a> · <a href="encestar.html?en" id="aEn">EN</a>
+  </p>
+<script>
+(function () {
+  const en = new URLSearchParams(location.search).has('en');
+  const T = en ? {
+    back: 'Home',
+    title: 'HOOP',
+    hint: 'Hold click, touch, or spacebar to charge. Release to shoot. Orange ball, hoop on the right.',
+    pts: 'Points',
+  } : {
+    back: 'Inicio',
+    title: 'ENCESTAR',
+    hint: 'Mantén pulsado, clic o barra espaciadora para cargar. Suelta para lanzar. Pelota naranja, canasta a la derecha.',
+    pts: 'Puntos',
+  };
+  document.getElementById('backLabel').textContent = T.back;
+  document.getElementById('gameTitle').textContent = T.title;
+  document.getElementById('gameHint').textContent = T.hint;
+  document.getElementById('labelPts').textContent = T.pts;
+  if (en) { document.documentElement.lang = 'en'; }
+
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const g = 0.42;
+  const groundY = H - 50;
+  const ballR = 14;
+  const startX = 100;
+  const startY = groundY - ballR;
+  const angle = -0.68;
+  const maxSpeed = 24;
+
+  const hoop = {
+    x: W - 200,
+    y: 120,
+    w: 88,
+    rimH: 8,
+  };
+  // Zona de canasta: rectángulo bajo el aro
+  const goal = {
+    x: hoop.x,
+    y: hoop.y + 12,
+    w: hoop.w,
+    h: 36,
+  };
+
+  const ball = { x: startX, y: startY, vx: 0, vy: 0, active: false, scored: false };
+  let charge = 0;
+  let charging = false;
+  let chargeT = 0;
+  let score = 0;
+  let raf = 0;
+  let flightFrames = 0;
+  const bar = document.getElementById('bar');
+  const scoreN = document.getElementById('scoreN');
+
+  function drawScene() {
+    ctx.fillStyle = '#0a0a0a';
+    ctx.fillRect(0, 0, W, H);
+    // Suelo (estilo offline)
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, groundY, W, 3);
+    ctx.fillStyle = '#1f1f1f';
+    ctx.fillRect(0, groundY + 3, W, H - groundY - 3);
+    // Canasta: tablero
+    ctx.fillStyle = '#e5e7eb';
+    ctx.fillRect(hoop.x + hoop.w, hoop.y - 40, 8, 100);
+    // Aro
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(hoop.x, hoop.y);
+    ctx.lineTo(hoop.x + hoop.w, hoop.y);
+    ctx.stroke();
+    // Red (líneas simples)
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 5; i++) {
+      const t = (i + 0.5) / 5;
+      const x = hoop.x + t * hoop.w;
+      ctx.beginPath();
+      ctx.moveTo(x, hoop.y);
+      ctx.lineTo(x + 8, hoop.y + 32);
+      ctx.stroke();
+    }
+  }
+
+  function drawBall() {
+    const bx = ball.active ? ball.x : startX;
+    const by = ball.active ? ball.y : startY;
+    const grd = ctx.createRadialGradient(bx - 4, by - 4, 2, bx, by, ballR);
+    grd.addColorStop(0, '#fdba74');
+    grd.addColorStop(1, '#ea580c');
+    ctx.beginPath();
+    ctx.arc(bx, by, ballR, 0, Math.PI * 2);
+    ctx.fillStyle = grd;
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  }
+
+  function resetBall() {
+    if (raf) {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    }
+    ball.x = startX;
+    ball.y = startY;
+    ball.vx = 0;
+    ball.vy = 0;
+    ball.active = false;
+    ball.scored = false;
+    charge = 0;
+    flightFrames = 0;
+    bar.style.width = '0%';
+  }
+
+  function checkGoal() {
+    if (ball.scored) return;
+    const cx = ball.x;
+    const cy = ball.y;
+    if (
+      cx + ballR > goal.x &&
+      cx - ballR < goal.x + goal.w &&
+      cy + ballR > goal.y &&
+      cy - ballR < goal.y + goal.h &&
+      ball.vy > 0.2
+    ) {
+      ball.scored = true;
+      score += 1;
+      scoreN.textContent = String(score);
+    }
+  }
+
+  function tick() {
+    if (charging) {
+      chargeT += 0.07;
+      charge = 0.25 + 0.75 * (Math.sin(chargeT) * 0.5 + 0.5);
+      bar.style.width = (charge * 100) + '%';
+    }
+    if (ball.active) {
+      ball.vy += g;
+      ball.x += ball.vx;
+      ball.y += ball.vy;
+      flightFrames++;
+      if (flightFrames > 520) {
+        resetBall();
+        draw();
+        return;
+      }
+      if (ball.y + ballR > groundY) {
+        ball.y = groundY - ballR;
+        if (ball.vy > 0) ball.vy *= -0.5;
+        ball.vx *= 0.9;
+        if (Math.abs(ball.vy) < 0.4) ball.vy = 0;
+        if (Math.abs(ball.vx) < 0.2) ball.vx = 0;
+      }
+      if (ball.x - ballR > W + 40 || ball.x + ballR < -40 || ball.y - ballR > H + 20) {
+        resetBall();
+        draw();
+        return;
+      }
+      checkGoal();
+    } else {
+      flightFrames = 0;
+    }
+    draw();
+    if (charging || ball.active) {
+      raf = requestAnimationFrame(tick);
+    } else {
+      raf = 0;
+    }
+  }
+
+  function draw() {
+    drawScene();
+    drawBall();
+  }
+
+  function startCharge() {
+    if (ball.active) return;
+    if (charging) return;
+    charging = true;
+    chargeT = 0;
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function releaseShot() {
+    if (!charging || ball.active) return;
+    const power = Math.max(0.15, Math.min(1, charge));
+    charging = false;
+    bar.style.width = '0%';
+    const s = maxSpeed * power;
+    ball.vx = Math.cos(angle) * s;
+    ball.vy = Math.sin(angle) * s;
+    ball.x = startX;
+    ball.y = startY;
+    ball.active = true;
+    ball.scored = false;
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); startCharge(); });
+  window.addEventListener('mouseup', (e) => { if (charging) releaseShot(); });
+  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startCharge(); }, { passive: false });
+  window.addEventListener('touchend', (e) => { if (charging) releaseShot(); });
+  let spaceDown = false;
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' && !spaceDown) {
+      e.preventDefault();
+      spaceDown = true;
+      startCharge();
+    }
+  });
+  window.addEventListener('keyup', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      spaceDown = false;
+      if (charging) releaseShot();
+    }
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>
