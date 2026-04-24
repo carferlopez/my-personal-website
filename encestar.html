@@ -95,7 +95,7 @@
   <div class="score"><span id="labelPts">Puntos</span> <span id="scoreN">0</span></div>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
-    <canvas id="game" width="800" height="400" role="img" aria-label="Mini juego de canasta"></canvas>
+    <canvas id="game" width="800" height="520" role="img" aria-label="Mini juego de canasta"></canvas>
   </div>
   <p class="lang">
     <a href="encestar.html" id="aEs">ES</a> · <a href="encestar.html?en" id="aEn">EN</a>
@@ -125,6 +125,7 @@
   const W = canvas.width;
   const H = canvas.height;
   const g = 0.42;
+  // Más altura de lienzo: más espacio arriba para parábolas realistas
   const groundY = H - 50;
   const ballR = 14;
   const startX = 100;
@@ -134,19 +135,24 @@
   // Aro: ancho interior ~1.4× el diámetro de la pelota (proporción razonable en vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
-  const backboardL = W - 78;
+  const backboardL = W - 90;
   const backboardW = 7;
-  const backboardT = 38;
-  const backboardB = 192;
-  const rimY = 128;
-  const rimR = backboardL - 8;
+  const backboardT = 158;
+  const backboardB = 312;
+  const backboardR = backboardL + backboardW;
+  const rimY = 248;
+  const rimR = backboardL - 12;
   const rimL = rimR - innerRimW;
-  const poleW = 9;
-  const poleL = (rimL + backboardL) * 0.5 - poleW * 0.5;
-  const poleYTop = rimY + 16;
+  const rimCx = (rimL + rimR) * 0.5;
+  // Red: ancho arriba = aro, abajo más estrecho (cónica hacia adelante)
   const netD = 58;
-  const netBotL = rimL - 8;
-  const netBotR = rimR + 8;
+  const netBotW = innerRimW * 0.36;
+  const netBotL = rimCx - netBotW * 0.5;
+  const netBotR = rimCx + netBotW * 0.5;
+  // Poste detrás del tablero (lado +x)
+  const poleW = 10;
+  const poleL = backboardR + 8;
+  const yArm = backboardB - 20;
   // Zona de anotación: bajo el aro
   const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
 
@@ -170,12 +176,17 @@
     ctx.fillRect(0, groundY, W, 3);
     ctx.fillStyle = '#1f1f1f';
     ctx.fillRect(0, groundY + 3, W, H - groundY - 3);
-    // Poste (suelo → arriba) + brazo al tablero
+    // Poste detrás del tablero (+x) y brazo hacia el reverso del tablero
+    const poleH = yArm - groundY + 6;
     ctx.fillStyle = '#374151';
-    ctx.fillRect(poleL, groundY, poleW, poleYTop - groundY);
-    const armY = backboardB - 22;
-    const brFromPole = Math.max(0, backboardL - (poleL + poleW));
-    ctx.fillRect(poleL + poleW, armY, Math.max(4, brFromPole), 5);
+    ctx.fillRect(poleL, groundY, poleW, poleH);
+    const armH = 5;
+    const armL = backboardR;
+    const armR = poleL;
+    if (armR > armL) {
+      ctx.fillStyle = '#374151';
+      ctx.fillRect(armL, yArm, armR - armL, armH);
+    }
     ctx.fillStyle = '#4b5563';
     ctx.fillRect(poleL - 1, groundY, poleW + 2, 4);
     // Tablero
@@ -213,9 +224,11 @@
     function netX(r, c) {
       const t = r / nRow;
       const y = lerpY(yTopN, yBotN, t);
-      const wTop = topR - topL, wBot = netBotR - netBotL;
+      const wTop = topR - topL;
+      const wBot = netBotR - netBotL;
+      // Ancho decrece hacia abajo: arriba (t=0) aro, abajo boca más estrecha
       const w = wTop * (1 - t) + wBot * t;
-      const cx = ((topL + topR) * 0.5) * (1 - t) + ((netBotL + netBotR) * 0.5) * t;
+      const cx = rimCx;
       const u = c / nCol;
       return { x: cx - w * 0.5 + u * w, y: y };
     }
@@ -242,6 +255,41 @@
     }
   }
 
+  function drawAimHint() {
+    const power = Math.max(0.15, Math.min(1, charge));
+    const s = maxSpeed * power;
+    let vx = Math.cos(angle) * s;
+    let vy = Math.sin(angle) * s;
+    let x = startX;
+    let y = startY;
+    const pts = [{ x, y }];
+    const maxIter = 130;
+    const showSteps = 28;
+    for (let i = 0; i < maxIter; i++) {
+      vy += g;
+      x += vx;
+      y += vy;
+      if (i < showSteps) pts.push({ x, y });
+      if (y + ballR > groundY) break;
+    }
+    if (pts.length < 2) return;
+    ctx.save();
+    ctx.setLineDash([4, 7]);
+    ctx.strokeStyle = 'rgba(255,255,255,0.24)';
+    ctx.lineWidth = 1.4;
+    ctx.beginPath();
+    ctx.moveTo(pts[0].x, pts[0].y);
+    for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+    ctx.stroke();
+    const last = pts[pts.length - 1];
+    ctx.setLineDash([]);
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.beginPath();
+    ctx.arc(last.x, last.y, 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
   function drawBall() {
     const bx = ball.active ? ball.x : startX;
     const by = ball.active ? ball.y : startY;
@@ -252,8 +300,24 @@
     ctx.arc(bx, by, ballR, 0, Math.PI * 2);
     ctx.fillStyle = grd;
     ctx.fill();
+    // Costuras tipo balón (elipses perpendiculares)
+    ctx.save();
+    ctx.translate(bx, by);
+    ctx.strokeStyle = 'rgba(40, 16, 7, 0.9)';
+    ctx.lineWidth = 1.1;
+    for (let r = 0; r < 2; r++) {
+      ctx.save();
+      ctx.rotate((r * Math.PI) / 2 + 0.1);
+      ctx.beginPath();
+      ctx.ellipse(0, 0, ballR * 0.96, ballR * 0.33, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+    ctx.restore();
     ctx.strokeStyle = 'rgba(0,0,0,0.35)';
     ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(bx, by, ballR, 0, Math.PI * 2);
     ctx.stroke();
   }
 
@@ -383,6 +447,7 @@
 
   function draw() {
     drawScene();
+    if (charging && !ball.active) drawAimHint();
     drawBall();
   }
 
