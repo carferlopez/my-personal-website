@@ -131,20 +131,24 @@
   const startY = groundY - ballR;
   const angle = -0.68;
   const maxSpeed = 24;
-
-  const hoop = {
-    x: W - 200,
-    y: 120,
-    w: 88,
-    rimH: 8,
-  };
-  // Zona de canasta: rectángulo bajo el aro
-  const goal = {
-    x: hoop.x,
-    y: hoop.y + 12,
-    w: hoop.w,
-    h: 36,
-  };
+  // Aro: ancho interior ~1.4× el diámetro de la pelota (proporción razonable en vista lateral)
+  const innerRimW = ballR * 1.4 * 2;
+  const RIM_T = 3;
+  const backboardL = W - 78;
+  const backboardW = 7;
+  const backboardT = 38;
+  const backboardB = 192;
+  const rimY = 128;
+  const rimR = backboardL - 8;
+  const rimL = rimR - innerRimW;
+  const poleW = 9;
+  const poleL = (rimL + backboardL) * 0.5 - poleW * 0.5;
+  const poleYTop = rimY + 16;
+  const netD = 58;
+  const netBotL = rimL - 8;
+  const netBotR = rimR + 8;
+  // Zona de anotación: bajo el aro
+  const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
 
   const ball = { x: startX, y: startY, vx: 0, vy: 0, active: false, scored: false };
   let charge = 0;
@@ -156,34 +160,85 @@
   const bar = document.getElementById('bar');
   const scoreN = document.getElementById('scoreN');
 
+  function lerpY(a, b, t) { return a + (b - a) * t; }
+
   function drawScene() {
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, W, H);
-    // Suelo (estilo offline)
+    // Suelo
     ctx.fillStyle = '#fff';
     ctx.fillRect(0, groundY, W, 3);
     ctx.fillStyle = '#1f1f1f';
     ctx.fillRect(0, groundY + 3, W, H - groundY - 3);
-    // Canasta: tablero
+    // Poste (suelo → arriba) + brazo al tablero
+    ctx.fillStyle = '#374151';
+    ctx.fillRect(poleL, groundY, poleW, poleYTop - groundY);
+    const armY = backboardB - 22;
+    const brFromPole = Math.max(0, backboardL - (poleL + poleW));
+    ctx.fillRect(poleL + poleW, armY, Math.max(4, brFromPole), 5);
+    ctx.fillStyle = '#4b5563';
+    ctx.fillRect(poleL - 1, groundY, poleW + 2, 4);
+    // Tablero
     ctx.fillStyle = '#e5e7eb';
-    ctx.fillRect(hoop.x + hoop.w, hoop.y - 40, 8, 100);
-    // Aro
+    ctx.fillRect(backboardL, backboardT, backboardW, backboardB - backboardT);
+    ctx.fillStyle = '#9ca3af';
+    ctx.fillRect(backboardL, backboardT, 1, backboardB - backboardT);
+    // Aro (proporcional a la pelota)
     ctx.strokeStyle = '#ef4444';
-    ctx.lineWidth = 4;
+    ctx.lineWidth = RIM_T;
     ctx.beginPath();
-    ctx.moveTo(hoop.x, hoop.y);
-    ctx.lineTo(hoop.x + hoop.w, hoop.y);
+    ctx.moveTo(rimL, rimY);
+    ctx.lineTo(rimR, rimY);
     ctx.stroke();
-    // Red (líneas simples)
-    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    // Red: trapecio + malla de rombos
+    ctx.strokeStyle = 'rgba(255,255,255,0.4)';
     ctx.lineWidth = 1;
-    for (let i = 0; i < 5; i++) {
-      const t = (i + 0.5) / 5;
-      const x = hoop.x + t * hoop.w;
+    const nStr = 6;
+    const topL = rimL;
+    const topR = rimR;
+    for (let i = 0; i < nStr; i++) {
+      const u = (i + 0.5) / nStr;
+      const tx = lerpY(topL, topR, u);
+      const bx = lerpY(netBotL, netBotR, u);
+      const y1 = rimY + RIM_T;
+      const y2 = y1 + netD;
       ctx.beginPath();
-      ctx.moveTo(x, hoop.y);
-      ctx.lineTo(x + 8, hoop.y + 32);
+      ctx.moveTo(tx, y1);
+      ctx.lineTo(bx, y2);
       ctx.stroke();
+    }
+    const yTopN = rimY + RIM_T, yBotN = yTopN + netD;
+    const nRow = 5, nCol = 6;
+    const grid = [];
+    function netX(r, c) {
+      const t = r / nRow;
+      const y = lerpY(yTopN, yBotN, t);
+      const wTop = topR - topL, wBot = netBotR - netBotL;
+      const w = wTop * (1 - t) + wBot * t;
+      const cx = ((topL + topR) * 0.5) * (1 - t) + ((netBotL + netBotR) * 0.5) * t;
+      const u = c / nCol;
+      return { x: cx - w * 0.5 + u * w, y: y };
+    }
+    for (let r = 0; r <= nRow; r++) {
+      grid[r] = [];
+      for (let c = 0; c <= nCol; c++) {
+        const p = netX(r, c);
+        grid[r][c] = p;
+      }
+    }
+    for (let r = 0; r < nRow; r++) {
+      for (let c = 0; c < nCol; c++) {
+        const a = grid[r][c], b = grid[r][c + 1], d = grid[r + 1][c], e = grid[r + 1][c + 1];
+        if (!a || !b || !d || !e) continue;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(e.x, e.y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(b.x, b.y);
+        ctx.lineTo(d.x, d.y);
+        ctx.stroke();
+      }
     }
   }
 
@@ -218,6 +273,53 @@
     bar.style.width = '0%';
   }
 
+  function resolveBackboard() {
+    if (!ball.active) return;
+    const l = backboardL, t = backboardT, r = backboardL + backboardW, b = backboardB;
+    const x = ball.x, y = ball.y, R = ballR;
+    let qx = x, qy = y;
+    if (qx < l) qx = l;
+    else if (qx > r) qx = r;
+    if (qy < t) qy = t;
+    else if (qy > b) qy = b;
+    const dx = x - qx, dy = y - qy;
+    const d2 = dx * dx + dy * dy;
+    if (d2 > R * R) return;
+    if (d2 < 1e-4) {
+      const dL = x - l, dR = r - x, dT = y - t, dB = b - y;
+      const m = Math.min(dL, dR, dT, dB);
+      if (m === dL) { ball.x = l - R - 0.2; if (ball.vx > 0) ball.vx *= -0.6; return; }
+      if (m === dR) { ball.x = r + R + 0.2; if (ball.vx < 0) ball.vx *= -0.6; return; }
+      if (m === dT) { ball.y = t - R - 0.2; if (ball.vy > 0) ball.vy *= -0.5; return; }
+      ball.y = b + R + 0.2; if (ball.vy < 0) ball.vy *= -0.5; return;
+    }
+    const d = Math.sqrt(d2);
+    const nx = dx / d, ny = dy / d;
+    const o = R - d;
+    ball.x += nx * o;
+    ball.y += ny * o;
+    const vn = ball.vx * nx + ball.vy * ny;
+    if (vn < 0) {
+      ball.vx = (ball.vx - 2 * vn * nx) * 0.62;
+      ball.vy = (ball.vy - 2 * vn * ny) * 0.62;
+    }
+  }
+
+  function resolveRim() {
+    if (!ball.active) return;
+    if (ball.x + ballR < rimL - 2 || ball.x - ballR > rimR + 2) return;
+    const bandT = rimY - 2, bandB = rimY + 6;
+    if (ball.y + ballR < bandT || ball.y - ballR > bandB) return;
+    if (ball.vy > 0.15) {
+      ball.y = bandT - ballR - 0.2;
+      ball.vy *= -0.4;
+      ball.vx *= 0.9;
+    } else if (ball.vy < -0.2 && ball.y - ballR < bandB) {
+      ball.y = bandB + ballR + 0.2;
+      ball.vy *= -0.45;
+    }
+  }
+
   function checkGoal() {
     if (ball.scored) return;
     const cx = ball.x;
@@ -245,6 +347,10 @@
       ball.vy += g;
       ball.x += ball.vx;
       ball.y += ball.vy;
+      for (let s = 0; s < 2; s++) {
+        resolveRim();
+        resolveBackboard();
+      }
       flightFrames++;
       if (flightFrames > 520) {
         resetBall();
