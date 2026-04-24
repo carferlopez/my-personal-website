@@ -960,7 +960,7 @@
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
       projectsTitle: "PROJECTS & APPS",
-      projectsStrap: "🚧 UNDER CONSTRUCTION 🚧 Very soon you’ll be able to see all my work and creations. Meanwhile, you can play basket shot <a href=\"encestar.html?en\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
+      projectsStrap: "🚧 UNDER CONSTRUCTION 🚧 Very soon you’ll be able to see all my work and creations. Meanwhile, you can play basket shot <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">here</a>.",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
       projectsRowLabel: "Projects and apps carousel"
@@ -968,6 +968,10 @@
   };
 
   let lang = 'es';
+  try {
+    const _ls = localStorage.getItem('carlosmakes_lang');
+    if (_ls === 'en' || _ls === 'es') lang = _ls;
+  } catch (e) {}
 
   /**
    * Catálogo de proyectos / apps.
@@ -1152,6 +1156,7 @@
   function applyLang() {
     const d = t[lang];
     document.documentElement.lang = lang;
+    try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     document.getElementById('scrollHint').textContent = d.scrollHint;
     const logoHome = document.getElementById('logoHome');
     if (logoHome) logoHome.setAttribute('aria-label', d.navHome);

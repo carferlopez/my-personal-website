@@ -75,13 +75,14 @@
     background: #0a0a0a;
   }
   canvas { display: block; width: 100%; height: auto; cursor: pointer; }
-  .lang {
-    margin-top: 1.25rem;
-    font-size: 0.75rem;
-    color: #6b7280;
+  .launch-hint {
+    margin-top: 0.6rem;
+    text-align: center;
+    color: #9ca3af;
+    font-size: 0.8rem;
+    max-width: 28rem;
+    line-height: 1.4;
   }
-  .lang a { color: #9ca3af; }
-  .lang a:hover { color: #ef4444; }
 </style>
 </head>
 <body>
@@ -90,28 +91,38 @@
     <span id="subtle">carlosmakes</span>
   </div>
   <h1 id="gameTitle">¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
-  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, touch o barra espaciadora.</p>
+  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla.</p>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
     <canvas id="game" width="640" height="640" role="img" aria-label=""></canvas>
   </div>
-  <p class="lang">
-    <a href="encestar.html" id="aEs">ES</a> · <a href="encestar.html?en" id="aEn">EN</a>
-  </p>
+  <p class="launch-hint" id="launchHint"></p>
 <script>
 (function () {
-  const en = new URLSearchParams(location.search).has('en');
+  const en = (function () {
+    const q = new URLSearchParams(location.search);
+    if (q.has('en')) return true;
+    if (q.has('es')) return false;
+    try {
+      const s = localStorage.getItem('carlosmakes_lang');
+      if (s === 'en') return true;
+      if (s === 'es') return false;
+    } catch (e) {}
+    return false;
+  })();
   const T = en ? {
     back: 'Home',
     title: 'HOW MANY SHOTS IN A ROW CAN YOU SINK?',
-    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). Click, touch, or spacebar.',
+    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). You can also press anywhere on the page (not only the game frame) or the spacebar.',
+    launchHint: 'Press anywhere to launch.',
     ariaBase: 'Basketball shot mini game',
     hudYours: 'Your score',
     hudAllTime: 'All-time',
   } : {
     back: 'Inicio',
     title: '¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
-    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, touch o barra espaciadora.',
+    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla (también fuera del juego en móvil o tablet).',
+    launchHint: 'Pulsa en cualquier parte de la pantalla para lanzar.',
     ariaBase: 'Minijuego de tiro a canasta',
     hudYours: 'Tu puntuación',
     hudAllTime: 'Máx. histórica',
@@ -119,6 +130,8 @@
   document.getElementById('backLabel').textContent = T.back;
   document.getElementById('gameTitle').textContent = T.title;
   document.getElementById('gameHint').textContent = T.hint;
+  const launchHintEl = document.getElementById('launchHint');
+  if (launchHintEl) launchHintEl.textContent = T.launchHint;
   if (en) { document.documentElement.lang = 'en'; }
 
   const canvas = document.getElementById('game');
@@ -852,10 +865,19 @@
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
-  canvas.addEventListener('mousedown', (e) => { e.preventDefault(); startCharge(); });
-  window.addEventListener('mouseup', (e) => { if (charging) releaseShot(); });
-  canvas.addEventListener('touchstart', (e) => { e.preventDefault(); startCharge(); }, { passive: false });
-  window.addEventListener('touchend', (e) => { if (charging) releaseShot(); });
+  function pointerTargetIsPlayable(tgt) {
+    if (!tgt || !tgt.closest) return true;
+    if (tgt.closest('a[href]')) return false;
+    return true;
+  }
+  document.addEventListener('pointerdown', (e) => {
+    if (e.button != null && e.button !== 0) return;
+    if (!pointerTargetIsPlayable(e.target)) return;
+    e.preventDefault();
+    startCharge();
+  }, { passive: false });
+  window.addEventListener('pointerup', () => { if (charging) releaseShot(); });
+  window.addEventListener('pointercancel', () => { if (charging) releaseShot(); });
   let spaceDown = false;
   window.addEventListener('keydown', (e) => {
     if (e.code === 'Space' && !spaceDown) {
