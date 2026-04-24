@@ -1,0 +1,14 @@
+---
+description: When coding tasks finish, commit and push; request git/network permissions without waiting
+alwaysApply: true
+---
+
+# Git: close each request with commit and push
+
+- When a request **changes or adds project files** (code, config, rules), **in the same turn** run `git add` for the affected paths, `git commit` with a clear message in the project’s style, then `git push` to the current branch’s upstream.
+- If there is **nothing to commit** (or the user’s message was questions-only with no file edits), skip; do not create empty commits.
+- **Request the permissions** needed to commit and push (e.g. `git_write`, `network`) in that turn so the work does not end with “I’ll commit if you want.”
+- If `git push` fails (no `origin`, auth, or network), report the error and the minimal fix; do not pretend the work is published.
+- The user should **not** need a follow-up message whose only purpose is to ask for a commit: treat **commit + push** as the default end of a coding request.
+
+**Note:** Cursor may still show a single permission dialog unless the user allows auto-approve for those actions. This rule means **proactively** run commit/push, not to bypass security tools.
