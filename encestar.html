@@ -176,6 +176,8 @@
   let flightFrames = 0;
   const bar = document.getElementById('bar');
   const scoreN = document.getElementById('scoreN');
+  const NET_JIGGLE_MAX = 20;
+  let netJiggleT = 0;
 
   function lerpY(a, b, t) { return a + (b - a) * t; }
 
@@ -224,10 +226,13 @@
     const nStr = 6;
     const topL = rimL;
     const topR = rimR;
+    const jig = netJiggleT > 0
+      ? (3.2 * (netJiggleT / NET_JIGGLE_MAX)) * Math.sin(netJiggleT * 0.7) : 0;
     for (let i = 0; i < nStr; i++) {
       const u = (i + 0.5) / nStr;
       const tx = lerpY(topL, topR, u);
-      const bx = lerpY(netBotL, netBotR, u);
+      let bx = lerpY(netBotL, netBotR, u);
+      bx += jig * (0.35 + 0.65 * Math.sin(u * Math.PI * 2));
       const y1 = rimY + RIM_T;
       const y2 = y1 + netD;
       ctx.beginPath();
@@ -260,13 +265,15 @@
       for (let c = 0; c < nCol; c++) {
         const a = grid[r][c], b = grid[r][c + 1], d = grid[r + 1][c], e = grid[r + 1][c + 1];
         if (!a || !b || !d || !e) continue;
+        const sh = netJiggleT > 0
+          ? 0.55 * (netJiggleT / NET_JIGGLE_MAX) * Math.sin((r + c) * 0.9 + netJiggleT * 0.12) : 0;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
-        ctx.lineTo(e.x, e.y);
+        ctx.lineTo(e.x + sh, e.y);
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(d.x, d.y);
+        ctx.lineTo(d.x + sh, d.y);
         ctx.stroke();
       }
     }
@@ -404,6 +411,9 @@
     charge = 0;
     flightFrames = 0;
     bar.style.width = '0%';
+    if (netJiggleT > 0) {
+      raf = requestAnimationFrame(tick);
+    }
   }
 
   function resolveBackboard() {
@@ -438,8 +448,20 @@
     }
   }
 
-  function resolveRim() {
+  function resolveRim(prevY) {
     if (!ball.active || ball.netAnim) return;
+    const py = prevY !== undefined ? prevY : ball.y;
+    const prevB = py + ballR;
+    const newB = ball.y + ballR;
+    // Baja a través del plano del aro: no rebotar (cruce en un frame + holgura en x)
+    if (
+      ball.vy > 0.04 &&
+      prevB < rimY + 0.5 && newB >= rimY - 1.5 &&
+      ball.x + ballR > rimL - 2 && ball.x - ballR < rimR + 2
+    ) {
+      const yLo = ball.y - ballR, yHi = ball.y + ballR;
+      if (yLo < yNetBottom + 6 && yHi > rimY - 3) return;
+    }
     // Pasa de arriba hacia canasta: no rebotar en el aro
     if (
       ball.wasAboveRim &&
@@ -464,6 +486,7 @@
   }
 
   function tick() {
+    if (netJiggleT > 0) netJiggleT--;
     if (charging) {
       const elapsed = performance.now() - pressT0;
       charge = Math.min(1, elapsed / CHARGE_MAX_MS);
@@ -478,8 +501,6 @@
       ball.y = na.sy + (na.ey - na.sy) * e;
       ball.spin += 0.19;
       if (u >= 1) {
-        score += 1;
-        scoreN.textContent = String(score);
         ball.netAnim = null;
         ball.wasAboveRim = false;
         resetBall();
@@ -492,6 +513,8 @@
       return;
     }
     if (ball.active) {
+      const prevY = ball.y;
+      const prevBottom = prevY + ballR;
       if (
         ball.y + ballR < rimY - 2 &&
         ball.x - ballR > rimL + 3 &&
@@ -502,15 +525,27 @@
       ball.vy += gBall;
       ball.x += ball.vx;
       ball.y += ball.vy;
+      const newBottom = ball.y + ballR;
       let throughNet = false;
-      if (
-        ball.wasAboveRim &&
-        ball.vy > 0.1 &&
-        ball.x - ballR > rimL + 2 &&
-        ball.x + ballR < rimR - 2
-      ) {
-        const bot = ball.y + ballR;
-        if (bot >= rimY - 0.5 && ball.y - ballR < rimY + 14) {
+      if (!ball.scored && !ball.netAnim) {
+        const horizOpen = ball.x + ballR > rimL - 2 && ball.x - ballR < rimR + 2;
+        const falling = ball.vy > 0.04;
+        const crossRimPlane = prevBottom < rimY + 0.5 && newBottom >= rimY - 1.5;
+        const inHoopWindow =
+          newBottom > rimY - 2 &&
+          ball.y - ballR < yNetBottom + 4;
+        const legacyBand =
+          ball.wasAboveRim &&
+          falling && horizOpen &&
+          newBottom >= rimY - 1 &&
+          newBottom < rimY + 48 &&
+          ball.y - ballR < rimY + 22;
+        if (horizOpen && falling && inHoopWindow && (crossRimPlane || legacyBand)) {
+          throughNet = true;
+          ball.scored = true;
+          score += 1;
+          scoreN.textContent = String(score);
+          netJiggleT = NET_JIGGLE_MAX;
           ball.netAnim = {
             t: 0,
             dur: 44,
@@ -521,12 +556,11 @@
           };
           ball.vx = 0;
           ball.vy = 0;
-          throughNet = true;
         }
       }
       if (!throughNet) {
         for (let s = 0; s < 2; s++) {
-          resolveRim();
+          resolveRim(prevY);
           resolveBackboard();
         }
       }
@@ -571,7 +605,7 @@
       flightFrames = 0;
     }
     draw();
-    if (charging || ball.active || ball.netAnim) {
+    if (charging || ball.active || ball.netAnim || netJiggleT > 0) {
       raf = requestAnimationFrame(tick);
     } else {
       raf = 0;
