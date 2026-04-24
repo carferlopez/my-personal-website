@@ -537,6 +537,90 @@
     border-color: var(--white);
   }
 
+  .contact-form-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  .contact-form__lead {
+    margin-top: 2rem;
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 42rem;
+  }
+  @media (min-width: 640px) { .contact-form__lead { font-size: 1rem; } }
+  .contact-box:hover .contact-form__lead { color: var(--gray-light); }
+  .contact-form {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: 42rem;
+  }
+  .contact-form__row { display: flex; flex-direction: column; gap: 0.35rem; }
+  .contact-form__label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .contact-form__input,
+  .contact-form__select,
+  .contact-form__textarea {
+    width: 100%;
+    max-width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.55rem 0.7rem;
+    border: 3px solid var(--black);
+    background: var(--white);
+    color: var(--black);
+    min-width: 0;
+  }
+  .contact-form__textarea {
+    min-height: 9rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .contact-box:hover .contact-form__input,
+  .contact-box:hover .contact-form__select,
+  .contact-box:hover .contact-form__textarea {
+    border-color: var(--white);
+    color: var(--white);
+    background: transparent;
+  }
+  .contact-box:hover .contact-form__select option {
+    color: var(--black);
+    background: var(--white);
+  }
+  .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  .contact-form__status {
+    color: var(--red);
+    font-size: 0.95rem;
+    font-weight: 600;
+    max-width: 42rem;
+  }
+  .contact-box:hover .contact-form__status { color: var(--red); }
+  .contact-form__done {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+    max-width: 42rem;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--gray);
+    border-top: 1px solid var(--gray-light);
+  }
+  .contact-box:hover .contact-form__done { color: var(--gray-light); border-top-color: rgba(255, 255, 255, 0.25); }
+  .contact-form__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .contact-form { position: relative; }
+
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
     margin-top: 1.25rem;
@@ -900,6 +984,45 @@
           <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" class="contact-btn">x</a>
           <a href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer" class="contact-btn">instagram</a>
         </div>
+
+        <div class="contact-form-wrap" id="contactFormBlock">
+          <p class="contact-form__lead" id="contactFormLead"></p>
+          <form id="contactForm" class="contact-form" novalidate>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-name" id="label-cf-name">Nombre</label>
+              <input class="contact-form__input" type="text" name="name" id="cf-name" required maxlength="200" autocomplete="name" />
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-email" id="label-cf-email">Email</label>
+              <input class="contact-form__input" type="email" name="email" id="cf-email" required autocomplete="email" />
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-topic" id="label-cf-topic">Tema</label>
+              <select class="contact-form__select" name="topic" id="cf-topic" required>
+                <option value="" id="cf-topic-placeholder">—</option>
+                <option value="colaboracion" id="opt-cf-colaboracion">Colaboración</option>
+                <option value="proyecto" id="opt-cf-proyecto">Proyecto</option>
+                <option value="consulta" id="opt-cf-consulta">Consulta</option>
+                <option value="otro" id="opt-cf-otro">Otro</option>
+              </select>
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-message" id="label-cf-message">Mensaje</label>
+              <textarea class="contact-form__textarea" name="message" id="cf-message" required minlength="20" maxlength="5000" rows="6"></textarea>
+            </div>
+            <div class="contact-form__row contact-form__hp" aria-hidden="true">
+              <label for="cf-gotcha">Company website</label>
+              <input type="text" name="_gotcha" id="cf-gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="contact-form__row">
+              <button type="submit" class="contact-btn contact-form__submit" id="contactFormSubmit">Enviar</button>
+            </div>
+          </form>
+          <p class="contact-form__status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
+        </div>
+        <div class="contact-form__done" id="contactFormSuccess" hidden>
+          <p id="contactFormSuccessText"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -936,6 +1059,21 @@
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
+      contactFormLead: "O escríbeme aquí. El mensaje llega a mi buzón (nada de formularios de terceros; solo un trasto en la nube y Resend).",
+      contactFormName: "Nombre",
+      contactFormEmail: "Email",
+      contactFormTopic: "Tema",
+      contactFormMessage: "Mensaje",
+      contactFormTopicPh: "Elige un tema",
+      contactTopicColab: "Colaboración",
+      contactTopicProyecto: "Proyecto",
+      contactTopicConsulta: "Consulta",
+      contactTopicOtro: "Otro",
+      contactFormSend: "Enviar",
+      contactFormSending: "Enviando…",
+      contactFormSuccess: "Recibido. Te respondo cuando la cafeína haga efecto.",
+      contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
+      contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       projectsTitle: "TRABAJOS",
       projectsStrapLead: "🚧 EN CONSTRUCCIÓN 🚧",
       projectsStrapBody: "Muy pronto podrás ver todos los proyectos en los que estoy trabajando. Mientras tanto, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a> que he programado para que no te aburras... 🏀",
@@ -968,6 +1106,21 @@
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
+      contactFormLead: "Or drop me a line here. The message goes to my inbox (no third-party form vendors—just a Cloudflare Worker and Resend).",
+      contactFormName: "Name",
+      contactFormEmail: "Email",
+      contactFormTopic: "Topic",
+      contactFormMessage: "Message",
+      contactFormTopicPh: "Choose a topic",
+      contactTopicColab: "Collaboration",
+      contactTopicProyecto: "Project",
+      contactTopicConsulta: "Inquiry",
+      contactTopicOtro: "Other",
+      contactFormSend: "Send",
+      contactFormSending: "Sending…",
+      contactFormSuccess: "Got it. I’ll get back to you when the caffeine kicks in.",
+      contactFormErrGeneric: "Couldn’t send. Check your connection or try again in a bit.",
+      contactFormErr429: "That’s a few messages in a row. Grab a coffee and try again in a few minutes.",
       projectsTitle: "WORK",
       projectsStrapLead: "🚧 UNDER CONSTRUCTION 🚧",
       projectsStrapBody: "Very soon you’ll be able to see all the projects I’m working on. Meanwhile, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a> I built so you don’t get bored... 🏀",
@@ -1212,6 +1365,97 @@
       enLabel.classList.remove('inactive');
       esLabel.classList.add('inactive');
     }
+
+    if (d.contactFormLead) {
+      const lead = document.getElementById('contactFormLead');
+      if (lead) lead.textContent = d.contactFormLead;
+    }
+    const lname = document.getElementById('label-cf-name');
+    if (lname) lname.textContent = d.contactFormName;
+    const lem = document.getElementById('label-cf-email');
+    if (lem) lem.textContent = d.contactFormEmail;
+    const ltop = document.getElementById('label-cf-topic');
+    if (ltop) ltop.textContent = d.contactFormTopic;
+    const lmsg = document.getElementById('label-cf-message');
+    if (lmsg) lmsg.textContent = d.contactFormMessage;
+    const tph = document.getElementById('cf-topic-placeholder');
+    if (tph) tph.textContent = d.contactFormTopicPh;
+    const o1 = document.getElementById('opt-cf-colaboracion');
+    if (o1) o1.textContent = d.contactTopicColab;
+    const o2 = document.getElementById('opt-cf-proyecto');
+    if (o2) o2.textContent = d.contactTopicProyecto;
+    const o3 = document.getElementById('opt-cf-consulta');
+    if (o3) o3.textContent = d.contactTopicConsulta;
+    const o4 = document.getElementById('opt-cf-otro');
+    if (o4) o4.textContent = d.contactTopicOtro;
+    const csub = document.getElementById('contactFormSubmit');
+    if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
+    const cfin = document.getElementById('contactFormSuccessText');
+    if (cfin) cfin.textContent = d.contactFormSuccess;
+  }
+
+  function getContactFormEndpoint() {
+    try {
+      if (typeof location !== 'undefined' && location.protocol && location.protocol !== 'file:') {
+        return location.origin + '/api/contact';
+      }
+    } catch (e) {}
+    return 'https://carlosmakes.com/api/contact';
+  }
+
+  function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const d = t[lang];
+      const status = document.getElementById('contactFormStatus');
+      const btn = document.getElementById('contactFormSubmit');
+      const block = document.getElementById('contactFormBlock');
+      const done = document.getElementById('contactFormSuccess');
+      if (!status || !btn || !block || !done) return;
+      status.hidden = true;
+      status.textContent = '';
+      btn.disabled = true;
+      btn.textContent = d.contactFormSending;
+      try {
+        const payload = {
+          name: document.getElementById('cf-name').value.trim(),
+          email: document.getElementById('cf-email').value.trim(),
+          topic: document.getElementById('cf-topic').value,
+          message: document.getElementById('cf-message').value,
+          _gotcha: document.getElementById('cf-gotcha').value,
+        };
+        const r = await fetch(getContactFormEndpoint(), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang === 'en' ? 'en' : 'es',
+          },
+          body: JSON.stringify(payload),
+        });
+        const j = await r.json().catch(function () { return {}; });
+        if (r.status === 200 && j.ok) {
+          block.hidden = true;
+          done.hidden = false;
+          return;
+        }
+        if (r.status === 429) {
+          status.textContent = d.contactFormErr429;
+        } else if (j && j.details && j.details[0] && j.details[0].message) {
+          status.textContent = j.details[0].message;
+        } else {
+          status.textContent = d.contactFormErrGeneric;
+        }
+        status.hidden = false;
+      } catch (err) {
+        status.textContent = t[lang].contactFormErrGeneric;
+        status.hidden = false;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = t[lang].contactFormSend;
+      }
+    });
   }
 
   document.getElementById('langToggle').addEventListener('click', () => {
@@ -1224,6 +1468,7 @@
   // Init
   // ============================================
   applyLang();
+  initContactForm();
   typewriter();
 </script>
 
