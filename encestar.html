@@ -262,48 +262,66 @@
     }
   }
 
-  function drawAimHint() {
-    const power = Math.max(0.15, Math.min(1, charge));
-    const s = maxSpeed * power;
-    let vx = Math.cos(angle) * s;
+  // Misma integración que tick: vy += g, x += vx, y += vy
+  function buildAimTrajectory(power) {
+    const s = maxSpeed * Math.max(0.15, Math.min(1, power));
+    const vx = Math.cos(angle) * s;
     let vy = Math.sin(angle) * s;
     let x = startX;
     let y = startY;
-    // Sólo se dibuja ~mitad de camino a la canasta: hasta mitad de pantalla o 50% en X hacia el aro (lo que corta antes)
-    const xEnd = Math.min(W * 0.5, startX + (rimCx - startX) * 0.5);
-    const pts = [{ x, y }];
-    const maxIter = 220;
+    const full = [{ x, y }];
+    const maxIter = 450;
     for (let i = 0; i < maxIter; i++) {
       vy += g;
-      const px = x, py = y;
       x += vx;
       y += vy;
       if (y + ballR > groundY) break;
-      if (x > xEnd) {
-        if (x !== px) {
-          const t = (xEnd - px) / (x - px);
-          if (t >= 0 && t <= 1) {
-            const iy = py + t * (y - py);
-            if (iy + ballR <= groundY) pts.push({ x: xEnd, y: iy });
+      full.push({ x, y });
+    }
+    return full;
+  }
+
+  function drawAimHint() {
+    const full = buildAimTrajectory(charge);
+    if (full.length < 2) return;
+    let apex = 0;
+    for (let i = 1; i < full.length; i++) {
+      if (full[i].y < full[apex].y) apex = i;
+    }
+    // Trazo largo: recorre subida, vértice y bajada hacia canasta (≈90% en X hacia el aro); corte antes del aro
+    const n = full.length;
+    const postApex = Math.min(apex + 12, n - 1);
+    let xVis = Math.min(startX + (rimCx - startX) * 0.9, rimCx - 12);
+    if (postApex > 0 && full[postApex].x > xVis) {
+      xVis = Math.min(rimCx - 8, full[postApex].x);
+    }
+    const pts = [full[0]];
+    for (let i = 1; i < n; i++) {
+      const p = full[i], prev = full[i - 1];
+      if (p.x > xVis) {
+        if (p.x !== prev.x) {
+          const t = (xVis - prev.x) / (p.x - prev.x);
+          if (t > 0 && t <= 1) {
+            const iy = prev.y + t * (p.y - prev.y);
+            if (iy + ballR <= groundY) pts.push({ x: xVis, y: iy });
           }
         }
         break;
       }
-      pts.push({ x, y });
+      pts.push(p);
     }
     if (pts.length < 2) return;
     const last = pts[pts.length - 1];
     ctx.save();
     ctx.setLineDash([4, 7]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.26)';
+    ctx.strokeStyle = 'rgba(255,255,255,0.28)';
     ctx.lineWidth = 1.4;
     ctx.beginPath();
     ctx.moveTo(pts[0].x, pts[0].y);
     for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
     ctx.stroke();
-    // Punto final del tramo "visible" (~mitad de pantalla / mitad hacia el aro); hacia canasta: imaginario
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,255,255,0.22)';
+    ctx.fillStyle = 'rgba(255,255,255,0.24)';
     ctx.beginPath();
     ctx.arc(last.x, last.y, 2, 0, Math.PI * 2);
     ctx.fill();
