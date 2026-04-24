@@ -477,6 +477,8 @@
     background: var(--white);
     color: var(--black);
   }
+  #contacto.section-band--dark .contact-box:hover .big-heading { color: var(--black); }
+  #contacto.section-band--dark .contact-box:hover .contact-label { color: var(--black); }
   #contacto.section-band--dark .contact-box:hover .contact-sub { color: var(--gray); }
 
   .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
@@ -539,6 +541,28 @@
     font-size: 0.875rem;
     font-weight: 600;
   }
+  .contact-alt {
+    margin-top: 0.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem;
+  }
+  .contact-alt-label {
+    font-size: 0.85rem;
+    color: inherit;
+    opacity: 0.85;
+  }
+  .contact-alt-link {
+    border: 2px solid currentColor;
+    padding: 0.25rem 0.55rem;
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: background-color 0.1s, color 0.1s;
+  }
+  .contact-alt-link:hover { background: var(--white); color: var(--black); }
 
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
@@ -893,6 +917,11 @@
           </div>
           <button class="contact-submit" id="contactSubmit" type="submit">Enviar mensaje</button>
           <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
+          <div class="contact-alt">
+            <span class="contact-alt-label" id="contactAltLabel">O si prefieres:</span>
+            <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
+            <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          </div>
         </form>
       </div>
     </div>
@@ -930,6 +959,7 @@
       contactSuccess: "Mensaje enviado. Te respondo pronto.",
       contactError: "No se pudo enviar. Inténtalo de nuevo en un momento.",
       contactInvalid: "Revisa los campos e inténtalo de nuevo.",
+      contactAltLabel: "O si prefieres:",
       projectsTitle: "PROYECTOS Y APPS",
       projectsStrap: "Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.",
       projectsNote: "La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.",
@@ -964,6 +994,7 @@
       contactSuccess: "Message sent. I will get back to you soon.",
       contactError: "Could not send your message. Please try again shortly.",
       contactInvalid: "Please review the form and try again.",
+      contactAltLabel: "Or if you prefer:",
       projectsTitle: "PROJECTS & APPS",
       projectsStrap: "Gallery under construction: poster-style covers for everything I ship will live here.",
       projectsNote: "This row will update (image, link, status) as each project goes live in production.",
@@ -1179,6 +1210,7 @@
     document.getElementById('contactEmailLabel').textContent = d.contactEmailLabel;
     document.getElementById('contactMessageLabel').textContent = d.contactMessageLabel;
     document.getElementById('contactSubmit').textContent = d.contactSubmit;
+    document.getElementById('contactAltLabel').textContent = d.contactAltLabel;
     document.getElementById('projectsTitle').textContent = d.projectsTitle;
     document.getElementById('projectsStrap').textContent = d.projectsStrap;
     document.getElementById('projectsNote').textContent = d.projectsNote;
