@@ -521,6 +521,29 @@
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
     margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    text-align: left;
+    max-width: 42rem;
+  }
+  .projects-strap__lead {
+    display: block;
+    color: var(--black);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    font-size: 1.05em;
+  }
+  @media (min-width: 640px) { .projects-strap__lead { font-size: 1.08em; } }
+  @media (min-width: 768px) { .projects-strap__lead { font-size: 1.1em; } }
+  @media (min-width: 1024px) { .projects-strap__lead { font-size: 1.12em; } }
+  .projects-strap__intro {
+    display: block;
+    color: var(--gray);
+    font-weight: 500;
+    line-height: 1.5;
   }
   .projects-strap a {
     color: var(--red);
@@ -833,7 +856,7 @@
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <div class="container">
       <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
-      <p class="subheading projects-strap" id="projectsStrap">🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos. Mientras tanto, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a>.</p>
+      <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Muy pronto podrás ver todos mis trabajos. Mientras tanto, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a>.</span></p>
 
       <div class="projects-chevron-wrap">
         <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
@@ -894,7 +917,8 @@
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
       projectsTitle: "PROYECTOS Y APPS",
-      projectsStrap: "🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos. Mientras tanto, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a>.",
+      projectsStrapLead: "🚧 EN CONSTRUCCIÓN 🚧",
+      projectsStrapBody: "Muy pronto podrás ver todos mis trabajos. Mientras tanto, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a>.",
       projectChevPrev: "Anterior",
       projectChevNext: "Siguiente",
       projectsRowLabel: "Carrusel de proyectos y aplicaciones"
@@ -925,7 +949,8 @@
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
       projectsTitle: "PROJECTS & APPS",
-      projectsStrap: "🚧 UNDER CONSTRUCTION 🚧 Very soon you’ll be able to see all my work. Meanwhile, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a>.",
+      projectsStrapLead: "🚧 UNDER CONSTRUCTION 🚧",
+      projectsStrapBody: "Very soon you’ll be able to see all my work. Meanwhile, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a>.",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
       projectsRowLabel: "Projects and apps carousel"
@@ -1145,7 +1170,9 @@
     document.getElementById('contactSub').textContent = d.contactSub;
     document.getElementById('projectsTitle').textContent = d.projectsTitle;
     const projectsStrapEl = document.getElementById('projectsStrap');
-    if (projectsStrapEl) projectsStrapEl.innerHTML = d.projectsStrap;
+    if (projectsStrapEl && d.projectsStrapLead && d.projectsStrapBody) {
+      projectsStrapEl.innerHTML = '<span class="projects-strap__lead" id="projectsStrapLead">' + d.projectsStrapLead + '</span><span class="projects-strap__intro" id="projectsStrapIntro">' + d.projectsStrapBody + '</span>';
+    }
     const projectsRow = document.getElementById('projectsRow');
     if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
     const projectsPrev = document.getElementById('projectsPrev');
