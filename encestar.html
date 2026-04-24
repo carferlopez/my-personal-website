@@ -35,17 +35,21 @@
   }
   .top a.back { color: #ef4444; }
   .top a.back:hover { color: #fff; }
-  h1 {
-    font-size: clamp(0.78rem, 2.2vw, 1.15rem);
+  h1.page-title {
+    display: block;
+    width: 100%;
+    max-width: 42rem;
+    font-size: clamp(0.9rem, 2.6vw, 1.4rem);
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.12;
+    line-height: 1.15;
     text-align: center;
+    text-wrap: balance;
     margin: 0 auto 0.5rem;
-    max-width: 42rem;
+    padding: 0 0.25rem;
   }
   @media (min-width: 40rem) {
-    h1 { font-size: clamp(0.95rem, 1.4vw, 1.2rem); }
+    h1.page-title { font-size: clamp(1.05rem, 1.55vw, 1.4rem); }
   }
   .hint {
     text-align: center;
@@ -76,11 +80,12 @@
   }
   canvas { display: block; width: 100%; height: auto; cursor: pointer; }
   .launch-hint {
-    margin-top: 0.6rem;
+    width: 100%;
+    max-width: 42rem;
+    margin: 0 auto 0.75rem;
     text-align: center;
     color: #9ca3af;
-    font-size: 0.8rem;
-    max-width: 28rem;
+    font-size: 0.88rem;
     line-height: 1.4;
   }
 </style>
@@ -90,13 +95,13 @@
     <a class="back" id="backLink" href="index.html">← <span id="backLabel">Inicio</span></a>
     <span id="subtle">carlosmakes</span>
   </div>
-  <h1 id="gameTitle">¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
+  <h1 class="page-title" id="gameTitle">¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
   <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla.</p>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
+  <p class="launch-hint" id="launchHint"></p>
   <div class="canvas-wrap">
     <canvas id="game" width="640" height="640" role="img" aria-label=""></canvas>
   </div>
-  <p class="launch-hint" id="launchHint"></p>
 <script>
 (function () {
   const en = (function () {
@@ -267,8 +272,9 @@
     }
   }
 
-  /** Puntuación: banda a todo el ancho del canvas; fila 1 = etiquetas, fila 2 = 7 seg (columnas 50% / 50%). */
+  /** Puntuación: banda a todo el ancho del canvas; fila 1 = etiquetas, fila 2 = 7 seg (columnas 50% / 50%). Tamaño ~20% menor que el bloque de título. */
   function drawDigitalScore() {
+    const markerS = 0.8;
     const m = 10;
     const barW = W - 2 * m;
     const colW = barW * 0.5;
@@ -277,23 +283,25 @@
     const off = 'rgba(40, 8, 8, 0.38)';
     const segGlow = 'rgba(255, 35, 35, 0.4)';
 
-    const topPad = 8;
-    const labelSize = 22;
-    const labelH = 28;
-    const labelToDigits = 10;
-    const boxPadY = 10;
-    const bottomPad = 8;
-    const innerSidePad = 6;
-    const segGap = 5;
+    const topPad = 8 * markerS;
+    const labelSize = 22 * markerS;
+    const labelH = 28 * markerS;
+    const labelToDigits = 10 * markerS;
+    const boxPadY = 10 * markerS;
+    const bottomPad = 8 * markerS;
+    const innerSidePad = 6 * markerS;
+    const segGap = 4;
 
     const dLeft = segValStr(score);
     const dRight = segValStr(historicMax);
     const maxSlots = 3;
     const maxInnerW = colW - innerSidePad * 2;
     let dw = Math.floor((maxInnerW - segGap * (maxSlots - 1)) / maxSlots);
-    dw = Math.min(72, Math.max(36, dw));
+    const dwMin = Math.floor(36 * markerS);
+    const dwMax = Math.floor(72 * markerS);
+    dw = Math.min(dwMax, Math.max(dwMin, dw));
     const dh = Math.round(dw * 1.52);
-    const tw = Math.max(3.4, dw * 0.12);
+    const tw = Math.max(2.7, dw * 0.12);
 
     const topLabelY = y0 + topPad;
     const boxTop = topLabelY + labelH + labelToDigits;
@@ -304,10 +312,10 @@
     ctx.save();
     ctx.fillStyle = 'rgba(8, 2, 2, 0.92)';
     ctx.strokeStyle = 'rgba(200, 45, 45, 0.55)';
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 1.6;
     if (typeof ctx.roundRect === 'function') {
       ctx.beginPath();
-      ctx.roundRect(m, y0, barW, stripH, 8);
+      ctx.roundRect(m, y0, barW, stripH, 6 * markerS);
       ctx.fill();
       ctx.stroke();
     } else {
@@ -318,7 +326,7 @@
     ctx.fillStyle = 'rgba(14, 4, 4, 0.88)';
     if (typeof ctx.roundRect === 'function') {
       ctx.beginPath();
-      ctx.roundRect(m + 4, boxTop, barW - 8, boxH, 5);
+      ctx.roundRect(m + 4, boxTop, barW - 8, boxH, 4 * markerS);
       ctx.fill();
     } else {
       ctx.fillRect(m + 4, boxTop, barW - 8, boxH);
@@ -628,7 +636,10 @@
     ctx.restore();
   }
 
-  function resetBall() {
+  function resetBall(options) {
+    if (options && options.miss) {
+      score = 0;
+    }
     if (raf) {
       cancelAnimationFrame(raf);
       raf = 0;
@@ -737,7 +748,7 @@
         if (u >= 1) {
         ball.netAnim = null;
         ball.wasAboveRim = false;
-        resetBall();
+        resetBall({ miss: false });
         draw();
         if (charging) raf = requestAnimationFrame(tick);
         return;
@@ -808,7 +819,7 @@
       }
       flightFrames++;
       if (flightFrames > 520) {
-        resetBall();
+        resetBall({ miss: true });
         draw();
         return;
       }
@@ -824,12 +835,12 @@
         Math.abs(ball.vx) < 0.11 &&
         Math.abs(ball.vy) < 0.11
       ) {
-        resetBall();
+        resetBall({ miss: true });
         draw();
         return;
       }
       if (ball.x - ballR > W + 40 || ball.x + ballR < -40 || ball.y - ballR > H + 20) {
-        resetBall();
+        resetBall({ miss: true });
         draw();
         return;
       }
