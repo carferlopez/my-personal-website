@@ -95,8 +95,8 @@
     <a class="back" id="backLink" href="index.html">← <span id="backLabel">Inicio</span></a>
     <span id="subtle">carlosmakes</span>
   </div>
-  <h1 class="page-title" id="gameTitle">¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
-  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla.</p>
+  <h1 class="page-title" id="gameTitle">BATE TU RÉCORD. ¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
+  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla. No hace falta registrarte: tu mejor racha se guarda en este dispositivo para que juegues contra ti mismo.</p>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <p class="launch-hint" id="launchHint"></p>
   <div class="canvas-wrap">
@@ -117,20 +117,20 @@
   })();
   const T = en ? {
     back: 'Home',
-    title: 'HOW MANY SHOTS IN A ROW CAN YOU SINK?',
-    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). You can also press anywhere on the page (not only the game frame) or the spacebar.',
+    title: 'BEAT YOUR OWN SCORE. HOW MANY SHOTS IN A ROW CAN YOU SINK?',
+    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). You can also press anywhere on the page (not only the game frame) or the spacebar. No sign-up: your best streak is saved in this browser so you can race against your own high score.',
     launchHint: 'Press anywhere to launch.',
     ariaBase: 'Basketball shot mini game',
-    hudYours: 'Your score',
-    hudAllTime: 'All-time',
+    hudYours: 'Streak',
+    hudAllTime: 'Your best',
   } : {
     back: 'Inicio',
-    title: '¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
-    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla (también fuera del juego en móvil o tablet).',
+    title: 'BATE TU RÉCORD. ¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
+    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla (también fuera del juego en móvil o tablet). No hace falta registrarte: tu mejor racha se guarda en este dispositivo para que juegues contra ti mismo.',
     launchHint: 'Pulsa en cualquier parte de la pantalla para lanzar.',
     ariaBase: 'Minijuego de tiro a canasta',
-    hudYours: 'Tu puntuación',
-    hudAllTime: 'Máx. histórica',
+    hudYours: 'Racha',
+    hudAllTime: 'Tu récord',
   };
   document.getElementById('backLabel').textContent = T.back;
   document.getElementById('gameTitle').textContent = T.title;
@@ -187,6 +187,7 @@
     netAnim: null,
     spin: 0
   };
+  // Mejor racha personal (solo en este navegador / dispositivo; sin backend)
   const LS_HISTORIC = 'encestar_v1_historic_max';
   const LS_LEGACY = 'encestar_v1_best_streak';
   let charge = 0;
