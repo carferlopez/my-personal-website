@@ -332,6 +332,12 @@
     transition: background-color 0.1s, color 0.1s;
   }
   @media (min-width: 640px) { .card { border-width: 8px; padding: 2rem; gap: 1.5rem; } }
+  @media (min-width: 1024px) {
+    .card { padding-left: 2.35rem; padding-right: 2.35rem; }
+  }
+  @media (min-width: 1280px) {
+    .card { padding-left: 2.75rem; padding-right: 2.75rem; }
+  }
   /* Misma altura mínima en móvil (una columna) */
   @media (max-width: 767px) {
     .card { min-height: clamp(24rem, 65vh, 32rem); }
@@ -377,10 +383,11 @@
     min-height: 3.4em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
     line-break: auto;
     text-wrap: wrap;
+    box-sizing: border-box;
   }
   /* Títulos en bloque: no partir palabras; si hace falta, bajamos ligeramente el cuerpo en móvil */
   @media (max-width: 480px) {
