@@ -363,12 +363,9 @@
   @media (min-width: 1024px) {
     .card-num { font-size: 3.75rem; padding-bottom: 0.45rem; }
   }
-  /* Hover: sin relleno; número y raya (border-bottom: currentColor) al color inverso */
-  #filosofia .card:not(:hover) .card-num:hover {
-    color: var(--black);
-  }
-  #filosofia .card:hover .card-num:hover {
-    color: var(--white);
+  /* Hover del número: rojo (contraste en card oscura y en card clara; evita blanco sobre blanco) */
+  #filosofia .card .card-num:hover {
+    color: var(--red);
   }
 
   .card-title {
