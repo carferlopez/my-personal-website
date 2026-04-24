@@ -319,6 +319,7 @@
   @media (min-width: 1280px) { .cards-grid { grid-template-columns: 1fr 1fr 1fr; } }
 
   .card {
+    container-type: inline-size;
     border: 4px solid var(--black);
     padding: 1.5rem;
     display: flex;
@@ -374,26 +375,34 @@
   }
 
   .card-title {
-    font-size: 1.65rem;
+    font-size: 1.65rem; /* sin container queries */
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.1;
+    line-height: 1.12;
     text-transform: uppercase;
-    min-height: 2.6em;
+    min-height: 2.2em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
     line-break: auto;
     text-wrap: wrap;
   }
-  @media (max-width: 480px) {
-    .card-title { font-size: min(1.55rem, 4.2vw + 0.5rem); }
+  @supports (font-size: 1cqi) {
+    .card-title {
+      /* cqi = % del ancho de la propia .card; baja el tamaño en 2–3 col para no partir palabras */
+      font-size: clamp(0.78rem, 0.1rem + 3.5cqi, 2.65rem);
+    }
   }
-  @media (min-width: 640px) { .card-title { font-size: 1.9rem; min-height: 2.5em; } }
-  @media (min-width: 768px) { .card-title { font-size: 2.2rem; min-height: 2.4em; } }
-  @media (min-width: 1024px) { .card-title { font-size: 2.45rem; min-height: 2.3em; } }
-  @media (min-width: 1280px) { .card-title { font-size: 2.6rem; min-height: 2.2em; } }
+  @supports not (font-size: 1cqi) {
+    @media (max-width: 480px) {
+      .card-title { font-size: min(1.45rem, 4vw + 0.4rem); }
+    }
+    @media (min-width: 640px) { .card-title { font-size: 1.9rem; } }
+    @media (min-width: 768px) { .card-title { font-size: 2.1rem; } }
+    @media (min-width: 1024px) { .card-title { font-size: 2.3rem; } }
+    @media (min-width: 1280px) { .card-title { font-size: 2.4rem; } }
+  }
 
   /* Frase en primera persona: cuerpo principal, más grande que cita y autor */
   .card-practice {
@@ -404,7 +413,7 @@
     text-wrap: pretty;
     hyphens: none;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     line-break: auto;
     transition: color 0.1s;
   }
@@ -437,7 +446,7 @@
     transition: color 0.1s;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
     line-break: auto;
     text-wrap: pretty;
@@ -453,7 +462,7 @@
     transition: color 0.1s;
     line-height: 1.35;
     word-break: normal;
-    overflow-wrap: break-word;
+    overflow-wrap: normal;
     hyphens: none;
   }
   @media (min-width: 640px) { .card-author { font-size: 0.875rem; } }
@@ -827,7 +836,7 @@
       <div class="cards-grid">
         <article class="card">
           <div class="card-num">01</div>
-          <h3 class="card-title" id="card1Title">CREATIVIDAD + CRITERIO</h3>
+          <h3 class="card-title" id="card1Title">CREATIVIDAD&#160;+&#160;CRITERIO</h3>
           <p class="card-practice" id="card1Practice">Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.</p>
           <div class="card-quote-wrap">
             <p class="card-quote" id="card1Quote">"Si quieres tener ideas originales, necesitas vivir una vida original."</p>
@@ -906,7 +915,7 @@
       philosophyTitle: "SI QUEREMOS RESULTADOS DISTINTOS, NO PODEMOS SEGUIR HACIENDO LO MISMO, ",
       philosophyEndBlack: "¿VERDAD",
       philosophySub: "Diseño, construyo y gestiono productos y sistemas digitales con un enfoque distinto al tradicional:",
-      card1Title: "CREATIVIDAD + CRITERIO",
+      card1Title: "CREATIVIDAD\u00A0+\u00A0CRITERIO",
       card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.",
       card1Quote: '"Si quieres tener ideas originales, necesitas vivir una vida original."',
       card2Title: "LANZAMIENTO TEMPRANO",
@@ -938,10 +947,10 @@
       philosophyTitle: "IF WE WANT DIFFERENT RESULTS, WE CAN'T KEEP DOING THE SAME, ",
       philosophyEndBlack: "RIGHT",
       philosophySub: "I design, build, and manage digital products and systems with an approach that differs from the traditional one:",
-      card1Title: "CREATIVITY + JUDGMENT",
+      card1Title: "CREATIVITY\u00A0+\u00A0JUDGMENT",
       card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions worth building.",
       card1Quote: '"If you want to have original ideas, you need to live an original life."',
-      card2Title: "SHIP & ITERATE",
+      card2Title: "SHIP\u00A0&\u00A0ITERATE",
       card2Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
       card2Quote: '"People don\'t know what they want until you show it to them."',
       card2Author: "— Steve Jobs",
