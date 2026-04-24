@@ -794,7 +794,7 @@
   <!-- ==================== PHILOSOPHY ==================== -->
   <section id="filosofia" class="section-pad">
     <div class="container">
-      <p class="big-heading"><span id="philosophyTitle">SI SEGUIMOS HACIENDO LO MISMO DE SIEMPRE, NO OBTENDREMOS RESULTADOS DISTINTOS, </span><span class="red" id="philosophyTitleEnd">¿VERDAD?</span></p>
+      <p class="big-heading"><span id="philosophyTitle">SI SEGUIMOS HACIENDO LO MISMO DE SIEMPRE, NO OBTENDREMOS RESULTADOS DISTINTOS, </span><span id="philosophyEndGroup"><span id="philosophyEndBlack">¿VERDAD</span><span class="red">?</span></span></p>
       <p class="subheading" id="philosophySub">Diseño, construyo y gestiono productos y sistemas digitales de otro modo.</p>
 
       <div class="cards-grid">
@@ -877,7 +877,7 @@
       ],
       scrollHint: "[ SOBRE MÍ ] ↓",
       philosophyTitle: "SI SEGUIMOS HACIENDO LO MISMO DE SIEMPRE, NO OBTENDREMOS RESULTADOS DISTINTOS, ",
-      philosophyTitleEnd: "¿VERDAD?",
+      philosophyEndBlack: "¿VERDAD",
       philosophySub: "Diseño, construyo y gestiono productos y sistemas digitales de otro modo.",
       card1Title: "CREATIVIDAD + CRITERIO",
       card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.",
@@ -907,7 +907,7 @@
       ],
       scrollHint: "[ ABOUT ME ] ↓",
       philosophyTitle: "IF WE KEEP DOING THE SAME THING, WE WON'T GET DIFFERENT RESULTS, ",
-      philosophyTitleEnd: "RIGHT?",
+      philosophyEndBlack: "RIGHT",
       philosophySub: "I design, build, and manage digital products and systems in a different way.",
       card1Title: "CREATIVITY + JUDGMENT",
       card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions worth building.",
@@ -1122,7 +1122,8 @@
     try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     document.getElementById('scrollHint').textContent = d.scrollHint;
     document.getElementById('philosophyTitle').textContent = d.philosophyTitle;
-    document.getElementById('philosophyTitleEnd').textContent = d.philosophyTitleEnd;
+    const philosophyEndBlack = document.getElementById('philosophyEndBlack');
+    if (philosophyEndBlack) philosophyEndBlack.textContent = d.philosophyEndBlack;
     document.getElementById('philosophySub').textContent = d.philosophySub;
     document.getElementById('card1Title').textContent = d.card1Title;
     document.getElementById('card1Practice').textContent = d.card1Practice;
