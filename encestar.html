@@ -267,30 +267,43 @@
     }
   }
 
+  // HUD: larger 7-seg + label so scores read clearly on small screens
+  const HUD = {
+    dw: 22,
+    gap: 4,
+    dh: 40,
+    tw: 3.2,
+    padX: 10,
+    padY: 7,
+    labY: 2,
+    boxOff: 14,
+    labelFont: "600 10px Inter, system-ui, sans-serif",
+    labelPad: 16,
+  };
+
   function hudPanelWidth(label, n) {
     const display = segValStr(n);
-    const dw = 16, gap = 3, padX = 8;
+    const { dw, gap, padX, labelFont, labelPad } = HUD;
     const inner = padX * 2 + display.length * dw + (display.length - 1) * gap;
     ctx.save();
-    ctx.font = '600 8px Inter, system-ui, sans-serif';
+    ctx.font = labelFont;
     const lw = ctx.measureText(label).width;
     ctx.restore();
-    return Math.max(inner, lw + 12);
+    return Math.max(inner, lw + labelPad);
   }
 
   function drawHudPanel(label, n, x0, y0, onCol, offCol, segGlow) {
     const display = segValStr(n);
-    const dw = 16, gap = 3, dh = 30, tw = 2.6;
-    const padX = 8, padY = 6, labY = 1;
+    const { dw, gap, dh, tw, padX, padY, labY, boxOff, labelFont, labelPad } = HUD;
     ctx.save();
-    ctx.font = '600 8px Inter, system-ui, sans-serif';
+    ctx.font = labelFont;
     ctx.textBaseline = 'top';
     ctx.fillStyle = 'rgba(255, 200, 200, 0.88)';
     ctx.fillText(label, x0, y0 + labY);
-    const boxTop = y0 + 10;
+    const boxTop = y0 + boxOff;
     const innerW = padX * 2 + display.length * dw + (display.length - 1) * gap;
     const lw = ctx.measureText(label).width;
-    const boxW = Math.max(innerW, lw + 12);
+    const boxW = Math.max(innerW, lw + labelPad);
     const boxH = padY * 2 + dh + 2;
     ctx.fillStyle = 'rgba(8, 2, 2, 0.94)';
     ctx.strokeStyle = 'rgba(200, 45, 45, 0.6)';
