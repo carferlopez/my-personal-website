@@ -147,7 +147,8 @@
   a.logo { display: block; }
   @media (min-width: 640px) { .logo, a.logo { font-size: 1.575rem; } }
   @media (min-width: 768px) { .logo, a.logo { font-size: 1.89rem; } }
-  .logo .gray { color: var(--gray); }
+  /* Más claro que --gray: mismo gris que --gray-mid (secundario, estilo og) */
+  .logo .gray { color: var(--gray-mid); }
   .logo .red { color: var(--red); }
 
   .header-top nav { display: flex; gap: 0.5rem; align-items: center; }
