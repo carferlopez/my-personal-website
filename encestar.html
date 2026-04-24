@@ -39,25 +39,17 @@
     display: block;
     width: 100%;
     max-width: 42rem;
-    font-size: clamp(0.9rem, 2.6vw, 1.4rem);
+    font-size: clamp(1.8rem, 5.2vw, 2.8rem);
     font-weight: 900;
-    letter-spacing: -0.03em;
-    line-height: 1.15;
+    letter-spacing: -0.04em;
+    line-height: 1.1;
     text-align: center;
     text-wrap: balance;
-    margin: 0 auto 0.5rem;
+    margin: 0 auto 0.9rem;
     padding: 0 0.25rem;
   }
   @media (min-width: 40rem) {
-    h1.page-title { font-size: clamp(1.05rem, 1.55vw, 1.4rem); }
-  }
-  .hint {
-    text-align: center;
-    color: #9ca3af;
-    font-size: 0.875rem;
-    max-width: 28rem;
-    margin-bottom: 1rem;
-    line-height: 1.45;
+    h1.page-title { font-size: clamp(2.1rem, 3.1vw, 2.8rem); }
   }
   .bar-wrap {
     width: min(100%, 36rem);
@@ -82,7 +74,7 @@
   .launch-hint {
     width: 100%;
     max-width: 42rem;
-    margin: 0 auto 0.75rem;
+    margin: 0 auto 0.6rem;
     text-align: center;
     color: #9ca3af;
     font-size: 0.88rem;
@@ -95,10 +87,9 @@
     <a class="back" id="backLink" href="index.html">← <span id="backLabel">Inicio</span></a>
     <span id="subtle">carlosmakes</span>
   </div>
-  <h1 class="page-title" id="gameTitle">BATE TU RÉCORD. ¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
-  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla. No hace falta registrarte: tu mejor racha se guarda en este dispositivo para que juegues contra ti mismo.</p>
-  <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
+  <h1 class="page-title" id="gameTitle">¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?</h1>
   <p class="launch-hint" id="launchHint"></p>
+  <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
     <canvas id="game" width="640" height="640" role="img" aria-label=""></canvas>
   </div>
@@ -117,16 +108,14 @@
   })();
   const T = en ? {
     back: 'Home',
-    title: 'BEAT YOUR OWN SCORE. HOW MANY SHOTS IN A ROW CAN YOU SINK?',
-    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). You can also press anywhere on the page (not only the game frame) or the spacebar. No sign-up: your best streak is saved in this browser so you can race against your own high score.',
+    title: 'HOW MANY SHOTS IN A ROW CAN YOU SINK?',
     launchHint: 'Press anywhere to launch.',
     ariaBase: 'Basketball shot mini game',
     hudYours: 'Streak',
     hudAllTime: 'Your best',
   } : {
     back: 'Inicio',
-    title: 'BATE TU RÉCORD. ¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
-    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, toque, barra espaciadora, o en cualquier parte de la pantalla (también fuera del juego en móvil o tablet). No hace falta registrarte: tu mejor racha se guarda en este dispositivo para que juegues contra ti mismo.',
+    title: '¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
     launchHint: 'Pulsa en cualquier parte de la pantalla para lanzar.',
     ariaBase: 'Minijuego de tiro a canasta',
     hudYours: 'Racha',
@@ -134,7 +123,6 @@
   };
   document.getElementById('backLabel').textContent = T.back;
   document.getElementById('gameTitle').textContent = T.title;
-  document.getElementById('gameHint').textContent = T.hint;
   const launchHintEl = document.getElementById('launchHint');
   if (launchHintEl) launchHintEl.textContent = T.launchHint;
   if (en) { document.documentElement.lang = 'en'; }
