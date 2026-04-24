@@ -70,20 +70,6 @@
   .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
   @media (min-width: 768px) { .container { padding: 0 3rem; } }
 
-  /* Bandas alternas: hero claro → bloque oscuro → claro → oscuro */
-  .section-band--light {
-    background: var(--white);
-    color: var(--black);
-  }
-  .section-band--light .subheading { color: var(--gray); }
-  .section-band--dark {
-    background: var(--black);
-    color: var(--white);
-  }
-  .section-band--dark .big-heading { color: var(--white); }
-  .section-band--dark .subheading { color: var(--gray-mid); }
-  .section-band--dark .contact-sub { color: var(--gray-mid); }
-
   /* ==================== HERO ==================== */
   .hero {
     min-height: 100svh;
@@ -383,8 +369,7 @@
   @media (min-width: 1024px) {
     .card-num { font-size: 3.75rem; padding-bottom: 0.45rem; }
   }
-  /* Hover del número: rojo (contraste en card oscura y en card clara; evita blanco sobre blanco) */
-  #filosofia .card .card-num:hover {
+  .card .card-num:hover {
     color: var(--red);
   }
 
@@ -430,12 +415,7 @@
   @media (min-width: 1024px) { .card-practice { font-size: 1.375rem; } }
   @media (min-width: 1280px) { .card-practice { font-size: 1.4rem; } }
 
-  /* Hover: invierte color junto con el resto de la card */
   .card:hover .card-practice { color: var(--white); }
-
-  /* En la sección #filosofia (fondo negro) el color base se invierte */
-  #filosofia .card .card-practice { color: var(--white); }
-  #filosofia .card:hover .card-practice { color: var(--black); }
 
   .card-quote-wrap {
     display: flex;
@@ -450,22 +430,6 @@
   }
   .card:hover .card-quote-wrap { border-top-color: rgba(255, 255, 255, 0.3); }
 
-  #filosofia .card {
-    border-color: var(--white);
-    background: var(--black);
-    color: var(--white);
-  }
-  #filosofia .card-quote { color: var(--gray-mid); }
-  #filosofia .card-author { color: var(--white); }
-  #filosofia .card-quote-wrap { border-top-color: rgba(255, 255, 255, 0.25); }
-
-  #filosofia .card:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  #filosofia .card:hover .card-quote { color: var(--gray); }
-  #filosofia .card:hover .card-author { color: var(--black); }
-  #filosofia .card:hover .card-quote-wrap { border-top-color: var(--gray-light); }
   /* Cita: más pequeña que .card-practice; jerarquía de “mí” vs referencia de autor */
   .card-quote {
     font-style: italic;
@@ -501,6 +465,8 @@
   /* ==================== CONTACT ==================== */
   .contact-box {
     border: 8px solid var(--black);
+    background: var(--white);
+    color: var(--black);
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -513,23 +479,8 @@
   @media (min-width: 768px) { .contact-box { padding: 5rem; } }
   .contact-box:hover { background: var(--black); color: var(--white); }
   .contact-box:hover .contact-sub { color: var(--gray-light); }
-
-  #contacto.section-band--dark .contact-box {
-    border-color: var(--white);
-    color: var(--white);
-  }
-  #contacto.section-band--dark .contact-box:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  #contacto.section-band--dark .contact-box:hover .contact-sub { color: var(--gray); }
-  /* Sobre .section-band--dark .big-heading, que fija el título en blanco */
-  #contacto.section-band--dark .contact-box:hover .big-heading {
-    color: var(--black);
-  }
-  #contacto.section-band--dark .contact-box:hover .big-heading .red {
-    color: var(--red);
-  }
+  .contact-box:hover .big-heading { color: var(--white); }
+  .contact-box:hover .big-heading .red { color: var(--red); }
 
   .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
@@ -551,8 +502,7 @@
   @media (min-width: 768px) { .contact-btn { font-size: 1.875rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 2.25rem; } }
   .contact-btn:hover { background: var(--white); color: var(--black); }
-  /* Caja ya en hover (fondo blanco): el botón debe rellenarse en negro, no en blanco */
-  #contacto.section-band--dark .contact-box:hover .contact-btn:hover {
+  .contact-box:hover .contact-btn:hover {
     background: var(--black);
     color: var(--white);
   }
@@ -802,7 +752,7 @@
 <main>
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero section-band--light" id="inicio">
+  <section class="hero" id="inicio">
     <div class="hero-inner">
       <header>
         <div class="header-top">
@@ -841,7 +791,7 @@
   </section>
 
   <!-- ==================== PHILOSOPHY ==================== -->
-  <section id="filosofia" class="section-pad section-band--dark">
+  <section id="filosofia" class="section-pad">
     <div class="container">
       <p class="big-heading"><span id="philosophyTitle">SI CASI TODO EL MUNDO HACE LO MISMO, HABRÁ QUE HACER ALGO DISTINTO...</span><span class="red" id="philosophyTitleEnd">¿NO?</span></p>
       <p class="subheading" id="philosophySub">Diseño, construyo y gestiono productos y sistemas digitales de otro modo.</p>
@@ -879,7 +829,7 @@
   </section>
 
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
-  <section id="proyectos" class="section-pad section-band--light projects-section" aria-labelledby="projectsTitle">
+  <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <div class="container">
       <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
       <p class="subheading projects-strap" id="projectsStrap">🚧 EN CONSTRUCCIÓN 🚧 Muy pronto podrás ver todos mis trabajos. Mientras tanto, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a>.</p>
@@ -895,7 +845,7 @@
   </section>
 
   <!-- ==================== CONTACT ==================== -->
-  <section id="contacto" class="section-pad section-band--dark">
+  <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
         <h2 class="big-heading"><span id="contactTitle">¿EN QUÉ PUEDO AYUDARTE</span><span class="red" id="contactMark">?</span></h2>
