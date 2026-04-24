@@ -38,7 +38,6 @@
   * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
 
   :root {
-    --site-header-h: 5.5rem;
     --black: #000;
     --white: #fff;
     --gray: #6b7280;
@@ -47,7 +46,7 @@
     --red: #ef4444;
   }
 
-  html { scroll-behavior: smooth; scroll-padding-top: var(--site-header-h, 5.5rem); }
+  html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -85,48 +84,6 @@
   .section-band--dark .subheading { color: var(--gray-mid); }
   .section-band--dark .contact-sub { color: var(--gray-mid); }
 
-  /* Barra superior fija: contraste inverso al fondo visible al hacer scroll (JS) */
-  .site-header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 200;
-    background: transparent;
-    transition: color 0.2s, background 0.2s;
-    pointer-events: none;
-  }
-  .site-header__inner {
-    pointer-events: auto;
-    max-width: 72rem;
-    margin: 0 auto;
-    width: 100%;
-    padding: 1.5rem 1.5rem 0.75rem;
-  }
-  @media (min-width: 768px) { .site-header__inner { padding: 1.5rem 3rem 0.75rem; } }
-  .site-header--on-light { color: var(--black); }
-  .site-header--on-light a.logo:hover { opacity: 0.85; }
-  .site-header--on-dark {
-    color: var(--white);
-  }
-  .site-header--on-dark .logo .gray { color: var(--gray-mid); }
-  .site-header--on-dark a.logo:hover { opacity: 0.9; }
-  .site-header--on-dark .header-top nav a { color: var(--white); }
-  .site-header--on-dark .header-top nav a:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  .site-header--on-dark .lang-toggle { color: var(--white); }
-  .site-header--on-dark .lang-toggle .sep { color: var(--gray-mid); }
-  .site-header--on-dark .lang-toggle .inactive { color: var(--gray-mid); }
-  .site-header--on-dark .lang-toggle .inactive .flag { filter: grayscale(0.2); opacity: 0.75; }
-  .site-header--on-dark .lang-toggle .inactive:hover { color: #e5e7eb; }
-  .site-header--on-dark .lang-toggle:hover { background: var(--white); color: var(--black); }
-  .site-header--on-dark .lang-toggle:hover .sep { color: var(--gray); }
-  .site-header--on-dark a:focus-visible, .site-header--on-dark .lang-toggle:focus-visible {
-    outline-color: var(--red);
-  }
-
   /* ==================== HERO ==================== */
   .hero {
     min-height: 100svh;
@@ -135,16 +92,16 @@
     position: relative;
   }
   .hero-inner {
+    padding: 1.5rem 1.5rem 3rem;
     display: flex;
     flex-direction: column;
     flex: 1;
     max-width: 72rem;
     margin: 0 auto;
     width: 100%;
-    /* Espacio bajo la barra fija (alto vía --site-header-h) + airado previo al título */
-    padding: calc(var(--site-header-h, 5.5rem) + 0.5rem) 1.5rem 3rem;
   }
-  @media (min-width: 768px) { .hero-inner { padding: calc(var(--site-header-h, 5.5rem) + 0.5rem) 3rem 3rem; } }
+  @media (min-width: 768px) { .hero-inner { padding: 1.5rem 3rem 3rem; } }
+  .hero a.logo:hover { opacity: 0.85; }
 
   header {
     display: flex;
@@ -809,8 +766,9 @@
 
 <main>
 
-  <div class="site-header site-header--on-light" id="siteHeader" role="banner">
-    <div class="site-header__inner">
+  <!-- ==================== HERO ==================== -->
+  <section class="hero section-band--light" id="inicio">
+    <div class="hero-inner">
       <header>
         <div class="header-top">
           <a class="logo" id="logoHome" href="#inicio">Carlos <span class="gray">Fernández</span><span class="red">.</span></a>
@@ -834,12 +792,7 @@
           </button>
         </div>
       </header>
-    </div>
-  </div>
 
-  <!-- ==================== HERO ==================== -->
-  <section class="hero section-band--light" id="inicio">
-    <div class="hero-inner">
       <div class="hero-title-wrap">
         <h1 class="hero-title">
           <span id="typewriter"></span><span class="cursor"></span>
@@ -1169,42 +1122,6 @@
   }
 
   // ============================================
-  // Barra fija: alto + contraste con la sección bajo ella
-  // ============================================
-  function setSiteHeaderHeight() {
-    const el = document.getElementById('siteHeader');
-    if (el) document.documentElement.style.setProperty('--site-header-h', el.offsetHeight + 'px');
-  }
-
-  function setSiteHeaderBand() {
-    const header = document.getElementById('siteHeader');
-    if (!header) return;
-    const prev = header.style.pointerEvents;
-    header.style.pointerEvents = 'none';
-    const x = Math.min(window.innerWidth - 1, Math.max(1, window.innerWidth / 2));
-    const y = Math.min(window.innerHeight - 1, Math.max(1, 28));
-    const fromPoint = document.elementFromPoint(x, y);
-    header.style.pointerEvents = prev;
-    let band = 'light';
-    if (fromPoint) {
-      const section = fromPoint.closest('section');
-      if (section && section.classList.contains('section-band--dark')) band = 'dark';
-    }
-    header.classList.toggle('site-header--on-dark', band === 'dark');
-    header.classList.toggle('site-header--on-light', band === 'light');
-  }
-
-  let siteHeaderRaf = null;
-  function scheduleSiteHeaderUpdate() {
-    if (siteHeaderRaf) return;
-    siteHeaderRaf = requestAnimationFrame(() => {
-      siteHeaderRaf = null;
-      setSiteHeaderHeight();
-      setSiteHeaderBand();
-    });
-  }
-
-  // ============================================
   // Idioma
   // ============================================
   function applyLang() {
@@ -1254,7 +1171,6 @@
     lang = lang === 'es' ? 'en' : 'es';
     applyLang();
     restartTypewriter();
-    scheduleSiteHeaderUpdate();
   });
 
   // ============================================
@@ -1262,9 +1178,6 @@
   // ============================================
   applyLang();
   typewriter();
-  requestAnimationFrame(() => scheduleSiteHeaderUpdate());
-  window.addEventListener('scroll', scheduleSiteHeaderUpdate, { passive: true });
-  window.addEventListener('resize', () => { scheduleSiteHeaderUpdate(); });
 </script>
 
 </body>
