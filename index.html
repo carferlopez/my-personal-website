@@ -410,9 +410,9 @@
     @media (min-width: 1280px) { .card-title { font-size: 2.8rem; } }
   }
 
-  /* Frase en primera persona: siempre claramente por debajo del título (peso 500) */
+  /* Frase en primera persona: claramente más pequeña que .card-title (900) */
   .card-practice {
-    font-size: 1.2rem;
+    font-size: 1.05rem;
     font-weight: 500;
     line-height: 1.5;
     color: var(--black);
@@ -423,10 +423,10 @@
     line-break: auto;
     transition: color 0.1s;
   }
-  @media (min-width: 640px) { .card-practice { font-size: 1.3rem; line-height: 1.48; } }
-  @media (min-width: 768px) { .card-practice { font-size: 1.36rem; } }
-  @media (min-width: 1024px) { .card-practice { font-size: 1.42rem; } }
-  @media (min-width: 1280px) { .card-practice { font-size: 1.48rem; } }
+  @media (min-width: 640px) { .card-practice { font-size: 1.1rem; line-height: 1.48; } }
+  @media (min-width: 768px) { .card-practice { font-size: 1.12rem; } }
+  @media (min-width: 1024px) { .card-practice { font-size: 1.16rem; } }
+  @media (min-width: 1280px) { .card-practice { font-size: 1.2rem; } }
 
   .card:hover .card-practice { color: var(--white); }
 
@@ -443,12 +443,12 @@
   }
   .card:hover .card-quote-wrap { border-top-color: rgba(255, 255, 255, 0.3); }
 
-  /* Cita: más pequeña que .card-practice; jerarquía de “mí” vs referencia de autor */
+  /* Cita: por debajo de .card-practice; autor aún un poco menor */
   .card-quote {
     font-style: italic;
     color: var(--gray);
     line-height: 1.45;
-    font-size: 1.02rem;
+    font-size: 0.9rem;
     transition: color 0.1s;
     max-width: 100%;
     word-break: normal;
@@ -457,12 +457,12 @@
     line-break: auto;
     text-wrap: pretty;
   }
-  @media (min-width: 640px) { .card-quote { font-size: 1.1rem; line-height: 1.48; } }
-  @media (min-width: 768px) { .card-quote { font-size: 1.15rem; } }
-  @media (min-width: 1024px) { .card-quote { font-size: 1.22rem; line-height: 1.5; } }
-  @media (min-width: 1280px) { .card-quote { font-size: 1.28rem; } }
+  @media (min-width: 640px) { .card-quote { font-size: 0.95rem; line-height: 1.48; } }
+  @media (min-width: 768px) { .card-quote { font-size: 0.98rem; } }
+  @media (min-width: 1024px) { .card-quote { font-size: 1.02rem; line-height: 1.5; } }
+  @media (min-width: 1280px) { .card-quote { font-size: 1.05rem; } }
   .card-author {
-    font-size: 0.875rem;
+    font-size: 0.8rem;
     font-weight: 700;
     color: var(--black);
     transition: color 0.1s;
@@ -471,9 +471,9 @@
     overflow-wrap: normal;
     hyphens: none;
   }
-  @media (min-width: 640px) { .card-author { font-size: 0.95rem; } }
-  @media (min-width: 768px) { .card-author { font-size: 1.02rem; } }
-  @media (min-width: 1024px) { .card-author { font-size: 1.08rem; } }
+  @media (min-width: 640px) { .card-author { font-size: 0.86rem; } }
+  @media (min-width: 768px) { .card-author { font-size: 0.9rem; } }
+  @media (min-width: 1024px) { .card-author { font-size: 0.94rem; } }
 
   /* ==================== CONTACT ==================== */
   .contact-box {
