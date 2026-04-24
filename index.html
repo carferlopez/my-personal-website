@@ -351,7 +351,7 @@
     border: none;
     border-bottom: 4px solid currentColor;
     padding: 0 0 0.3rem 0;
-    font-size: 1.875rem;
+    font-size: 2.25rem;
     font-weight: 900;
     line-height: 0.9;
     margin-bottom: 0.5rem;
@@ -361,62 +361,57 @@
     transition: color 0.1s, border-color 0.1s;
   }
   @media (min-width: 640px) {
-    .card-num { font-size: 2.25rem; padding-bottom: 0.35rem; }
+    .card-num { font-size: 2.75rem; padding-bottom: 0.35rem; }
   }
   @media (min-width: 768px) {
-    .card-num { font-size: 3rem; padding-bottom: 0.4rem; }
+    .card-num { font-size: 3.5rem; padding-bottom: 0.4rem; }
   }
   @media (min-width: 1024px) {
-    .card-num { font-size: 3.75rem; padding-bottom: 0.45rem; }
+    .card-num { font-size: 4.5rem; padding-bottom: 0.45rem; }
   }
   .card .card-num:hover {
     color: var(--red);
   }
 
   .card-title {
-    font-size: 1.5rem;
+    font-size: 1.65rem;
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.08;
+    line-height: 1.1;
     text-transform: uppercase;
-    /* Caja fija: sin forzar 2+ líneas con “balance” (evitaba CREATIVIDAD cortada) */
-    min-height: 3.4em;
+    min-height: 2.6em;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
     line-break: auto;
     text-wrap: wrap;
   }
-  /* Títulos en bloque: no partir palabras; si hace falta, bajamos ligeramente el cuerpo en móvil */
   @media (max-width: 480px) {
-    .card-title { font-size: min(1.4rem, 4.1vw + 0.5rem); }
+    .card-title { font-size: min(1.55rem, 4.2vw + 0.5rem); }
   }
-  @media (min-width: 640px) { .card-title { font-size: 1.75rem; min-height: 3.2em; } }
-  @media (min-width: 768px) { .card-title { font-size: 1.95rem; min-height: 3.1em; } }
-  @media (min-width: 1024px) { .card-title { font-size: 2.1rem; min-height: 3em; } }
-  /* 3 col: columna más estrecha; sin overflow-wrap: break-word (rompe a mitad de palabra) */
-  @media (min-width: 1280px) {
-    .card-title { font-size: clamp(1.7rem, 0.6rem + 0.9vw, 1.9rem); min-height: 2.9em; }
-  }
+  @media (min-width: 640px) { .card-title { font-size: 1.9rem; min-height: 2.5em; } }
+  @media (min-width: 768px) { .card-title { font-size: 2.2rem; min-height: 2.4em; } }
+  @media (min-width: 1024px) { .card-title { font-size: 2.45rem; min-height: 2.3em; } }
+  @media (min-width: 1280px) { .card-title { font-size: 2.6rem; min-height: 2.2em; } }
 
   /* Frase en primera persona: cuerpo principal, más grande que cita y autor */
   .card-practice {
-    font-size: 1.125rem;
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.5;
     color: var(--black);
     text-wrap: pretty;
     hyphens: none;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     line-break: auto;
     transition: color 0.1s;
   }
-  @media (min-width: 640px) { .card-practice { font-size: 1.25rem; line-height: 1.48; } }
-  @media (min-width: 768px) { .card-practice { font-size: 1.3125rem; } }
-  @media (min-width: 1024px) { .card-practice { font-size: 1.375rem; } }
-  @media (min-width: 1280px) { .card-practice { font-size: 1.4rem; } }
+  @media (min-width: 640px) { .card-practice { font-size: 1.35rem; line-height: 1.48; } }
+  @media (min-width: 768px) { .card-practice { font-size: 1.4rem; } }
+  @media (min-width: 1024px) { .card-practice { font-size: 1.5rem; } }
+  @media (min-width: 1280px) { .card-practice { font-size: 1.55rem; } }
 
   .card:hover .card-practice { color: var(--white); }
 
@@ -438,32 +433,32 @@
     font-style: italic;
     color: var(--gray);
     line-height: 1.45;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     transition: color 0.1s;
     max-width: 100%;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
     line-break: auto;
     text-wrap: pretty;
   }
-  @media (min-width: 640px) { .card-quote { font-size: 0.9375rem; line-height: 1.48; } }
-  @media (min-width: 768px) { .card-quote { font-size: 1rem; } }
-  @media (min-width: 1024px) { .card-quote { font-size: 1.0625rem; line-height: 1.5; } }
-  @media (min-width: 1280px) { .card-quote { font-size: 1.125rem; } }
+  @media (min-width: 640px) { .card-quote { font-size: 1.05rem; line-height: 1.48; } }
+  @media (min-width: 768px) { .card-quote { font-size: 1.1rem; } }
+  @media (min-width: 1024px) { .card-quote { font-size: 1.15rem; line-height: 1.5; } }
+  @media (min-width: 1280px) { .card-quote { font-size: 1.2rem; } }
   .card-author {
-    font-size: 0.75rem;
+    font-size: 0.8125rem;
     font-weight: 700;
     color: var(--black);
     transition: color 0.1s;
     line-height: 1.35;
     word-break: normal;
-    overflow-wrap: normal;
+    overflow-wrap: break-word;
     hyphens: none;
   }
-  @media (min-width: 640px) { .card-author { font-size: 0.8125rem; } }
-  @media (min-width: 768px) { .card-author { font-size: 0.875rem; } }
-  @media (min-width: 1024px) { .card-author { font-size: 0.9375rem; } }
+  @media (min-width: 640px) { .card-author { font-size: 0.875rem; } }
+  @media (min-width: 768px) { .card-author { font-size: 0.95rem; } }
+  @media (min-width: 1024px) { .card-author { font-size: 1.025rem; } }
 
   /* ==================== CONTACT ==================== */
   .contact-box {
