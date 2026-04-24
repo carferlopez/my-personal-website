@@ -181,7 +181,7 @@
 
   function lerpY(a, b, t) { return a + (b - a) * t; }
 
-  function drawScene() {
+  function drawSceneBack() {
     ctx.fillStyle = '#0a0a0a';
     ctx.fillRect(0, 0, W, H);
     // Suelo
@@ -220,7 +220,10 @@
     ctx.moveTo(rimL, rimY);
     ctx.lineTo(rimR, rimY);
     ctx.stroke();
-    // Red: trapecio + malla de rombos
+  }
+
+  // Red encima de la pelota cuando esta atraviesa el aro (véase draw)
+  function drawNet() {
     ctx.strokeStyle = 'rgba(255,255,255,0.4)';
     ctx.lineWidth = 1;
     const nStr = 6;
@@ -248,7 +251,6 @@
       const y = lerpY(yTopN, yBotN, t);
       const wTop = topR - topL;
       const wBot = netBotR - netBotL;
-      // Ancho decrece hacia abajo: arriba (t=0) aro, abajo boca más estrecha
       const w = wTop * (1 - t) + wBot * t;
       const cx = rimCx;
       const u = c / nCol;
@@ -277,6 +279,16 @@
         ctx.stroke();
       }
     }
+  }
+
+  function ballShouldRenderBehindNet() {
+    if (ball.netAnim) return true;
+    if (!ball.active) return false;
+    const bx = ball.x, by = ball.y;
+    const horiz = bx + ballR > rimL - 4 && bx - ballR < rimR + 4;
+    const pastRim = by + ballR > rimY - 2;
+    const inNetColumn = by - ballR < yNetBottom + 12;
+    return horiz && pastRim && inNetColumn;
   }
 
   // Misma integración que el tiro: vy += gBall, x += vx, y += vy
@@ -613,9 +625,15 @@
   }
 
   function draw() {
-    drawScene();
-    if (charging && !ball.active && !ball.netAnim) drawAimHint();
-    drawBall();
+    drawSceneBack();
+    if (ballShouldRenderBehindNet()) {
+      drawBall();
+      drawNet();
+    } else {
+      drawNet();
+      if (charging && !ball.active && !ball.netAnim) drawAimHint();
+      drawBall();
+    }
   }
 
   function startCharge() {
