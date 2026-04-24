@@ -338,22 +338,23 @@
   .card-num {
     display: inline-block;
     align-self: flex-start;
-    border: 4px solid currentColor;
-    padding: 0.25rem 0.5rem;
+    border: none;
+    border-bottom: 4px solid currentColor;
+    padding: 0 0 0.3rem 0;
     font-size: 1.875rem;
     font-weight: 900;
     line-height: 0.9;
     margin-bottom: 0.5rem;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
   }
   @media (min-width: 640px) {
-    .card-num { font-size: 2.25rem; padding: 0.3rem 0.6rem; }
+    .card-num { font-size: 2.25rem; padding-bottom: 0.35rem; }
   }
   @media (min-width: 768px) {
-    .card-num { font-size: 3rem; padding: 0.35rem 0.7rem; }
+    .card-num { font-size: 3rem; padding-bottom: 0.4rem; }
   }
   @media (min-width: 1024px) {
-    .card-num { font-size: 3.75rem; padding: 0.4rem 0.75rem; }
+    .card-num { font-size: 3.75rem; padding-bottom: 0.45rem; }
   }
   /* Mismo criterio que .contact-btn: inversión al hover (sección #filosofia, card oscura) */
   #filosofia .card:not(:hover) .card-num:hover {
