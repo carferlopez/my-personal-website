@@ -106,17 +106,15 @@
     title: 'HOW MANY SHOTS IN A ROW CAN YOU SINK?',
     hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). Click, touch, or spacebar.',
     ariaBase: 'Basketball shot mini game',
-    hudPts: 'PTS',
-    hudStreak: 'STK',
-    hudBest: 'BEST',
+    hudYours: 'Your score',
+    hudAllTime: 'All-time',
   } : {
     back: 'Inicio',
     title: '¿CUÁNTOS TIROS SEGUIDOS ERES CAPAZ DE ENCESTAR?',
     hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, touch o barra espaciadora.',
     ariaBase: 'Minijuego de tiro a canasta',
-    hudPts: 'CAN',
-    hudStreak: 'RCH',
-    hudBest: 'RÉC',
+    hudYours: 'Tu puntuación',
+    hudAllTime: 'Máx. histórica',
   };
   document.getElementById('backLabel').textContent = T.back;
   document.getElementById('gameTitle').textContent = T.title;
@@ -171,18 +169,27 @@
     netAnim: null,
     spin: 0
   };
-  const LS_BEST = 'encestar_v1_best_streak';
+  const LS_HISTORIC = 'encestar_v1_historic_max';
+  const LS_LEGACY = 'encestar_v1_best_streak';
   let charge = 0;
   let charging = false;
   let pressT0 = 0;
   let score = 0;
-  let streak = 0;
-  let bestStreak = 0;
+  let historicMax = 0;
   try {
-    bestStreak = Math.max(0, parseInt(localStorage.getItem(LS_BEST) || '0', 10) || 0);
-  } catch (e) { bestStreak = 0; }
-  function persistBest() {
-    try { localStorage.setItem(LS_BEST, String(bestStreak)); } catch (e) {}
+    historicMax = Math.max(0, parseInt(localStorage.getItem(LS_HISTORIC) || '0', 10) || 0);
+    if (historicMax === 0) {
+      const leg = localStorage.getItem(LS_LEGACY);
+      if (leg) historicMax = Math.max(0, parseInt(leg, 10) || 0);
+    }
+  } catch (e) { historicMax = 0; }
+  try {
+    if (historicMax > 0 && !localStorage.getItem(LS_HISTORIC)) {
+      localStorage.setItem(LS_HISTORIC, String(historicMax));
+    }
+  } catch (e) {}
+  function persistHistoric() {
+    try { localStorage.setItem(LS_HISTORIC, String(historicMax)); } catch (e) {}
   }
   let raf = 0;
   let flightFrames = 0;
@@ -196,11 +203,12 @@
 
   function lerpY(a, b, t) { return a + (b - a) * t; }
 
-  function drawOneSegDigit(ox, oy, w, h, t, d, on, off) {
+  function drawOneSegDigit(ox, oy, w, h, t, d, on, off, segGlow) {
     if (d < 0 || d > 9) return;
     const s = D7[d];
     const m = 1.2;
     const mid = h * 0.5;
+    const glow = segGlow;
     on = on != null ? on : '#fbbf24';
     off = off != null ? off : 'rgba(24, 18, 8, 0.14)';
     const strokeit = (onSeg, p0, p1) => {
@@ -212,8 +220,13 @@
       ctx.lineJoin = 'round';
       ctx.strokeStyle = onSeg ? on : off;
       if (onSeg) {
-        ctx.shadowColor = 'rgba(251, 191, 36, 0.45)';
-        ctx.shadowBlur = 3;
+        if (glow) {
+          ctx.shadowColor = glow;
+          ctx.shadowBlur = 3.5;
+        } else {
+          ctx.shadowColor = 'rgba(251, 191, 36, 0.45)';
+          ctx.shadowBlur = 3;
+        }
       } else {
         ctx.shadowBlur = 0;
       }
@@ -234,10 +247,10 @@
     return n >= 100 ? String(n).padStart(3, '0') : String(n).padStart(2, '0');
   }
 
-  function draw7SegString(display, ix, iy, dw, gap, dh, tw, on, off) {
+  function draw7SegString(display, ix, iy, dw, gap, dh, tw, on, off, segGlow) {
     for (let i = 0; i < display.length; i++) {
       const digit = +display[i];
-      drawOneSegDigit(ix + i * (dw + gap), iy, dw, dh, tw, digit, on, off);
+      drawOneSegDigit(ix + i * (dw + gap), iy, dw, dh, tw, digit, on, off, segGlow);
     }
   }
 
@@ -252,23 +265,22 @@
     return Math.max(inner, lw + 12);
   }
 
-  function drawHudPanel(label, n, x0, y0, onCol) {
-    const offCol = 'rgba(24, 18, 8, 0.12)';
+  function drawHudPanel(label, n, x0, y0, onCol, offCol, segGlow) {
     const display = segValStr(n);
     const dw = 16, gap = 3, dh = 30, tw = 2.6;
     const padX = 8, padY = 6, labY = 1;
     ctx.save();
     ctx.font = '600 8px Inter, system-ui, sans-serif';
     ctx.textBaseline = 'top';
-    ctx.fillStyle = 'rgba(180, 190, 205, 0.78)';
+    ctx.fillStyle = 'rgba(255, 200, 200, 0.88)';
     ctx.fillText(label, x0, y0 + labY);
     const boxTop = y0 + 10;
     const innerW = padX * 2 + display.length * dw + (display.length - 1) * gap;
     const lw = ctx.measureText(label).width;
     const boxW = Math.max(innerW, lw + 12);
     const boxH = padY * 2 + dh + 2;
-    ctx.fillStyle = 'rgba(6, 8, 10, 0.88)';
-    ctx.strokeStyle = 'rgba(100, 106, 120, 0.5)';
+    ctx.fillStyle = 'rgba(8, 2, 2, 0.94)';
+    ctx.strokeStyle = 'rgba(200, 45, 45, 0.6)';
     ctx.lineWidth = 1.5;
     if (typeof ctx.roundRect === 'function') {
       ctx.beginPath();
@@ -281,19 +293,19 @@
     }
     const iy = boxTop + padY;
     const ix = x0 + (boxW - innerW) * 0.5 + padX;
-    draw7SegString(display, ix, iy, dw, gap, dh, tw, onCol, offCol);
+    draw7SegString(display, ix, iy, dw, gap, dh, tw, onCol, offCol, segGlow);
     ctx.restore();
     return boxW;
   }
 
   function drawDigitalScore() {
     const y0 = 6;
-    const xL = 8;
-    drawHudPanel(T.hudPts, score, xL, y0, '#fbbf24');
-    const wStk = hudPanelWidth(T.hudStreak, streak);
-    drawHudPanel(T.hudStreak, streak, (W - wStk) / 2, y0, '#4ade80');
-    const wBest = hudPanelWidth(T.hudBest, bestStreak);
-    drawHudPanel(T.hudBest, bestStreak, W - 8 - wBest, y0, '#facc15');
+    const on = '#ff3b3b';
+    const off = 'rgba(40, 8, 8, 0.38)';
+    const segGlow = 'rgba(255, 35, 35, 0.4)';
+    const wRight = hudPanelWidth(T.hudAllTime, historicMax);
+    drawHudPanel(T.hudYours, score, 8, y0, on, off, segGlow);
+    drawHudPanel(T.hudAllTime, historicMax, W - 8 - wRight, y0, on, off, segGlow);
   }
 
   function drawSceneBack() {
@@ -574,13 +586,10 @@
     ctx.restore();
   }
 
-  function resetBall(keepStreak) {
+  function resetBall() {
     if (raf) {
       cancelAnimationFrame(raf);
       raf = 0;
-    }
-    if (!keepStreak) {
-      streak = 0;
     }
     ball.x = startX;
     ball.y = startY;
@@ -686,7 +695,7 @@
         if (u >= 1) {
         ball.netAnim = null;
         ball.wasAboveRim = false;
-        resetBall(true);
+        resetBall();
         draw();
         if (charging) raf = requestAnimationFrame(tick);
         return;
@@ -727,10 +736,9 @@
           throughNet = true;
           ball.scored = true;
           score += 1;
-          streak += 1;
-          if (streak > bestStreak) {
-            bestStreak = streak;
-            persistBest();
+          if (score > historicMax) {
+            historicMax = score;
+            persistHistoric();
           }
           netJiggleT = NET_JIGGLE_MAX;
           ball.netAnim = {
@@ -811,8 +819,8 @@
     }
     drawDigitalScore();
     const al = en
-      ? (T.ariaBase + ' — ' + T.hudPts + ' ' + score + ' — ' + T.hudStreak + ' (in a row) ' + streak + ' — ' + T.hudBest + ' ' + bestStreak)
-      : (T.ariaBase + ' — canastas ' + score + ' — racha ' + streak + ' — ' + T.hudBest + ' ' + bestStreak);
+      ? (T.ariaBase + ' — ' + T.hudYours + ' ' + score + ' — ' + T.hudAllTime + ' ' + historicMax)
+      : (T.ariaBase + ' — ' + T.hudYours + ' ' + score + ' — ' + T.hudAllTime + ' ' + historicMax);
     canvas.setAttribute('aria-label', al);
   }
 
