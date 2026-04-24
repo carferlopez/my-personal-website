@@ -133,9 +133,9 @@
   const ballR = 14;
   const startX = 70;
   const startY = groundY - ballR;
-  // Tiro más “lob”: más arco, menos carrera en x (vx menor, vy hacia arriba mayor)
-  const angle = -0.96;
-  const maxSpeed = 20;
+  // Tiro con mucho arco, poco avance en x
+  const angle = -1.12;
+  const maxSpeed = 17.5;
   // Aro: ancho interior ~1.4× el diámetro de la pelota (vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
@@ -150,6 +150,8 @@
   const rimCx = (rimL + rimR) * 0.5;
   // Red: boca = aro, abajo más estrecho
   const netD = 50;
+  const yNetTop = rimY + RIM_T;
+  const yNetBottom = yNetTop + netD;
   const netBotW = innerRimW * 0.28;
   const netBotL = rimCx - netBotW * 0.5;
   const netBotR = rimCx + netBotW * 0.5;
@@ -158,10 +160,12 @@
   const poleL = backboardR + 26;
   const poleYTop = 225;
   const yArm = backboardB - 22;
-  // Zona de anotación: bajo el aro
-  const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
-
-  const ball = { x: startX, y: startY, vx: 0, vy: 0, active: false, scored: false };
+  const ball = {
+    x: startX, y: startY, vx: 0, vy: 0, active: false, scored: false,
+    wasAboveRim: false,
+    netAnim: null,
+    spin: 0
+  };
   let charge = 0;
   let charging = false;
   let chargeT = 0;
@@ -229,7 +233,7 @@
       ctx.lineTo(bx, y2);
       ctx.stroke();
     }
-    const yTopN = rimY + RIM_T, yBotN = yTopN + netD;
+    const yTopN = yNetTop, yBotN = yNetBottom;
     const nRow = 5, nCol = 6;
     const grid = [];
     function netX(r, c) {
@@ -327,53 +331,57 @@
   }
 
   function drawBall() {
-    const bx = ball.active ? ball.x : startX;
-    const by = ball.active ? ball.y : startY;
+    const bx = ball.active || ball.netAnim ? ball.x : startX;
+    const by = ball.active || ball.netAnim ? ball.y : startY;
     const r = ballR;
-    const grd = ctx.createRadialGradient(bx - 4, by - 4, 2, bx, by, r);
+    const inFlight = ball.active || ball.netAnim;
+    ctx.save();
+    ctx.translate(bx, by);
+    if (inFlight) ctx.rotate(ball.spin);
+    const grd = ctx.createRadialGradient(-4, -4, 2, 0, 0, r);
     grd.addColorStop(0, '#fdba74');
     grd.addColorStop(1, '#ea580c');
     ctx.beginPath();
-    ctx.arc(bx, by, r, 0, Math.PI * 2);
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.fillStyle = grd;
     ctx.fill();
-    // Costuras típicas: ecuador recto + dos curvas (Bezier) que se cruzan, sin elipses
-    ctx.save();
     ctx.beginPath();
-    ctx.arc(bx, by, r - 0.3, 0, Math.PI * 2);
+    ctx.arc(0, 0, r - 0.3, 0, Math.PI * 2);
     ctx.clip();
     ctx.strokeStyle = 'rgba(32, 12, 5, 0.92)';
     ctx.lineWidth = 1.15;
     ctx.lineCap = 'round';
     const k = 0.88;
-    // Eje horizontal (círculo máximo = línea de costura)
     ctx.beginPath();
-    ctx.moveTo(bx - r * k, by);
-    ctx.lineTo(bx + r * k, by);
+    ctx.moveTo(-r * k, 0);
+    ctx.lineTo(r * k, 0);
     ctx.stroke();
-    // Dos trazos en S (costuras de panel opuestas)
     ctx.beginPath();
-    ctx.moveTo(bx - r * 0.2, by - r * 0.72);
+    ctx.moveTo(-r * 0.2, -r * 0.72);
     ctx.bezierCurveTo(
-      bx - r * 0.7, by - r * 0.25,
-      bx - r * 0.5, by + r * 0.35,
-      bx - r * 0.1, by + r * 0.7
+      -r * 0.7, -r * 0.25,
+      -r * 0.5, r * 0.35,
+      -r * 0.1, r * 0.7
     );
     ctx.stroke();
     ctx.beginPath();
-    ctx.moveTo(bx + r * 0.2, by - r * 0.72);
+    ctx.moveTo(r * 0.2, -r * 0.72);
     ctx.bezierCurveTo(
-      bx + r * 0.7, by - r * 0.25,
-      bx + r * 0.5, by + r * 0.35,
-      bx + r * 0.1, by + r * 0.7
+      r * 0.7, -r * 0.25,
+      r * 0.5, r * 0.35,
+      r * 0.1, r * 0.7
     );
     ctx.stroke();
     ctx.restore();
+    ctx.save();
+    ctx.translate(bx, by);
+    if (inFlight) ctx.rotate(ball.spin);
     ctx.strokeStyle = 'rgba(0,0,0,0.32)';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.arc(bx, by, r, 0, Math.PI * 2);
+    ctx.arc(0, 0, r, 0, Math.PI * 2);
     ctx.stroke();
+    ctx.restore();
   }
 
   function resetBall() {
@@ -387,13 +395,16 @@
     ball.vy = 0;
     ball.active = false;
     ball.scored = false;
+    ball.wasAboveRim = false;
+    ball.netAnim = null;
+    ball.spin = 0;
     charge = 0;
     flightFrames = 0;
     bar.style.width = '0%';
   }
 
   function resolveBackboard() {
-    if (!ball.active) return;
+    if (!ball.active || ball.netAnim) return;
     const l = backboardL, t = backboardT, r = backboardL + backboardW, b = backboardB;
     const x = ball.x, y = ball.y, R = ballR;
     let qx = x, qy = y;
@@ -425,7 +436,17 @@
   }
 
   function resolveRim() {
-    if (!ball.active) return;
+    if (!ball.active || ball.netAnim) return;
+    // Pasa de arriba hacia canasta: no rebotar en el aro
+    if (
+      ball.wasAboveRim &&
+      ball.vy > 0.08 &&
+      ball.x + ballR > rimL + 2 &&
+      ball.x - ballR < rimR - 2
+    ) {
+      const yLo = ball.y - ballR, yHi = ball.y + ballR;
+      if (yLo < rimY + 8 && yHi > rimY - 2) return;
+    }
     if (ball.x + ballR < rimL - 2 || ball.x - ballR > rimR + 2) return;
     const bandT = rimY - 2, bandB = rimY + 6;
     if (ball.y + ballR < bandT || ball.y - ballR > bandB) return;
@@ -439,36 +460,77 @@
     }
   }
 
-  function checkGoal() {
-    if (ball.scored) return;
-    const cx = ball.x;
-    const cy = ball.y;
-    if (
-      cx + ballR > goal.x &&
-      cx - ballR < goal.x + goal.w &&
-      cy + ballR > goal.y &&
-      cy - ballR < goal.y + goal.h &&
-      ball.vy > 0.2
-    ) {
-      ball.scored = true;
-      score += 1;
-      scoreN.textContent = String(score);
-    }
-  }
-
   function tick() {
     if (charging) {
       chargeT += 0.07;
       charge = 0.25 + 0.75 * (Math.sin(chargeT) * 0.5 + 0.5);
       bar.style.width = (charge * 100) + '%';
     }
+    if (ball.netAnim) {
+      const na = ball.netAnim;
+      na.t = (na.t || 0) + 1;
+      const u = Math.min(1, na.t / na.dur);
+      const e = 1 - (1 - u) * (1 - u);
+      ball.x = na.sx + (na.ex - na.sx) * e;
+      ball.y = na.sy + (na.ey - na.sy) * e;
+      ball.spin += 0.19;
+      if (u >= 1) {
+        score += 1;
+        scoreN.textContent = String(score);
+        ball.netAnim = null;
+        ball.wasAboveRim = false;
+        resetBall();
+        draw();
+        if (charging) raf = requestAnimationFrame(tick);
+        return;
+      }
+      draw();
+      raf = requestAnimationFrame(tick);
+      return;
+    }
     if (ball.active) {
+      if (
+        ball.y + ballR < rimY - 2 &&
+        ball.x - ballR > rimL + 3 &&
+        ball.x + ballR < rimR - 3
+      ) {
+        ball.wasAboveRim = true;
+      }
       ball.vy += gBall;
       ball.x += ball.vx;
       ball.y += ball.vy;
-      for (let s = 0; s < 2; s++) {
-        resolveRim();
-        resolveBackboard();
+      let throughNet = false;
+      if (
+        ball.wasAboveRim &&
+        ball.vy > 0.1 &&
+        ball.x - ballR > rimL + 2 &&
+        ball.x + ballR < rimR - 2
+      ) {
+        const bot = ball.y + ballR;
+        if (bot >= rimY - 0.5 && ball.y - ballR < rimY + 14) {
+          ball.netAnim = {
+            t: 0,
+            dur: 44,
+            sx: ball.x,
+            sy: ball.y,
+            ex: rimCx,
+            ey: yNetBottom - ballR * 0.25
+          };
+          ball.vx = 0;
+          ball.vy = 0;
+          throughNet = true;
+        }
+      }
+      if (!throughNet) {
+        for (let s = 0; s < 2; s++) {
+          resolveRim();
+          resolveBackboard();
+        }
+      }
+      // Rotación en vuelo: más rápida cuanto más velocidad (efecto backspin)
+      {
+        const sp = Math.hypot(ball.vx, ball.vy);
+        ball.spin += 0.045 + 0.0072 * sp;
       }
       flightFrames++;
       if (flightFrames > 520) {
@@ -483,7 +545,6 @@
         if (Math.abs(ball.vy) < 0.4) ball.vy = 0;
         if (Math.abs(ball.vx) < 0.2) ball.vx = 0;
       }
-      // Cada tiro: al quedar en el suelo, volver al origen
       if (
         ball.y + ballR >= groundY - 0.5 &&
         Math.abs(ball.vx) < 0.11 &&
@@ -498,12 +559,16 @@
         draw();
         return;
       }
-      checkGoal();
+      if (throughNet) {
+        draw();
+        raf = requestAnimationFrame(tick);
+        return;
+      }
     } else {
       flightFrames = 0;
     }
     draw();
-    if (charging || ball.active) {
+    if (charging || ball.active || ball.netAnim) {
       raf = requestAnimationFrame(tick);
     } else {
       raf = 0;
@@ -512,11 +577,12 @@
 
   function draw() {
     drawScene();
-    if (charging && !ball.active) drawAimHint();
+    if (charging && !ball.active && !ball.netAnim) drawAimHint();
     drawBall();
   }
 
   function startCharge() {
+    if (ball.netAnim) return;
     if (ball.active) return;
     if (charging) return;
     charging = true;
@@ -534,6 +600,9 @@
     ball.vy = Math.sin(angle) * s;
     ball.x = startX;
     ball.y = startY;
+    ball.wasAboveRim = false;
+    ball.netAnim = null;
+    ball.spin = 0;
     ball.active = true;
     ball.scored = false;
     if (!raf) raf = requestAnimationFrame(tick);
