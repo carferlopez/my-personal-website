@@ -224,34 +224,47 @@
 
   // Red encima de la pelota cuando esta atraviesa el aro (véase draw)
   function drawNet() {
+    const e = netBallElastic();
+    const y1e = e.y1, y2e = e.y2;
+    const topL = rimL;
+    const topR = rimR;
+    const effBotL = e.botL, effBotR = e.botR;
+    const jig = netJiggleT > 0
+      ? (3.2 * (netJiggleT / NET_JIGGLE_MAX)) * Math.sin(netJiggleT * 0.7) : 0;
     ctx.strokeStyle = 'rgba(255,255,255,0.4)';
     ctx.lineWidth = 1;
     const nStr = 6;
-    const topL = rimL;
-    const topR = rimR;
-    const jig = netJiggleT > 0
-      ? (3.2 * (netJiggleT / NET_JIGGLE_MAX)) * Math.sin(netJiggleT * 0.7) : 0;
     for (let i = 0; i < nStr; i++) {
       const u = (i + 0.5) / nStr;
       const tx = lerpY(topL, topR, u);
-      let bx = lerpY(netBotL, netBotR, u);
-      bx += jig * (0.35 + 0.65 * Math.sin(u * Math.PI * 2));
-      const y1 = rimY + RIM_T;
-      const y2 = y1 + netD;
-      ctx.beginPath();
-      ctx.moveTo(tx, y1);
-      ctx.lineTo(bx, y2);
-      ctx.stroke();
+      let bx2 = lerpY(effBotL, effBotR, u);
+      bx2 += jig * (0.35 + 0.65 * Math.sin(u * Math.PI * 2));
+      if (e.active) {
+        const tAlong = (e.yS - y1e) / (y2e - y1e);
+        const onChord = lerpY(tx, bx2, tAlong);
+        const out = (u - 0.5) * 2;
+        const midX = onChord + out * e.kink;
+        ctx.beginPath();
+        ctx.moveTo(tx, y1e);
+        ctx.lineTo(midX, e.yS);
+        ctx.lineTo(bx2, y2e);
+        ctx.stroke();
+      } else {
+        ctx.beginPath();
+        ctx.moveTo(tx, y1e);
+        ctx.lineTo(bx2, y2e);
+        ctx.stroke();
+      }
     }
     const yTopN = yNetTop, yBotN = yNetBottom;
     const nRow = 5, nCol = 6;
     const grid = [];
+    const wBotE = effBotR - effBotL;
     function netX(r, c) {
       const t = r / nRow;
       const y = lerpY(yTopN, yBotN, t);
       const wTop = topR - topL;
-      const wBot = netBotR - netBotL;
-      const w = wTop * (1 - t) + wBot * t;
+      const w = wTop * (1 - t) + wBotE * t;
       const cx = rimCx;
       const u = c / nCol;
       return { x: cx - w * 0.5 + u * w, y: y };
@@ -289,6 +302,30 @@
     const pastRim = by + ballR > rimY - 2;
     const inNetColumn = by - ballR < yNetBottom + 12;
     return horiz && pastRim && inNetColumn;
+  }
+
+  /** Cede elásticamente: se ensancha la boca baja y los hilos se corven al paso del balón. */
+  function netBallElastic() {
+    const y1 = rimY + RIM_T, y2 = y1 + netD;
+    const def = {
+      active: false,
+      botL: netBotL,
+      botR: netBotR,
+      yS: (y1 + y2) * 0.5,
+      kink: 0,
+      y1, y2
+    };
+    if (!ball.netAnim && !ballShouldRenderBehindNet()) return def;
+    const by = ball.y;
+    const tDepth = Math.max(0, Math.min(1, (by - y1) / netD));
+    const narrowW = netBotR - netBotL;
+    const minClearW = 2 * ballR + 24;
+    const open = 1 - Math.pow(1 - tDepth, 1.4);
+    const wBotE = lerpY(narrowW, Math.max(narrowW, minClearW), open);
+    const botL = rimCx - wBotE * 0.5, botR = rimCx + wBotE * 0.5;
+    const yS = Math.max(y1 + 2, Math.min(by, y2 - 2));
+    const kink = 3.5 + 12 * tDepth * (0.4 + 0.6 * open);
+    return { active: true, botL, botR, yS, kink, y1, y2 };
   }
 
   // Misma integración que el tiro: vy += gBall, x += vx, y += vy
