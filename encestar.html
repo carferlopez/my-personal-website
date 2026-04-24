@@ -133,17 +133,18 @@
   const ballR = 14;
   const startX = 70;
   const startY = groundY - ballR;
-  const angle = -0.68;
-  const maxSpeed = 24;
+  // Tiro más “lob”: más arco, menos carrera en x (vx menor, vy hacia arriba mayor)
+  const angle = -0.96;
+  const maxSpeed = 20;
   // Aro: ancho interior ~1.4× el diámetro de la pelota (vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
   const backboardL = W - 86;
   const backboardW = 7;
-  const backboardT = 198;
-  const backboardB = 350;
+  const backboardT = 243;
+  const backboardB = 395;
   const backboardR = backboardL + backboardW;
-  const rimY = 278;
+  const rimY = 323;
   const rimR = backboardL - 8;
   const rimL = rimR - innerRimW;
   const rimCx = (rimL + rimR) * 0.5;
@@ -155,7 +156,7 @@
   // Soporte: derecha del tablero (+x)
   const poleW = 12;
   const poleL = backboardR + 26;
-  const poleYTop = 180;
+  const poleYTop = 225;
   const yArm = backboardB - 22;
   // Zona de anotación: bajo el aro
   const goal = { x: rimL - 2, y: rimY + RIM_T + 4, w: innerRimW + 4, h: 32 };
