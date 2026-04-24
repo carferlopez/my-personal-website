@@ -375,10 +375,11 @@
   }
 
   .card-title {
-    font-size: 1.8rem; /* sin container queries */
+    /* Siempre > .card-practice: peso 900 y tamaño mínimo por encima del cuerpo */
+    font-size: 1.9rem; /* sin container queries */
     font-weight: 900;
     letter-spacing: -0.03em;
-    line-height: 1.12;
+    line-height: 1.1;
     text-transform: uppercase;
     min-height: 2.2em;
     max-width: 100%;
@@ -390,23 +391,23 @@
   }
   @supports (font-size: 1cqi) {
     .card-title {
-      /* cqi = ancho de la .card; piso/techos más altos que antes */
-      font-size: clamp(1.05rem, 0.15rem + 4.2cqi, 3rem);
+      /* max(): el título nunca queda por debajo del cuerpo aunque la tarjeta sea estrecha (3 col) */
+      font-size: max(1.6rem, min(3.3rem, 0.2rem + 5.1cqi));
     }
   }
   @supports not (font-size: 1cqi) {
     @media (max-width: 480px) {
-      .card-title { font-size: min(1.6rem, 4.2vw + 0.5rem); }
+      .card-title { font-size: min(1.7rem, 4.5vw + 0.6rem); }
     }
-    @media (min-width: 640px) { .card-title { font-size: 2.1rem; } }
-    @media (min-width: 768px) { .card-title { font-size: 2.3rem; } }
-    @media (min-width: 1024px) { .card-title { font-size: 2.55rem; } }
-    @media (min-width: 1280px) { .card-title { font-size: 2.7rem; } }
+    @media (min-width: 640px) { .card-title { font-size: 2.2rem; } }
+    @media (min-width: 768px) { .card-title { font-size: 2.4rem; } }
+    @media (min-width: 1024px) { .card-title { font-size: 2.6rem; } }
+    @media (min-width: 1280px) { .card-title { font-size: 2.8rem; } }
   }
 
-  /* Frase en primera persona: cuerpo principal, más grande que cita y autor */
+  /* Frase en primera persona: siempre claramente por debajo del título (peso 500) */
   .card-practice {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 500;
     line-height: 1.5;
     color: var(--black);
@@ -417,10 +418,10 @@
     line-break: auto;
     transition: color 0.1s;
   }
-  @media (min-width: 640px) { .card-practice { font-size: 1.45rem; line-height: 1.48; } }
-  @media (min-width: 768px) { .card-practice { font-size: 1.52rem; } }
-  @media (min-width: 1024px) { .card-practice { font-size: 1.62rem; } }
-  @media (min-width: 1280px) { .card-practice { font-size: 1.7rem; } }
+  @media (min-width: 640px) { .card-practice { font-size: 1.3rem; line-height: 1.48; } }
+  @media (min-width: 768px) { .card-practice { font-size: 1.36rem; } }
+  @media (min-width: 1024px) { .card-practice { font-size: 1.42rem; } }
+  @media (min-width: 1280px) { .card-practice { font-size: 1.48rem; } }
 
   .card:hover .card-practice { color: var(--white); }
 
