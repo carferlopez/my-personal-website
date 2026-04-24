@@ -345,7 +345,7 @@
     font-weight: 900;
     line-height: 0.9;
     margin-bottom: 0.5rem;
-    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
+    transition: color 0.1s, border-color 0.1s;
   }
   @media (min-width: 640px) {
     .card-num { font-size: 2.25rem; padding-bottom: 0.35rem; }
@@ -356,13 +356,11 @@
   @media (min-width: 1024px) {
     .card-num { font-size: 3.75rem; padding-bottom: 0.45rem; }
   }
-  /* Mismo criterio que .contact-btn: inversión al hover (sección #filosofia, card oscura) */
+  /* Hover: sin relleno; número y raya (border-bottom: currentColor) al color inverso */
   #filosofia .card:not(:hover) .card-num:hover {
-    background: var(--white);
     color: var(--black);
   }
   #filosofia .card:hover .card-num:hover {
-    background: var(--black);
     color: var(--white);
   }
 
