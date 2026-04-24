@@ -72,16 +72,18 @@ function escapeHtml(value) {
 }
 
 app.post("/api/send-email", async (req, res) => {
-  const { name, email, message, website, startedAt } = req.body ?? {};
+  const { name, email, message, website, _gotcha, topic, startedAt } = req.body ?? {};
   const ip = getClientIp(req);
   const startedAtMs = Number(startedAt);
   const safeName = typeof name === "string" ? name.trim() : "";
   const safeEmail = typeof email === "string" ? email.trim() : "";
   const safeMessage = typeof message === "string" ? message.trim() : "";
   const safeWebsite = typeof website === "string" ? website.trim() : "";
+  const safeGotcha = typeof _gotcha === "string" ? _gotcha.trim() : "";
+  const safeTopic = typeof topic === "string" ? topic.trim() : "";
   const now = Date.now();
 
-  if (safeWebsite.length > 0) {
+  if (safeWebsite.length > 0 || safeGotcha.length > 0) {
     return res.status(400).json({ error: "Rejected." });
   }
 
@@ -101,7 +103,7 @@ app.post("/api/send-email", async (req, res) => {
     return res.status(400).json({ error: "Invalid email." });
   }
 
-  if (safeMessage.length < 10 || safeMessage.length > 5000) {
+  if (safeMessage.length < 20 || safeMessage.length > 5000) {
     return res.status(400).json({ error: "Invalid message." });
   }
 
@@ -111,11 +113,16 @@ app.post("/api/send-email", async (req, res) => {
   }
 
   try {
-    const subject = `Nuevo contacto web - ${safeName}`;
+    const subject = `Nuevo contacto web - ${safeName}${safeTopic ? ` [${safeTopic}]` : ""}`;
+    const topicLine =
+      safeTopic.length > 0
+        ? `<p><strong>Tema:</strong> ${escapeHtml(safeTopic)}</p>`
+        : "";
     const html = `
       <h2>Nuevo mensaje desde carlosmakes.com</h2>
       <p><strong>Nombre:</strong> ${escapeHtml(safeName)}</p>
       <p><strong>Email:</strong> ${escapeHtml(safeEmail)}</p>
+      ${topicLine}
       <p><strong>Mensaje:</strong></p>
       <p>${escapeHtml(safeMessage).replace(/\n/g, "<br>")}</p>
     `;

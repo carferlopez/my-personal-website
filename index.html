@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlos Fernández — AI Consultant & Indie Maker</title>
-<meta name="description" content="Consultor de IA y creador independiente. Diseño y construyo productos y sistemas digitales de principio a fin, con la IA como palanca.">
+<title>Carlos Fernández — Systems Architect & Indie Maker</title>
+<meta name="description" content="Si queremos resultados distintos, ¿por qué seguimos haciendo lo mismo?">
 <meta name="author" content="Carlos Fernández">
 
 <!-- Open Graph / Facebook / LinkedIn -->
@@ -12,8 +12,8 @@
 <meta property="og:url" content="https://carlosmakes.com/">
 <meta property="og:locale" content="es_ES">
 <meta property="og:locale:alternate" content="en_US">
-<meta property="og:title" content="Carlos Fernández — AI Consultant & Indie Maker">
-<meta property="og:description" content="Diseño y construyo productos y sistemas digitales de principio a fin, con la IA como palanca.">
+<meta property="og:title" content="Carlos Fernández — Systems Architect & Indie Maker">
+<meta property="og:description" content="Si queremos resultados distintos, ¿por qué seguimos haciendo lo mismo?">
 <meta property="og:image" content="https://carlosmakes.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -21,8 +21,8 @@
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Carlos Fernández — AI Consultant & Indie Maker">
-<meta name="twitter:description" content="Diseño y construyo productos y sistemas digitales de principio a fin, con la IA como palanca.">
+<meta name="twitter:title" content="Carlos Fernández — Systems Architect & Indie Maker">
+<meta name="twitter:description" content="Si queremos resultados distintos, ¿por qué seguimos haciendo lo mismo?">
 <meta name="twitter:image" content="https://carlosmakes.com/og.png">
 <meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
 
@@ -69,21 +69,6 @@
   /* ==================== LAYOUT ==================== */
   .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
   @media (min-width: 768px) { .container { padding: 0 3rem; } }
-
-  /* Bandas alternas: hero claro → bloque oscuro → claro → oscuro */
-  .section-band--light {
-    background: var(--white);
-    color: var(--black);
-  }
-  .section-band--light .subheading { color: var(--gray); }
-  .section-band--dark {
-    background: var(--black);
-    color: var(--white);
-  }
-  .section-band--dark .big-heading { color: var(--white); }
-  .section-band--dark .subheading { color: var(--gray-mid); }
-  .section-band--dark .projects-note { color: var(--gray-mid); }
-  .section-band--dark .contact-sub { color: var(--gray-mid); }
 
   /* ==================== HERO ==================== */
   .hero {
@@ -136,35 +121,73 @@
   }
 
   .logo {
-    font-size: 1.125rem;
+    display: inline-block;
+    font-size: 1.4175rem;
     font-weight: 900;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: -0.05em;
+    text-decoration: none;
+    color: inherit;
+    padding: 0.375rem 0.5rem;
+    margin: -0.375rem -0.5rem;
+    transition: background-color 0.1s, color 0.1s;
+    cursor: default;
+    -webkit-user-select: none;
+    user-select: none;
   }
-  @media (min-width: 640px) { .logo { font-size: 1.25rem; } }
-  @media (min-width: 768px) { .logo { font-size: 1.5rem; } }
-  .logo .gray { color: var(--gray); }
+  @media (min-width: 640px) { .logo { padding: 0.5rem 0.6rem; margin: -0.5rem -0.6rem; } }
+  @media (min-width: 640px) { .logo { font-size: 1.575rem; } }
+  @media (min-width: 768px) { .logo { font-size: 1.89rem; } }
+  /* Más claro que --gray: mismo gris que --gray-mid (secundario, estilo og) */
+  .logo .gray { color: var(--gray-mid); }
   .logo .red { color: var(--red); }
+  /* Mismo criterio que .header-top nav a:hover: fondo negro, nombre en blanco; gris y rojo se mantienen (sin enlace) */
+  .logo:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+  .logo:hover .gray { color: var(--gray-mid); }
+  .logo:hover .red { color: var(--red); }
 
-  nav { display: flex; gap: 0.5rem; align-items: center; }
-  @media (min-width: 640px) { nav { gap: 1rem; } }
-  @media (min-width: 768px) { nav { gap: 1.25rem; } }
+  .header-top nav { display: flex; gap: 0.5rem; align-items: center; }
+  @media (min-width: 640px) { .header-top nav { gap: 1rem; } }
+  @media (min-width: 768px) { .header-top nav { gap: 1.25rem; } }
 
-  nav a {
+  .header-top nav a {
     padding: 0.375rem;
     min-width: 2rem;
     min-height: 2rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--black);
     transition: background-color 0.1s, color 0.1s;
   }
-  @media (min-width: 640px) { nav a { padding: 0.5rem; } }
-  nav a:hover { background: var(--black); color: var(--white); }
-  nav svg { width: 1rem; height: 1rem; display: block; }
-  @media (min-width: 640px) { nav svg { width: 1.25rem; height: 1.25rem; } }
-  @media (min-width: 768px) { nav svg { width: 1.5rem; height: 1.5rem; } }
+  @media (min-width: 640px) { .header-top nav a { padding: 0.5rem; } }
+  .header-top nav a:hover {
+    background: var(--black);
+    color: var(--white);
+  }
+  .header-top nav svg {
+    width: 1rem;
+    height: 1rem;
+    display: block;
+    flex-shrink: 0;
+    color: inherit;
+  }
+  @media (min-width: 640px) { .header-top nav svg { width: 1.25rem; height: 1.25rem; } }
+  @media (min-width: 768px) { .header-top nav svg { width: 1.5rem; height: 1.5rem; } }
+  /* Asegurar inversión: currentColor pasa a blanco; trazos y rellenables siguen al icono */
+  .header-top nav a:hover svg * {
+    stroke: currentColor;
+  }
+  .header-top nav a:hover svg [fill="none"] {
+    fill: none;
+  }
+  .header-top nav a:hover svg path:not([fill="none"]) {
+    fill: currentColor;
+  }
 
   .lang-toggle {
     font-size: 0.625rem;
@@ -324,16 +347,35 @@
   .card:hover .card-quote, .card:hover .card-author { color: var(--white); }
 
   .card-num {
+    display: inline-block;
+    align-self: flex-start;
+    border: none;
+    border-bottom: 4px solid currentColor;
+    padding: 0 0 0.3rem 0;
     font-size: 2.5rem;
     font-weight: 900;
     line-height: 0.9;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.5rem;
+    box-shadow: none;
+    text-shadow: none;
+    filter: none;
+    transition: color 0.1s, border-color 0.1s;
   }
-  @media (min-width: 640px) { .card-num { font-size: 3rem; } }
-  @media (min-width: 768px) { .card-num { font-size: 3.85rem; } }
-  @media (min-width: 1024px) { .card-num { font-size: 5rem; } }
+  @media (min-width: 640px) {
+    .card-num { font-size: 3rem; padding-bottom: 0.35rem; }
+  }
+  @media (min-width: 768px) {
+    .card-num { font-size: 3.85rem; padding-bottom: 0.4rem; }
+  }
+  @media (min-width: 1024px) {
+    .card-num { font-size: 5rem; padding-bottom: 0.45rem; }
+  }
+  .card .card-num:hover {
+    color: var(--red);
+  }
 
   .card-title {
+    /* min-width:0 + width:100% = el flex/grid permite salto de línea dentro del padding */
     display: block;
     width: 100%;
     min-width: 0;
@@ -354,6 +396,7 @@
   }
   @supports (font-size: 1cqi) {
     .card-title {
+      /* Máx. moderado para que quepa en 2–3 líneas; piso > cuerpo (.card-practice) */
       font-size: max(1.65rem, min(2.75rem, 0.18rem + 4.6cqi));
     }
   }
@@ -367,7 +410,7 @@
     @media (min-width: 1280px) { .card-title { font-size: 2.8rem; } }
   }
 
-  /* Frase en primera persona: claramente más pequeña que .card-title */
+  /* Frase en primera persona: claramente más pequeña que .card-title (900) */
   .card-practice {
     font-size: 1.05rem;
     font-weight: 500;
@@ -385,12 +428,7 @@
   @media (min-width: 1024px) { .card-practice { font-size: 1.16rem; } }
   @media (min-width: 1280px) { .card-practice { font-size: 1.2rem; } }
 
-  /* Hover: invierte color junto con el resto de la card */
   .card:hover .card-practice { color: var(--white); }
-
-  /* En la sección #filosofia (fondo negro) el color base se invierte */
-  #filosofia .card .card-practice { color: var(--white); }
-  #filosofia .card:hover .card-practice { color: var(--black); }
 
   .card-quote-wrap {
     display: flex;
@@ -405,22 +443,6 @@
   }
   .card:hover .card-quote-wrap { border-top-color: rgba(255, 255, 255, 0.3); }
 
-  #filosofia .card {
-    border-color: var(--white);
-    background: var(--black);
-    color: var(--white);
-  }
-  #filosofia .card-quote { color: var(--gray-mid); }
-  #filosofia .card-author { color: var(--white); }
-  #filosofia .card-quote-wrap { border-top-color: rgba(255, 255, 255, 0.25); }
-
-  #filosofia .card:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  #filosofia .card:hover .card-quote { color: var(--gray); }
-  #filosofia .card:hover .card-author { color: var(--black); }
-  #filosofia .card:hover .card-quote-wrap { border-top-color: var(--gray-light); }
   /* Cita: por debajo de .card-practice; autor aún un poco menor */
   .card-quote {
     font-style: italic;
@@ -456,6 +478,8 @@
   /* ==================== CONTACT ==================== */
   .contact-box {
     border: 8px solid var(--black);
+    background: var(--white);
+    color: var(--black);
     padding: 2rem;
     display: flex;
     flex-direction: column;
@@ -468,79 +492,52 @@
   @media (min-width: 768px) { .contact-box { padding: 5rem; } }
   .contact-box:hover { background: var(--black); color: var(--white); }
   .contact-box:hover .contact-sub { color: var(--gray-light); }
-
-  #contacto.section-band--dark .contact-box {
-    border-color: var(--white);
-    color: var(--white);
-  }
-  #contacto.section-band--dark .contact-box:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  #contacto.section-band--dark .contact-box:hover .big-heading { color: var(--black); }
-  #contacto.section-band--dark .contact-box:hover .contact-label { color: var(--black); }
-  #contacto.section-band--dark .contact-box:hover .contact-sub { color: var(--gray); }
+  .contact-box:hover .big-heading { color: var(--white); }
+  .contact-box:hover .big-heading .red { color: var(--red); }
 
   .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
 
-  .contact-form {
-    display: grid;
-    gap: 0.875rem;
-    width: 100%;
-    max-width: 42rem;
-    margin-top: 1rem;
-  }
-  @media (min-width: 640px) { .contact-form { gap: 1rem; margin-top: 1.25rem; } }
-  .contact-field {
-    display: grid;
-    gap: 0.375rem;
-  }
-  .contact-label {
-    font-size: 0.8rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-  }
-  .contact-input,
-  .contact-textarea {
-    width: 100%;
-    border: 2px solid currentColor;
-    background: transparent;
-    color: inherit;
-    font: inherit;
-    padding: 0.7rem 0.75rem;
-  }
-  .contact-textarea {
-    min-height: 8rem;
-    resize: vertical;
-  }
-  .contact-input::placeholder,
-  .contact-textarea::placeholder {
-    color: currentColor;
-    opacity: 0.65;
-  }
-  .contact-submit {
-    justify-self: start;
-    border: 3px solid currentColor;
-    background: transparent;
-    color: inherit;
+  .contact-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
+  @media (min-width: 640px) { .contact-buttons { gap: 1rem; margin-top: 1.5rem; } }
+
+  .contact-btn {
+    border: 3px solid;
     padding: 0.45rem 0.9rem;
     font-size: 0.9rem;
     font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    transition: background-color 0.1s, color 0.1s, opacity 0.1s;
+    text-transform: capitalize;
+    display: inline-block;
+    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
   }
-  @media (min-width: 640px) { .contact-submit { padding: 0.6rem 1.2rem; font-size: 1rem; } }
-  .contact-submit:hover { background: var(--white); color: var(--black); }
-  .contact-submit:disabled { opacity: 0.6; cursor: wait; }
-  .contact-status {
-    min-height: 1.25rem;
-    font-size: 0.875rem;
-    font-weight: 600;
+  @media (min-width: 640px) { .contact-btn { padding: 0.6rem 1.2rem; font-size: 1.05rem; } }
+  @media (min-width: 768px) { .contact-btn { font-size: 1.15rem; } }
+  @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
+  /* Caja clara: botón con borde negro -> hover sólido negro + texto blanco */
+  .contact-box .contact-btn {
+    color: var(--black);
+    background: transparent;
+    border-color: var(--black);
   }
+  .contact-box .contact-btn:hover {
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
+  }
+  /* Caja con hover (fondo negro): botón contorno claro -> hover sólido blanco + texto negro */
+  .contact-box:hover .contact-btn {
+    color: var(--white);
+    background: transparent;
+    border-color: var(--white);
+  }
+  .contact-box:hover .contact-btn:hover {
+    background: var(--white);
+    color: var(--black);
+    border-color: var(--white);
+  }
+
+
   .contact-alt {
     margin-top: 0.25rem;
     display: flex;
@@ -554,7 +551,9 @@
     opacity: 0.85;
   }
   .contact-alt-link {
-    border: 2px solid currentColor;
+    border: 2px solid var(--black);
+    background: var(--white);
+    color: var(--black);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
     font-weight: 800;
@@ -562,21 +561,137 @@
     letter-spacing: 0.05em;
     transition: background-color 0.1s, color 0.1s;
   }
-  .contact-alt-link:hover { background: var(--white); color: var(--black); }
+  .contact-alt-link:hover { background: var(--black); color: var(--white); }
+  .contact-box:hover .contact-alt-link {
+    border-color: var(--white);
+    background: var(--black);
+    color: var(--white);
+  }
+  .contact-box:hover .contact-alt-link:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+
+  .contact-form-wrap {
+    width: 100%;
+    max-width: 100%;
+  }
+  .contact-form__lead {
+    margin-top: 2rem;
+    color: var(--gray);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    max-width: 42rem;
+  }
+  @media (min-width: 640px) { .contact-form__lead { font-size: 1rem; } }
+  .contact-box:hover .contact-form__lead { color: var(--gray-light); }
+  .contact-form {
+    margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    max-width: 42rem;
+  }
+  .contact-form__row { display: flex; flex-direction: column; gap: 0.35rem; }
+  .contact-form__label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .contact-form__input,
+  .contact-form__select,
+  .contact-form__textarea {
+    width: 100%;
+    max-width: 100%;
+    font: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.55rem 0.7rem;
+    border: 3px solid var(--black);
+    background: var(--white);
+    color: var(--black);
+    min-width: 0;
+  }
+  .contact-form__textarea {
+    min-height: 9rem;
+    resize: vertical;
+    line-height: 1.5;
+  }
+  .contact-box:hover .contact-form__input,
+  .contact-box:hover .contact-form__select,
+  .contact-box:hover .contact-form__textarea {
+    border-color: var(--white);
+    color: var(--white);
+    background: transparent;
+  }
+  .contact-box:hover .contact-form__select option {
+    color: var(--black);
+    background: var(--white);
+  }
+  .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
+  .contact-form__status {
+    color: var(--red);
+    font-size: 0.95rem;
+    font-weight: 600;
+    max-width: 42rem;
+  }
+  .contact-box:hover .contact-form__status { color: var(--red); }
+  .contact-form__done {
+    margin-top: 1.5rem;
+    padding: 1rem 0;
+    max-width: 42rem;
+    font-size: 1.05rem;
+    line-height: 1.55;
+    color: var(--gray);
+    border-top: 1px solid var(--gray-light);
+  }
+  .contact-box:hover .contact-form__done { color: var(--gray-light); border-top-color: rgba(255, 255, 255, 0.25); }
+  .contact-form__hp {
+    position: absolute;
+    left: -10000px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .contact-form { position: relative; }
 
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
     margin-top: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.7rem;
+    text-align: left;
+    /* Ancho del .container (misma anchura que el carrusel de posters) */
+    max-width: 100%;
   }
-  .projects-note {
-    font-size: 0.875rem;
+  .projects-strap__lead {
+    display: block;
+    color: var(--black);
+    font-weight: 900;
+    letter-spacing: 0.02em;
+    line-height: 1.25;
+    font-size: 1.05em;
+  }
+  @media (min-width: 640px) { .projects-strap__lead { font-size: 1.08em; } }
+  @media (min-width: 768px) { .projects-strap__lead { font-size: 1.1em; } }
+  @media (min-width: 1024px) { .projects-strap__lead { font-size: 1.12em; } }
+  .projects-strap__intro {
+    display: block;
     color: var(--gray);
-    margin-top: 0.5rem;
+    font-weight: 500;
     line-height: 1.5;
-    max-width: 40rem;
   }
-  @media (min-width: 640px) { .projects-note { font-size: 0.9375rem; } }
-
+  .projects-strap a {
+    color: var(--red);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.12em;
+    cursor: pointer;
+  }
+  .projects-strap a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
   .projects-chevron-wrap {
     position: relative;
     margin-top: 2.5rem;
@@ -800,7 +915,7 @@
 <main>
 
   <!-- ==================== HERO ==================== -->
-  <section class="hero section-band--light">
+  <section class="hero" id="inicio">
     <div class="hero-inner">
       <header>
         <div class="header-top">
@@ -839,16 +954,16 @@
   </section>
 
   <!-- ==================== PHILOSOPHY ==================== -->
-  <section id="filosofia" class="section-pad section-band--dark">
+  <section id="filosofia" class="section-pad">
     <div class="container">
-      <p class="big-heading"><span id="philosophyTitle">DISEÑO Y CONSTRUYO PRODUCTOS Y SISTEMAS DIGITALES DE PRINCIPIO A FIN CON LA IA COMO PALANCA</span><span class="red">.</span></p>
-      <p class="subheading" id="philosophySub">Aplicando estos principios:</p>
+      <p class="big-heading"><span id="philosophyTitle">SI QUEREMOS RESULTADOS DISTINTOS, ¿POR QUÉ SEGUIMOS HACIENDO LO MISMO</span><span id="philosophyEndGroup"><span id="philosophyEndBlack"></span><span class="red">?</span></span></p>
+      <p class="subheading" id="philosophySub">Para evitar hacer más de lo mismo, aplico el siguiente filtro a mis proyectos:</p>
 
       <div class="cards-grid">
         <article class="card">
           <div class="card-num">01</div>
-          <h3 class="card-title" id="card1Title">CREATIVIDAD</h3>
-          <p class="card-practice" id="card1Practice">Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras.</p>
+          <h3 class="card-title" id="card1Title">CREATIVIDAD + CRITERIO</h3>
+          <p class="card-practice" id="card1Practice">Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.</p>
           <div class="card-quote-wrap">
             <p class="card-quote" id="card1Quote">"Si quieres tener ideas originales, necesitas vivir una vida original."</p>
             <p class="card-author">— Pieter Levels</p>
@@ -856,20 +971,20 @@
         </article>
         <article class="card">
           <div class="card-num">02</div>
-          <h3 class="card-title" id="card2Title">MENOS ES MÁS</h3>
-          <p class="card-practice" id="card2Practice">Construyo lo mínimo que funciona. Lo justo, ni más ni menos.</p>
+          <h3 class="card-title" id="card2Title">LANZAMIENTO TEMPRANO</h3>
+          <p class="card-practice" id="card2Practice">Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card2Quote">"Todo debe hacerse tan simple como sea posible, pero no más simple."</p>
-            <p class="card-author">— Albert Einstein</p>
+            <p class="card-quote" id="card2Quote">"Los clientes no saben lo que quieren hasta que se lo enseñas."</p>
+            <p class="card-author" id="card2Author">— Steve Jobs</p>
           </div>
         </article>
         <article class="card">
           <div class="card-num">03</div>
-          <h3 class="card-title" id="card3Title">JUST SHIP</h3>
-          <p class="card-practice" id="card3Practice">Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.</p>
+          <h3 class="card-title" id="card3Title">MENOS ES MÁS</h3>
+          <p class="card-practice" id="card3Practice">Construyo lo mínimo que demuestra resultados. Simple, efectivo y elegante, sin florituras innecesarias.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card3Quote">"Los clientes no saben lo que quieren hasta que se lo enseñas."</p>
-            <p class="card-author">— Steve Jobs</p>
+            <p class="card-quote" id="card3Quote">"Todo debe hacerse tan simple como sea posible, pero no más simple."</p>
+            <p class="card-author" id="card3Author">— Albert Einstein</p>
           </div>
         </article>
       </div>
@@ -877,11 +992,10 @@
   </section>
 
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
-  <section id="proyectos" class="section-pad section-band--light projects-section" aria-labelledby="projectsTitle">
+  <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <div class="container">
-      <h2 class="big-heading" id="projectsTitle">PROYECTOS Y APPS</h2>
-      <p class="subheading projects-strap" id="projectsStrap">Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.</p>
-      <p class="projects-note" id="projectsNote">La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.</p>
+      <h2 class="big-heading" id="projectsTitle">TRABAJOS</h2>
+      <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Muy pronto podrás ver todos los proyectos en los que estoy trabajando. Mientras tanto, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> que he programado para que no te aburras... 🏀</span></p>
 
       <div class="projects-chevron-wrap">
         <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
@@ -894,35 +1008,56 @@
   </section>
 
   <!-- ==================== CONTACT ==================== -->
-  <section id="contacto" class="section-pad section-band--dark">
+  <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
         <h2 class="big-heading"><span id="contactTitle">¿EN QUÉ PUEDO AYUDARTE</span><span class="red" id="contactMark">?</span></h2>
         <p class="contact-sub" id="contactSub">Cuéntamelo aquí.</p>
 
-        <form id="contactForm" class="contact-form" novalidate>
-          <input type="text" name="website" id="contactWebsite" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0;pointer-events:none;">
-          <input type="hidden" name="startedAt" id="contactStartedAt" value="">
-          <div class="contact-field">
-            <label class="contact-label" for="contactName" id="contactNameLabel">Nombre</label>
-            <input class="contact-input" id="contactName" name="name" type="text" autocomplete="name" maxlength="120" required>
-          </div>
-          <div class="contact-field">
-            <label class="contact-label" for="contactEmail" id="contactEmailLabel">Email</label>
-            <input class="contact-input" id="contactEmail" name="email" type="email" autocomplete="email" maxlength="254" required>
-          </div>
-          <div class="contact-field">
-            <label class="contact-label" for="contactMessage" id="contactMessageLabel">Mensaje</label>
-            <textarea class="contact-textarea" id="contactMessage" name="message" maxlength="5000" required></textarea>
-          </div>
-          <button class="contact-submit" id="contactSubmit" type="submit">Enviar mensaje</button>
-          <p class="contact-status" id="contactStatus" role="status" aria-live="polite"></p>
-          <div class="contact-alt">
-            <span class="contact-alt-label" id="contactAltLabel">O si prefieres:</span>
-            <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
-            <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          </div>
-        </form>
+        <div class="contact-form-wrap" id="contactFormBlock">
+          <p class="contact-form__lead" id="contactFormLead"></p>
+          <form id="contactForm" class="contact-form" novalidate>
+            <input type="hidden" name="startedAt" id="cf-started-at" value="">
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-name" id="label-cf-name">Nombre</label>
+              <input class="contact-form__input" type="text" name="name" id="cf-name" required maxlength="200" autocomplete="name" />
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-email" id="label-cf-email">Email</label>
+              <input class="contact-form__input" type="email" name="email" id="cf-email" required autocomplete="email" />
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-topic" id="label-cf-topic">Tema</label>
+              <select class="contact-form__select" name="topic" id="cf-topic" required>
+                <option value="" id="cf-topic-placeholder">—</option>
+                <option value="colaboracion" id="opt-cf-colaboracion">Colaboración</option>
+                <option value="proyecto" id="opt-cf-proyecto">Proyecto</option>
+                <option value="consulta" id="opt-cf-consulta">Consulta</option>
+                <option value="otro" id="opt-cf-otro">Otro</option>
+              </select>
+            </div>
+            <div class="contact-form__row">
+              <label class="contact-form__label" for="cf-message" id="label-cf-message">Mensaje</label>
+              <textarea class="contact-form__textarea" name="message" id="cf-message" required minlength="20" maxlength="5000" rows="6"></textarea>
+            </div>
+            <div class="contact-form__row contact-form__hp" aria-hidden="true">
+              <label for="cf-gotcha">Company website</label>
+              <input type="text" name="_gotcha" id="cf-gotcha" tabindex="-1" autocomplete="off" />
+            </div>
+            <div class="contact-form__row">
+              <button type="submit" class="contact-btn contact-form__submit" id="contactFormSubmit">Enviar</button>
+            </div>
+          </form>
+          <p class="contact-form__status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
+        </div>
+        <div class="contact-alt">
+          <span class="contact-alt-label" id="contactAltLabel">O si prefieres:</span>
+          <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
+          <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        </div>
+        <div class="contact-form__done" id="contactFormSuccess" hidden>
+          <p id="contactFormSuccessText"></p>
+        </div>
       </div>
     </div>
   </section>
@@ -935,78 +1070,108 @@
   // ============================================
   const t = {
     es: {
-      typewriter: ["CONSULTOR DE IA.", "CREADOR INDEPENDIENTE."],
+      typewriter: [
+        "DISEÑO SOLUCIONES DIGITALES CREATIVAS.",
+        "LAS VALIDO CON USUARIOS REALES.",
+        "Y SOLO ENTONCES LAS CONSTRUYO.",
+        "BIENVENIDO A MI LABORATORIO DE IDEAS.",
+      ],
       scrollHint: "[ SOBRE MÍ ] ↓",
-      philosophyTitle: "DISEÑO Y CONSTRUYO PRODUCTOS Y SISTEMAS DIGITALES DE PRINCIPIO A FIN CON LA IA COMO PALANCA",
-      philosophySub: "Aplicando estos principios:",
-      card1Title: "CREATIVIDAD",
-      card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras.",
+      philosophyTitle: "SI QUEREMOS RESULTADOS DISTINTOS, ¿POR QUÉ SEGUIMOS HACIENDO LO MISMO",
+      philosophyEndBlack: "",
+      philosophySub: "Para evitar hacer más de lo mismo, aplico el siguiente filtro a mis proyectos:",
+      card1Title: "CREATIVIDAD + CRITERIO",
+      card1Practice: "Aplico mi forma divergente de pensar a la búsqueda de soluciones diferentes e innovadoras que merezca la pena construir.",
       card1Quote: '"Si quieres tener ideas originales, necesitas vivir una vida original."',
-      card2Title: "MENOS ES MÁS",
-      card2Practice: "Construyo lo mínimo que funciona. Lo justo, ni más ni menos.",
-      card2Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
-      card3Title: "JUST SHIP",
-      card3Practice: "Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.",
-      card3Quote: '"Los clientes no saben lo que quieren hasta que se lo enseñas."',
+      card2Title: "LANZAMIENTO TEMPRANO",
+      card2Practice: "Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.",
+      card2Quote: '"Los clientes no saben lo que quieren hasta que se lo enseñas."',
+      card2Author: "— Steve Jobs",
+      card3Title: "MENOS ES MÁS",
+      card3Practice: "Construyo lo mínimo que demuestra resultados. Simple, efectivo y elegante, sin florituras innecesarias.",
+      card3Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
+      card3Author: "— Albert Einstein",
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
       contactSub: "Cuéntamelo aquí.",
-      contactNameLabel: "Nombre",
-      contactEmailLabel: "Email",
-      contactMessageLabel: "Mensaje",
-      contactSubmit: "Enviar mensaje",
-      contactSending: "Enviando...",
-      contactSuccess: "Mensaje enviado. Te respondo pronto.",
-      contactError: "No se pudo enviar. Inténtalo de nuevo en un momento.",
-      contactInvalid: "Revisa los campos e inténtalo de nuevo.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "PROYECTOS Y APPS",
-      projectsStrap: "Galería en construcción: aquí publicaré las carátulas de lo que vaya publicando.",
-      projectsNote: "La fila se actualizará (imagen, enlace, estado) cuando cada proyecto pase a estar operativo en producción.",
-      projectBadgeComing: "EN OBRA",
-      projectBadgeLive: "EN VIVO",
+      contactFormLead: "O escríbeme aquí. El mensaje llega a mi buzón (nada de formularios de terceros; Resend y un trasto en el servidor).",
+      contactFormName: "Nombre",
+      contactFormEmail: "Email",
+      contactFormTopic: "Tema",
+      contactFormMessage: "Mensaje",
+      contactFormTopicPh: "Elige un tema",
+      contactTopicColab: "Colaboración",
+      contactTopicProyecto: "Proyecto",
+      contactTopicConsulta: "Consulta",
+      contactTopicOtro: "Otro",
+      contactFormSend: "Enviar",
+      contactFormSending: "Enviando…",
+      contactFormSuccess: "Recibido. Te respondo cuando la cafeína haga efecto.",
+      contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
+      contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
+      projectsTitle: "TRABAJOS",
+      projectsStrapLead: "🚧 EN CONSTRUCCIÓN 🚧",
+      projectsStrapBody: "Muy pronto podrás ver todos los proyectos en los que estoy trabajando. Mientras tanto, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a> que he programado para que no te aburras... 🏀",
       projectChevPrev: "Anterior",
       projectChevNext: "Siguiente",
-      projectsRowLabel: "Carrusel de proyectos y aplicaciones"
+      projectsRowLabel: "Carrusel de trabajos"
     },
     en: {
-      typewriter: ["AI CONSULTANT.", "INDIE MAKER."],
+      typewriter: [
+        "I DESIGN CREATIVE DIGITAL SOLUTIONS.",
+        "I VALIDATE THEM WITH REAL USERS.",
+        "AND ONLY THEN I BUILD THEM.",
+        "WELCOME TO MY IDEA LABORATORY.",
+      ],
       scrollHint: "[ ABOUT ME ] ↓",
-      philosophyTitle: "I DESIGN AND BUILD DIGITAL PRODUCTS AND SYSTEMS END TO END, WITH AI AS LEVERAGE",
-      philosophySub: "Applying these principles:",
-      card1Title: "CREATIVITY",
-      card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions.",
+      philosophyTitle: "IF WE WANT DIFFERENT RESULTS, WHY DO WE KEEP DOING THE SAME",
+      philosophyEndBlack: "",
+      philosophySub: "To avoid doing more of the same, I apply the following filter to my projects:",
+      card1Title: "CREATIVITY + JUDGMENT",
+      card1Practice: "I apply my divergent way of thinking to the search for different, innovative solutions worth building.",
       card1Quote: '"If you want to have original ideas, you need to live an original life."',
-      card2Title: "LESS IS MORE",
-      card2Practice: "I build the minimum that works. Just right, nothing more.",
-      card2Quote: '"Everything should be made as simple as possible, but not simpler."',
-      card3Title: "JUST SHIP",
-      card3Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
-      card3Quote: '"People don\'t know what they want until you show it to them."',
+      card2Title: "SHIP & ITERATE",
+      card2Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
+      card2Quote: '"People don\'t know what they want until you show it to them."',
+      card2Author: "— Steve Jobs",
+      card3Title: "LESS IS MORE",
+      card3Practice: "I build the minimum that proves results. Simple, effective, elegant, no unnecessary frills.",
+      card3Quote: '"Everything should be made as simple as possible, but not simpler."',
+      card3Author: "— Albert Einstein",
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
       contactSub: "Tell me here.",
-      contactNameLabel: "Name",
-      contactEmailLabel: "Email",
-      contactMessageLabel: "Message",
-      contactSubmit: "Send message",
-      contactSending: "Sending...",
-      contactSuccess: "Message sent. I will get back to you soon.",
-      contactError: "Could not send your message. Please try again shortly.",
-      contactInvalid: "Please review the form and try again.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "PROJECTS & APPS",
-      projectsStrap: "Gallery under construction: poster-style covers for everything I ship will live here.",
-      projectsNote: "This row will update (image, link, status) as each project goes live in production.",
-      projectBadgeComing: "IN THE WORKS",
-      projectBadgeLive: "LIVE",
+      contactFormLead: "Or drop me a line here. The message goes to my inbox (no third-party form vendors—Resend and a small server).",
+      contactFormName: "Name",
+      contactFormEmail: "Email",
+      contactFormTopic: "Topic",
+      contactFormMessage: "Message",
+      contactFormTopicPh: "Choose a topic",
+      contactTopicColab: "Collaboration",
+      contactTopicProyecto: "Project",
+      contactTopicConsulta: "Inquiry",
+      contactTopicOtro: "Other",
+      contactFormSend: "Send",
+      contactFormSending: "Sending…",
+      contactFormSuccess: "Got it. I’ll get back to you when the caffeine kicks in.",
+      contactFormErrGeneric: "Couldn’t send. Check your connection or try again in a bit.",
+      contactFormErr429: "That’s a few messages in a row. Grab a coffee and try again in a few minutes.",
+      projectsTitle: "WORK",
+      projectsStrapLead: "🚧 UNDER CONSTRUCTION 🚧",
+      projectsStrapBody: "Very soon you’ll be able to see all the projects I’m working on. Meanwhile, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a> I built so you don’t get bored... 🏀",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
-      projectsRowLabel: "Projects and apps carousel"
+      projectsRowLabel: "Work carousel"
     }
   };
 
   let lang = 'es';
+  try {
+    const _ls = localStorage.getItem('carlosmakes_lang');
+    if (_ls === 'en' || _ls === 'es') lang = _ls;
+  } catch (e) {}
 
   /**
    * Catálogo de proyectos / apps.
@@ -1083,25 +1248,25 @@
   }
 
   function renderProjects() {
-    const d = t[lang];
     const track = document.getElementById('projectsTrack');
     if (!track) return;
 
-    const parts = projectsCatalog.map((p) => {
+    const parts = projectsCatalog.map((p, i) => {
+      const n = i + 1;
+      const numLabel = escapeHtml(lang === 'es' ? 'PROYECTO ' + n : 'PROJECT ' + n);
       const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
       const poster = safePosterUrl(p.poster);
       const titlePlain = p.title[lang] || p.title.es;
-      const badgeComing = escapeHtml(d.projectBadgeComing);
-      const badgeLive = escapeHtml(d.projectBadgeLive);
-      const aria = escapeHtml(`${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ' — ' + (lang === 'es' ? 'en obras' : 'in the works')}`);
+      const aria = escapeHtml(`${numLabel} — ${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ''}`);
+
+      const badge = isLive
+        ? '<span class="project-poster-badge project-poster-badge--live">' + numLabel + '</span>'
+        : '<span class="project-poster-badge">' + numLabel + '</span>';
 
       let body;
       if (isLive && poster) {
-        body = buildLiveCardHtml(poster, badgeLive);
+        body = buildLiveCardHtml(poster, numLabel);
       } else {
-        const badge = isLive
-          ? '<span class="project-poster-badge project-poster-badge--live">' + badgeLive + '</span>'
-          : '<span class="project-poster-badge">' + badgeComing + '</span>';
         body = buildLockedCardHtml(badge);
       }
 
@@ -1191,8 +1356,11 @@
   function applyLang() {
     const d = t[lang];
     document.documentElement.lang = lang;
+    try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     document.getElementById('scrollHint').textContent = d.scrollHint;
     document.getElementById('philosophyTitle').textContent = d.philosophyTitle;
+    const philosophyEndBlack = document.getElementById('philosophyEndBlack');
+    if (philosophyEndBlack) philosophyEndBlack.textContent = d.philosophyEndBlack;
     document.getElementById('philosophySub').textContent = d.philosophySub;
     document.getElementById('card1Title').textContent = d.card1Title;
     document.getElementById('card1Practice').textContent = d.card1Practice;
@@ -1200,20 +1368,23 @@
     document.getElementById('card2Title').textContent = d.card2Title;
     document.getElementById('card2Practice').textContent = d.card2Practice;
     document.getElementById('card2Quote').textContent = d.card2Quote;
+    const card2AuthorEl = document.getElementById('card2Author');
+    if (card2AuthorEl && d.card2Author) card2AuthorEl.textContent = d.card2Author;
     document.getElementById('card3Title').textContent = d.card3Title;
     document.getElementById('card3Practice').textContent = d.card3Practice;
     document.getElementById('card3Quote').textContent = d.card3Quote;
+    const card3AuthorEl = document.getElementById('card3Author');
+    if (card3AuthorEl && d.card3Author) card3AuthorEl.textContent = d.card3Author;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
-    document.getElementById('contactNameLabel').textContent = d.contactNameLabel;
-    document.getElementById('contactEmailLabel').textContent = d.contactEmailLabel;
-    document.getElementById('contactMessageLabel').textContent = d.contactMessageLabel;
-    document.getElementById('contactSubmit').textContent = d.contactSubmit;
-    document.getElementById('contactAltLabel').textContent = d.contactAltLabel;
+    const contactAltL = document.getElementById('contactAltLabel');
+    if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     document.getElementById('projectsTitle').textContent = d.projectsTitle;
-    document.getElementById('projectsStrap').textContent = d.projectsStrap;
-    document.getElementById('projectsNote').textContent = d.projectsNote;
+    const projectsStrapEl = document.getElementById('projectsStrap');
+    if (projectsStrapEl && d.projectsStrapLead && d.projectsStrapBody) {
+      projectsStrapEl.innerHTML = '<span class="projects-strap__lead" id="projectsStrapLead">' + d.projectsStrapLead + '</span><span class="projects-strap__intro" id="projectsStrapIntro">' + d.projectsStrapBody + '</span>';
+    }
     const projectsRow = document.getElementById('projectsRow');
     if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
     const projectsPrev = document.getElementById('projectsPrev');
@@ -1233,6 +1404,106 @@
       enLabel.classList.remove('inactive');
       esLabel.classList.add('inactive');
     }
+
+    if (d.contactFormLead) {
+      const lead = document.getElementById('contactFormLead');
+      if (lead) lead.textContent = d.contactFormLead;
+    }
+    const lname = document.getElementById('label-cf-name');
+    if (lname) lname.textContent = d.contactFormName;
+    const lem = document.getElementById('label-cf-email');
+    if (lem) lem.textContent = d.contactFormEmail;
+    const ltop = document.getElementById('label-cf-topic');
+    if (ltop) ltop.textContent = d.contactFormTopic;
+    const lmsg = document.getElementById('label-cf-message');
+    if (lmsg) lmsg.textContent = d.contactFormMessage;
+    const tph = document.getElementById('cf-topic-placeholder');
+    if (tph) tph.textContent = d.contactFormTopicPh;
+    const o1 = document.getElementById('opt-cf-colaboracion');
+    if (o1) o1.textContent = d.contactTopicColab;
+    const o2 = document.getElementById('opt-cf-proyecto');
+    if (o2) o2.textContent = d.contactTopicProyecto;
+    const o3 = document.getElementById('opt-cf-consulta');
+    if (o3) o3.textContent = d.contactTopicConsulta;
+    const o4 = document.getElementById('opt-cf-otro');
+    if (o4) o4.textContent = d.contactTopicOtro;
+    const csub = document.getElementById('contactFormSubmit');
+    if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
+    const cfin = document.getElementById('contactFormSuccessText');
+    if (cfin) cfin.textContent = d.contactFormSuccess;
+  }
+
+  function getContactFormEndpoint() {
+    try {
+      if (typeof location !== 'undefined' && location.protocol && location.protocol !== 'file:') {
+        return location.origin + '/api/send-email';
+      }
+    } catch (e) {}
+    return 'https://carlosmakes.com/api/send-email';
+  }
+
+  function initContactStartedAt() {
+    const st = document.getElementById('cf-started-at');
+    if (st) st.value = String(Date.now());
+  }
+
+  function initContactForm() {
+    const form = document.getElementById('contactForm');
+    if (!form) return;
+    initContactStartedAt();
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const d = t[lang];
+      const status = document.getElementById('contactFormStatus');
+      const btn = document.getElementById('contactFormSubmit');
+      const block = document.getElementById('contactFormBlock');
+      const done = document.getElementById('contactFormSuccess');
+      if (!status || !btn || !block || !done) return;
+      status.hidden = true;
+      status.textContent = '';
+      btn.disabled = true;
+      btn.textContent = d.contactFormSending;
+      try {
+        const payload = {
+          name: document.getElementById('cf-name').value.trim(),
+          email: document.getElementById('cf-email').value.trim(),
+          topic: document.getElementById('cf-topic').value,
+          message: document.getElementById('cf-message').value,
+          _gotcha: document.getElementById('cf-gotcha').value,
+          startedAt: (document.getElementById('cf-started-at') && document.getElementById('cf-started-at').value) || String(Date.now()),
+        };
+        const r = await fetch(getContactFormEndpoint(), {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept-Language': lang === 'en' ? 'en' : 'es',
+          },
+          body: JSON.stringify(payload),
+        });
+        const j = await r.json().catch(function () { return {}; });
+        if (r.status === 200 && j.ok) {
+          block.hidden = true;
+          done.hidden = false;
+          const st = document.getElementById('cf-started-at');
+          if (st) st.value = String(Date.now());
+          return;
+        }
+        if (r.status === 429) {
+          status.textContent = d.contactFormErr429;
+        } else if (j && j.details && j.details[0] && j.details[0].message) {
+          status.textContent = j.details[0].message;
+        } else {
+          status.textContent = d.contactFormErrGeneric;
+        }
+        status.hidden = false;
+      } catch (err) {
+        status.textContent = t[lang].contactFormErrGeneric;
+        status.hidden = false;
+      } finally {
+        btn.disabled = false;
+        btn.textContent = t[lang].contactFormSend;
+      }
+    });
   }
 
   document.getElementById('langToggle').addEventListener('click', () => {
@@ -1242,68 +1513,10 @@
   });
 
   // ============================================
-  // Contact form
-  // ============================================
-  const contactForm = document.getElementById('contactForm');
-  const contactStatus = document.getElementById('contactStatus');
-  const contactSubmit = document.getElementById('contactSubmit');
-  const contactStartedAt = document.getElementById('contactStartedAt');
-  const contactWebsite = document.getElementById('contactWebsite');
-
-  function markContactFormStart() {
-    if (contactStartedAt) contactStartedAt.value = String(Date.now());
-  }
-
-  function setContactStatus(message) {
-    if (contactStatus) contactStatus.textContent = message || '';
-  }
-
-  markContactFormStart();
-
-  contactForm.addEventListener('submit', async (event) => {
-    event.preventDefault();
-    const d = t[lang];
-    setContactStatus('');
-
-    const name = document.getElementById('contactName').value.trim();
-    const email = document.getElementById('contactEmail').value.trim();
-    const message = document.getElementById('contactMessage').value.trim();
-    const website = contactWebsite ? contactWebsite.value.trim() : '';
-    const startedAt = contactStartedAt ? contactStartedAt.value : '';
-    const emailIsValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-
-    if (website.length > 0 || name.length < 2 || message.length < 10 || !emailIsValid) {
-      setContactStatus(d.contactInvalid);
-      return;
-    }
-
-    contactSubmit.disabled = true;
-    setContactStatus(d.contactSending);
-
-    try {
-      const response = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, message, website, startedAt })
-      });
-
-      if (!response.ok) throw new Error('Request failed');
-
-      contactForm.reset();
-      markContactFormStart();
-      setContactStatus(d.contactSuccess);
-    } catch (_) {
-      setContactStatus(d.contactError);
-    } finally {
-      contactSubmit.disabled = false;
-      contactSubmit.textContent = d.contactSubmit;
-    }
-  });
-
-  // ============================================
   // Init
   // ============================================
   applyLang();
+  initContactForm();
   typewriter();
 </script>
 
