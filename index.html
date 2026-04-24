@@ -867,11 +867,11 @@
         </article>
         <article class="card">
           <div class="card-num">03</div>
-          <h3 class="card-title" id="card3Title">SHIP &amp; ITERATE</h3>
-          <p class="card-practice" id="card3Practice">Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.</p>
+          <h3 class="card-title" id="card3Title">¿APORTA VALOR? ¿SOLUCIONA PROBLEMAS? SEGUIMOS. ¿NO HACE NINGUNA DE LAS DOS COSAS? CAMBIAMOS O CERRAMOS.</h3>
+          <p class="card-practice" id="card3Practice">Mido con franqueza si lo que tengo en marcha aporta valor y resuelve un problema real. Si es así, seguimos invirtiendo. Si no, pivotamos o lo cerramos: el tiempo y el foco son finitos.</p>
           <div class="card-quote-wrap">
-            <p class="card-quote" id="card3Quote">"Los clientes no saben lo que quieren hasta que se lo enseñas."</p>
-            <p class="card-author">— Steve Jobs</p>
+            <p class="card-quote" id="card3Quote">“Si no es un ‘sí’ rotundo, es un no.”</p>
+            <p class="card-author" id="card3Author">— Derek Sivers</p>
           </div>
         </article>
       </div>
@@ -935,9 +935,10 @@
       card2Title: "SIMPLICIDAD RADICAL",
       card2Practice: "Construyo lo mínimo que demuestra resultados. Sin florituras innecesarias.",
       card2Quote: '"Todo debe hacerse tan simple como sea posible, pero no más simple."',
-      card3Title: "SHIP & ITERATE",
-      card3Practice: "Lanzo tan pronto como sea posible, valido con el usuario y optimizo de manera constante.",
-      card3Quote: '"Los clientes no saben lo que quieren hasta que se lo enseñas."',
+      card3Title: "¿APORTA VALOR? ¿SOLUCIONA PROBLEMAS? SEGUIMOS. ¿NO HACE NINGUNA DE LAS DOS COSAS? CAMBIAMOS O CERRAMOS.",
+      card3Practice: "Mido con franqueza si lo que tengo en marcha aporta valor y resuelve un problema real. Si es así, seguimos invirtiendo. Si no, pivotamos o lo cerramos: el tiempo y el foco son finitos.",
+      card3Quote: "\u201cSi no es un \u2018sí\u2019 rotundo, es un no.\u201d",
+      card3Author: "— Derek Sivers",
       contactTitle: "¿EN QUÉ PUEDO AYUDARTE",
       contactMark: "?",
       contactSub: "Contáctame a través de cualquiera de estos canales:",
@@ -965,9 +966,10 @@
       card2Title: "RADICAL SIMPLICITY",
       card2Practice: "I build the minimum that proves results. No unnecessary frills.",
       card2Quote: '"Everything should be made as simple as possible, but not simpler."',
-      card3Title: "SHIP & ITERATE",
-      card3Practice: "I launch as soon as possible, validate with the user, and optimize constantly.",
-      card3Quote: '"People don\'t know what they want until you show it to them."',
+      card3Title: "DOES IT ADD VALUE? DOES IT SOLVE PROBLEMS? WE KEEP GOING. IF IT DOES NEITHER, WE PIVOT OR SHUT IT DOWN.",
+      card3Practice: "I look honestly at whether what I have in play really adds value and fixes a real problem. If it does, we keep investing. If it doesn’t, we pivot or we close: time and focus are finite.",
+      card3Quote: "\u201cIf it isn\u2019t a \u2018Hell yes\u2019, it\u2019s a \u2018no\u2019.\u201d",
+      card3Author: "— Derek Sivers",
       contactTitle: "CAN I HELP YOU WITH ANYTHING",
       contactMark: "?",
       contactSub: "Contact me through any of these channels:",
@@ -1184,6 +1186,8 @@
     document.getElementById('card3Title').textContent = d.card3Title;
     document.getElementById('card3Practice').textContent = d.card3Practice;
     document.getElementById('card3Quote').textContent = d.card3Quote;
+    const card3AuthorEl = document.getElementById('card3Author');
+    if (card3AuthorEl && d.card3Author) card3AuthorEl.textContent = d.card3Author;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
