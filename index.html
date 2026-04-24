@@ -38,6 +38,7 @@
   * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
 
   :root {
+    --site-header-h: 5.5rem;
     --black: #000;
     --white: #fff;
     --gray: #6b7280;
@@ -46,7 +47,7 @@
     --red: #ef4444;
   }
 
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; scroll-padding-top: var(--site-header-h, 5.5rem); }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -84,6 +85,48 @@
   .section-band--dark .subheading { color: var(--gray-mid); }
   .section-band--dark .contact-sub { color: var(--gray-mid); }
 
+  /* Barra superior fija: contraste inverso al fondo visible al hacer scroll (JS) */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background: transparent;
+    transition: color 0.2s, background 0.2s;
+    pointer-events: none;
+  }
+  .site-header__inner {
+    pointer-events: auto;
+    max-width: 72rem;
+    margin: 0 auto;
+    width: 100%;
+    padding: 1.5rem 1.5rem 0.75rem;
+  }
+  @media (min-width: 768px) { .site-header__inner { padding: 1.5rem 3rem 0.75rem; } }
+  .site-header--on-light { color: var(--black); }
+  .site-header--on-light a.logo:hover { opacity: 0.85; }
+  .site-header--on-dark {
+    color: var(--white);
+  }
+  .site-header--on-dark .logo .gray { color: var(--gray-mid); }
+  .site-header--on-dark a.logo:hover { opacity: 0.9; }
+  .site-header--on-dark .header-top nav a { color: var(--white); }
+  .site-header--on-dark .header-top nav a:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+  .site-header--on-dark .lang-toggle { color: var(--white); }
+  .site-header--on-dark .lang-toggle .sep { color: var(--gray-mid); }
+  .site-header--on-dark .lang-toggle .inactive { color: var(--gray-mid); }
+  .site-header--on-dark .lang-toggle .inactive .flag { filter: grayscale(0.2); opacity: 0.75; }
+  .site-header--on-dark .lang-toggle .inactive:hover { color: #e5e7eb; }
+  .site-header--on-dark .lang-toggle:hover { background: var(--white); color: var(--black); }
+  .site-header--on-dark .lang-toggle:hover .sep { color: var(--gray); }
+  .site-header--on-dark a:focus-visible, .site-header--on-dark .lang-toggle:focus-visible {
+    outline-color: var(--red);
+  }
+
   /* ==================== HERO ==================== */
   .hero {
     min-height: 100svh;
@@ -92,15 +135,16 @@
     position: relative;
   }
   .hero-inner {
-    padding: 1.5rem 1.5rem 3rem;
     display: flex;
     flex-direction: column;
     flex: 1;
     max-width: 72rem;
     margin: 0 auto;
     width: 100%;
+    /* Espacio bajo la barra fija (alto vía --site-header-h) + airado previo al título */
+    padding: calc(var(--site-header-h, 5.5rem) + 0.5rem) 1.5rem 3rem;
   }
-  @media (min-width: 768px) { .hero-inner { padding: 1.5rem 3rem 3rem; } }
+  @media (min-width: 768px) { .hero-inner { padding: calc(var(--site-header-h, 5.5rem) + 0.5rem) 3rem 3rem; } }
 
   header {
     display: flex;
@@ -134,13 +178,16 @@
     width: 100%;
   }
 
-  .logo {
+  .logo, a.logo {
     font-size: 1.125rem;
     font-weight: 900;
     white-space: nowrap;
     text-transform: uppercase;
     letter-spacing: -0.05em;
+    text-decoration: none;
+    color: inherit;
   }
+  a.logo { display: block; }
   @media (min-width: 640px) { .logo { font-size: 1.25rem; } }
   @media (min-width: 768px) { .logo { font-size: 1.5rem; } }
   .logo .gray { color: var(--gray); }
@@ -762,12 +809,11 @@
 
 <main>
 
-  <!-- ==================== HERO ==================== -->
-  <section class="hero section-band--light">
-    <div class="hero-inner">
+  <div class="site-header site-header--on-light" id="siteHeader" role="banner">
+    <div class="site-header__inner">
       <header>
         <div class="header-top">
-          <div class="logo">Carlos <span class="gray">Fernández</span><span class="red">.</span></div>
+          <a class="logo" id="logoHome" href="#inicio">Carlos <span class="gray">Fernández</span><span class="red">.</span></a>
           <nav aria-label="Redes y contacto">
             <a href="mailto:hola@carlosmakes.com" aria-label="E-mail">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -788,7 +834,12 @@
           </button>
         </div>
       </header>
+    </div>
+  </div>
 
+  <!-- ==================== HERO ==================== -->
+  <section class="hero section-band--light" id="inicio">
+    <div class="hero-inner">
       <div class="hero-title-wrap">
         <h1 class="hero-title">
           <span id="typewriter"></span><span class="cursor"></span>
@@ -886,6 +937,7 @@
         "BIENVENIDO A MI LABORATORIO DE IDEAS.",
       ],
       scrollHint: "[ SOBRE MÍ ] ↓",
+      navHome: "Ir al inicio",
       philosophyTitle: "DISEÑO, CONSTRUYO Y GESTIONO PRODUCTOS Y SISTEMAS DIGITALES CON LA IA COMO PALANCA",
       philosophySub: "Aplicando estos principios:",
       card1Title: "CREATIVIDAD",
@@ -914,6 +966,7 @@
         "WELCOME TO MY IDEA LABORATORY.",
       ],
       scrollHint: "[ ABOUT ME ] ↓",
+      navHome: "Go to the top of the page",
       philosophyTitle: "I DESIGN, BUILD, AND MANAGE DIGITAL PRODUCTS AND SYSTEMS WITH AI AS LEVERAGE",
       philosophySub: "Applying these principles:",
       card1Title: "CREATIVITY",
@@ -1116,12 +1169,50 @@
   }
 
   // ============================================
+  // Barra fija: alto + contraste con la sección bajo ella
+  // ============================================
+  function setSiteHeaderHeight() {
+    const el = document.getElementById('siteHeader');
+    if (el) document.documentElement.style.setProperty('--site-header-h', el.offsetHeight + 'px');
+  }
+
+  function setSiteHeaderBand() {
+    const header = document.getElementById('siteHeader');
+    if (!header) return;
+    const prev = header.style.pointerEvents;
+    header.style.pointerEvents = 'none';
+    const x = Math.min(window.innerWidth - 1, Math.max(1, window.innerWidth / 2));
+    const y = Math.min(window.innerHeight - 1, Math.max(1, 28));
+    const fromPoint = document.elementFromPoint(x, y);
+    header.style.pointerEvents = prev;
+    let band = 'light';
+    if (fromPoint) {
+      const section = fromPoint.closest('section');
+      if (section && section.classList.contains('section-band--dark')) band = 'dark';
+    }
+    header.classList.toggle('site-header--on-dark', band === 'dark');
+    header.classList.toggle('site-header--on-light', band === 'light');
+  }
+
+  let siteHeaderRaf = null;
+  function scheduleSiteHeaderUpdate() {
+    if (siteHeaderRaf) return;
+    siteHeaderRaf = requestAnimationFrame(() => {
+      siteHeaderRaf = null;
+      setSiteHeaderHeight();
+      setSiteHeaderBand();
+    });
+  }
+
+  // ============================================
   // Idioma
   // ============================================
   function applyLang() {
     const d = t[lang];
     document.documentElement.lang = lang;
     document.getElementById('scrollHint').textContent = d.scrollHint;
+    const logoHome = document.getElementById('logoHome');
+    if (logoHome) logoHome.setAttribute('aria-label', d.navHome);
     document.getElementById('philosophyTitle').textContent = d.philosophyTitle;
     document.getElementById('philosophySub').textContent = d.philosophySub;
     document.getElementById('card1Title').textContent = d.card1Title;
@@ -1163,6 +1254,7 @@
     lang = lang === 'es' ? 'en' : 'es';
     applyLang();
     restartTypewriter();
+    scheduleSiteHeaderUpdate();
   });
 
   // ============================================
@@ -1170,6 +1262,9 @@
   // ============================================
   applyLang();
   typewriter();
+  requestAnimationFrame(() => scheduleSiteHeaderUpdate());
+  window.addEventListener('scroll', scheduleSiteHeaderUpdate, { passive: true });
+  window.addEventListener('resize', () => { scheduleSiteHeaderUpdate(); });
 </script>
 
 </body>
