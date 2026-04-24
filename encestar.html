@@ -125,6 +125,9 @@
   const W = canvas.width;
   const H = canvas.height;
   const g = 0.42;
+  // Masa relativa: mayor → cae con más inercia (g efectivo menor)
+  const ballMass = 1;
+  const gBall = g / ballMass;
   // Lienzo 1:1; cancha, tablero y aro reescalados a la misma unidad
   const groundY = H - 50;
   const ballR = 14;
@@ -262,7 +265,7 @@
     }
   }
 
-  // Misma integración que tick: vy += g, x += vx, y += vy
+  // Misma integración que el tiro: vy += gBall, x += vx, y += vy
   function buildAimTrajectory(power) {
     const s = maxSpeed * Math.max(0.15, Math.min(1, power));
     const vx = Math.cos(angle) * s;
@@ -270,9 +273,9 @@
     let x = startX;
     let y = startY;
     const full = [{ x, y }];
-    const maxIter = 450;
+    const maxIter = 500;
     for (let i = 0; i < maxIter; i++) {
-      vy += g;
+      vy += gBall;
       x += vx;
       y += vy;
       if (y + ballR > groundY) break;
@@ -281,47 +284,41 @@
     return full;
   }
 
+  // Origen (0, groundY) = pared · suelo. Eje X = suelo; eje Y = pared izquierda.
+  function drawAimRefAxes() {
+    const xLen = Math.min(300, W - 1);
+    const yLen = 210;
+    ctx.save();
+    ctx.strokeStyle = 'rgba(200, 210, 220, 0.5)';
+    ctx.lineWidth = 1.2;
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(0, groundY);
+    ctx.lineTo(xLen, groundY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(0, groundY);
+    ctx.lineTo(0, groundY - yLen);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // Parábola en el plano (distancia a la pared, altura) = (x, groundY - y): trazo completo hasta suelo
   function drawAimHint() {
     const full = buildAimTrajectory(charge);
     if (full.length < 2) return;
-    let apex = 0;
-    for (let i = 1; i < full.length; i++) {
-      if (full[i].y < full[apex].y) apex = i;
-    }
-    // Trazo largo: recorre subida, vértice y bajada hacia canasta (≈90% en X hacia el aro); corte antes del aro
-    const n = full.length;
-    const postApex = Math.min(apex + 12, n - 1);
-    let xVis = Math.min(startX + (rimCx - startX) * 0.9, rimCx - 12);
-    if (postApex > 0 && full[postApex].x > xVis) {
-      xVis = Math.min(rimCx - 8, full[postApex].x);
-    }
-    const pts = [full[0]];
-    for (let i = 1; i < n; i++) {
-      const p = full[i], prev = full[i - 1];
-      if (p.x > xVis) {
-        if (p.x !== prev.x) {
-          const t = (xVis - prev.x) / (p.x - prev.x);
-          if (t > 0 && t <= 1) {
-            const iy = prev.y + t * (p.y - prev.y);
-            if (iy + ballR <= groundY) pts.push({ x: xVis, y: iy });
-          }
-        }
-        break;
-      }
-      pts.push(p);
-    }
-    if (pts.length < 2) return;
-    const last = pts[pts.length - 1];
+    drawAimRefAxes();
+    const last = full[full.length - 1];
     ctx.save();
     ctx.setLineDash([4, 7]);
-    ctx.strokeStyle = 'rgba(255,255,255,0.28)';
-    ctx.lineWidth = 1.4;
+    ctx.strokeStyle = 'rgba(255,255,255,0.32)';
+    ctx.lineWidth = 1.45;
     ctx.beginPath();
-    ctx.moveTo(pts[0].x, pts[0].y);
-    for (let j = 1; j < pts.length; j++) ctx.lineTo(pts[j].x, pts[j].y);
+    ctx.moveTo(full[0].x, full[0].y);
+    for (let j = 1; j < full.length; j++) ctx.lineTo(full[j].x, full[j].y);
     ctx.stroke();
     ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(255,255,255,0.24)';
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
     ctx.beginPath();
     ctx.arc(last.x, last.y, 2, 0, Math.PI * 2);
     ctx.fill();
@@ -465,7 +462,7 @@
       bar.style.width = (charge * 100) + '%';
     }
     if (ball.active) {
-      ball.vy += g;
+      ball.vy += gBall;
       ball.x += ball.vx;
       ball.y += ball.vy;
       for (let s = 0; s < 2; s++) {
