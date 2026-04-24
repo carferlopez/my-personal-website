@@ -1,0 +1,19 @@
+{
+  "name": "carlos-site-main",
+  "version": "1.0.0",
+  "description": "Personal website with secure Resend email endpoint",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "resend": "^6.12.2"
+  }
+}
