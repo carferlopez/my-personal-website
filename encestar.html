@@ -91,7 +91,7 @@
     <span id="subtle">carlosmakes</span>
   </div>
   <h1 id="gameTitle">ENCESTAR</h1>
-  <p class="hint" id="gameHint">Mantén pulsado, clic o barra espaciadora para cargar. Suelta para lanzar. Pelota naranja, canasta a la derecha.</p>
+  <p class="hint" id="gameHint">Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, touch o barra espaciadora.</p>
   <div class="score"><span id="labelPts">Puntos</span> <span id="scoreN">0</span></div>
   <div class="bar-wrap" aria-hidden="true"><div class="bar" id="bar"></div></div>
   <div class="canvas-wrap">
@@ -106,12 +106,12 @@
   const T = en ? {
     back: 'Home',
     title: 'HOOP',
-    hint: 'Hold click, touch, or spacebar to charge. Release to shoot. Orange ball, hoop on the right.',
+    hint: 'Hold to build power, release to shoot. A quick tap is weak; the longer you hold, the stronger (up to max). Click, touch, or spacebar.',
     pts: 'Points',
   } : {
     back: 'Inicio',
     title: 'ENCESTAR',
-    hint: 'Mantén pulsado, clic o barra espaciadora para cargar. Suelta para lanzar. Pelota naranja, canasta a la derecha.',
+    hint: 'Mantén para acumular fuerza; suelta para lanzar. Un toque corto tira suave, cuanto más mantienes, más fuerte (hasta el máximo). Clic, touch o barra espaciadora.',
     pts: 'Puntos',
   };
   document.getElementById('backLabel').textContent = T.back;
@@ -133,11 +133,11 @@
   const ballR = 14;
   const startX = 70;
   const startY = groundY - ballR;
-  // Tiro con arco alto; maxSpeed y potencia mín. deben permitir cúspide claramente por encima del aro
+  // Tiro: potencia 0..1 = tiempo manteniendo pulsado / CHARGE_MAX_MS (un toque corto = tiro suave, más tiempo = más fuerte)
   const angle = -1.15;
   const maxSpeed = 30;
-  const powerMin = 0.5;
-  const aimHintPowerMin = 0.62;
+  const CHARGE_MAX_MS = 960;
+  const minShotPower = 0.04;
   // Aro: ancho interior ~1.4× el diámetro de la pelota (vista lateral)
   const innerRimW = ballR * 1.4 * 2;
   const RIM_T = 3;
@@ -170,7 +170,7 @@
   };
   let charge = 0;
   let charging = false;
-  let chargeT = 0;
+  let pressT0 = 0;
   let score = 0;
   let raf = 0;
   let flightFrames = 0;
@@ -274,7 +274,7 @@
 
   // Misma integración que el tiro: vy += gBall, x += vx, y += vy
   function buildAimTrajectory(power) {
-    const s = maxSpeed * Math.max(powerMin, Math.min(1, power));
+    const s = maxSpeed * Math.max(minShotPower, Math.min(1, power));
     const vx = Math.cos(angle) * s;
     let vy = Math.sin(angle) * s;
     let x = startX;
@@ -312,7 +312,7 @@
 
   // Parábola en el plano (distancia a la pared, altura) = (x, groundY - y): trazo completo hasta suelo
   function drawAimHint() {
-    const p = Math.max(aimHintPowerMin, Math.min(1, charge));
+    const p = Math.max(minShotPower, Math.min(1, charge));
     const full = buildAimTrajectory(p);
     if (full.length < 2) return;
     drawAimRefAxes();
@@ -465,8 +465,8 @@
 
   function tick() {
     if (charging) {
-      chargeT += 0.07;
-      charge = 0.25 + 0.75 * (Math.sin(chargeT) * 0.5 + 0.5);
+      const elapsed = performance.now() - pressT0;
+      charge = Math.min(1, elapsed / CHARGE_MAX_MS);
       bar.style.width = (charge * 100) + '%';
     }
     if (ball.netAnim) {
@@ -589,13 +589,14 @@
     if (ball.active) return;
     if (charging) return;
     charging = true;
-    chargeT = 0;
+    pressT0 = performance.now();
     if (!raf) raf = requestAnimationFrame(tick);
   }
 
   function releaseShot() {
     if (!charging || ball.active) return;
-    const power = Math.max(powerMin, Math.min(1, charge));
+    const elapsed = performance.now() - pressT0;
+    const power = Math.max(minShotPower, Math.min(1, elapsed / CHARGE_MAX_MS));
     charging = false;
     bar.style.width = '0%';
     const s = maxSpeed * power;
