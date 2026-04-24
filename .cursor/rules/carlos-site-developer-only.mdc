@@ -1,0 +1,15 @@
+---
+description: Proyecto Carlos site — única fuente de verdad en Developer, no en Downloads
+alwaysApply: true
+---
+
+# Fuente de verdad: carpeta Developer
+
+- **Todo el código y assets de este sitio (index, encestar, estilos, reglas, etc.) se modifica solo aquí:**  
+  `/Users/carlosfernandez/Developer/Carlos-site-main`
+
+- **No** escribas ni asumas el proyecto en `Downloads/Carlos-site-main` (u otra copia). Esa ruta no es el repo que se sincroniza con GitHub; no dupliques trabajo ahí.
+
+- Trata esta carpeta como el **root del repositorio**; `git` y `origin` viven aquí. Al editar, usa **rutas absolutas o relativas a este root** únicamente.
+
+- Si en el entorno de Cursor se abre otra carpeta similar, el agente **debe seguir** usando y mencionando **Developer** para cualquier cambio al sitio.

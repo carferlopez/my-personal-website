@@ -5,6 +5,8 @@ alwaysApply: true
 
 # Git: close each request with commit and push
 
+- Commits afectan solo a **`/Users/carlosfernandez/Developer/Carlos-site-main`** (véase la regla *carlos-site-developer-only*). No haces `git` en copias bajo `Downloads/`.
+
 - When a request **changes or adds project files** (code, config, rules), **in the same turn** run `git add` for the affected paths, `git commit` with a clear message in the project’s style, then `git push` to the current branch’s upstream.
 - If there is **nothing to commit** (or the user’s message was questions-only with no file edits), skip; do not create empty commits.
 - **Request the permissions** needed to commit and push (e.g. `git_write`, `network`) in that turn so the work does not end with “I’ll commit if you want.”
