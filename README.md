@@ -32,6 +32,7 @@ curl -X POST http://localhost:3000/api/contact \
 
 - Keep `.env` private; it is ignored via `.gitignore`.
 - Email sending must happen server-side, not in browser JavaScript.
-- The live site uses the Cloudflare Worker at `/api/contact`; local `npm run dev` matches that path.
+- The live site uses the Cloudflare Worker at `https://carlosmakes.com/api/contact`. The form posts to that URL even when the page is served from `www`, because the static layer on `www` often does not run the Worker and returns 405 for `POST` to `/api/contact`.
+- Local `npm run dev` uses `http://localhost:PORT/api/contact`.
 - `resend-example.js` is kept as a standalone script if you want to run a direct test with Node.
 - Anti-spam protections included: IP rate limit, cooldown, honeypot field, minimum form fill time, server-side validation.

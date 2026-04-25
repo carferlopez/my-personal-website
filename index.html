@@ -1420,6 +1420,13 @@
   function getContactFormEndpoint() {
     try {
       if (typeof location !== 'undefined' && location.protocol && location.protocol !== 'file:') {
+        const h = (location.hostname || '').toLowerCase();
+        // The Cloudflare Worker for POST /api/contact is on the apex host. On www, the
+        // static layer often answers first and returns 405 for POST. Always send the API
+        // request to the same origin the Worker is bound to.
+        if (h === 'www.carlosmakes.com' || h === 'carlosmakes.com') {
+          return location.protocol + '//carlosmakes.com/api/contact';
+        }
         return location.origin + '/api/contact';
       }
     } catch (e) {}
