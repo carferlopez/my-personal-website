@@ -17,7 +17,8 @@ zone_name = "carlosmakes.com"
 # preview_id = "PASTE_PREVIEW_ID"
 
 [vars]
-FROM_EMAIL = "contacto@carlosmakes.com"
+# Con dominio verificado en Resend puedes poner contacto@carlosmakes.com
+FROM_EMAIL = "onboarding@resend.dev"
 TO_EMAIL = "hola@carlosmakes.com"
 
 # CORS / dev (opcional)
