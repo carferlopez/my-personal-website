@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node server.js",
     "start": "node server.js",
-    "deploy:www-redirect": "cd worker/www-redirect && npx wrangler@latest deploy"
+    "deploy:www-redirect": "cd worker/www-redirect && npx wrangler@latest deploy",
+    "deploy:contact": "cd worker && npx wrangler@latest deploy"
   },
   "keywords": [],
   "author": "",

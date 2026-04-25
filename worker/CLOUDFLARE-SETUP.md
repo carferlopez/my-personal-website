@@ -1,4 +1,38 @@
-# Cloudflare: desplegar el redirect `www` → apex
+# Cloudflare: despliegue (www → apex y formulario de contacto)
+
+## Contacto: `POST /api/contact` (Resend) — arregla el error **405** en el formulario
+
+Si al enviar el formulario ves `405` en `https://carlosmakes.com/api/contact`, el worker de contacto **no** está enlazado a esa ruta. El `wrangler.toml` en `worker/` ya incluye la ruta; falta desplegar este worker (es **otro** distinto de `www-redirect`).
+
+En la terminal:
+
+```bash
+cd ~/developer/Carlos-site-main/worker
+npx wrangler@latest secret put RESEND_API_KEY
+```
+
+(Pega la API key de Resend cuando lo pida; no se mostrará al escribir.)
+
+```bash
+npx wrangler@latest deploy
+```
+
+Ajusta `TO_EMAIL` en `wrangler.toml` si quieres otra bandeja; luego vuelve a `deploy` si la cambias.
+
+Prueba:
+
+```bash
+curl -X POST "https://carlosmakes.com/api/contact" \
+  -H "Content-Type: application/json" \
+  -H "Origin: https://carlosmakes.com" \
+  -d '{"name":"Test","email":"a@b.com","topic":"otro","message":"Esto supera veinte caracteres.","_gotcha":""}'
+```
+
+Debería responder `{"ok":true}` o un error JSON de Resend/validación (pero no 405).
+
+---
+
+# Redirect: `www` → apex
 
 Desde este entorno no puedo usar tu sesión de Cloudflare. Tienes dos formas de desplegar.
 

@@ -1,21 +1,24 @@
-# Configura KV y emails antes de deploy. La API key NUNCA va aquí: solo `wrangler secret put`.
+# API del formulario: POST /api/contact → Resend. Resend: wrangler secret put RESEND_API_KEY
 name = "carlosmakes-contact"
 main = "src/index.js"
 compatibility_date = "2024-12-01"
+workers_dev = false
 
-# Sustituye el id de KV tras: npx wrangler kv namespace create RATE_LIMIT
-[[kv_namespaces]]
-binding = "RATE_LIMIT"
-id = "REEMPLAZA_CON_EL_ID_PRODUCCION"
-preview_id = "REEMPLAZA_CON_EL_ID_PREVIEW"
+# Sin esta ruta, /api/contact lo atiende el hosting estático (Pages) y devuelve 405.
+[[routes]]
+pattern = "carlosmakes.com/api/contact*"
+zone_name = "carlosmakes.com"
+
+# Opcional: rate limit con KV
+#   npx wrangler kv namespace create RATE_LIMIT
+# [[kv_namespaces]]
+# binding = "RATE_LIMIT"
+# id = "PASTE_ID"
+# preview_id = "PASTE_PREVIEW_ID"
 
 [vars]
 FROM_EMAIL = "contacto@carlosmakes.com"
-# Caja de entrada donde quieres recibir (visible en el dashboard; no es secreto)
-TO_EMAIL = "REEMPLAZA_TU_EMAIL@ejemplo.com"
+TO_EMAIL = "hola@carlosmakes.com"
 
-# Opcional: orígenes extra separados por coma (dev raro)
+# CORS / dev (opcional)
 # CORS_EXTRA = "http://192.168.1.1:3000"
-
-# Tras el primer deploy, en Cloudflare: Workers & Pages → tu worker → Triggers
-#   URL: carlosmakes.com  Path: /api/contact  (o subdominio workers.dev para pruebas)
