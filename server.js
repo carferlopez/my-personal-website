@@ -71,7 +71,9 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-app.post("/api/send-email", async (req, res) => {
+const TOPIC_VALUES = new Set(["colaboracion", "proyecto", "consulta", "otro"]);
+
+async function handleContactPost(req, res) {
   const { name, email, message, website, _gotcha, topic, startedAt } = req.body ?? {};
   const ip = getClientIp(req);
   const startedAtMs = Number(startedAt);
@@ -87,8 +89,11 @@ app.post("/api/send-email", async (req, res) => {
     return res.status(400).json({ error: "Rejected." });
   }
 
-  if (!Number.isFinite(startedAtMs) || now - startedAtMs < MIN_SUBMIT_TIME_MS || startedAtMs > now + 10_000) {
-    return res.status(400).json({ error: "Rejected." });
+  // Optional: Cloudflare Worker /api/contact does not send this; only enforce if present
+  if (String(startedAt ?? "").length > 0) {
+    if (!Number.isFinite(startedAtMs) || now - startedAtMs < MIN_SUBMIT_TIME_MS || startedAtMs > now + 10_000) {
+      return res.status(400).json({ error: "Rejected." });
+    }
   }
 
   if (!applyContactRateLimit(ip)) {
@@ -103,8 +108,18 @@ app.post("/api/send-email", async (req, res) => {
     return res.status(400).json({ error: "Invalid email." });
   }
 
+  if (!safeTopic || !TOPIC_VALUES.has(safeTopic)) {
+    return res.status(400).json({
+      error: "Validation failed",
+      details: [{ field: "topic", message: "Invalid topic" }],
+    });
+  }
+
   if (safeMessage.length < 20 || safeMessage.length > 5000) {
-    return res.status(400).json({ error: "Invalid message." });
+    return res.status(400).json({
+      error: "Validation failed",
+      details: [{ field: "message", message: "Message must be at least 20 characters" }],
+    });
   }
 
   const urlCount = (safeMessage.match(/https?:\/\//gi) || []).length;
@@ -146,6 +161,14 @@ app.post("/api/send-email", async (req, res) => {
       details: error?.message ?? "Unknown error",
     });
   }
+}
+
+// Production (Cloudflare Worker) and local dev both use this path
+app.post("/api/contact", async (req, res) => {
+  return handleContactPost(req, res);
+});
+app.post("/api/send-email", async (req, res) => {
+  return handleContactPost(req, res);
 });
 
 app.listen(port, () => {

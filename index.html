@@ -1420,10 +1420,10 @@
   function getContactFormEndpoint() {
     try {
       if (typeof location !== 'undefined' && location.protocol && location.protocol !== 'file:') {
-        return location.origin + '/api/send-email';
+        return location.origin + '/api/contact';
       }
     } catch (e) {}
-    return 'https://carlosmakes.com/api/send-email';
+    return 'https://carlosmakes.com/api/contact';
   }
 
   function initContactStartedAt() {
