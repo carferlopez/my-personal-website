@@ -1,0 +1,27 @@
+# Despliega el worker www → apex (301). Requiere secretos en el repo (ver worker/CLOUDFLARE-SETUP.md).
+name: Deploy www redirect worker
+
+on:
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+    paths:
+      - "worker/www-redirect/**"
+      - ".github/workflows/deploy-www-redirect.yml"
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Deploy carlosmakes-www-redirect
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: worker/www-redirect
+          command: deploy

@@ -1,6 +1,10 @@
 # Despliegue: cd worker/www-redirect && npx wrangler@latest deploy
-# Tras el deploy, en Cloudflare: Workers & Pages → carlosmakes-www-redirect →
-#   Triggers → Add route →  www.carlosmakes.com/*  (zona: carlosmakes.com)
+# La ruta se aplica con el deploy (zona carlosmakes.com en tu cuenta de Cloudflare).
 name = "carlosmakes-www-redirect"
 main = "src/index.js"
 compatibility_date = "2024-12-01"
+workers_dev = false
+
+[[routes]]
+pattern = "www.carlosmakes.com/*"
+zone_name = "carlosmakes.com"

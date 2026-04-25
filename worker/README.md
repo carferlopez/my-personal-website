@@ -124,3 +124,5 @@ Si entras a la web con `https://www.carlosmakes.com/`, la capa estática a veces
    Deberías ver `301` y `location: https://carlosmakes.com/cualquier-ruta`.
 
 > Alternativa **sin** código: en el dashboard, **Reglas** → **Redirect Rules** o **URL forward** (301) de `www` → apex. El worker del repo hace lo mismo y queda versionado contigo; elige una de las dos para no duplicar redirecciones.
+
+Para desplegar con tu cuenta (CLI o GitHub Actions), sigue **`worker/CLOUDFLARE-SETUP.md`**.
