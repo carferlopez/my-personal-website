@@ -23,7 +23,6 @@ const RATE_LIMIT_COOLDOWN_MS = Number(process.env.CONTACT_RATE_COOLDOWN_MS || 30
 const MIN_SUBMIT_TIME_MS = Number(process.env.CONTACT_MIN_SUBMIT_TIME_MS || 2500);
 
 app.use(express.json({ limit: "32kb" }));
-app.use(express.static(path.join(__dirname)));
 
 const contactRateStore = new Map();
 
@@ -89,7 +88,6 @@ async function handleContactPost(req, res) {
     return res.status(400).json({ error: "Rejected." });
   }
 
-  // Optional: Cloudflare Worker /api/contact does not send this; only enforce if present
   if (String(startedAt ?? "").length > 0) {
     if (!Number.isFinite(startedAtMs) || now - startedAtMs < MIN_SUBMIT_TIME_MS || startedAtMs > now + 10_000) {
       return res.status(400).json({ error: "Rejected." });
@@ -163,13 +161,44 @@ async function handleContactPost(req, res) {
   }
 }
 
-// Production (Cloudflare Worker) and local dev both use this path
+function allowApiCorsIfNeeded(req, res) {
+  const o = req.headers.origin;
+  if (o) {
+    res.setHeader("Access-Control-Allow-Origin", o);
+    res.setHeader("Vary", "Origin");
+  }
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Accept-Language");
+  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+}
+
+// API must be registered before express.static, or some stacks return 405 for POST to /api/...
+app.options("/api/contact", (req, res) => {
+  allowApiCorsIfNeeded(req, res);
+  res.setHeader("Allow", "POST, OPTIONS");
+  return res.status(204).end();
+});
+app.options("/api/contact/", (req, res) => {
+  allowApiCorsIfNeeded(req, res);
+  res.setHeader("Allow", "POST, OPTIONS");
+  return res.status(204).end();
+});
+app.options("/api/send-email", (req, res) => {
+  allowApiCorsIfNeeded(req, res);
+  res.setHeader("Allow", "POST, OPTIONS");
+  return res.status(204).end();
+});
+
 app.post("/api/contact", async (req, res) => {
+  return handleContactPost(req, res);
+});
+app.post("/api/contact/", async (req, res) => {
   return handleContactPost(req, res);
 });
 app.post("/api/send-email", async (req, res) => {
   return handleContactPost(req, res);
 });
+
+app.use(express.static(path.join(__dirname)));
 
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
