@@ -88,7 +88,39 @@ Debería responder `{"ok":true}` (si Resend acepta el `from` y la API key) o un 
 | `src/index.js` | Lógica del worker |
 | `wrangler.toml` | Nombre, KV, `FROM`/`TO` (sin `RESEND_API_KEY`) |
 | `.dev.vars`     | **Local** secretos: gitignored |
+| `www-redirect/src/index.js` | Solo **301** `www` → apex (worker aparte) |
+| `www-redirect/wrangler.toml` | Nombre `carlosmakes-www-redirect` |
 
 ## Dominio y Cloudflare
 
 No puedo comprobar desde aquí si `carlosmakes.com` ya usa Cloudflare. Si el DNS aún no está allí, el paso 4 requiere **cambiar los nameservers** a Cloudflare o usar una alternativa (subdominio solo para API) documentada en su dashboard.
+
+## 5) Redirigir `www` → apex (canónico, recomendado a medio plazo)
+
+Si entras a la web con `https://www.carlosmakes.com/`, la capa estática a veces no ejecuta el mismo Worker que en el apex y el formulario devolvía **405** en `POST /api/contact`. La solución limpia es que **`www` redirija con 301** a `https://carlosmakes.com` (misma ruta y query), de modo que haya un solo “sitio canónico” y el `fetch` del formulario use `location.origin + '/api/contact'`.
+
+1. Crea o actualiza un **segundo** worker solo para eso, en `worker/www-redirect/`.
+
+2. Despliega:
+
+   ```bash
+   cd worker/www-redirect
+   npx wrangler@latest deploy
+   ```
+
+3. En **Cloudflare** → **Workers & Pages** → el worker `carlosmakes-www-redirect` → **Triggers** → **Routes** → añade:
+
+   - **Route:** `www.carlosmakes.com/*`  
+   - **Zone:** `carlosmakes.com`
+
+4. Asegúrate de que en **DNS** el nombre `www` queda en **proxy naranja** hacia el destino que use tu cuenta (a veces CNAME a Pages o a los targets que indique el panel). El worker intercepta en la ruta que hayas añadido.
+
+5. Comprueba:
+
+   ```bash
+   curl -sI "https://www.carlosmakes.com/cualquier-ruta" | head -5
+   ```
+
+   Deberías ver `301` y `location: https://carlosmakes.com/cualquier-ruta`.
+
+> Alternativa **sin** código: en el dashboard, **Reglas** → **Redirect Rules** o **URL forward** (301) de `www` → apex. El worker del repo hace lo mismo y queda versionado contigo; elige una de las dos para no duplicar redirecciones.
