@@ -726,7 +726,7 @@
     margin: 0 -0.5rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    touch-action: pan-y;
+    touch-action: pan-x pan-y;
   }
   .projects-row::-webkit-scrollbar { height: 6px; }
   .projects-row::-webkit-scrollbar-track { background: var(--gray-light); }
@@ -1313,27 +1313,6 @@
     row.addEventListener('scroll', () => requestAnimationFrame(updateProjectsChevrons), { passive: true });
     window.addEventListener('resize', () => { requestAnimationFrame(updateProjectsChevrons); });
 
-    // Detectar dirección del gesto: horizontal → carrusel, vertical → scroll de página
-    let tsX = 0, tsY = 0, locked = false;
-    row.addEventListener('touchstart', e => {
-      tsX = e.touches[0].clientX;
-      tsY = e.touches[0].clientY;
-      locked = false;
-      row.style.touchAction = '';
-    }, { passive: true });
-    row.addEventListener('touchmove', e => {
-      if (locked) return;
-      const dx = Math.abs(e.touches[0].clientX - tsX);
-      const dy = Math.abs(e.touches[0].clientY - tsY);
-      if (dx > 8 || dy > 8) {
-        locked = true;
-        row.style.touchAction = dy > dx ? 'pan-y' : 'pan-x';
-      }
-    }, { passive: true });
-    row.addEventListener('touchend', () => {
-      locked = false;
-      row.style.touchAction = '';
-    }, { passive: true });
   }
 
   // ============================================
