@@ -1096,7 +1096,13 @@
       contactTopicOtro: "Otro",
       contactFormSend: "Enviar",
       contactFormSending: "Enviando…",
-      contactFormSuccess: "Recibido. Te respondo cuando la cafeína haga efecto.",
+      contactFormSuccess: [
+        "Recibido. Te respondo cuando el café haga efecto.",
+        "Mensaje recibido. Ahora solo hace falta leerlo ;)",
+        "Recibido. Me pongo con ello en cuanto cierre estas 47 pestañas.",
+        "¡Recibido! Lo leeré entre reunión y reunión, que es cuando pasan las cosas importantes.",
+        "Anotado. Ahora solo tengo que acordarme de responder.",
+      ],
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       projectsTitle: "TRABAJOS",
@@ -1143,7 +1149,14 @@
       contactTopicOtro: "Other",
       contactFormSend: "Send",
       contactFormSending: "Sending…",
-      contactFormSuccess: "Got it. I’ll get back to you when the caffeine kicks in.",
+      contactFormSuccess: [
+        "Got it. I’ll get back to you when the caffeine kicks in.",
+        "Message received. Now I just need to actually open my inbox.",
+        "Noted. On it — or I’ll convincingly pretend to be until I am.",
+        "Got it. I’ll get to it once I close these 47 tabs.",
+        "Landed! I’ll read it between meetings, which is when real things happen.",
+        "Saved. I’ll reply before it gets buried under other emails. Probably.",
+      ],
       contactFormErrGeneric: "Couldn’t send. Check your connection or try again in a bit.",
       contactFormErr429: "That’s a few messages in a row. Grab a coffee and try again in a few minutes.",
       projectsTitle: "WORK",
@@ -1414,7 +1427,10 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     const cfin = document.getElementById('contactFormSuccessText');
-    if (cfin) cfin.textContent = d.contactFormSuccess;
+    if (cfin) {
+      const msgs = d.contactFormSuccess;
+      cfin.textContent = Array.isArray(msgs) ? msgs[Math.floor(Math.random() * msgs.length)] : msgs;
+    }
   }
 
   function getContactFormEndpoint() {

@@ -683,40 +683,33 @@
     }
   }
 
-  function resolveRim(prevY) {
+  function resolveRim() {
     if (!ball.active || ball.netAnim) return;
-    const py = prevY !== undefined ? prevY : ball.y;
-    const prevB = py + ballR;
-    const newB = ball.y + ballR;
-    // Baja a través del plano del aro: no rebotar (cruce en un frame + holgura en x)
+    // Paso limpio: balón cayendo desde arriba centrado en el aro → no colisionar
     if (
-      ball.vy > 0.04 &&
-      prevB < rimY + 0.5 && newB >= rimY - 1.5 &&
-      ball.x + ballR > rimL - 2 && ball.x - ballR < rimR + 2
-    ) {
-      const yLo = ball.y - ballR, yHi = ball.y + ballR;
-      if (yLo < yNetBottom + 6 && yHi > rimY - 3) return;
-    }
-    // Pasa de arriba hacia canasta: no rebotar en el aro
-    if (
-      ball.wasAboveRim &&
-      ball.vy > 0.08 &&
-      ball.x + ballR > rimL + 2 &&
-      ball.x - ballR < rimR - 2
-    ) {
-      const yLo = ball.y - ballR, yHi = ball.y + ballR;
-      if (yLo < rimY + 8 && yHi > rimY - 2) return;
-    }
-    if (ball.x + ballR < rimL - 2 || ball.x - ballR > rimR + 2) return;
-    const bandT = rimY - 2, bandB = rimY + 6;
-    if (ball.y + ballR < bandT || ball.y - ballR > bandB) return;
-    if (ball.vy > 0.15) {
-      ball.y = bandT - ballR - 0.2;
-      ball.vy *= -0.4;
-      ball.vx *= 0.9;
-    } else if (ball.vy < -0.2 && ball.y - ballR < bandB) {
-      ball.y = bandB + ballR + 0.2;
-      ball.vy *= -0.45;
+      ball.wasAboveRim && ball.vy > 0.08 &&
+      ball.x - ballR > rimL && ball.x + ballR < rimR
+    ) return;
+    // Colisión con cada extremo del aro como círculo independiente
+    const edgeR = RIM_T + 1;
+    const minD = ballR + edgeR;
+    const RESTITUTION = 0.52;
+    const DAMPING = 0.87;
+    const eps = [[rimL, rimY], [rimR, rimY]];
+    for (let i = 0; i < 2; i++) {
+      const ex = eps[i][0], ey = eps[i][1];
+      const dx = ball.x - ex, dy = ball.y - ey;
+      const d2 = dx * dx + dy * dy;
+      if (d2 >= minD * minD || d2 < 1e-4) continue;
+      const d = Math.sqrt(d2);
+      const nx = dx / d, ny = dy / d;
+      ball.x += nx * (minD - d);
+      ball.y += ny * (minD - d);
+      const vn = ball.vx * nx + ball.vy * ny;
+      if (vn < 0) {
+        ball.vx = (ball.vx - (1 + RESTITUTION) * vn * nx) * DAMPING;
+        ball.vy = (ball.vy - (1 + RESTITUTION) * vn * ny) * DAMPING;
+      }
     }
   }
 
