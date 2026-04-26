@@ -208,6 +208,8 @@
     [1,0,1,1,0,1,1], [1,0,1,1,1,1,1], [1,1,1,0,0,0,0], [1,1,1,1,1,1,1], [1,1,1,1,0,1,1]
   ];
   let netJiggleT = 0;
+  let netEntryX = 0;    // -1 (izq) a 1 (der): posición horizontal de entrada en el aro
+  let netEntrySpeed = 0.5; // velocidad normalizada al entrar
 
   function lerpY(a, b, t) { return a + (b - a) * t; }
 
@@ -396,8 +398,11 @@
     const topL = rimL;
     const topR = rimR;
     const effBotL = e.botL, effBotR = e.botR;
-    const jig = netJiggleT > 0
-      ? (3.2 * (netJiggleT / NET_JIGGLE_MAX)) * Math.sin(netJiggleT * 0.7) : 0;
+    const swingFade = netJiggleT > 0 ? netJiggleT / NET_JIGGLE_MAX : 0;
+    const jig = swingFade > 0 ? (3.2 * swingFade) * Math.sin(netJiggleT * 0.7) : 0;
+    // Balanceo direccional: la red se desplaza hacia donde entró el balón y oscila
+    const dirSwing = swingFade > 0
+      ? netEntryX * 9 * netEntrySpeed * swingFade * Math.sin(netJiggleT * 0.45) : 0;
     ctx.strokeStyle = 'rgba(255,255,255,0.4)';
     ctx.lineWidth = 1;
     const nStr = 6;
@@ -406,6 +411,7 @@
       const tx = lerpY(topL, topR, u);
       let bx2 = lerpY(effBotL, effBotR, u);
       bx2 += jig * (0.35 + 0.65 * Math.sin(u * Math.PI * 2));
+      bx2 += dirSwing * Math.sin(u * Math.PI);
       if (e.active) {
         const tAlong = (e.yS - y1e) / (y2e - y1e);
         const onChord = lerpY(tx, bx2, tAlong);
@@ -449,13 +455,14 @@
         if (!a || !b || !d || !e) continue;
         const sh = netJiggleT > 0
           ? 0.55 * (netJiggleT / NET_JIGGLE_MAX) * Math.sin((r + c) * 0.9 + netJiggleT * 0.12) : 0;
+        const dirSh = dirSwing * ((r + 1) / (nRow + 1)) * 0.55;
         ctx.beginPath();
         ctx.moveTo(a.x, a.y);
-        ctx.lineTo(e.x + sh, e.y);
+        ctx.lineTo(e.x + sh + dirSh, e.y);
         ctx.stroke();
         ctx.beginPath();
         ctx.moveTo(b.x, b.y);
-        ctx.lineTo(d.x + sh, d.y);
+        ctx.lineTo(d.x + sh + dirSh, d.y);
         ctx.stroke();
       }
     }
@@ -772,7 +779,11 @@
       const newBottom = ball.y + ballR;
       let throughNet = false;
       if (!ball.scored && !ball.netAnim) {
-        const horizOpen = ball.x + ballR > rimL - 2 && ball.x - ballR < rimR + 2;
+        const rimEdgeMin = ballR + RIM_T + 1;
+        const notTouchingRim =
+          Math.hypot(ball.x - rimL, ball.y - rimY) > rimEdgeMin &&
+          Math.hypot(ball.x - rimR, ball.y - rimY) > rimEdgeMin;
+        const horizOpen = notTouchingRim && ball.x + ballR > rimL + 1 && ball.x - ballR < rimR - 1;
         const falling = ball.vy > 0.04;
         const crossRimPlane = prevBottom < rimY + 0.5 && newBottom >= rimY - 1.5;
         const inHoopWindow =
@@ -793,6 +804,8 @@
             persistHistoric();
           }
           netJiggleT = NET_JIGGLE_MAX;
+          netEntryX = Math.max(-1, Math.min(1, (ball.x - rimCx) / (innerRimW * 0.4)));
+          netEntrySpeed = Math.min(1, Math.hypot(ball.vx, ball.vy) / 18);
           ball.netAnim = {
             t: 0,
             dur: 44,
