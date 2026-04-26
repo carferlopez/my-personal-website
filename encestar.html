@@ -683,24 +683,26 @@
     }
   }
 
-  function resolveRim() {
+  function resolveRim(prevY) {
     if (!ball.active || ball.netAnim) return;
+    const py = prevY !== undefined ? prevY : ball.y;
     // Paso limpio: balón cayendo desde arriba centrado en el aro → no colisionar
     if (
       ball.wasAboveRim && ball.vy > 0.08 &&
       ball.x - ballR > rimL && ball.x + ballR < rimR
     ) return;
-    // Colisión con cada extremo del aro como círculo independiente
     const edgeR = RIM_T + 1;
     const minD = ballR + edgeR;
     const RESTITUTION = 0.52;
     const DAMPING = 0.87;
-    const eps = [[rimL, rimY], [rimR, rimY]];
+    let bounced = false;
+    // Colisión discreta con cada extremo del aro como círculo independiente
     for (let i = 0; i < 2; i++) {
-      const ex = eps[i][0], ey = eps[i][1];
-      const dx = ball.x - ex, dy = ball.y - ey;
+      const ex = i === 0 ? rimL : rimR;
+      const dx = ball.x - ex, dy = ball.y - rimY;
       const d2 = dx * dx + dy * dy;
       if (d2 >= minD * minD || d2 < 1e-4) continue;
+      bounced = true;
       const d = Math.sqrt(d2);
       const nx = dx / d, ny = dy / d;
       ball.x += nx * (minD - d);
@@ -709,6 +711,20 @@
       if (vn < 0) {
         ball.vx = (ball.vx - (1 + RESTITUTION) * vn * nx) * DAMPING;
         ball.vy = (ball.vy - (1 + RESTITUTION) * vn * ny) * DAMPING;
+      }
+    }
+    // Anti-tunneling: el balón cruzó el plano del aro en un solo frame sin activar colisión
+    if (!bounced) {
+      const prevBallBottom = py + ballR;
+      const ballBottom = ball.y + ballR;
+      const crossedDown = ball.vy > 0 && prevBallBottom <= rimY + 1 && ballBottom > rimY - 1;
+      const crossedUp   = ball.vy < 0 && py - ballR >= rimY - 1 && ball.y - ballR < rimY + 1;
+      const notInHoop   = !(ball.x - ballR > rimL && ball.x + ballR < rimR);
+      const nearRim     = ball.x + ballR > rimL - edgeR && ball.x - ballR < rimR + edgeR;
+      if ((crossedDown || crossedUp) && notInHoop && nearRim) {
+        ball.y = crossedDown ? rimY - ballR - 0.2 : rimY + ballR + 0.2;
+        ball.vy = -ball.vy * RESTITUTION * DAMPING;
+        ball.vx *= DAMPING;
       }
     }
   }
