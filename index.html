@@ -232,6 +232,10 @@
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
   .hero-title .red { color: var(--red); }
+  /* Typewriter: el acento (punto o ;) debe ganar a herencia del h1 */
+  .hero-title #typewriter .red {
+    color: var(--red) !important;
+  }
 
   .cursor {
     display: inline-block;
@@ -1319,11 +1323,19 @@
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
 
   function renderTypewriter(text) {
+    typeEl.replaceChildren();
     if (text.endsWith(';)')) {
-      typeEl.innerHTML =
-        text.slice(0, -2) + '<span class="red" style="color: var(--red)">;)</span>';
+      typeEl.append(document.createTextNode(text.slice(0, -2)));
+      const wink = document.createElement('span');
+      wink.className = 'red';
+      wink.textContent = ';)';
+      typeEl.append(wink);
     } else if (text.endsWith('.')) {
-      typeEl.innerHTML = text.slice(0, -1) + '<span class="red" style="color: var(--red)">.</span>';
+      typeEl.append(document.createTextNode(text.slice(0, -1)));
+      const dot = document.createElement('span');
+      dot.className = 'red';
+      dot.textContent = '.';
+      typeEl.append(dot);
     } else {
       typeEl.textContent = text;
     }
