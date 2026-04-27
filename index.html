@@ -1275,28 +1275,6 @@
   });
 
   // ============================================
-  // Accent color randomizer
-  // ============================================
-  (function () {
-    const accents = [
-      '#ef4444', // rojo (original)
-      '#ff5500', // naranja
-      '#ffcc00', // amarillo
-      '#00cc44', // verde
-      '#00ccff', // cian
-      '#0066ff', // azul
-      '#7700ff', // violeta
-      '#ff0099', // magenta
-    ];
-    const color = accents[Math.floor(Math.random() * accents.length)];
-    document.documentElement.style.setProperty('--red', color);
-    const favicon = document.querySelector('link[rel="icon"]');
-    if (favicon) {
-      favicon.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22black%22/><circle cx=%2278%22 cy=%2278%22 r=%2220%22 fill=%22${encodeURIComponent(color)}%22/></svg>`;
-    }
-  })();
-
-  // ============================================
   // Init
   // ============================================
   applyLang();
