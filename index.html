@@ -1531,6 +1531,10 @@
     ];
     const color = accents[Math.floor(Math.random() * accents.length)];
     document.documentElement.style.setProperty('--red', color);
+    const favicon = document.querySelector('link[rel="icon"]');
+    if (favicon) {
+      favicon.href = `data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22black%22/><circle cx=%2278%22 cy=%2278%22 r=%2210%22 fill=%22${encodeURIComponent(color)}%22/></svg>`;
+    }
   })();
 
   // ============================================
