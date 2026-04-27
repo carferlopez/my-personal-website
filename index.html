@@ -629,15 +629,14 @@
   }
   .contact-box:hover .contact-form__status { color: var(--red); }
   .contact-form__done {
-    margin-top: 1.5rem;
-    padding: 1rem 0;
     max-width: 42rem;
-    font-size: 1.05rem;
+    font-size: 1rem;
     line-height: 1.55;
     color: var(--gray);
-    border-top: 1px solid var(--gray-light);
   }
-  .contact-box:hover .contact-form__done { color: var(--gray-light); border-top-color: rgba(255, 255, 255, 0.25); }
+  @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
+  @media (min-width: 768px) { .contact-form__done { font-size: 1.25rem; } }
+  .contact-box:hover .contact-form__done { color: var(--gray-light); }
   .contact-form__hp {
     position: absolute;
     left: -10000px;
@@ -1004,6 +1003,9 @@
       <div class="contact-box">
         <h2 class="big-heading"><span id="contactTitle">¿EN QUÉ PUEDO AYUDARTE</span><span class="red" id="contactMark">?</span></h2>
         <p class="contact-sub" id="contactSub">Cuéntamelo aquí.</p>
+        <div class="contact-form__done" id="contactFormSuccess" hidden>
+          <p id="contactFormSuccessText"></p>
+        </div>
 
         <div class="contact-form-wrap" id="contactFormBlock">
           <form id="contactForm" class="contact-form" novalidate>
@@ -1044,9 +1046,6 @@
           <span class="contact-alt-label" id="contactAltLabel">O si prefieres:</span>
           <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
           <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        </div>
-        <div class="contact-form__done" id="contactFormSuccess" hidden>
-          <p id="contactFormSuccessText"></p>
         </div>
       </div>
     </div>
@@ -1427,11 +1426,6 @@
     if (o4) o4.textContent = d.contactTopicOtro;
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
-    const cfin = document.getElementById('contactFormSuccessText');
-    if (cfin) {
-      const msgs = d.contactFormSuccess;
-      cfin.textContent = Array.isArray(msgs) ? msgs[Math.floor(Math.random() * msgs.length)] : msgs;
-    }
   }
 
   function getContactFormEndpoint() {
@@ -1484,7 +1478,14 @@
         });
         const j = await r.json().catch(function () { return {}; });
         if (r.status === 200 && j.ok) {
+          const cfin = document.getElementById('contactFormSuccessText');
+          if (cfin) {
+            const msgs = t[lang].contactFormSuccess;
+            cfin.textContent = Array.isArray(msgs) ? msgs[Math.floor(Math.random() * msgs.length)] : msgs;
+          }
           block.hidden = true;
+          document.getElementById('contactSub').hidden = true;
+          document.querySelector('.contact-alt').hidden = true;
           done.hidden = false;
           const st = document.getElementById('cf-started-at');
           if (st) st.value = String(Date.now());
