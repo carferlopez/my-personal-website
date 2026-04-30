@@ -593,12 +593,17 @@
   }
   #proyectos #projectsTitle {
     margin: 0;
-    padding: 0 0.15rem;
-    flex: 0 0 auto;
+    /* Misma franja horizontal: no roba ancho al carrusel; el peso sale de letras más grandes. */
+    width: 2.75rem;
+    flex: 0 0 2.75rem;
+    max-width: 2.75rem;
+    box-sizing: border-box;
+    padding: 0 0.1rem;
+    overflow: visible;
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    align-items: stretch;
+    align-items: center;
     justify-content: center;
     min-height: 0;
     max-height: 100%;
@@ -608,11 +613,18 @@
     color: var(--page-orange);
     -webkit-text-fill-color: var(--page-orange);
   }
+  @media (min-width: 768px) {
+    #proyectos #projectsTitle {
+      width: 3rem;
+      flex: 0 0 3rem;
+      max-width: 3rem;
+    }
+  }
   #proyectos #projectsTitle .projects-vertical-title__stack {
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     flex: 1 1 auto;
     width: 100%;
     min-height: 0;
@@ -623,19 +635,22 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Boceto: cada letra girada 90° CCW; lectura de abajo (primera letra) hacia arriba (column-reverse). */
     transform: rotate(-90deg);
     transform-origin: center center;
-    /* Escala para que WORK/TRABAJOS quepan enteros con la sección en encuadre típico (~50–75vh de columna). */
-    font-size: clamp(1.5rem, min(3.8vw, 5.5vh), 3.1rem);
+    /* Grande y denso como líneas del hero (SYSTEMS…): peso 900, tracking cerrado. */
+    font-size: clamp(3.1rem, min(12vw, 15vh), 7.75rem);
     font-weight: 900;
-    line-height: 1;
+    line-height: 0.88;
+    letter-spacing: -0.05em;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
+    /* Junta glifos en la columna (puede solaparse ligeramente). */
+    margin-block: -0.38em;
+    -webkit-text-stroke: 0.02em var(--page-orange);
   }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: clamp(1.65rem, min(4.2vw, 6vh), 3.5rem);
+      font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
+      margin-block: -0.42em;
     }
   }
   @media (max-width: 639px) {
@@ -648,6 +663,9 @@
       position: static;
       align-self: flex-start;
       padding: 0;
+      width: auto;
+      max-width: none;
+      flex: 0 0 auto;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack {
       flex-direction: row;
@@ -658,8 +676,12 @@
       gap: 0.08em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: clamp(2.5rem, 11vw, 3.75rem);
+      font-size: clamp(2.85rem, 11vw, 4.25rem);
       transform: none;
+      margin-block: 0;
+      line-height: 0.88;
+      letter-spacing: -0.05em;
+      -webkit-text-stroke: 0.02em var(--page-orange);
     }
   }
 
