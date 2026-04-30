@@ -935,12 +935,41 @@
   .contact-form-wrap { width: 100%; max-width: 100%; }
   .contact-form {
     margin-top: 1.25rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1.1rem;
-    max-width: 42rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "name    message"
+      "email   message"
+      "topic   message"
+      "submit  message";
+    grid-template-rows: auto auto auto auto;
+    column-gap: 1.5rem;
+    row-gap: 1rem;
+    max-width: 100%;
     position: relative;
   }
+  /* Honeypot e input hidden fuera del flujo */
+  .contact-form input[type="hidden"] { display: none; }
+  .contact-form__hp { display: none !important; }
+
+  /* Asignación de áreas */
+  .contact-form > .contact-form__row:nth-child(2) { grid-area: name; }
+  .contact-form > .contact-form__row:nth-child(3) { grid-area: email; }
+  .contact-form > .contact-form__row:nth-child(4) { grid-area: topic; }
+  .contact-form > .contact-form__row:nth-child(5) { grid-area: message; display: flex; flex-direction: column; }
+  .contact-form > .contact-form__row:nth-child(5) .contact-form__textarea { flex: 1; resize: none; min-height: 220px; }
+  .contact-form > .contact-form__row:nth-child(7) { grid-area: submit; align-self: end; }
+
+  /* Móvil: columna única */
+  @media (max-width: 639px) {
+    .contact-form {
+      grid-template-columns: 1fr;
+      grid-template-areas: none;
+    }
+    .contact-form > .contact-form__row:nth-child(n) { grid-area: auto; }
+    .contact-form > .contact-form__row:nth-child(5) .contact-form__textarea { min-height: 8rem; resize: vertical; }
+  }
+
   .contact-form__row { display: flex; flex-direction: column; gap: 0.35rem; }
   .contact-form__label {
     font-weight: 700;
