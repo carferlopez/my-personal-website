@@ -89,9 +89,10 @@
   }
 
   /* ==================== LAYOUT ==================== */
+  /* Sin margin-inline auto: igual que hero-v2 (full-bleed + padding lateral). Centrar aquí corría WORKS/contacto/typewriter vs el titular grande. */
   .container {
     max-width: 72rem;
-    margin: 0 auto;
+    margin: 0;
     width: 100%;
     padding-left: max(var(--container-pad-x), env(safe-area-inset-left, 0px));
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
