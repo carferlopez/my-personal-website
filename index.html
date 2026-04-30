@@ -47,10 +47,10 @@
     --red: #ef4444;
     --hero-v2-orange: #ff4d00;
     --hero-v2-violet: #aa00ff;
-    /* Titulares / typewriter: solo CMY (sin verde) */
-    --cmy-cyan: #00e5ff;
-    --cmy-magenta: #ff2e89;
-    --cmy-yellow: #ffea00;
+    /* Titulares bajo el hero + typewriter: naranja vivo, magenta vivo, amarillo fluorescente (el brutalista no usa estas vars) */
+    --page-orange: #ff5a1a;
+    --page-magenta: #ff00b2;
+    --page-yellow: #e8ff1a;
   }
 
   html { scroll-behavior: smooth; }
@@ -242,18 +242,18 @@
     -webkit-text-fill-color: #ff4d00 !important;
   }
 
-  /* Typewriter: CMY según data-tw-line 0–2 */
+  /* Typewriter: naranja → magenta → amarillo (misma triada que titulares #proyectos / contacto) */
   #introHeading[data-tw-line="0"] #typewriter {
-    color: var(--cmy-cyan);
-    -webkit-text-fill-color: var(--cmy-cyan);
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
   }
   #introHeading[data-tw-line="1"] #typewriter {
-    color: var(--cmy-magenta);
-    -webkit-text-fill-color: var(--cmy-magenta);
+    color: var(--page-magenta);
+    -webkit-text-fill-color: var(--page-magenta);
   }
   #introHeading[data-tw-line="2"] #typewriter {
-    color: var(--cmy-yellow);
-    -webkit-text-fill-color: var(--cmy-yellow);
+    color: var(--page-yellow);
+    -webkit-text-fill-color: var(--page-yellow);
   }
 
   /* ==================== INTRO (antiguo hero: typewriter) ==================== */
@@ -472,8 +472,8 @@
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
 
   .hero-title #typewriter .typewriter-suffix {
-    color: var(--hero-v2-orange);
-    -webkit-text-fill-color: var(--hero-v2-orange);
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
   }
 
   .cursor {
@@ -499,7 +499,7 @@
     padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
     font-weight: 700;
     letter-spacing: 0.5em;
-    color: var(--gray);
+    color: var(--white);
     pointer-events: auto;
     animation: float 3s ease-in-out infinite;
     font-size: 0.875rem;
@@ -535,18 +535,18 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
-  /* Titulares de sección: M, Y, C (typewriter rota C→M→Y) */
+  /* Titulares fuera del brutalista: mismo ciclo naranja → magenta → amarillo */
   #proyectos #projectsTitle {
-    color: var(--cmy-magenta);
-    -webkit-text-fill-color: var(--cmy-magenta);
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
   }
   #contacto .contact-box > h2.big-heading {
-    color: var(--cmy-yellow);
-    -webkit-text-fill-color: var(--cmy-yellow);
+    color: var(--page-magenta);
+    -webkit-text-fill-color: var(--page-magenta);
   }
   #contactDividerText {
-    color: var(--cmy-cyan);
-    -webkit-text-fill-color: var(--cmy-cyan);
+    color: var(--page-yellow);
+    -webkit-text-fill-color: var(--page-yellow);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -568,7 +568,7 @@
 
   .subheading {
     font-size: 1rem;
-    color: var(--gray-mid);
+    color: var(--white);
     margin-top: 2.5rem;
     line-height: 1.6;
     text-wrap: pretty;
@@ -599,7 +599,7 @@
     border-color: rgba(255, 255, 255, 0.55);
   }
 
-  .contact-sub { color: var(--gray-mid); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
+  .contact-sub { color: var(--white); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
 
@@ -775,7 +775,7 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--gray-mid);
+    color: var(--white);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
@@ -812,18 +812,19 @@
   @media (min-width: 1024px) { .projects-strap__lead { font-size: 1.12em; } }
   .projects-strap__intro {
     display: block;
-    color: var(--gray);
+    color: var(--white);
     font-weight: 500;
     line-height: 1.5;
   }
   .projects-strap a {
-    color: var(--red);
+    color: var(--white);
     font-weight: 700;
     text-decoration: underline;
     text-underline-offset: 0.12em;
     cursor: pointer;
   }
-  .projects-strap a:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
+  .projects-strap a:hover { opacity: 0.85; }
+  .projects-strap a:focus-visible { outline: 3px solid var(--white); outline-offset: 2px; }
   .projects-chevron-wrap {
     position: relative;
     margin-top: 2.5rem;
@@ -1442,7 +1443,7 @@
   const typeEl = document.getElementById('typewriter');
   const introHeadingEl = document.getElementById('introHeading');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
-  /** Avanza en cada cambio de frase: cian → magenta → amarillo (CMY). */
+  /** Avanza en cada cambio de frase: naranja → magenta → amarillo (misma triada que el resto de titulares). */
   let typewriterNeonIx = 0;
   /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
   let introTypewriterUnlocked = false;
@@ -1451,7 +1452,7 @@
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
   }
 
-  /** Cuerpo en CMY; sufijo final `.` o `;)` en naranja. */
+  /** Cuerpo en triada; sufijo `.` o `;)` en naranja vivo (--page-orange). */
   function renderTypewriter(text, fullWord) {
     if (!typeEl) return;
     typeEl.replaceChildren();
