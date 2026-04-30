@@ -408,6 +408,23 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
+  /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
+  .big-heading--mid {
+    font-size: 5.25vw;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    text-transform: uppercase;
+    text-wrap: pretty;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+  }
+  @media (min-width: 640px) { .big-heading--mid { font-size: 4.9vw; } }
+  @media (min-width: 768px) { .big-heading--mid { font-size: 4.55vw; } }
+  @media (min-width: 1024px) { .big-heading--mid { font-size: 4.2vw; } }
+  @media (min-width: 1280px) { .big-heading--mid { font-size: 45px; } }
+
   .subheading {
     font-size: 1rem;
     color: var(--gray);
@@ -551,22 +568,22 @@
     align-items: center;
     gap: 1rem;
     margin-top: 2.5rem;
-    max-width: 42rem;
+    max-width: 100%;
+    flex-wrap: wrap;
   }
   .contact-divider::before,
   .contact-divider::after {
     content: '';
-    flex: 1;
+    flex: 1 1 2rem;
+    min-width: 1.25rem;
     border-top: 2px solid currentColor;
     opacity: 0.15;
   }
-  .contact-divider span {
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    opacity: 0.5;
-    white-space: nowrap;
+  .contact-divider .big-heading--mid {
+    flex: 1 1 12rem;
+    max-width: 100%;
+    text-align: center;
+    margin: 0;
   }
 
   .contact-form-wrap { width: 100%; max-width: 100%; }
@@ -975,7 +992,7 @@
         </form>
 
         <div class="contact-divider">
-          <span id="contactDividerText">¿Tienes algo concreto que contarme?</span>
+          <p class="big-heading big-heading--mid" id="contactDividerText">¿Tienes algo concreto que contarme?</p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
