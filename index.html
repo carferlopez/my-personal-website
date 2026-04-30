@@ -533,6 +533,18 @@
   }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
+  .u-sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   /* ==================== SECTIONS ==================== */
   .section-pad { padding: 4rem 0; }
   @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
@@ -554,66 +566,90 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
-  /* Titulares fuera del brutalista: mismo ciclo naranja → magenta → amarillo */
-  #proyectos #projectsTitle {
-    margin: 0;
-    padding: 0.15rem 0.35rem;
-    flex: 0 0 auto;
-    font-size: clamp(2rem, 5.5vw, 3.75rem);
-    font-weight: 900;
-    letter-spacing: 0.14em;
-    line-height: 1;
-    text-transform: uppercase;
-    text-wrap: balance;
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
-    writing-mode: vertical-rl;
-    text-orientation: mixed;
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: sticky;
-    top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
-    z-index: 1;
-  }
-  .projects-layout {
+  /* WORKS/TRABAJOS: lateral izq., alto = strap + carrusel; letras abajo → arriba (column-reverse) */
+  .projects-module {
     display: flex;
     flex-direction: row;
     align-items: stretch;
     gap: 0.65rem;
-    margin-top: 2.5rem;
+    margin-top: 0;
     min-width: 0;
   }
-  @media (min-width: 640px) {
-    .projects-layout { gap: 1rem; }
-    #proyectos #projectsTitle {
-      font-size: clamp(2.35rem, 4.2vw, 4rem);
-      padding: 0.2rem 0.45rem;
-    }
+  .projects-module__body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .projects-module__body .projects-strap.subheading {
+    margin-top: 0;
+  }
+  .projects-module__body .projects-chevron-wrap {
+    margin-top: 1.75rem;
   }
   @media (min-width: 768px) {
-    .projects-layout { gap: 1.35rem; }
-    #proyectos #projectsTitle {
-      font-size: clamp(2.6rem, 3.5vw, 4.25rem);
-      letter-spacing: 0.16em;
+    .projects-module { gap: 1.15rem; }
+    .projects-module__body .projects-chevron-wrap { margin-top: 2.25rem; }
+  }
+  #proyectos #projectsTitle {
+    margin: 0;
+    padding: 0 0.15rem;
+    flex: 0 0 auto;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    position: sticky;
+    top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
+    z-index: 1;
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
+  }
+  #proyectos #projectsTitle .projects-vertical-title__stack {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1 1 auto;
+    width: 100%;
+    gap: 0;
+    min-height: 12rem;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__stack > span {
+    display: block;
+    font-size: clamp(4rem, min(20vw, 28vh), 12rem);
+    font-weight: 900;
+    line-height: 0.92;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+  }
+  @media (min-width: 640px) {
+    #proyectos #projectsTitle .projects-vertical-title__stack > span {
+      font-size: clamp(4.5rem, min(22vw, 32vh), 13rem);
     }
   }
   @media (max-width: 639px) {
-    .projects-layout {
+    .projects-module {
       flex-direction: column;
       align-items: stretch;
       gap: 1.25rem;
     }
     #proyectos #projectsTitle {
-      writing-mode: horizontal-tb;
-      text-orientation: mixed;
-      align-self: flex-start;
       position: static;
-      font-size: clamp(1.85rem, 9vw, 2.25rem);
-      letter-spacing: -0.04em;
+      align-self: flex-start;
       padding: 0;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__stack {
+      flex-direction: row;
+      flex-wrap: wrap;
       justify-content: flex-start;
+      align-items: baseline;
+      min-height: 0;
+      gap: 0.08em;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__stack > span {
+      font-size: clamp(2.5rem, 11vw, 3.75rem);
     }
   }
 
@@ -1197,16 +1233,20 @@
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <div class="container">
-      <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
-
-      <div class="projects-layout">
-        <h2 class="projects-vertical-title" id="projectsTitle">TRABAJOS</h2>
-        <div class="projects-chevron-wrap">
-          <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
-          <div class="projects-row" id="projectsRow" data-projects-scroll>
-            <ul class="projects-track" id="projectsTrack" role="list"></ul>
+      <div class="projects-module">
+        <h2 class="projects-vertical-title" id="projectsTitle">
+          <span class="projects-vertical-title__stack" aria-hidden="true"></span>
+          <span class="u-sr-only projects-title-sr">TRABAJOS</span>
+        </h2>
+        <div class="projects-module__body">
+          <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
+          <div class="projects-chevron-wrap">
+            <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
+            <div class="projects-row" id="projectsRow" data-projects-scroll>
+              <ul class="projects-track" id="projectsTrack" role="list"></ul>
+            </div>
+            <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
           </div>
-          <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
         </div>
       </div>
     </div>
@@ -1649,6 +1689,22 @@
     requestAnimationFrame(tryStart);
   }
 
+  function setProjectsTitleStack(text) {
+    const h2 = document.getElementById('projectsTitle');
+    if (!h2 || !text) return;
+    const stack = h2.querySelector('.projects-vertical-title__stack');
+    const sr = h2.querySelector('.projects-title-sr');
+    if (sr) sr.textContent = text;
+    if (!stack) return;
+    stack.replaceChildren();
+    for (let i = 0; i < text.length; i++) {
+      const ch = text.charAt(i);
+      const s = document.createElement('span');
+      s.textContent = ch;
+      stack.appendChild(s);
+    }
+  }
+
   // ============================================
   // Idioma
   // ============================================
@@ -1662,7 +1718,7 @@
     document.getElementById('contactSub').textContent = d.contactSub;
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
-    document.getElementById('projectsTitle').textContent = d.projectsTitle;
+    setProjectsTitleStack(d.projectsTitle);
     const projectsStrapEl = document.getElementById('projectsStrap');
     if (projectsStrapEl && d.projectsStrapLead && d.projectsStrapBody) {
       projectsStrapEl.innerHTML = '<span class="projects-strap__lead" id="projectsStrapLead">' + d.projectsStrapLead + '</span><span class="projects-strap__intro" id="projectsStrapIntro">' + d.projectsStrapBody + '</span>';
