@@ -1197,9 +1197,9 @@
   const t = {
     es: {
       typewriter: [
-        "CREO PROGRAMAS & PRODUCTOS DIGITALES. ;)",
-        "CREATIVOS, DIFERENTES, PERO SOBRE TODO ÚTILES. ;)",
-        "ESPERO QUE TE SIRVAN. ;)",
+        "CREO PROGRAMAS & PRODUCTOS DIGITALES.",
+        "CREATIVOS, DIFERENTES, PERO SOBRE TODO ÚTILES.",
+        "ESPERO QUE TE SIRVAN ;)",
       ],
       scrollHint: "COMO POR EJEMPLO ESTOS ↓",
       contactTitle: "NO TE PIERDAS TODAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
@@ -1239,9 +1239,9 @@
     },
     en: {
       typewriter: [
-        "I CREATE DIGITAL PROGRAMS & PRODUCTS. ;)",
-        "SIMPLE TO USE, BUT ABOVE ALL, USEFUL. ;)",
-        "I HOPE THEY HELP YOU. ;)",
+        "I CREATE DIGITAL PROGRAMS & PRODUCTS.",
+        "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
+        "I HOPE THEY HELP YOU ;)",
       ],
       scrollHint: "LIKE THESE FOR EXAMPLE ↓",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
@@ -1435,15 +1435,14 @@
   const typeEl = document.getElementById('typewriter');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
 
-  const TYPEWRITER_SUFFIX = '. ;)';
-
+  /** Solo la 3ª frase termina en `;)` (naranja); las demás van enteras en color del titular */
   function renderTypewriter(text, fullWord) {
     if (!typeEl) return;
     typeEl.replaceChildren();
     if (!text) return;
 
-    if (fullWord.endsWith(TYPEWRITER_SUFFIX)) {
-      const baseLen = fullWord.length - TYPEWRITER_SUFFIX.length;
+    if (fullWord.endsWith(';)')) {
+      const baseLen = fullWord.length - 2;
       if (text.length <= baseLen) {
         typeEl.textContent = text;
         return;
@@ -1456,21 +1455,7 @@
       return;
     }
 
-    if (text.endsWith(';)') && !text.endsWith(TYPEWRITER_SUFFIX)) {
-      typeEl.append(document.createTextNode(text.slice(0, -2)));
-      const wink = document.createElement('span');
-      wink.className = 'typewriter-accent';
-      wink.textContent = ';)';
-      typeEl.append(wink);
-    } else if (text.endsWith('.')) {
-      typeEl.append(document.createTextNode(text.slice(0, -1)));
-      const dot = document.createElement('span');
-      dot.className = 'typewriter-accent';
-      dot.textContent = '.';
-      typeEl.append(dot);
-    } else {
-      typeEl.textContent = text;
-    }
+    typeEl.textContent = text;
   }
 
   function typewriter() {
