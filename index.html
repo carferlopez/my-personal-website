@@ -645,7 +645,8 @@
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* Misma referencia que el logo: todo el bloque WORKS (columna vertical) arranca a la izquierda, no centrado en el h2 */
+    align-items: flex-start;
     justify-content: center;
     min-height: 0;
     max-height: 100%;
@@ -663,11 +664,11 @@
   #proyectos #projectsTitle .projects-vertical-title__stack {
     display: flex;
     flex-direction: column-reverse;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
     flex: 1 1 auto;
     width: max-content;
-    align-self: center;
+    align-self: flex-start;
     min-height: 0;
     /* Separación uniforme entre todas las letras (como entre W–O), sin solapes */
     row-gap: clamp(0.14rem, 0.42vh, 0.4rem);
