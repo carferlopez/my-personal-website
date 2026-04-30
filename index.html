@@ -1658,7 +1658,7 @@
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
   /** Avanza en cada cambio de frase: naranja → magenta → amarillo (misma triada que el resto de titulares). */
   let typewriterNeonIx = 0;
-  /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
+  /** El carrusel de frases solo arranca cuando el hero ya está en negro y el titular #introHeading va centrado en pantalla. */
   let introTypewriterUnlocked = false;
   let introRevealTimer = null;
   const INTRO_TYPEWRITER_DELAY_MS = 420;
@@ -1739,15 +1739,36 @@
     typewriter();
   }
 
-  /** Arranca solo cuando #inicio (hero brutalista) ha salido por completo: encuadre en negro, sin solaparse con el título GSAP. */
+  /** Arranca solo con viewport en negro y el titular #presentacion centrado (no antes ni tras pasar ese encuadre). */
   function initIntroTypewriterOnScroll() {
     const intro = document.getElementById('presentacion');
     const hero = document.getElementById('inicio');
-    if (!intro || !typeEl) return;
+    const heading = document.getElementById('introHeading');
+    if (!intro || !typeEl || !heading) return;
 
-    function heroFullyAboveViewport() {
+    /** Mitad vertical del titular cercana al centro del viewport (≈ ±14%). */
+    const CENTER_TOLERANCE_Y = () => Math.max(36, window.innerHeight * 0.14);
+
+    function isHeroClearAndDark() {
       if (!hero) return true;
-      return hero.getBoundingClientRect().bottom <= 0.5;
+      const rHero = hero.getBoundingClientRect();
+      if (rHero.bottom > 2) return false;
+      if (hero.classList.contains('hero-v2-section--static')) return true;
+      const fadeEl = hero.querySelector('.hero-v2-end-fade');
+      const op = fadeEl ? parseFloat(getComputedStyle(fadeEl).opacity) || 0 : 1;
+      return op >= 0.99;
+    }
+
+    function isHeadingVerticallyCentered() {
+      const r = heading.getBoundingClientRect();
+      if (r.height < 2) return false;
+      const mid = r.top + r.height * 0.5;
+      const vc = window.innerHeight * 0.5;
+      return Math.abs(mid - vc) <= CENTER_TOLERANCE_Y();
+    }
+
+    function typewriterRevealReady() {
+      return isHeroClearAndDark() && isHeadingVerticallyCentered();
     }
 
     const start = () => {
@@ -1767,21 +1788,41 @@
       }, INTRO_TYPEWRITER_DELAY_MS);
     };
 
-    function tryStart() {
-      if (introTypewriterUnlocked) return;
-      if (!heroFullyAboveViewport()) return;
-      start();
+    const scrollOpts = { passive: true };
+    function detach() {
       window.removeEventListener('scroll', onScrollOrResize, scrollOpts);
       window.removeEventListener('resize', onScrollOrResize, scrollOpts);
+      window.removeEventListener('hashchange', onScrollOrResize);
+      window.removeEventListener('load', onScrollOrResize);
+      if (io) io.disconnect();
     }
 
-    const scrollOpts = { passive: true };
+    function tryStart() {
+      if (introTypewriterUnlocked) return;
+      if (!typewriterRevealReady()) return;
+      detach();
+      start();
+    }
+
     function onScrollOrResize() {
       requestAnimationFrame(tryStart);
     }
 
+    /** Refuerzo: cruzar banda vertical central (~24% alto), y validar después con geometría. */
+    let io = null;
+    if (typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(() => requestAnimationFrame(tryStart), {
+        root: null,
+        threshold: [0, 0.02, 0.25, 0.75, 1],
+        rootMargin: '-38% 0px -38% 0px',
+      });
+      io.observe(heading);
+    }
+
     window.addEventListener('scroll', onScrollOrResize, scrollOpts);
     window.addEventListener('resize', onScrollOrResize, scrollOpts);
+    window.addEventListener('hashchange', onScrollOrResize);
+    window.addEventListener('load', onScrollOrResize);
     requestAnimationFrame(tryStart);
   }
 
