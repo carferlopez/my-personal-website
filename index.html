@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<script>document.documentElement.classList.add('js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carlos Fernández — Systems Architect & Creative Developer</title>
 <meta name="description" content="Construyo productos digitales en solitario: lanzar rápido, usuarios reales, sin ruido corporativo.">
@@ -169,6 +170,19 @@
     min-height: 100svh;
   }
 
+  /* Último tramo del hero: fundido a negro antes de mostrar la presentación / typewriter */
+  .hero-v2-end-fade {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: var(--black);
+    pointer-events: none;
+    opacity: 0;
+  }
+  .hero-v2-section--static .hero-v2-end-fade {
+    display: none;
+  }
+
   .hero-v2-sticky {
     position: sticky;
     top: 0;
@@ -212,6 +226,8 @@
     line-height: 0.88;
     will-change: transform;
     transform-origin: 50% 50%;
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: column;
     color: #ff4d00 !important;
@@ -277,6 +293,16 @@
 
   .intro-hero:not(.intro-hero--typewriter-armed) .hero-title .cursor {
     visibility: hidden;
+  }
+
+  html.js .intro-hero .hero-title-wrap,
+  html.js .intro-hero .scroll-hint--intro {
+    opacity: 0;
+    transition: opacity 0.55s ease;
+  }
+  html.js .intro-hero.intro-hero--typewriter-armed .hero-title-wrap,
+  html.js .intro-hero.intro-hero--typewriter-armed .scroll-hint--intro {
+    opacity: 1;
   }
 
   .intro-hero-inner {
@@ -1259,6 +1285,7 @@
         <span class="hero-v2-line"><span class="hero-v2-amp">&</span><span class="hero-v2-violet"> CREATIVE</span></span>
         <span class="hero-v2-line hero-v2-line--violet">DEVELOPER</span>
       </h1>
+      <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -1618,6 +1645,8 @@
   let typewriterNeonIx = 0;
   /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
   let introTypewriterUnlocked = false;
+  let introRevealTimer = null;
+  const INTRO_TYPEWRITER_DELAY_MS = 420;
 
   function syncTypewriterNeonDataset() {
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
@@ -1681,6 +1710,8 @@
 
   function restartTypewriter() {
     clearTimeout(typeTimeout);
+    clearTimeout(introRevealTimer);
+    introRevealTimer = null;
     wordIndex = 0;
     charIndex = 0;
     isDeleting = false;
@@ -1709,12 +1740,16 @@
       introTypewriterUnlocked = true;
       intro.classList.add('intro-hero--typewriter-armed');
       clearTimeout(typeTimeout);
+      clearTimeout(introRevealTimer);
       wordIndex = 0;
       charIndex = 0;
       isDeleting = false;
       typewriterNeonIx = 0;
       syncTypewriterNeonDataset();
-      typewriter();
+      introRevealTimer = setTimeout(() => {
+        introRevealTimer = null;
+        typewriter();
+      }, INTRO_TYPEWRITER_DELAY_MS);
     };
 
     function tryStart() {
@@ -2000,17 +2035,26 @@
 
   if (!reduceMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
     gsap.registerPlugin(ScrollTrigger);
-    gsap.to('#heroV2Title', {
-      scale: 7,
-      rotationZ: 22,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: '.hero-v2-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.8,
-      },
-    });
+    const heroScroll = {
+      trigger: '.hero-v2-section',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.8,
+    };
+    const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
+    heroTl.fromTo(
+      '#heroV2Title',
+      { scale: 1, rotationZ: 0 },
+      { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
+      0
+    );
+    /* Fade a negro en el ~último cuarto del recorrido (tras el zoom) */
+    heroTl.fromTo(
+      '.hero-v2-end-fade',
+      { opacity: 0 },
+      { opacity: 1, ease: 'none', duration: 0.26 },
+      0.74
+    );
   }
 </script>
 
