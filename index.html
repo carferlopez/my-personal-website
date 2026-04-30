@@ -1174,6 +1174,21 @@
   @media (prefers-reduced-motion: reduce) {
     .project-poster-blur-blob { filter: blur(0); opacity: 0.85; }
   }
+  .project-poster-inner--orange { background: #1a0800; border-color: rgba(255,90,26,0.45); }
+  .project-poster-inner--orange .project-poster-blur-blob {
+    background: conic-gradient(from 200deg, #4d1f00, #200800, #6a3200, #341200, #1a0600);
+  }
+  .project-poster-inner--orange .project-poster-lock-icon { color: #ff5a1a; }
+  .project-poster-inner--violet { background: #0d0018; border-color: rgba(170,0,255,0.45); }
+  .project-poster-inner--violet .project-poster-blur-blob {
+    background: conic-gradient(from 200deg, #220040, #0a0018, #360062, #180030, #0d0018);
+  }
+  .project-poster-inner--violet .project-poster-lock-icon { color: #aa00ff; }
+  .project-poster-inner--yellow { background: #0f1000; border-color: rgba(232,255,26,0.45); }
+  .project-poster-inner--yellow .project-poster-blur-blob {
+    background: conic-gradient(from 200deg, #262a00, #0c0e00, #383d00, #1c1f00, #0e1000);
+  }
+  .project-poster-inner--yellow .project-poster-lock-icon { color: #e8ff1a; }
   .project-poster-blur-grid {
     position: absolute;
     inset: 0;
@@ -1577,11 +1592,12 @@
   const PROJECT_LOCK_SVG = '<svg class="project-poster-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
   const PROJECT_BLUR_LAYERS = '<div class="project-poster-blurstack" aria-hidden="true"><div class="project-poster-blur-blob"></div><div class="project-poster-blur-grid"></div></div><div class="project-poster-veil" aria-hidden="true"></div>';
 
-  function buildLockedCardHtml(badgeHtml) {
-    return `<div class="project-poster-inner">
+  const CARD_COLORS = ['orange', 'violet', 'yellow'];
+
+  function buildLockedCardHtml(colorClass) {
+    return `<div class="project-poster-inner project-poster-inner--${colorClass}">
       ${PROJECT_BLUR_LAYERS}
       <div class="project-poster-lock">${PROJECT_LOCK_SVG}</div>
-      <div class="project-poster-badge-wrap">${badgeHtml}</div>
     </div>`;
   }
 
@@ -1599,21 +1615,19 @@
 
     const parts = projectsCatalog.map((p, i) => {
       const n = i + 1;
-      const numLabel = escapeHtml(lang === 'es' ? 'PROYECTO ' + n : 'PROJECT ' + n);
       const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
       const poster = safePosterUrl(p.poster);
       const titlePlain = p.title[lang] || p.title.es;
-      const aria = escapeHtml(`${numLabel} — ${titlePlain}${isLive ? ' — ' + (lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab') : ''}`);
-
-      const badge = isLive
-        ? '<span class="project-poster-badge project-poster-badge--live">' + numLabel + '</span>'
-        : '<span class="project-poster-badge">' + numLabel + '</span>';
+      const liveLabel = lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab';
+      const aria = escapeHtml(titlePlain + (isLive ? ' — ' + liveLabel : ''));
+      const colorClass = CARD_COLORS[i % CARD_COLORS.length];
 
       let body;
       if (isLive && poster) {
+        const numLabel = escapeHtml(lang === 'es' ? 'PROYECTO ' + n : 'PROJECT ' + n);
         body = buildLiveCardHtml(poster, numLabel);
       } else {
-        body = buildLockedCardHtml(badge);
+        body = buildLockedCardHtml(colorClass);
       }
 
       if (isLive) {
