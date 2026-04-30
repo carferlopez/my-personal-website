@@ -665,8 +665,8 @@
     width: max-content;
     align-self: flex-start;
     min-height: 0;
-    /* Mismo tamaño px que líneas hero (syncWorksFontToHero); clamp = fallback previo JS */
-    font-size: clamp(3.1rem, min(12vw, 15vh), 7.75rem);
+    /* Fallback ~90 % del clamp “hero”; en desktop syncWorksFontToHero aplica hero×0.9 en px */
+    font-size: calc(0.9 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
     /* row-gap 0: letras apiladas compactas */
     row-gap: 0;
   }
@@ -696,9 +696,16 @@
     margin-block-start: 0.09em;
     margin-block-end: -0.02em;
   }
+  /* O–R–K–S más juntas; la W mantiene su respiro respecto a la O */
+  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
+  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
+  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"],
+  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="S"] {
+    margin-block: -0.058em;
+  }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
-      font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
+      font-size: calc(0.9 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
       row-gap: 0;
     }
   }
@@ -727,13 +734,19 @@
       row-gap: 0.08em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: clamp(2.85rem, 11vw, 4.25rem);
+      font-size: calc(0.9 * clamp(2.85rem, 11vw, 4.25rem));
       transform: none;
       margin-block: 0;
       margin-inline: 0;
       line-height: 0.82;
       letter-spacing: -0.1em;
       -webkit-text-stroke: 0.02em var(--page-yellow);
+    }
+    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
+    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
+    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"],
+    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="S"] {
+      margin-inline: -0.055em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
       margin-block: 0;
@@ -1846,7 +1859,7 @@
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
-  /** Mismo font-size en px que las líneas del hero (#heroV2Title); sin redimensionar al módulo (evita bucles). */
+  /** Mismo criterio que el hero pero −10 % de tamaño. */
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
@@ -1858,8 +1871,9 @@
     if (!line) return;
     let fs = line.style.fontSize;
     if (!fs) fs = getComputedStyle(line).fontSize;
-    if (!fs || fs === '0px') return;
-    stack.style.fontSize = fs;
+    let fsPx = parseFloat(fs);
+    if (!Number.isFinite(fsPx) || fsPx <= 0) return;
+    stack.style.fontSize = (fsPx * 0.9) + 'px';
   }
 
   // ============================================
