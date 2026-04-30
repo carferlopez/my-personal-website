@@ -109,16 +109,13 @@
   }
   @media (min-width: 768px) { .site-header__inner { gap: 0.625rem; } }
 
-  /* Header sobre hero oscuro (por defecto) */
-  .site-header:not(.site-header--on-light) .logo .gray {
-    color: rgba(255, 255, 255, 0.52);
-  }
+  /* Header sobre hero oscuro (por defecto): nombre todo blanco, punto naranja */
   .site-header:not(.site-header--on-light) .logo:hover {
     background: var(--white);
     color: var(--black);
   }
-  .site-header:not(.site-header--on-light) .logo:hover .gray {
-    color: var(--gray-mid);
+  .site-header:not(.site-header--on-light) .logo:hover .logo-dot {
+    color: var(--hero-v2-orange);
   }
   .site-header:not(.site-header--on-light) .header-top nav a {
     color: var(--white);
@@ -251,16 +248,16 @@
   @media (min-width: 640px) { .logo { padding: 0.5rem 0.6rem; margin: -0.5rem -0.6rem; } }
   @media (min-width: 640px) { .logo { font-size: 1.45rem; } }
   @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
-  /* Más claro que --gray: mismo gris que --gray-mid (secundario, estilo og) */
-  .logo .gray { color: var(--gray-mid); }
-  .logo .red { color: var(--red); }
-  /* Mismo criterio que .header-top nav a:hover: fondo negro, nombre en blanco; gris y rojo se mantienen (sin enlace) */
+  .logo .logo-dot {
+    color: var(--hero-v2-orange);
+  }
   .logo:hover {
     background: var(--black);
     color: var(--white);
   }
-  .logo:hover .gray { color: var(--gray-mid); }
-  .logo:hover .red { color: var(--red); }
+  .logo:hover .logo-dot {
+    color: var(--hero-v2-orange);
+  }
 
   .header-top nav { display: flex; gap: 0.5rem; align-items: center; }
   @media (min-width: 640px) { .header-top nav { gap: 1rem; } }
@@ -986,7 +983,7 @@
 <header class="site-header" id="siteHeader">
     <div class="site-header__inner">
       <div class="header-top">
-        <div class="logo">Carlos <span class="gray">Fernández</span><span class="red">.</span></div>
+        <div class="logo">Carlos Fernández<span class="logo-dot">.</span></div>
         <div class="header-actions">
           <nav aria-label="Redes y contacto">
             <a href="#contacto" aria-label="Formulario de contacto">
