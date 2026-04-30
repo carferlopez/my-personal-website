@@ -1434,6 +1434,8 @@
   // ============================================
   const typeEl = document.getElementById('typewriter');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
+  /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
+  let introTypewriterUnlocked = false;
 
   /** Solo la 3ª frase termina en `;)` (naranja); las demás van enteras en color del titular */
   function renderTypewriter(text, fullWord) {
@@ -1477,8 +1479,48 @@
 
   function restartTypewriter() {
     clearTimeout(typeTimeout);
-    wordIndex = 0; charIndex = 0; isDeleting = false;
+    wordIndex = 0;
+    charIndex = 0;
+    isDeleting = false;
+    if (!introTypewriterUnlocked) {
+      if (typeEl) typeEl.replaceChildren();
+      return;
+    }
     typewriter();
+  }
+
+  function initIntroTypewriterOnScroll() {
+    const intro = document.getElementById('presentacion');
+    if (!intro || !typeEl) return;
+    const start = () => {
+      if (introTypewriterUnlocked) return;
+      introTypewriterUnlocked = true;
+      clearTimeout(typeTimeout);
+      wordIndex = 0;
+      charIndex = 0;
+      isDeleting = false;
+      typewriter();
+    };
+    if (typeof IntersectionObserver !== 'undefined') {
+      const io = new IntersectionObserver((entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          io.disconnect();
+          start();
+          break;
+        }
+      }, { root: null, threshold: 0.14, rootMargin: '0px' });
+      io.observe(intro);
+    } else {
+      window.addEventListener('scroll', function onScroll() {
+        const r = intro.getBoundingClientRect();
+        const vh = window.innerHeight || 0;
+        if (r.top < vh * 0.88 && r.bottom > 0) {
+          window.removeEventListener('scroll', onScroll);
+          start();
+        }
+      }, { passive: true });
+    }
   }
 
   // ============================================
@@ -1673,7 +1715,7 @@
   applyLang();
   initContactForm();
   initNewsletterForm();
-  typewriter();
+  initIntroTypewriterOnScroll();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
