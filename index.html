@@ -691,6 +691,11 @@
     padding: 0;
     -webkit-text-stroke: 0.02em var(--page-yellow);
   }
+  /* O–W suele verse más pegado (formas anchas × rotación); algo más de aire solo entre ellas */
+  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
+    margin-block-start: 0.09em;
+    margin-block-end: -0.02em;
+  }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
       font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
@@ -725,9 +730,14 @@
       font-size: clamp(2.85rem, 11vw, 4.25rem);
       transform: none;
       margin-block: 0;
+      margin-inline: 0;
       line-height: 0.82;
       letter-spacing: -0.1em;
       -webkit-text-stroke: 0.02em var(--page-yellow);
+    }
+    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
+      margin-block: 0;
+      margin-inline-start: 0.09em;
     }
   }
 
@@ -1829,6 +1839,7 @@
     for (let i = 0; i < text.length; i++) {
       const ch = text.charAt(i);
       const s = document.createElement('span');
+      s.setAttribute('data-glyph', ch);
       s.textContent = ch;
       stack.appendChild(s);
     }
