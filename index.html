@@ -47,11 +47,10 @@
     --red: #ef4444;
     --hero-v2-orange: #ff4d00;
     --hero-v2-violet: #aa00ff;
-    /* Titulares de sección (ciclo Leonardo-style) */
-    --section-neon-green: #12d160;
-    --section-neon-pink: #ff2e89;
-    --section-neon-yellow: #f5d51a;
-    --section-neon-blue: #33ccff;
+    /* Titulares / typewriter: solo CMY (sin verde) */
+    --cmy-cyan: #00e5ff;
+    --cmy-magenta: #ff2e89;
+    --cmy-yellow: #ffea00;
   }
 
   html { scroll-behavior: smooth; }
@@ -243,22 +242,18 @@
     -webkit-text-fill-color: #ff4d00 !important;
   }
 
-  /* Typewriter: color neon según data-tw-line (0–3), actualizado por JS en cada frase */
+  /* Typewriter: CMY según data-tw-line 0–2 */
   #introHeading[data-tw-line="0"] #typewriter {
-    color: var(--section-neon-green);
-    -webkit-text-fill-color: var(--section-neon-green);
+    color: var(--cmy-cyan);
+    -webkit-text-fill-color: var(--cmy-cyan);
   }
   #introHeading[data-tw-line="1"] #typewriter {
-    color: var(--section-neon-pink);
-    -webkit-text-fill-color: var(--section-neon-pink);
+    color: var(--cmy-magenta);
+    -webkit-text-fill-color: var(--cmy-magenta);
   }
   #introHeading[data-tw-line="2"] #typewriter {
-    color: var(--section-neon-yellow);
-    -webkit-text-fill-color: var(--section-neon-yellow);
-  }
-  #introHeading[data-tw-line="3"] #typewriter {
-    color: var(--section-neon-blue);
-    -webkit-text-fill-color: var(--section-neon-blue);
+    color: var(--cmy-yellow);
+    -webkit-text-fill-color: var(--cmy-yellow);
   }
 
   /* ==================== INTRO (antiguo hero: typewriter) ==================== */
@@ -531,18 +526,18 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
-  /* Titulares de sección (el typewriter rota neón 0–3 vía #introHeading[data-tw-line]) */
+  /* Titulares de sección: M, Y, C (typewriter rota C→M→Y) */
   #proyectos #projectsTitle {
-    color: var(--section-neon-pink);
-    -webkit-text-fill-color: var(--section-neon-pink);
+    color: var(--cmy-magenta);
+    -webkit-text-fill-color: var(--cmy-magenta);
   }
   #contacto .contact-box > h2.big-heading {
-    color: var(--section-neon-yellow);
-    -webkit-text-fill-color: var(--section-neon-yellow);
+    color: var(--cmy-yellow);
+    -webkit-text-fill-color: var(--cmy-yellow);
   }
   #contactDividerText {
-    color: var(--section-neon-blue);
-    -webkit-text-fill-color: var(--section-neon-blue);
+    color: var(--cmy-cyan);
+    -webkit-text-fill-color: var(--cmy-cyan);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -1438,13 +1433,13 @@
   const typeEl = document.getElementById('typewriter');
   const introHeadingEl = document.getElementById('introHeading');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
-  /** Avanza en cada cambio de frase para rotar verde → rosa → amarillo → azul. */
+  /** Avanza en cada cambio de frase: cian → magenta → amarillo (CMY). */
   let typewriterNeonIx = 0;
   /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
   let introTypewriterUnlocked = false;
 
   function syncTypewriterNeonDataset() {
-    if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 4);
+    if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
   }
 
   /** Render del texto del typewriter (un solo color por frase vía #typewriter + data-tw-line). */
@@ -1468,7 +1463,7 @@
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       wordIndex = (wordIndex + 1) % words.length;
-      typewriterNeonIx = (typewriterNeonIx + 1) % 4;
+      typewriterNeonIx = (typewriterNeonIx + 1) % 3;
       speed = 500;
     }
     typeTimeout = setTimeout(typewriter, speed);
