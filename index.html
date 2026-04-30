@@ -489,13 +489,10 @@
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
 
-  .hero-title #typewriter .typewriter-suffix--period {
+  .hero-title #typewriter .typewriter-suffix--period,
+  .hero-title #typewriter .typewriter-suffix--wink {
     color: var(--white);
     -webkit-text-fill-color: var(--white);
-  }
-  .hero-title #typewriter .typewriter-suffix--wink {
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
   }
 
   .cursor {
@@ -1474,7 +1471,7 @@
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
   }
 
-  /** Sufijo: `.` en blanco; `;)` en naranja vivo. (El punto del logo `.logo-dot` no pasa por aquí.) */
+  /** Sufijo `.` y `;)` en blanco. (El punto del logo `.logo-dot` no pasa por aquí.) */
   function renderTypewriter(text, fullWord) {
     if (!typeEl) return;
     typeEl.replaceChildren();
