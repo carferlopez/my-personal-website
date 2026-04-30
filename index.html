@@ -666,7 +666,7 @@
     align-self: flex-start;
     min-height: 0;
     /* Fallback ~94,5 % del hero (hero×0.945); desktop syncWorksFontToHero aplica ese factor en px */
-    font-size: calc(0.898 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
+    font-size: calc(0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
     /* row-gap 0: letras apiladas compactas */
     row-gap: 0;
   }
@@ -705,11 +705,11 @@
   }
   /* K se acerca a la S: más negativo en la cara superior (hacia la S) */
   #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"] {
-    margin-block-start: -0.28em;
+    margin-block-start: -0.16em;
   }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
-      font-size: calc(0.898 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      font-size: calc(0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
       row-gap: 0;
     }
   }
@@ -738,7 +738,7 @@
       row-gap: 0.08em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: calc(0.898 * clamp(2.85rem, 11vw, 4.25rem));
+      font-size: calc(0.853 * clamp(2.85rem, 11vw, 4.25rem));
       transform: none;
       margin-block: 0;
       margin-inline: 0;
@@ -1877,7 +1877,7 @@
     if (!fs) fs = getComputedStyle(line).fontSize;
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
-    stack.style.fontSize = (fsPx * 0.898) + 'px';
+    stack.style.fontSize = (fsPx * 0.853) + 'px';
   }
 
   // ============================================
