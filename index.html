@@ -940,9 +940,8 @@
     grid-template-areas:
       "name    message"
       "email   message"
-      "topic   message"
-      "submit  message";
-    grid-template-rows: auto auto auto auto;
+      "topic   submit";
+    grid-template-rows: auto auto auto;
     column-gap: 1.5rem;
     row-gap: 1rem;
     max-width: 100%;
@@ -958,7 +957,8 @@
   .contact-form > .contact-form__row:nth-child(4) { grid-area: topic; }
   .contact-form > .contact-form__row:nth-child(5) { grid-area: message; display: flex; flex-direction: column; }
   .contact-form > .contact-form__row:nth-child(5) .contact-form__textarea { flex: 1; resize: none; min-height: 220px; }
-  .contact-form > .contact-form__row:nth-child(7) { grid-area: submit; align-self: end; }
+  .contact-form > .contact-form__row:nth-child(7) { grid-area: submit; display: flex; flex-direction: column; }
+  .contact-form > .contact-form__row:nth-child(7) .contact-form__submit { flex: 1; }
 
   /* Móvil: columna única */
   @media (max-width: 639px) {
