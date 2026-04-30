@@ -581,7 +581,7 @@
     display: flex;
     flex-direction: row;
     align-items: stretch;
-    gap: 0.65rem;
+    gap: 0;
     margin-top: 0;
     min-width: 0;
   }
@@ -598,18 +598,18 @@
     margin-top: 1.75rem;
   }
   @media (min-width: 768px) {
-    .projects-module { gap: 1.15rem; }
     .projects-module__body .projects-chevron-wrap { margin-top: 2.25rem; }
   }
   #proyectos #projectsTitle {
     margin: 0;
     margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-    /* Misma franja horizontal: no roba ancho al carrusel; el peso sale de letras más grandes. */
-    width: 2.75rem;
-    flex: 0 0 2.75rem;
-    max-width: 2.75rem;
+    /* Ancho = glifo + reserva derecha donde “termina” la S (letras rotadas); sin hueco antes del strap */
+    width: max-content;
+    flex: 0 0 auto;
+    max-width: none;
     box-sizing: border-box;
     padding: 0;
+    padding-right: calc(0.42 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
     overflow: visible;
     align-self: stretch;
     display: flex;
@@ -624,11 +624,9 @@
     color: var(--page-orange);
     -webkit-text-fill-color: var(--page-orange);
   }
-  @media (min-width: 768px) {
+  @media (min-width: 640px) {
     #proyectos #projectsTitle {
-      width: 3rem;
-      flex: 0 0 3rem;
-      max-width: 3rem;
+      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
     }
   }
   #proyectos #projectsTitle .projects-vertical-title__stack {
@@ -637,7 +635,8 @@
     align-items: center;
     justify-content: center;
     flex: 1 1 auto;
-    width: 100%;
+    width: max-content;
+    align-self: center;
     min-height: 0;
     /* Separación uniforme entre todas las letras (como entre W–O), sin solapes */
     row-gap: clamp(0.14rem, 0.42vh, 0.4rem);
@@ -676,9 +675,10 @@
       position: static;
       align-self: flex-start;
       margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-      width: auto;
+      width: max-content;
       max-width: none;
       flex: 0 0 auto;
+      padding-right: 0.12em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack {
       flex-direction: row;
