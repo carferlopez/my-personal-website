@@ -805,7 +805,6 @@
   /* ==================== CONTACT ==================== */
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
-    border: 4px solid rgba(255, 255, 255, 0.35);
     background: var(--black);
     color: var(--white);
     padding: 2rem 0;
@@ -814,13 +813,9 @@
     gap: 2rem;
     min-height: 400px;
     overflow: hidden;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   @media (min-width: 640px) { .contact-box { padding: 3rem 0; gap: 3rem; min-height: 500px; } }
   @media (min-width: 768px) { .contact-box { padding: 5rem 0; } }
-  .contact-box:hover {
-    border-color: rgba(255, 255, 255, 0.55);
-  }
 
   .contact-sub { color: var(--white); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
