@@ -617,10 +617,16 @@
     min-height: 12rem;
   }
   #proyectos #projectsTitle .projects-vertical-title__stack > span {
-    display: block;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Boceto: cada letra girada 90° CCW; lectura de abajo (primera letra) hacia arriba (column-reverse). */
+    transform: rotate(-90deg);
+    transform-origin: center center;
     font-size: clamp(4rem, min(20vw, 28vh), 12rem);
     font-weight: 900;
-    line-height: 0.92;
+    line-height: 1;
     text-transform: uppercase;
     letter-spacing: -0.02em;
   }
@@ -650,6 +656,7 @@
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
       font-size: clamp(2.5rem, 11vw, 3.75rem);
+      transform: none;
     }
   }
 
