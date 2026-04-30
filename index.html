@@ -1053,51 +1053,42 @@
     margin-top: 0;
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
   }
   .projects-chev {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 2;
-    width: 2.5rem;
-    height: 2.5rem;
+    z-index: 4;
+    width: 3rem;
+    height: 3rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--black);
+    background: rgba(0,0,0,0.55);
     color: var(--white);
-    border: 2px solid var(--black);
-    font-size: 1.25rem;
+    border: 2px solid rgba(255,255,255,0.25);
+    font-size: 1.5rem;
     line-height: 1;
-    transition: background 0.15s, color 0.15s, opacity 0.15s;
+    transition: background 0.15s, color 0.15s, opacity 0.15s, border-color 0.15s;
+    backdrop-filter: blur(4px);
   }
-  .projects-chev:hover { background: var(--red); color: var(--white); }
+  .projects-chev:hover { background: var(--red); border-color: var(--red); color: var(--white); }
   .projects-chev:focus-visible { outline: 3px solid var(--red); outline-offset: 2px; }
   .projects-chev:disabled { opacity: 0.3; cursor: not-allowed; }
   .projects-chev--off { visibility: hidden; pointer-events: none; opacity: 0; }
-  .projects-chev--prev { left: -0.25rem; }
-  .projects-chev--next { right: -0.25rem; }
-  @media (max-width: 767px) {
-    .projects-chev { display: none; }
-  }
+  .projects-chev--prev { left: 0.75rem; }
+  .projects-chev--next { right: 0.75rem; }
 
   .projects-row {
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.08);
-    padding: 0.5rem 0 1rem;
-    margin: 0;
-    touch-action: pan-x pan-y;
+    overflow: hidden;
+    position: relative;
+    flex: 1;
+    min-height: clamp(260px, 50vh, 640px);
   }
-  .projects-row::-webkit-scrollbar { height: 6px; }
-  .projects-row::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.08); }
-  .projects-row::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.35); }
-  @media (prefers-reduced-motion: reduce) {
-    .projects-row { scroll-behavior: auto; }
+  @media (max-width: 639px) {
+    .projects-row { min-height: clamp(220px, 65vw, 420px); }
   }
 
   ul.projects-track {
@@ -1105,25 +1096,25 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 0.75rem;
-    width: max-content;
-    min-height: 0;
+    flex-direction: row;
+    gap: 0;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
-  @media (min-width: 640px) { ul.projects-track { gap: 1rem; } }
-  @media (min-width: 1024px) { ul.projects-track { gap: 1.25rem; } }
+  @media (prefers-reduced-motion: reduce) {
+    ul.projects-track { transition: none; }
+  }
 
   .project-poster {
-    flex: 0 0 auto;
-    width: min(40vw, 10rem);
-    scroll-snap-align: start;
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
   }
-  @media (min-width: 480px) { .project-poster { width: min(32vw, 11rem); } }
-  @media (min-width: 640px) { .project-poster { width: min(24vw, 12rem); } }
-  @media (min-width: 1024px) { .project-poster { width: 13.5rem; } }
 
   .project-poster-inner {
     position: relative;
-    aspect-ratio: 2 / 3;
     width: 100%;
     height: 100%;
     border: 4px solid rgba(255, 255, 255, 0.22);
@@ -1134,9 +1125,8 @@
     align-items: stretch;
     justify-content: flex-end;
     padding: 0;
-    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    transition: border-color 0.2s ease;
   }
-  @media (min-width: 640px) { .project-poster-inner { border-width: 6px; } }
   @media (prefers-reduced-motion: reduce) {
     .project-poster-inner { transition: none; }
   }
@@ -1150,8 +1140,7 @@
   }
   li.project-poster:hover .project-poster-inner,
   li.project-poster:focus-within .project-poster-inner {
-    transform: scale(1.05);
-    box-shadow: 0 12px 32px rgba(0,0,0,0.22);
+    border-color: rgba(255,255,255,0.5);
   }
   .project-poster-dummy { cursor: default; }
   .project-poster-dummy:focus { outline: none; }
@@ -1634,23 +1623,26 @@
     track.innerHTML = parts.join('');
   }
 
+  let projectsCardIndex = 0;
+
   function updateProjectsChevrons() {
-    const row = document.getElementById('projectsRow');
     const prev = document.getElementById('projectsPrev');
     const next = document.getElementById('projectsNext');
-    if (!row || !prev || !next) return;
-    const wide = window.matchMedia('(min-width: 768px)').matches;
-    const can = row.scrollWidth > row.clientWidth + 1;
-    const show = wide && can;
-    prev.classList.toggle('projects-chev--off', !show);
-    next.classList.toggle('projects-chev--off', !show);
-    if (!show) {
-      prev.disabled = true;
-      next.disabled = true;
-      return;
-    }
-    prev.disabled = row.scrollLeft <= 1;
-    next.disabled = row.scrollLeft + row.clientWidth >= row.scrollWidth - 1;
+    if (!prev || !next) return;
+    const total = projectsCatalog.length;
+    prev.disabled = projectsCardIndex <= 0;
+    next.disabled = projectsCardIndex >= total - 1;
+    prev.classList.toggle('projects-chev--off', total <= 1);
+    next.classList.toggle('projects-chev--off', total <= 1);
+  }
+
+  function goToProjectCard(index) {
+    const track = document.getElementById('projectsTrack');
+    if (!track) return;
+    const total = projectsCatalog.length;
+    projectsCardIndex = Math.max(0, Math.min(total - 1, index));
+    track.style.transform = 'translateX(-' + (projectsCardIndex * 100) + '%)';
+    updateProjectsChevrons();
   }
 
   function initProjectsCarousel() {
@@ -1661,12 +1653,9 @@
     if (row.dataset.ready) return;
     row.dataset.ready = '1';
 
-    const step = () => Math.max(1, row.clientWidth * 0.72);
-    prev.addEventListener('click', () => { row.scrollBy({ left: -step(), behavior: 'smooth' }); });
-    next.addEventListener('click', () => { row.scrollBy({ left: step(), behavior: 'smooth' }); });
-    row.addEventListener('scroll', () => requestAnimationFrame(updateProjectsChevrons), { passive: true });
-    window.addEventListener('resize', () => { requestAnimationFrame(updateProjectsChevrons); });
-
+    prev.addEventListener('click', () => goToProjectCard(projectsCardIndex - 1));
+    next.addEventListener('click', () => goToProjectCard(projectsCardIndex + 1));
+    updateProjectsChevrons();
   }
 
   // ============================================
