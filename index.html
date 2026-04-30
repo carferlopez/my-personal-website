@@ -569,21 +569,27 @@
     gap: 1rem;
     margin-top: 2.5rem;
     max-width: 100%;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: thin;
   }
   .contact-divider::before,
   .contact-divider::after {
     content: '';
-    flex: 1 1 2rem;
+    flex: 1 1 0;
     min-width: 1.25rem;
     border-top: 2px solid currentColor;
     opacity: 0.15;
   }
   .contact-divider .big-heading--mid {
-    flex: 1 1 12rem;
-    max-width: 100%;
+    flex: 0 0 auto;
+    max-width: none;
     text-align: center;
     margin: 0;
+    white-space: nowrap;
+    text-wrap: unset;
   }
 
   .contact-form-wrap { width: 100%; max-width: 100%; }
