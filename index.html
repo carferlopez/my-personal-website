@@ -680,10 +680,10 @@
     width: max-content;
     align-self: flex-start;
     min-height: 0;
-    /* Tamaño base en la pila para que row-gap em sea idéntico entre letras */
+    /* Fallback sin JS; en desktop el script fija tamaño hasta llenar el alto */
     font-size: clamp(3.1rem, min(12vw, 15vh), 7.75rem);
-    /* Hueco vertical mínimo (em); el tamaño se escala con JS al alto del módulo */
-    row-gap: 0.012em;
+    /* Interletraje mínimo: el sizing JS mide alto real y llega hasta el borde del contenedor */
+    row-gap: 0;
   }
   #proyectos #projectsTitle .projects-vertical-title__stack > span {
     flex: 0 0 auto;
@@ -709,7 +709,7 @@
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
       font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
-      row-gap: 0.012em;
+      row-gap: 0;
     }
   }
   @media (max-width: 639px) {
@@ -1848,9 +1848,10 @@
     queueMicrotask(() => { requestAnimationFrame(fitWorksLetterStack); });
   }
 
-  /** Debe coincidir con row-gap de .projects-vertical-title__stack en desktop (em). */
-  const WORKS_STACK_GAP_EM = 0.012;
-
+  /**
+   * Escala WORKS hasta el máximo tamaño que cabe en #projectsTitle; row-gap CSS = 0.
+   * Búsqueda binaria sobre la altura medida (incl. text-stroke) para apretar al mínimo posible.
+   */
   function fitWorksLetterStack() {
     const title = document.getElementById('projectsTitle');
     const stack = title?.querySelector('.projects-vertical-title__stack');
@@ -1860,17 +1861,25 @@
       return;
     }
     const letters = stack.querySelectorAll('span');
-    const n = letters.length;
-    if (!n) return;
+    if (!letters.length) return;
 
     const avail = title.clientHeight;
     if (avail < 48) return;
 
-    const totalEm = n + (n - 1) * WORKS_STACK_GAP_EM;
     const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    const minPx = Math.max(36, rem * 3.05);
-    const fs = Math.max(minPx, avail / totalEm);
-    stack.style.fontSize = fs + 'px';
+    const minPx = Math.max(28, rem * 2.25);
+    let lo = minPx;
+    let hi = Math.min(Math.max(avail, minPx + 8) * 6, rem * 220);
+
+    for (let iter = 0; iter < 42; iter++) {
+      const mid = (lo + hi) * 0.5;
+      stack.style.fontSize = mid + 'px';
+      const h = stack.getBoundingClientRect().height;
+      // Tolerancia mínima: un pocos px por antialiasing / stroke fuera del em-box
+      if (h <= avail + 2) lo = mid;
+      else hi = mid;
+    }
+    stack.style.fontSize = lo + 'px';
   }
 
   let worksStackFitObs = null;
