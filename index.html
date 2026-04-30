@@ -675,11 +675,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Una celda igual por cada letra: mismo hueco después de rotate(-90deg) */
+    /* Celda más baja que 1em: menos hueco vertical entre glifos rotados (-90deg) */
     width: 1em;
-    height: 1em;
+    height: 0.84em;
     min-width: 1em;
-    min-height: 1em;
+    min-height: 0.84em;
     transform: rotate(-90deg);
     transform-origin: center center;
     font-size: 1em;
@@ -687,7 +687,7 @@
     line-height: 1;
     letter-spacing: 0;
     text-transform: uppercase;
-    margin-block: 0;
+    margin-block: -0.02em;
     padding: 0;
     -webkit-text-stroke: 0.02em var(--page-yellow);
   }
@@ -718,15 +718,15 @@
       justify-content: flex-start;
       align-items: baseline;
       min-height: 0;
-      column-gap: 0.06em;
-      row-gap: 0.15em;
+      column-gap: 0;
+      row-gap: 0.08em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
       font-size: clamp(2.85rem, 11vw, 4.25rem);
       transform: none;
       margin-block: 0;
-      line-height: 0.88;
-      letter-spacing: -0.05em;
+      line-height: 0.82;
+      letter-spacing: -0.1em;
       -webkit-text-stroke: 0.02em var(--page-yellow);
     }
   }
