@@ -905,28 +905,8 @@
   .newsletter-form__input::placeholder { color: rgba(255, 255, 255, 0.4); }
 
   .contact-divider {
-    container-type: inline-size;
-    container-name: contact-divider;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
     margin-top: 2.5rem;
     max-width: 100%;
-    flex-wrap: nowrap;
-    overflow: visible;
-  }
-  @media (max-width: 520px) {
-    .contact-divider { gap: 0; }
-    .contact-divider::before,
-    .contact-divider::after { display: none; }
-  }
-  .contact-divider::before,
-  .contact-divider::after {
-    content: '';
-    flex: 1 1 0;
-    min-width: 1.25rem;
-    border-top: 2px solid currentColor;
-    opacity: 0.15;
   }
   .contact-divider .big-heading--mid {
     flex: 1 1 auto;
