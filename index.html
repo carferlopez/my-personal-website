@@ -467,6 +467,11 @@
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
 
+  .hero-title #typewriter .typewriter-suffix {
+    color: var(--hero-v2-orange);
+    -webkit-text-fill-color: var(--hero-v2-orange);
+  }
+
   .cursor {
     display: inline-block;
     width: 0.55em;
@@ -1442,11 +1447,40 @@
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
   }
 
-  /** Render del texto del typewriter (un solo color por frase vía #typewriter + data-tw-line). */
-  function renderTypewriter(text) {
+  /** Cuerpo en CMY; sufijo final `.` o `;)` en naranja. */
+  function renderTypewriter(text, fullWord) {
     if (!typeEl) return;
     typeEl.replaceChildren();
     if (!text) return;
+
+    if (fullWord.endsWith(';)')) {
+      const baseLen = fullWord.length - 2;
+      if (text.length <= baseLen) {
+        typeEl.textContent = text;
+        return;
+      }
+      typeEl.append(document.createTextNode(text.slice(0, baseLen)));
+      const suffix = document.createElement('span');
+      suffix.className = 'typewriter-suffix';
+      suffix.textContent = text.slice(baseLen);
+      typeEl.append(suffix);
+      return;
+    }
+
+    if (fullWord.endsWith('.')) {
+      const baseLen = fullWord.length - 1;
+      if (text.length <= baseLen) {
+        typeEl.textContent = text;
+        return;
+      }
+      typeEl.append(document.createTextNode(text.slice(0, baseLen)));
+      const suffix = document.createElement('span');
+      suffix.className = 'typewriter-suffix';
+      suffix.textContent = text.slice(baseLen);
+      typeEl.append(suffix);
+      return;
+    }
+
     typeEl.textContent = text;
   }
 
@@ -1455,7 +1489,7 @@
     const words = t[lang].typewriter;
     const currentWord = words[wordIndex];
     if (isDeleting) charIndex--; else charIndex++;
-    renderTypewriter(currentWord.substring(0, charIndex));
+    renderTypewriter(currentWord.substring(0, charIndex), currentWord);
 
     let speed = isDeleting ? 30 : 70;
     if (!isDeleting && charIndex === currentWord.length) {
