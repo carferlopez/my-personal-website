@@ -265,6 +265,10 @@
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
 
+  .intro-hero:not(.intro-hero--typewriter-armed) .hero-title .cursor {
+    visibility: hidden;
+  }
+
   .intro-hero-inner {
     display: flex;
     flex-direction: column;
@@ -1517,12 +1521,21 @@
     typewriter();
   }
 
+  /** Arranca solo cuando #inicio (hero brutalista) ha salido por completo: encuadre en negro, sin solaparse con el título GSAP. */
   function initIntroTypewriterOnScroll() {
     const intro = document.getElementById('presentacion');
+    const hero = document.getElementById('inicio');
     if (!intro || !typeEl) return;
+
+    function heroFullyAboveViewport() {
+      if (!hero) return true;
+      return hero.getBoundingClientRect().bottom <= 0.5;
+    }
+
     const start = () => {
       if (introTypewriterUnlocked) return;
       introTypewriterUnlocked = true;
+      intro.classList.add('intro-hero--typewriter-armed');
       clearTimeout(typeTimeout);
       wordIndex = 0;
       charIndex = 0;
@@ -1531,26 +1544,23 @@
       syncTypewriterNeonDataset();
       typewriter();
     };
-    if (typeof IntersectionObserver !== 'undefined') {
-      const io = new IntersectionObserver((entries) => {
-        for (const entry of entries) {
-          if (!entry.isIntersecting) continue;
-          io.disconnect();
-          start();
-          break;
-        }
-      }, { root: null, threshold: 0.14, rootMargin: '0px' });
-      io.observe(intro);
-    } else {
-      window.addEventListener('scroll', function onScroll() {
-        const r = intro.getBoundingClientRect();
-        const vh = window.innerHeight || 0;
-        if (r.top < vh * 0.88 && r.bottom > 0) {
-          window.removeEventListener('scroll', onScroll);
-          start();
-        }
-      }, { passive: true });
+
+    function tryStart() {
+      if (introTypewriterUnlocked) return;
+      if (!heroFullyAboveViewport()) return;
+      start();
+      window.removeEventListener('scroll', onScrollOrResize, scrollOpts);
+      window.removeEventListener('resize', onScrollOrResize, scrollOpts);
     }
+
+    const scrollOpts = { passive: true };
+    function onScrollOrResize() {
+      requestAnimationFrame(tryStart);
+    }
+
+    window.addEventListener('scroll', onScrollOrResize, scrollOpts);
+    window.addEventListener('resize', onScrollOrResize, scrollOpts);
+    requestAnimationFrame(tryStart);
   }
 
   // ============================================
