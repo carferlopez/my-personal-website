@@ -2128,7 +2128,9 @@
       - parseFloat(cs.paddingBottom);
     if (W < 16 || H < 16) return;
 
-    /* Una sola escala de font-size: maximiza tipografía que cabe en ancho × alto (mobile/tablet/desktop) */
+    /* En móvil portrait el alto no restringe: el texto llena el ancho y el usuario hace scroll.
+       En desktop y landscape se mantiene la restricción ancho × alto original. */
+    const constrainHeight = window.innerWidth >= 768 || window.innerHeight > window.innerWidth;
     let lo = 4;
     let hi = 800;
     for (let iter = 0; iter < 42; iter++) {
@@ -2136,7 +2138,7 @@
       lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
       const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
       const totH = title.offsetHeight;
-      if (maxW <= W + 1 && totH <= H + 1) lo = mid;
+      if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
       else hi = mid;
     }
     const best = lo;
