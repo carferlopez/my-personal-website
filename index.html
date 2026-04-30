@@ -600,6 +600,8 @@
     flex-direction: column;
     align-items: stretch;
     justify-content: center;
+    min-height: 0;
+    max-height: 100%;
     position: sticky;
     top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
     z-index: 1;
@@ -610,11 +612,11 @@
     display: flex;
     flex-direction: column-reverse;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex: 1 1 auto;
     width: 100%;
+    min-height: 0;
     gap: 0;
-    min-height: 12rem;
   }
   #proyectos #projectsTitle .projects-vertical-title__stack > span {
     flex: 0 0 auto;
@@ -624,7 +626,8 @@
     /* Boceto: cada letra girada 90° CCW; lectura de abajo (primera letra) hacia arriba (column-reverse). */
     transform: rotate(-90deg);
     transform-origin: center center;
-    font-size: clamp(4rem, min(20vw, 28vh), 12rem);
+    /* Escala para que WORK/TRABAJOS quepan enteros con la sección en encuadre típico (~50–75vh de columna). */
+    font-size: clamp(1.5rem, min(3.8vw, 5.5vh), 3.1rem);
     font-weight: 900;
     line-height: 1;
     text-transform: uppercase;
@@ -632,7 +635,7 @@
   }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: clamp(4.5rem, min(22vw, 32vh), 13rem);
+      font-size: clamp(1.65rem, min(4.2vw, 6vh), 3.5rem);
     }
   }
   @media (max-width: 639px) {
