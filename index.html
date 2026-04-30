@@ -665,9 +665,9 @@
     width: max-content;
     align-self: flex-start;
     min-height: 0;
-    /* Fallback sin JS; en desktop el script fija tamaño hasta llenar el alto */
+    /* Mismo tamaño px que líneas hero (syncWorksFontToHero); clamp = fallback previo JS */
     font-size: clamp(3.1rem, min(12vw, 15vh), 7.75rem);
-    /* Interletraje mínimo: el sizing JS mide alto real y llega hasta el borde del contenedor */
+    /* row-gap 0: letras apiladas compactas */
     row-gap: 0;
   }
   #proyectos #projectsTitle .projects-vertical-title__stack > span {
@@ -1832,52 +1832,23 @@
       s.textContent = ch;
       stack.appendChild(s);
     }
-    queueMicrotask(() => { requestAnimationFrame(fitWorksLetterStack); });
+    queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
-  /**
-   * Escala WORKS hasta el máximo tamaño que cabe en #projectsTitle; row-gap CSS = 0.
-   * Búsqueda binaria sobre la altura medida (incl. text-stroke) para apretar al mínimo posible.
-   */
-  function fitWorksLetterStack() {
-    const title = document.getElementById('projectsTitle');
-    const stack = title?.querySelector('.projects-vertical-title__stack');
-    if (!title || !stack) return;
+  /** Mismo font-size en px que las líneas del hero (#heroV2Title); sin redimensionar al módulo (evita bucles). */
+  function syncWorksFontToHero() {
+    const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
+    if (!stack) return;
     if (window.matchMedia('(max-width: 639px)').matches) {
       stack.style.removeProperty('font-size');
       return;
     }
-    const letters = stack.querySelectorAll('span');
-    if (!letters.length) return;
-
-    const avail = title.clientHeight;
-    if (avail < 48) return;
-
-    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
-    const minPx = Math.max(28, rem * 2.25);
-    let lo = minPx;
-    let hi = Math.min(Math.max(avail, minPx + 8) * 6, rem * 220);
-
-    for (let iter = 0; iter < 42; iter++) {
-      const mid = (lo + hi) * 0.5;
-      stack.style.fontSize = mid + 'px';
-      const h = stack.getBoundingClientRect().height;
-      // Tolerancia mínima: un pocos px por antialiasing / stroke fuera del em-box
-      if (h <= avail + 2) lo = mid;
-      else hi = mid;
-    }
-    stack.style.fontSize = lo + 'px';
-  }
-
-  let worksStackFitObs = null;
-  function initWorksLetterStackFit() {
-    const mod = document.querySelector('.projects-module');
-    const run = () => requestAnimationFrame(fitWorksLetterStack);
-    if (mod && typeof ResizeObserver !== 'undefined' && !worksStackFitObs) {
-      worksStackFitObs = new ResizeObserver(run);
-      worksStackFitObs.observe(mod);
-    }
-    run();
+    const line = document.querySelector('#heroV2Title .hero-v2-line');
+    if (!line) return;
+    let fs = line.style.fontSize;
+    if (!fs) fs = getComputedStyle(line).fontSize;
+    if (!fs || fs === '0px') return;
+    stack.style.fontSize = fs;
   }
 
   // ============================================
@@ -2075,7 +2046,6 @@
   initContactForm();
   initNewsletterForm();
   initIntroTypewriterOnScroll();
-  initWorksLetterStackFit();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2107,6 +2077,7 @@
     }
     const best = lo;
     lines.forEach((line) => { line.style.fontSize = best + 'px'; });
+    syncWorksFontToHero();
   }
 
   function updateHeaderTheme() {
@@ -2118,13 +2089,11 @@
   window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
   window.addEventListener('resize', () => {
     fitHeroV2Lines();
-    fitWorksLetterStack();
     updateHeaderTheme();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
   window.addEventListener('load', () => {
     fitHeroV2Lines();
-    fitWorksLetterStack();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
   updateHeaderTheme();
