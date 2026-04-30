@@ -682,8 +682,8 @@
     min-height: 0;
     /* Tamaño base en la pila para que row-gap em sea idéntico entre letras */
     font-size: clamp(3.1rem, min(12vw, 15vh), 7.75rem);
-    /* Separación fija entre celdas 1em (centro-a-centro coherente con el cuadrado por letra) */
-    row-gap: 0.12em;
+    /* Hueco vertical mínimo (em); el tamaño se escala con JS al alto del módulo */
+    row-gap: 0.012em;
   }
   #proyectos #projectsTitle .projects-vertical-title__stack > span {
     flex: 0 0 auto;
@@ -709,7 +709,7 @@
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
       font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
-      row-gap: 0.14em;
+      row-gap: 0.012em;
     }
   }
   @media (max-width: 639px) {
@@ -1845,6 +1845,43 @@
       s.textContent = ch;
       stack.appendChild(s);
     }
+    queueMicrotask(() => { requestAnimationFrame(fitWorksLetterStack); });
+  }
+
+  /** Debe coincidir con row-gap de .projects-vertical-title__stack en desktop (em). */
+  const WORKS_STACK_GAP_EM = 0.012;
+
+  function fitWorksLetterStack() {
+    const title = document.getElementById('projectsTitle');
+    const stack = title?.querySelector('.projects-vertical-title__stack');
+    if (!title || !stack) return;
+    if (window.matchMedia('(max-width: 639px)').matches) {
+      stack.style.removeProperty('font-size');
+      return;
+    }
+    const letters = stack.querySelectorAll('span');
+    const n = letters.length;
+    if (!n) return;
+
+    const avail = title.clientHeight;
+    if (avail < 48) return;
+
+    const totalEm = n + (n - 1) * WORKS_STACK_GAP_EM;
+    const rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+    const minPx = Math.max(36, rem * 3.05);
+    const fs = Math.max(minPx, avail / totalEm);
+    stack.style.fontSize = fs + 'px';
+  }
+
+  let worksStackFitObs = null;
+  function initWorksLetterStackFit() {
+    const mod = document.querySelector('.projects-module');
+    const run = () => requestAnimationFrame(fitWorksLetterStack);
+    if (mod && typeof ResizeObserver !== 'undefined' && !worksStackFitObs) {
+      worksStackFitObs = new ResizeObserver(run);
+      worksStackFitObs.observe(mod);
+    }
+    run();
   }
 
   // ============================================
@@ -2040,6 +2077,7 @@
   initContactForm();
   initNewsletterForm();
   initIntroTypewriterOnScroll();
+  initWorksLetterStackFit();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2082,11 +2120,13 @@
   window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
   window.addEventListener('resize', () => {
     fitHeroV2Lines();
+    fitWorksLetterStack();
     updateHeaderTheme();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
   window.addEventListener('load', () => {
     fitHeroV2Lines();
+    fitWorksLetterStack();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
   updateHeaderTheme();
