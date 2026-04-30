@@ -183,6 +183,9 @@
   .hero-v2-sticky {
     position: sticky;
     top: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     min-height: 100svh;
     height: 100svh;
     max-height: 100dvh;
@@ -191,13 +194,28 @@
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    /* Poco padding arriba: el título puede asomar bajo el header transparente (tipo Leonardo) */
-    padding: max(0.75rem, env(safe-area-inset-top, 0px)) 1.5rem 1.5rem;
+    /* Mínimo lateral + safe area para usar casi todo el ancho/alto del viewport */
+    padding:
+      max(0.75rem, env(safe-area-inset-top, 0px))
+      max(0.5rem, env(safe-area-inset-right, 0px))
+      max(0.75rem, env(safe-area-inset-bottom, 0px))
+      max(0.5rem, env(safe-area-inset-left, 0px));
   }
-  @media (min-width: 768px) { .hero-v2-sticky { padding: max(1rem, env(safe-area-inset-top, 0px)) 3rem 2rem; } }
+  @media (min-width: 768px) {
+    .hero-v2-sticky {
+      padding:
+        max(1rem, env(safe-area-inset-top, 0px))
+        max(1rem, env(safe-area-inset-right, 0px))
+        max(1rem, env(safe-area-inset-bottom, 0px))
+        max(1rem, env(safe-area-inset-left, 0px));
+    }
+  }
 
   .hero-v2-title {
     width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.03em;
@@ -1654,29 +1672,27 @@
     const title = document.getElementById('heroV2Title');
     if (!sticky || !title) return;
     const lines = title.querySelectorAll('.hero-v2-line');
+    if (!lines.length) return;
     const cs = getComputedStyle(sticky);
     const W = title.offsetWidth;
     const H = sticky.clientHeight
       - parseFloat(cs.paddingTop)
       - parseFloat(cs.paddingBottom);
-    lines.forEach((line) => {
-      let lo = 8;
-      let hi = 800;
-      while (lo < hi - 1) {
-        const mid = (lo + hi) >> 1;
-        line.style.fontSize = mid + 'px';
-        if (line.scrollWidth <= W) lo = mid;
-        else hi = mid;
-      }
-      line.style.fontSize = lo + 'px';
-    });
-    const totalH = title.offsetHeight;
-    if (totalH > H) {
-      const ratio = H / totalH;
-      lines.forEach((line) => {
-        line.style.fontSize = (parseFloat(line.style.fontSize) * ratio) + 'px';
-      });
+    if (W < 16 || H < 16) return;
+
+    /* Una sola escala de font-size: maximiza tipografía que cabe en ancho × alto (mobile/tablet/desktop) */
+    let lo = 4;
+    let hi = 800;
+    for (let iter = 0; iter < 42; iter++) {
+      const mid = (lo + hi) * 0.5;
+      lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
+      const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
+      const totH = title.offsetHeight;
+      if (maxW <= W + 1 && totH <= H + 1) lo = mid;
+      else hi = mid;
     }
+    const best = lo;
+    lines.forEach((line) => { line.style.fontSize = best + 'px'; });
   }
 
   function updateHeaderTheme() {
