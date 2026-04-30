@@ -1086,6 +1086,8 @@
     position: relative;
     flex: 1;
     min-height: clamp(260px, 50vh, 640px);
+    perspective: 1400px;
+    perspective-origin: 50% 50%;
   }
   @media (max-width: 639px) {
     .projects-row { min-height: clamp(220px, 65vw, 420px); }
@@ -1095,22 +1097,22 @@
     list-style: none;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: row;
-    gap: 0;
+    position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    ul.projects-track { transition: none; }
   }
 
   .project-poster {
-    flex: 0 0 100%;
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
+    transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity   0.52s ease,
+                filter    0.52s ease;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .project-poster { transition: none; }
   }
 
   .project-poster-inner {
@@ -1625,6 +1627,42 @@
 
   let projectsCardIndex = 0;
 
+  const CARD_3D = [
+    { tx: '-88%', scale: '0.62', ry:  '48deg', opacity: '0.18', blur: '6px',  z: 1 },
+    { tx: '-55%', scale: '0.80', ry:  '32deg', opacity: '0.58', blur: '2.5px',z: 2 },
+    { tx:   '0%', scale: '1',    ry:   '0deg', opacity: '1',    blur: '0',     z: 3 },
+    { tx:  '55%', scale: '0.80', ry: '-32deg', opacity: '0.58', blur: '2.5px',z: 2 },
+    { tx:  '88%', scale: '0.62', ry: '-48deg', opacity: '0.18', blur: '6px',  z: 1 },
+  ];
+
+  function cardStateForOffset(offset) {
+    const clamped = Math.max(-2, Math.min(2, offset));
+    return CARD_3D[clamped + 2];
+  }
+
+  function applyCard3D() {
+    const track = document.getElementById('projectsTrack');
+    if (!track) return;
+    const cards = track.querySelectorAll('.project-poster');
+    cards.forEach((card, i) => {
+      const offset = i - projectsCardIndex;
+      if (Math.abs(offset) > 2) {
+        card.style.opacity = '0';
+        card.style.pointerEvents = 'none';
+        card.style.zIndex = '0';
+        card.setAttribute('aria-hidden', 'true');
+        return;
+      }
+      const s = cardStateForOffset(offset);
+      card.style.transform = 'translateX(' + s.tx + ') scale(' + s.scale + ') rotateY(' + s.ry + ')';
+      card.style.opacity = s.opacity;
+      card.style.filter = s.blur === '0' ? 'none' : 'blur(' + s.blur + ')';
+      card.style.zIndex = String(s.z);
+      card.style.pointerEvents = offset === 0 ? '' : 'none';
+      card.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
+    });
+  }
+
   function updateProjectsChevrons() {
     const prev = document.getElementById('projectsPrev');
     const next = document.getElementById('projectsNext');
@@ -1637,11 +1675,9 @@
   }
 
   function goToProjectCard(index) {
-    const track = document.getElementById('projectsTrack');
-    if (!track) return;
     const total = projectsCatalog.length;
     projectsCardIndex = Math.max(0, Math.min(total - 1, index));
-    track.style.transform = 'translateX(-' + (projectsCardIndex * 100) + '%)';
+    applyCard3D();
     updateProjectsChevrons();
   }
 
@@ -1655,6 +1691,7 @@
 
     prev.addEventListener('click', () => goToProjectCard(projectsCardIndex - 1));
     next.addEventListener('click', () => goToProjectCard(projectsCardIndex + 1));
+    applyCard3D();
     updateProjectsChevrons();
   }
 
