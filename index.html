@@ -81,7 +81,10 @@
     z-index: 100;
     padding: 1.5rem 1.5rem 0.75rem;
     color: var(--white);
-    transition: background 0.35s ease, backdrop-filter 0.35s ease, color 0.2s ease;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    transition: background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, color 0.2s ease;
   }
   @media (min-width: 768px) { .site-header { padding: 1.5rem 3rem 0.75rem; } }
 
@@ -98,6 +101,12 @@
     background: rgba(255, 255, 255, 0.86);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+  }
+  /* Sobre fondo claro, sin scroll: barra totalmente transparente (mismo criterio que hero) */
+  .site-header--on-light:not(.scrolled) {
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .site-header__inner {
@@ -174,15 +183,18 @@
   .hero-v2-sticky {
     position: sticky;
     top: 0;
+    min-height: 100svh;
     height: 100svh;
+    max-height: 100dvh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    padding: 5.5rem 1.5rem 2rem;
+    /* Poco padding arriba: el título puede asomar bajo el header transparente (tipo Leonardo) */
+    padding: max(0.75rem, env(safe-area-inset-top, 0px)) 1.5rem 1.5rem;
   }
-  @media (min-width: 768px) { .hero-v2-sticky { padding: 6rem 3rem 2.5rem; } }
+  @media (min-width: 768px) { .hero-v2-sticky { padding: max(1rem, env(safe-area-inset-top, 0px)) 3rem 2rem; } }
 
   .hero-v2-title {
     width: 100%;
@@ -1674,7 +1686,7 @@
     let onLight = false;
     if (intro) onLight = intro.getBoundingClientRect().top < 80;
     hdr.classList.toggle('site-header--on-light', onLight);
-    hdr.classList.toggle('scrolled', window.scrollY > 32);
+    hdr.classList.toggle('scrolled', window.scrollY > 8);
   }
 
   window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
