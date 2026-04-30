@@ -471,7 +471,11 @@
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
 
-  .hero-title #typewriter .typewriter-suffix {
+  .hero-title #typewriter .typewriter-suffix--period {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+  }
+  .hero-title #typewriter .typewriter-suffix--wink {
     color: var(--page-orange);
     -webkit-text-fill-color: var(--page-orange);
   }
@@ -1452,7 +1456,7 @@
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
   }
 
-  /** Cuerpo en triada; sufijo `.` o `;)` en naranja vivo (--page-orange). */
+  /** Sufijo: `.` en blanco; `;)` en naranja vivo. (El punto del logo `.logo-dot` no pasa por aquí.) */
   function renderTypewriter(text, fullWord) {
     if (!typeEl) return;
     typeEl.replaceChildren();
@@ -1466,7 +1470,7 @@
       }
       typeEl.append(document.createTextNode(text.slice(0, baseLen)));
       const suffix = document.createElement('span');
-      suffix.className = 'typewriter-suffix';
+      suffix.className = 'typewriter-suffix typewriter-suffix--wink';
       suffix.textContent = text.slice(baseLen);
       typeEl.append(suffix);
       return;
@@ -1480,7 +1484,7 @@
       }
       typeEl.append(document.createTextNode(text.slice(0, baseLen)));
       const suffix = document.createElement('span');
-      suffix.className = 'typewriter-suffix';
+      suffix.className = 'typewriter-suffix typewriter-suffix--period';
       suffix.textContent = text.slice(baseLen);
       typeEl.append(suffix);
       return;
