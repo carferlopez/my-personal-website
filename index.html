@@ -131,13 +131,6 @@
   @media (min-width: 768px) { .site-header__inner { gap: 0.625rem; } }
 
   /* Header sobre hero oscuro (por defecto): nombre todo blanco, punto naranja */
-  .site-header:not(.site-header--on-light) .logo:hover {
-    background: var(--white);
-    color: var(--black);
-  }
-  .site-header:not(.site-header--on-light) .logo:hover .logo-dot {
-    color: var(--hero-v2-orange);
-  }
   .site-header:not(.site-header--on-light) .header-top nav a {
     color: var(--white);
   }
@@ -356,8 +349,7 @@
     color: inherit;
     padding: 0.375rem 0.5rem;
     margin: -0.375rem -0.5rem;
-    transition: background-color 0.1s, color 0.1s;
-    cursor: default;
+    cursor: pointer;
     -webkit-user-select: none;
     user-select: none;
   }
@@ -365,13 +357,6 @@
   @media (min-width: 640px) { .logo { font-size: 1.45rem; } }
   @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
   .logo .logo-dot {
-    color: var(--hero-v2-orange);
-  }
-  .logo:hover {
-    background: var(--black);
-    color: var(--white);
-  }
-  .logo:hover .logo-dot {
     color: var(--hero-v2-orange);
   }
 
@@ -1259,7 +1244,7 @@
 <header class="site-header" id="siteHeader">
     <div class="site-header__inner">
       <div class="header-top">
-        <div class="logo">Carlos Fernández<span class="logo-dot">.</span></div>
+        <a href="#inicio" class="logo" id="siteLogo" aria-label="Ir al inicio">Carlos Fernández<span class="logo-dot">.</span></a>
         <div class="header-actions">
           <nav aria-label="Redes y contacto">
             <a href="#contacto" aria-label="Formulario de contacto">
@@ -1428,6 +1413,7 @@
         "ESPERO QUE TE SIRVAN ;)",
       ],
       scrollHint: "COMO POR EJEMPLO ESTOS ↓",
+      siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS TODAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
       contactSub: "Suscríbete a mi newsletter y entérate cada vez que publique algo.",
@@ -1470,6 +1456,7 @@
         "I HOPE THEY HELP YOU ;)",
       ],
       scrollHint: "LIKE THESE ↓",
+      siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
       contactSub: "When I publish something, you’ll hear it first. No spam.",
@@ -1900,6 +1887,8 @@
     const d = t[lang];
     document.documentElement.lang = lang;
     try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
+    const logoLink = document.getElementById('siteLogo');
+    if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
     document.getElementById('scrollHint').textContent = d.scrollHint;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
