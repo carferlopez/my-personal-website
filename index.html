@@ -762,9 +762,17 @@
     color: var(--hero-v2-violet);
     -webkit-text-fill-color: var(--hero-v2-violet);
   }
+  #contacto #contactMark {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+  }
   #contactDividerText {
     color: var(--page-yellow);
     -webkit-text-fill-color: var(--page-yellow);
+  }
+  .contact-divider-mark {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -906,14 +914,14 @@
 
   .contact-divider {
     margin-top: 2.5rem;
-    max-width: 100%;
+    padding: 0;
   }
   .contact-divider .big-heading--mid {
-    flex: 1 1 auto;
-    min-width: 0;
-    max-width: 100%;
-    text-align: left;
+    display: block;
+    width: 100%;
     margin: 0;
+    padding: 0;
+    text-align: left;
     white-space: normal;
     text-wrap: pretty;
     line-height: 0.92;
@@ -1351,7 +1359,7 @@
         </form>
 
         <div class="contact-divider">
-          <p class="big-heading big-heading--mid" id="contactDividerText">O SI LO PREFIERES, CONTÁCTAME A TRAVÉS DE ESTOS CANALES</p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerText">O SI LO PREFIERES, CONTÁCTAME A TRAVÉS DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
