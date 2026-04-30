@@ -44,6 +44,8 @@
     --gray-light: #e5e7eb;
     --gray-mid: #9ca3af;
     --red: #ef4444;
+    --hero-v2-orange: #ff4d00;
+    --hero-v2-violet: #aa00ff;
   }
 
   html { scroll-behavior: smooth; }
@@ -70,32 +72,145 @@
   .container { max-width: 72rem; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
   @media (min-width: 768px) { .container { padding: 0 3rem; } }
 
-  /* ==================== HERO ==================== */
-  .hero {
-    min-height: 100svh;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+  /* ==================== SITE HEADER (fixed) ==================== */
+  .site-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 1.5rem 0.75rem;
+    color: var(--white);
+    transition: background 0.35s ease, backdrop-filter 0.35s ease, color 0.2s ease;
   }
-  .hero-inner {
-    padding: 1.5rem 1.5rem 3rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    max-width: 72rem;
-    margin: 0 auto;
-    width: 100%;
-  }
-  @media (min-width: 768px) { .hero-inner { padding: 1.5rem 3rem 3rem; } }
+  @media (min-width: 768px) { .site-header { padding: 1.5rem 3rem 0.75rem; } }
 
-  header {
+  .site-header.scrolled {
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .site-header--on-light {
+    color: var(--black);
+  }
+  .site-header--on-light.scrolled {
+    background: rgba(255, 255, 255, 0.86);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+
+  .site-header__inner {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     gap: 0.5rem;
     width: 100%;
+    max-width: 72rem;
+    margin: 0 auto;
   }
-  @media (min-width: 768px) { header { gap: 0.625rem; } }
+  @media (min-width: 768px) { .site-header__inner { gap: 0.625rem; } }
+
+  /* Header sobre hero oscuro (por defecto) */
+  .site-header:not(.site-header--on-light) .logo .gray {
+    color: rgba(255, 255, 255, 0.52);
+  }
+  .site-header:not(.site-header--on-light) .logo:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+  .site-header:not(.site-header--on-light) .logo:hover .gray {
+    color: var(--gray-mid);
+  }
+  .site-header:not(.site-header--on-light) .header-top nav a {
+    color: var(--white);
+  }
+  .site-header:not(.site-header--on-light) .header-top nav a:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+  .site-header:not(.site-header--on-light) .lang-toggle:hover {
+    background: var(--white);
+    color: var(--black);
+  }
+  .site-header:not(.site-header--on-light) .lang-toggle:hover .sep {
+    color: var(--gray-mid);
+  }
+  .site-header:not(.site-header--on-light) .lang-toggle .sep {
+    color: rgba(255, 255, 255, 0.35);
+  }
+  .site-header:not(.site-header--on-light) .lang-toggle .inactive {
+    color: rgba(255, 255, 255, 0.45);
+  }
+  .site-header:not(.site-header--on-light) .lang-toggle .inactive:hover {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  /* ==================== HERO V2 (carlos-site-V2) ==================== */
+  .hero-v2-section {
+    height: 300vh;
+    position: relative;
+    background: var(--black);
+    color: var(--white);
+  }
+  .hero-v2-section.hero-v2-section--static {
+    height: auto;
+    min-height: 100svh;
+  }
+
+  .hero-v2-sticky {
+    position: sticky;
+    top: 0;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    overflow: hidden;
+    padding: 5.5rem 1.5rem 2rem;
+  }
+  @media (min-width: 768px) { .hero-v2-sticky { padding: 6rem 3rem 2.5rem; } }
+
+  .hero-v2-title {
+    width: 100%;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.88;
+    will-change: transform;
+    transform-origin: 50% 50%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-v2-line {
+    display: block;
+    white-space: nowrap;
+    color: var(--white);
+    line-height: 0.88;
+  }
+  .hero-v2-line .accent {
+    color: var(--hero-v2-orange);
+  }
+  .hero-v2-line--violet {
+    color: var(--hero-v2-violet);
+  }
+
+  /* ==================== INTRO (antiguo hero: typewriter) ==================== */
+  .intro-hero {
+    position: relative;
+    background: var(--white);
+    color: var(--black);
+    padding-top: 5rem;
+  }
+  @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
+
+  .intro-hero-inner {
+    display: flex;
+    flex-direction: column;
+    min-height: min(88svh, 52rem);
+    padding-bottom: 2rem;
+  }
 
   .header-top {
     display: flex;
@@ -232,7 +347,7 @@
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
   .hero-title .red { color: var(--red); }
-  /* Typewriter: el acento (punto o ;) debe ganar a herencia del h1 */
+  /* Typewriter: el acento (punto o ;) debe ganar a herencia del titular */
   .hero-title #typewriter .red {
     color: var(--red) !important;
   }
@@ -249,12 +364,11 @@
   @keyframes blink { 50% { opacity: 0; } }
 
   .scroll-hint {
-    position: absolute;
-    bottom: 2rem;
-    left: 0;
-    right: 0;
     text-align: center;
     pointer-events: none;
+  }
+  .scroll-hint--intro {
+    margin-top: 2.5rem;
   }
   .scroll-hint a {
     display: inline-block;
@@ -776,44 +890,57 @@
 </head>
 <body>
 
-<main>
-
-  <!-- ==================== HERO ==================== -->
-  <section class="hero" id="inicio">
-    <div class="hero-inner">
-      <header>
-        <div class="header-top">
-          <div class="logo">Carlos <span class="gray">Fernández</span><span class="red">.</span></div>
-          <nav aria-label="Redes y contacto">
-            <a href="#contacto" aria-label="Formulario de contacto">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </a>
-            <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
-              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
-            </a>
-            <a href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
-            </a>
-          </nav>
-        </div>
-        <div class="header-lang">
-          <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma">
-            <span id="esLabel"><span class="flag">🇪🇸</span>ES</span>
-            <span class="sep">/</span>
-            <span id="enLabel" class="inactive"><span class="flag">🇺🇸</span>EN</span>
-          </button>
-        </div>
-      </header>
-
-      <div class="hero-title-wrap">
-        <h1 class="hero-title">
-          <span id="typewriter"></span><span class="cursor"></span>
-        </h1>
+<header class="site-header" id="siteHeader">
+    <div class="site-header__inner">
+      <div class="header-top">
+        <div class="logo">Carlos <span class="gray">Fernández</span><span class="red">.</span></div>
+        <nav aria-label="Redes y contacto">
+          <a href="#contacto" aria-label="Formulario de contacto">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          </a>
+          <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+          </a>
+        </nav>
+      </div>
+      <div class="header-lang">
+        <button class="lang-toggle" id="langToggle" type="button" aria-label="Cambiar idioma">
+          <span id="esLabel"><span class="flag">🇪🇸</span>ES</span>
+          <span class="sep">/</span>
+          <span id="enLabel" class="inactive"><span class="flag">🇺🇸</span>EN</span>
+        </button>
       </div>
     </div>
+  </header>
 
-    <div class="scroll-hint">
-      <a href="#proyectos" id="scrollHint">COMO POR EJEMPLO ESTOS ↓</a>
+<main>
+
+  <!-- Hero tipo carlos-site-V2 -->
+  <section class="hero-v2-section" id="inicio" aria-label="Systems Architect & Creative Developer">
+    <div class="hero-v2-sticky">
+      <h1 class="hero-v2-title" id="heroV2Title">
+        <span class="hero-v2-line">SYSTEMS</span>
+        <span class="hero-v2-line"><span class="accent">ARCHITECT</span></span>
+        <span class="hero-v2-line">& CREATIVE</span>
+        <span class="hero-v2-line hero-v2-line--violet">DEVELOPER</span>
+      </h1>
+    </div>
+  </section>
+
+  <!-- Antiguo hero: mensaje con typewriter -->
+  <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
+    <div class="container intro-hero-inner">
+      <div class="hero-title-wrap">
+        <h2 class="hero-title" id="introHeading">
+          <span id="typewriter"></span><span class="cursor"></span>
+        </h2>
+      </div>
+      <div class="scroll-hint scroll-hint--intro">
+        <a href="#proyectos" id="scrollHint">COMO POR EJEMPLO ESTOS ↓</a>
+      </div>
     </div>
   </section>
 
@@ -902,6 +1029,8 @@
 
 </main>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 <script>
   // ============================================
   // Traducciones centralizadas
@@ -1341,6 +1470,80 @@
   initContactForm();
   initNewsletterForm();
   typewriter();
+
+  // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const heroV2Section = document.querySelector('.hero-v2-section');
+
+  function fitHeroV2Lines() {
+    const sticky = document.querySelector('.hero-v2-sticky');
+    const title = document.getElementById('heroV2Title');
+    if (!sticky || !title) return;
+    const lines = title.querySelectorAll('.hero-v2-line');
+    const cs = getComputedStyle(sticky);
+    const W = title.offsetWidth;
+    const H = sticky.clientHeight
+      - parseFloat(cs.paddingTop)
+      - parseFloat(cs.paddingBottom);
+    lines.forEach((line) => {
+      let lo = 8;
+      let hi = 800;
+      while (lo < hi - 1) {
+        const mid = (lo + hi) >> 1;
+        line.style.fontSize = mid + 'px';
+        if (line.scrollWidth <= W) lo = mid;
+        else hi = mid;
+      }
+      line.style.fontSize = lo + 'px';
+    });
+    const totalH = title.offsetHeight;
+    if (totalH > H) {
+      const ratio = H / totalH;
+      lines.forEach((line) => {
+        line.style.fontSize = (parseFloat(line.style.fontSize) * ratio) + 'px';
+      });
+    }
+  }
+
+  function updateHeaderTheme() {
+    const intro = document.getElementById('presentacion');
+    const hdr = document.getElementById('siteHeader');
+    if (!hdr) return;
+    let onLight = false;
+    if (intro) onLight = intro.getBoundingClientRect().top < 80;
+    hdr.classList.toggle('site-header--on-light', onLight);
+    hdr.classList.toggle('scrolled', window.scrollY > 32);
+  }
+
+  window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
+  window.addEventListener('resize', () => {
+    fitHeroV2Lines();
+    updateHeaderTheme();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  });
+  window.addEventListener('load', () => {
+    fitHeroV2Lines();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  });
+  updateHeaderTheme();
+
+  if (heroV2Section && reduceMotion) heroV2Section.classList.add('hero-v2-section--static');
+  fitHeroV2Lines();
+
+  if (!reduceMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.to('#heroV2Title', {
+      scale: 7,
+      rotationZ: 22,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '.hero-v2-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.8,
+      },
+    });
+  }
 </script>
 
 </body>
