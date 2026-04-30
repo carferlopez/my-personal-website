@@ -1564,14 +1564,6 @@
       url: null,
       poster: null
     },
-    {
-      id: 'p4',
-      status: 'coming',
-      title: { es: 'Micro-SaaS en validación', en: 'Micro-SaaS in validation' },
-      blurb: { es: 'Hipótesis de negocio por confirmar; carátula al lanzar.', en: 'Business hypothesis TBD; cover on launch.' },
-      url: null,
-      poster: null
-    }
   ];
 
   function escapeHtml(s) {
@@ -1664,15 +1656,11 @@
     const track = document.getElementById('projectsTrack');
     if (!track) return;
     const cards = track.querySelectorAll('.project-poster');
+    const total = cards.length;
     cards.forEach((card, i) => {
-      const offset = i - projectsCardIndex;
-      if (Math.abs(offset) > 2) {
-        card.style.opacity = '0';
-        card.style.pointerEvents = 'none';
-        card.style.zIndex = '0';
-        card.setAttribute('aria-hidden', 'true');
-        return;
-      }
+      /* Offset circular: el más corto de los dos caminos posibles */
+      let offset = ((i - projectsCardIndex) % total + total) % total;
+      if (offset > Math.floor(total / 2)) offset -= total;
       const s = cardStateForOffset(offset);
       card.style.transform = 'translateX(' + s.tx + ') translateY(' + s.ty + ') scale(' + s.scale + ') rotateY(' + s.ry + ')';
       card.style.opacity = s.opacity;
@@ -1688,15 +1676,16 @@
     const next = document.getElementById('projectsNext');
     if (!prev || !next) return;
     const total = projectsCatalog.length;
-    prev.disabled = projectsCardIndex <= 0;
-    next.disabled = projectsCardIndex >= total - 1;
-    prev.classList.toggle('projects-chev--off', total <= 1);
-    next.classList.toggle('projects-chev--off', total <= 1);
+    const show = total > 1;
+    prev.disabled = !show;
+    next.disabled = !show;
+    prev.classList.toggle('projects-chev--off', !show);
+    next.classList.toggle('projects-chev--off', !show);
   }
 
   function goToProjectCard(index) {
     const total = projectsCatalog.length;
-    projectsCardIndex = Math.max(0, Math.min(total - 1, index));
+    projectsCardIndex = ((index % total) + total) % total;
     applyCard3D();
     updateProjectsChevrons();
   }
