@@ -562,16 +562,20 @@
   .contact-box:hover .newsletter-form__input::placeholder { color: rgba(255,255,255,0.4); }
 
   .contact-divider {
+    container-type: inline-size;
+    container-name: contact-divider;
     display: flex;
     align-items: center;
     gap: 1rem;
     margin-top: 2.5rem;
     max-width: 100%;
     flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: visible;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: thin;
+    overflow: visible;
+  }
+  @media (max-width: 520px) {
+    .contact-divider { gap: 0; }
+    .contact-divider::before,
+    .contact-divider::after { display: none; }
   }
   .contact-divider::before,
   .contact-divider::after {
@@ -582,12 +586,21 @@
     opacity: 0.15;
   }
   .contact-divider .big-heading--mid {
-    flex: 0 0 auto;
-    max-width: none;
+    flex: 1 1 auto;
+    min-width: 0;
+    max-width: 100%;
     text-align: center;
     margin: 0;
     white-space: nowrap;
     text-wrap: unset;
+    line-height: 1.05;
+    font-size: clamp(0.42rem, 0.92vw + 0.36rem, 2.5rem);
+  }
+  @supports (container-type: inline-size) {
+    .contact-divider .big-heading--mid {
+      /* Escala con el ancho del .contact-divider (~3.4% del contenedor ≈ una línea EN/ES) */
+      font-size: clamp(0.42rem, 3.4cqi, 2.5rem);
+    }
   }
 
   .contact-form-wrap { width: 100%; max-width: 100%; }
