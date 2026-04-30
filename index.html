@@ -645,9 +645,9 @@
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    /* Misma referencia que el logo: todo el bloque WORKS (columna vertical) arranca a la izquierda, no centrado en el h2 */
+    /* Bloque alineado a la izquierda (logo); pegado arriba — no centrar en la altura del módulo */
     align-items: flex-start;
-    justify-content: center;
+    justify-content: flex-start;
     min-height: 0;
     max-height: 100%;
     position: sticky;
@@ -664,9 +664,9 @@
   #proyectos #projectsTitle .projects-vertical-title__stack {
     display: flex;
     flex-direction: column-reverse;
-    align-items: flex-start;
-    justify-content: center;
-    flex: 1 1 auto;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 auto;
     width: max-content;
     align-self: flex-start;
     min-height: 0;
@@ -695,10 +695,6 @@
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
       font-size: clamp(3.4rem, min(13vw, 16vh), 8.5rem);
-    }
-    /* WORKS: acerca RKS a WO (solo columna lateral; no aplica en móvil row) */
-    #proyectos #projectsTitle .projects-vertical-title__stack > span:nth-child(3) {
-      margin-bottom: clamp(-0.08rem, -0.22vh, -0.2rem);
     }
   }
   @media (max-width: 639px) {
