@@ -243,10 +243,22 @@
     -webkit-text-fill-color: #ff4d00 !important;
   }
 
-  /* Intro: titular typewriter = verde (ciclo 1) */
-  #presentacion .hero-title {
+  /* Typewriter: color neon según data-tw-line (0–3), actualizado por JS en cada frase */
+  #introHeading[data-tw-line="0"] #typewriter {
     color: var(--section-neon-green);
     -webkit-text-fill-color: var(--section-neon-green);
+  }
+  #introHeading[data-tw-line="1"] #typewriter {
+    color: var(--section-neon-pink);
+    -webkit-text-fill-color: var(--section-neon-pink);
+  }
+  #introHeading[data-tw-line="2"] #typewriter {
+    color: var(--section-neon-yellow);
+    -webkit-text-fill-color: var(--section-neon-yellow);
+  }
+  #introHeading[data-tw-line="3"] #typewriter {
+    color: var(--section-neon-blue);
+    -webkit-text-fill-color: var(--section-neon-blue);
   }
 
   /* ==================== INTRO (antiguo hero: typewriter) ==================== */
@@ -527,7 +539,7 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
-  /* Titulares de sección: rosa / amarillo / azul (tras verde en #presentacion .hero-title) */
+  /* Titulares de sección (el typewriter rota neón 0–3 vía #introHeading[data-tw-line]) */
   #proyectos #projectsTitle {
     color: var(--section-neon-pink);
     -webkit-text-fill-color: var(--section-neon-pink);
@@ -1092,7 +1104,7 @@
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <div class="container intro-hero-inner">
       <div class="hero-title-wrap">
-        <h2 class="hero-title" id="introHeading">
+        <h2 class="hero-title" id="introHeading" data-tw-line="0">
           <span id="typewriter"></span><span class="cursor"></span>
         </h2>
       </div>
@@ -1432,9 +1444,16 @@
   // Typewriter
   // ============================================
   const typeEl = document.getElementById('typewriter');
+  const introHeadingEl = document.getElementById('introHeading');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
+  /** Avanza en cada cambio de frase para rotar verde → rosa → amarillo → azul. */
+  let typewriterNeonIx = 0;
   /** El carrusel de frases solo arranca cuando #presentacion entra en vista (scroll). */
   let introTypewriterUnlocked = false;
+
+  function syncTypewriterNeonDataset() {
+    if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 4);
+  }
 
   /** Solo la 3ª frase termina en `;)` (naranja); las demás van enteras en color del titular */
   function renderTypewriter(text, fullWord) {
@@ -1460,6 +1479,7 @@
   }
 
   function typewriter() {
+    syncTypewriterNeonDataset();
     const words = t[lang].typewriter;
     const currentWord = words[wordIndex];
     if (isDeleting) charIndex--; else charIndex++;
@@ -1471,6 +1491,7 @@
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       wordIndex = (wordIndex + 1) % words.length;
+      typewriterNeonIx = (typewriterNeonIx + 1) % 4;
       speed = 500;
     }
     typeTimeout = setTimeout(typewriter, speed);
@@ -1481,6 +1502,8 @@
     wordIndex = 0;
     charIndex = 0;
     isDeleting = false;
+    typewriterNeonIx = 0;
+    syncTypewriterNeonDataset();
     if (!introTypewriterUnlocked) {
       if (typeEl) typeEl.replaceChildren();
       return;
@@ -1498,6 +1521,8 @@
       wordIndex = 0;
       charIndex = 0;
       isDeleting = false;
+      typewriterNeonIx = 0;
+      syncTypewriterNeonDataset();
       typewriter();
     };
     if (typeof IntersectionObserver !== 'undefined') {
