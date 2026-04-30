@@ -665,8 +665,8 @@
     width: max-content;
     align-self: flex-start;
     min-height: 0;
-    /* Fallback ~90 % del clamp “hero”; en desktop syncWorksFontToHero aplica hero×0.9 en px */
-    font-size: calc(0.9 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
+    /* Fallback ~94,5 % del hero (hero×0.945); desktop syncWorksFontToHero aplica ese factor en px */
+    font-size: calc(0.945 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
     /* row-gap 0: letras apiladas compactas */
     row-gap: 0;
   }
@@ -705,7 +705,7 @@
   }
   @media (min-width: 640px) {
     #proyectos #projectsTitle .projects-vertical-title__stack {
-      font-size: calc(0.9 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      font-size: calc(0.945 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
       row-gap: 0;
     }
   }
@@ -734,7 +734,7 @@
       row-gap: 0.08em;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: calc(0.9 * clamp(2.85rem, 11vw, 4.25rem));
+      font-size: calc(0.945 * clamp(2.85rem, 11vw, 4.25rem));
       transform: none;
       margin-block: 0;
       margin-inline: 0;
@@ -1859,7 +1859,7 @@
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
-  /** Mismo criterio que el hero pero −10 % de tamaño. */
+  /** Escalado respecto al hero: 0.9×1.05 ≈ 94,5 %. */
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
@@ -1873,7 +1873,7 @@
     if (!fs) fs = getComputedStyle(line).fontSize;
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
-    stack.style.fontSize = (fsPx * 0.9) + 'px';
+    stack.style.fontSize = (fsPx * 0.945) + 'px';
   }
 
   // ============================================
