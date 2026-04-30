@@ -454,10 +454,13 @@
   @media (min-width: 768px) { .hero-title { font-size: 10vw; min-height: 50vh; } }
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
-  .hero-title .red { color: var(--red); }
-  /* Typewriter: el acento (punto o ;) debe ganar a herencia del titular */
-  .hero-title #typewriter .red {
-    color: var(--red) !important;
+  .hero-title .typewriter-accent {
+    color: var(--hero-v2-orange);
+    -webkit-text-fill-color: var(--hero-v2-orange);
+  }
+  .hero-title #typewriter .typewriter-accent {
+    color: var(--hero-v2-orange) !important;
+    -webkit-text-fill-color: var(--hero-v2-orange) !important;
   }
 
   .cursor {
@@ -1194,9 +1197,9 @@
   const t = {
     es: {
       typewriter: [
-        "CREO PROGRAMAS & PRODUCTOS DIGITALES.",
-        "CREATIVOS, DIFERENTES, PERO SOBRE TODO ÚTILES.",
-        "ESPERO QUE TE SIRVAN ;)",
+        "CREO PROGRAMAS & PRODUCTOS DIGITALES. ;)",
+        "CREATIVOS, DIFERENTES, PERO SOBRE TODO ÚTILES. ;)",
+        "ESPERO QUE TE SIRVAN. ;)",
       ],
       scrollHint: "COMO POR EJEMPLO ESTOS ↓",
       contactTitle: "NO TE PIERDAS TODAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
@@ -1236,9 +1239,9 @@
     },
     en: {
       typewriter: [
-        "I CREATE DIGITAL PROGRAMS & PRODUCTS.",
-        "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
-        "I HOPE THEY HELP YOU ;)",
+        "I CREATE DIGITAL PROGRAMS & PRODUCTS. ;)",
+        "SIMPLE TO USE, BUT ABOVE ALL, USEFUL. ;)",
+        "I HOPE THEY HELP YOU. ;)",
       ],
       scrollHint: "LIKE THESE FOR EXAMPLE ↓",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
@@ -1432,18 +1435,37 @@
   const typeEl = document.getElementById('typewriter');
   let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
 
-  function renderTypewriter(text) {
+  const TYPEWRITER_SUFFIX = '. ;)';
+
+  function renderTypewriter(text, fullWord) {
+    if (!typeEl) return;
     typeEl.replaceChildren();
-    if (text.endsWith(';)')) {
+    if (!text) return;
+
+    if (fullWord.endsWith(TYPEWRITER_SUFFIX)) {
+      const baseLen = fullWord.length - TYPEWRITER_SUFFIX.length;
+      if (text.length <= baseLen) {
+        typeEl.textContent = text;
+        return;
+      }
+      typeEl.append(document.createTextNode(fullWord.slice(0, baseLen)));
+      const accent = document.createElement('span');
+      accent.className = 'typewriter-accent';
+      accent.textContent = text.slice(baseLen);
+      typeEl.append(accent);
+      return;
+    }
+
+    if (text.endsWith(';)') && !text.endsWith(TYPEWRITER_SUFFIX)) {
       typeEl.append(document.createTextNode(text.slice(0, -2)));
       const wink = document.createElement('span');
-      wink.className = 'red';
+      wink.className = 'typewriter-accent';
       wink.textContent = ';)';
       typeEl.append(wink);
     } else if (text.endsWith('.')) {
       typeEl.append(document.createTextNode(text.slice(0, -1)));
       const dot = document.createElement('span');
-      dot.className = 'red';
+      dot.className = 'typewriter-accent';
       dot.textContent = '.';
       typeEl.append(dot);
     } else {
@@ -1455,7 +1477,7 @@
     const words = t[lang].typewriter;
     const currentWord = words[wordIndex];
     if (isDeleting) charIndex--; else charIndex++;
-    renderTypewriter(currentWord.substring(0, charIndex));
+    renderTypewriter(currentWord.substring(0, charIndex), currentWord);
 
     let speed = isDeleting ? 30 : 70;
     if (!isDeleting && charIndex === currentWord.length) {
