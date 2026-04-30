@@ -471,14 +471,6 @@
   @media (min-width: 768px) { .hero-title { font-size: 10vw; min-height: 50vh; } }
   @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
   @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
-  .hero-title .typewriter-accent {
-    color: var(--hero-v2-orange);
-    -webkit-text-fill-color: var(--hero-v2-orange);
-  }
-  .hero-title #typewriter .typewriter-accent {
-    color: var(--hero-v2-orange) !important;
-    -webkit-text-fill-color: var(--hero-v2-orange) !important;
-  }
 
   .cursor {
     display: inline-block;
@@ -1455,26 +1447,11 @@
     if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 4);
   }
 
-  /** Solo la 3ª frase termina en `;)` (naranja); las demás van enteras en color del titular */
-  function renderTypewriter(text, fullWord) {
+  /** Render del texto del typewriter (un solo color por frase vía #typewriter + data-tw-line). */
+  function renderTypewriter(text) {
     if (!typeEl) return;
     typeEl.replaceChildren();
     if (!text) return;
-
-    if (fullWord.endsWith(';)')) {
-      const baseLen = fullWord.length - 2;
-      if (text.length <= baseLen) {
-        typeEl.textContent = text;
-        return;
-      }
-      typeEl.append(document.createTextNode(fullWord.slice(0, baseLen)));
-      const accent = document.createElement('span');
-      accent.className = 'typewriter-accent';
-      accent.textContent = text.slice(baseLen);
-      typeEl.append(accent);
-      return;
-    }
-
     typeEl.textContent = text;
   }
 
@@ -1483,7 +1460,7 @@
     const words = t[lang].typewriter;
     const currentWord = words[wordIndex];
     if (isDeleting) charIndex--; else charIndex++;
-    renderTypewriter(currentWord.substring(0, charIndex), currentWord);
+    renderTypewriter(currentWord.substring(0, charIndex));
 
     let speed = isDeleting ? 30 : 70;
     if (!isDeleting && charIndex === currentWord.length) {
