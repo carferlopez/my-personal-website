@@ -932,19 +932,17 @@
     flex: 1 1 auto;
     min-width: 0;
     max-width: 100%;
-    text-align: center;
+    text-align: left;
     margin: 0;
-    white-space: nowrap;
-    text-wrap: unset;
-    line-height: 1.05;
-    font-size: clamp(0.42rem, 0.92vw + 0.36rem, 2.5rem);
+    white-space: normal;
+    text-wrap: pretty;
+    line-height: 0.92;
+    font-size: 7.5vw;
   }
-  @supports (container-type: inline-size) {
-    .contact-divider .big-heading--mid {
-      /* Escala con el ancho del .contact-divider (~3.4% del contenedor ≈ una línea EN/ES) */
-      font-size: clamp(0.42rem, 3.4cqi, 2.5rem);
-    }
-  }
+  @media (min-width: 640px)  { .contact-divider .big-heading--mid { font-size: 7vw; } }
+  @media (min-width: 768px)  { .contact-divider .big-heading--mid { font-size: 6.5vw; } }
+  @media (min-width: 1024px) { .contact-divider .big-heading--mid { font-size: 6vw; } }
+  @media (min-width: 1280px) { .contact-divider .big-heading--mid { font-size: 64px; } }
 
   .contact-form-wrap { width: 100%; max-width: 100%; }
   .contact-form {
