@@ -556,9 +556,67 @@
 
   /* Titulares fuera del brutalista: mismo ciclo naranja → magenta → amarillo */
   #proyectos #projectsTitle {
+    margin: 0;
+    padding: 0.15rem 0.35rem;
+    flex: 0 0 auto;
+    font-size: clamp(2rem, 5.5vw, 3.75rem);
+    font-weight: 900;
+    letter-spacing: 0.14em;
+    line-height: 1;
+    text-transform: uppercase;
+    text-wrap: balance;
     color: var(--page-orange);
     -webkit-text-fill-color: var(--page-orange);
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: sticky;
+    top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
+    z-index: 1;
   }
+  .projects-layout {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.65rem;
+    margin-top: 2.5rem;
+    min-width: 0;
+  }
+  @media (min-width: 640px) {
+    .projects-layout { gap: 1rem; }
+    #proyectos #projectsTitle {
+      font-size: clamp(2.35rem, 4.2vw, 4rem);
+      padding: 0.2rem 0.45rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .projects-layout { gap: 1.35rem; }
+    #proyectos #projectsTitle {
+      font-size: clamp(2.6rem, 3.5vw, 4.25rem);
+      letter-spacing: 0.16em;
+    }
+  }
+  @media (max-width: 639px) {
+    .projects-layout {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1.25rem;
+    }
+    #proyectos #projectsTitle {
+      writing-mode: horizontal-tb;
+      text-orientation: mixed;
+      align-self: flex-start;
+      position: static;
+      font-size: clamp(1.85rem, 9vw, 2.25rem);
+      letter-spacing: -0.04em;
+      padding: 0;
+      justify-content: flex-start;
+    }
+  }
+
   #contacto .contact-box > h2.big-heading {
     color: var(--page-magenta);
     -webkit-text-fill-color: var(--page-magenta);
@@ -598,6 +656,10 @@
   @media (min-width: 640px) { .subheading { font-size: 1.125rem; } }
   @media (min-width: 768px) { .subheading { font-size: 1.25rem; } }
   @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
+
+  .projects-section .projects-strap.subheading {
+    margin-top: 0;
+  }
 
   /* ==================== CONTACT ==================== */
   .contact-box {
@@ -809,7 +871,7 @@
 
   /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
   .projects-strap {
-    margin-top: 1.25rem;
+    margin-top: 0;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -846,7 +908,9 @@
   .projects-strap a:focus-visible { outline: 3px solid var(--white); outline-offset: 2px; }
   .projects-chevron-wrap {
     position: relative;
-    margin-top: 2.5rem;
+    margin-top: 0;
+    flex: 1;
+    min-width: 0;
   }
   .projects-chev {
     position: absolute;
@@ -1133,15 +1197,17 @@
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <div class="container">
-      <h2 class="big-heading" id="projectsTitle">TRABAJOS</h2>
       <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
 
-      <div class="projects-chevron-wrap">
-        <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
-        <div class="projects-row" id="projectsRow" data-projects-scroll>
-          <ul class="projects-track" id="projectsTrack" role="list"></ul>
+      <div class="projects-layout">
+        <h2 class="projects-vertical-title" id="projectsTitle">TRABAJOS</h2>
+        <div class="projects-chevron-wrap">
+          <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
+          <div class="projects-row" id="projectsRow" data-projects-scroll>
+            <ul class="projects-track" id="projectsTrack" role="list"></ul>
+          </div>
+          <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
         </div>
-        <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
       </div>
     </div>
   </section>
