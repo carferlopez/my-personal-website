@@ -6,7 +6,7 @@
 <title>Carlos Fernández — Systems Architect & Creative Developer</title>
 <meta name="description" content="Construyo productos digitales en solitario: lanzar rápido, usuarios reales, sin ruido corporativo.">
 <meta name="author" content="Carlos Fernández">
-<meta name="theme-color" content="#ff4d00">
+<meta name="theme-color" content="#000000">
 
 <!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
@@ -47,19 +47,24 @@
     --red: #ef4444;
     --hero-v2-orange: #ff4d00;
     --hero-v2-violet: #aa00ff;
+    /* Titulares de sección (ciclo Leonardo-style) */
+    --section-neon-green: #12d160;
+    --section-neon-pink: #ff2e89;
+    --section-neon-yellow: #f5d51a;
+    --section-neon-blue: #33ccff;
   }
 
   html { scroll-behavior: smooth; }
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    background: var(--white);
-    color: var(--black);
+    background: var(--black);
+    color: var(--white);
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
   }
 
-  ::selection { background: var(--black); color: var(--white); }
+  ::selection { background: rgba(255, 255, 255, 0.22); color: var(--white); }
 
   a { color: inherit; text-decoration: none; }
 
@@ -93,21 +98,6 @@
     background: rgba(0, 0, 0, 0.72);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-  }
-
-  .site-header--on-light {
-    color: var(--black);
-  }
-  .site-header--on-light.scrolled {
-    background: rgba(255, 255, 255, 0.86);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-  }
-  /* Sobre fondo claro, sin scroll: barra totalmente transparente (mismo criterio que hero) */
-  .site-header--on-light:not(.scrolled) {
-    background: transparent;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
   }
 
   .site-header__inner {
@@ -156,17 +146,6 @@
   .site-header:not(.site-header--on-light) .lang-select__option:hover {
     background: var(--white);
     color: var(--black);
-  }
-
-  .site-header--on-light .lang-select__btn {
-    color: var(--black);
-  }
-  .site-header--on-light .lang-select__btn .lang-select__chev {
-    color: var(--black);
-    opacity: 0.75;
-  }
-  .site-header--on-light .lang-select__btn:hover .lang-select__chev {
-    color: var(--white);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
@@ -264,11 +243,17 @@
     -webkit-text-fill-color: #ff4d00 !important;
   }
 
+  /* Intro: titular typewriter = verde (ciclo 1) */
+  #presentacion .hero-title {
+    color: var(--section-neon-green);
+    -webkit-text-fill-color: var(--section-neon-green);
+  }
+
   /* ==================== INTRO (antiguo hero: typewriter) ==================== */
   .intro-hero {
     position: relative;
-    background: var(--white);
-    color: var(--black);
+    background: var(--black);
+    color: var(--white);
     padding-top: 5rem;
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
@@ -487,7 +472,7 @@
     display: inline-block;
     width: 0.55em;
     height: 0.9em;
-    background: var(--black);
+    background: var(--white);
     margin-left: 0.5rem;
     transform: translateY(0.1em);
     animation: blink 1s step-end infinite;
@@ -515,7 +500,10 @@
   @media (min-width: 640px) { .scroll-hint a { font-size: 1rem; } }
   @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
   @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
-  .scroll-hint a:hover { background: var(--black); color: var(--white); }
+  .scroll-hint a:hover {
+    background: var(--white);
+    color: var(--black);
+  }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
   /* ==================== SECTIONS ==================== */
@@ -539,6 +527,20 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
+  /* Titulares de sección: rosa / amarillo / azul (tras verde en #presentacion .hero-title) */
+  #proyectos #projectsTitle {
+    color: var(--section-neon-pink);
+    -webkit-text-fill-color: var(--section-neon-pink);
+  }
+  #contacto .contact-box > h2.big-heading {
+    color: var(--section-neon-yellow);
+    -webkit-text-fill-color: var(--section-neon-yellow);
+  }
+  #contactDividerText {
+    color: var(--section-neon-blue);
+    -webkit-text-fill-color: var(--section-neon-blue);
+  }
+
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
   .big-heading--mid {
     font-size: 4.65vw;
@@ -558,7 +560,7 @@
 
   .subheading {
     font-size: 1rem;
-    color: var(--gray);
+    color: var(--gray-mid);
     margin-top: 2.5rem;
     line-height: 1.6;
     text-wrap: pretty;
@@ -572,25 +574,24 @@
 
   /* ==================== CONTACT ==================== */
   .contact-box {
-    border: 8px solid var(--black);
-    background: var(--white);
-    color: var(--black);
+    border: 4px solid rgba(255, 255, 255, 0.35);
+    background: var(--black);
+    color: var(--white);
     padding: 2rem;
     display: flex;
     flex-direction: column;
     gap: 2rem;
     min-height: 400px;
     overflow: hidden;
-    transition: background-color 0.1s, color 0.1s;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   @media (min-width: 640px) { .contact-box { padding: 3rem; gap: 3rem; min-height: 500px; } }
   @media (min-width: 768px) { .contact-box { padding: 5rem; } }
-  .contact-box:hover { background: var(--black); color: var(--white); }
-  .contact-box:hover .contact-sub { color: var(--gray-light); }
-  .contact-box:hover .big-heading { color: var(--white); }
-  .contact-box:hover .big-heading .red { color: var(--red); }
+  .contact-box:hover {
+    border-color: rgba(255, 255, 255, 0.55);
+  }
 
-  .contact-sub { color: var(--gray); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
+  .contact-sub { color: var(--gray-mid); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
 
@@ -609,24 +610,13 @@
   @media (min-width: 640px) { .contact-btn { padding: 0.6rem 1.2rem; font-size: 1.05rem; } }
   @media (min-width: 768px) { .contact-btn { font-size: 1.15rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
-  /* Caja clara: botón con borde negro -> hover sólido negro + texto blanco */
+  /* Botones y campos sobre caja oscura */
   .contact-box .contact-btn {
-    color: var(--black);
-    background: transparent;
-    border-color: var(--black);
-  }
-  .contact-box .contact-btn:hover {
-    background: var(--black);
-    color: var(--white);
-    border-color: var(--black);
-  }
-  /* Caja con hover (fondo negro): botón contorno claro -> hover sólido blanco + texto negro */
-  .contact-box:hover .contact-btn {
     color: var(--white);
     background: transparent;
     border-color: var(--white);
   }
-  .contact-box:hover .contact-btn:hover {
+  .contact-box .contact-btn:hover {
     background: var(--white);
     color: var(--black);
     border-color: var(--white);
@@ -646,9 +636,9 @@
     opacity: 0.85;
   }
   .contact-alt-link {
-    border: 2px solid var(--black);
-    background: var(--white);
-    color: var(--black);
+    border: 2px solid rgba(255, 255, 255, 0.55);
+    background: transparent;
+    color: var(--white);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
     font-weight: 800;
@@ -656,10 +646,10 @@
     letter-spacing: 0.05em;
     transition: background-color 0.1s, color 0.1s;
   }
-  .contact-alt-link:hover { background: var(--black); color: var(--white); }
+  .contact-alt-link:hover { background: var(--white); color: var(--black); }
   .contact-box:hover .contact-alt-link {
-    border-color: var(--white);
-    background: var(--black);
+    border-color: rgba(255, 255, 255, 0.65);
+    background: transparent;
     color: var(--white);
   }
   .contact-box:hover .contact-alt-link:hover {
@@ -681,18 +671,12 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid var(--black);
-    background: var(--white);
-    color: var(--black);
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--white);
   }
   @media (min-width: 640px) { .newsletter-form__input { font-size: 1.05rem; } }
-  .newsletter-form__input::placeholder { color: var(--gray-mid); }
-  .contact-box:hover .newsletter-form__input {
-    border-color: var(--white);
-    color: var(--white);
-    background: transparent;
-  }
-  .contact-box:hover .newsletter-form__input::placeholder { color: rgba(255,255,255,0.4); }
+  .newsletter-form__input::placeholder { color: rgba(255, 255, 255, 0.4); }
 
   .contact-divider {
     container-type: inline-size;
@@ -761,20 +745,16 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid var(--black);
-    background: var(--white);
-    color: var(--black);
+    border: 3px solid rgba(255, 255, 255, 0.45);
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--white);
     min-width: 0;
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
-  .contact-box:hover .contact-form__input,
-  .contact-box:hover .contact-form__select,
-  .contact-box:hover .contact-form__textarea {
-    border-color: var(--white);
-    color: var(--white);
-    background: transparent;
+  .contact-form__select option {
+    color: var(--black);
+    background: var(--white);
   }
-  .contact-box:hover .contact-form__select option { color: var(--black); background: var(--white); }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
     color: var(--red);
@@ -787,12 +767,11 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--gray);
+    color: var(--gray-mid);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-form__done { font-size: 1.25rem; } }
-  .contact-box:hover .contact-form__done { color: var(--gray-light); }
   .contact-form__hp {
     position: absolute;
     left: -10000px;
@@ -814,7 +793,7 @@
   }
   .projects-strap__lead {
     display: block;
-    color: var(--black);
+    color: var(--white);
     font-weight: 900;
     letter-spacing: 0.02em;
     line-height: 1.25;
@@ -875,7 +854,7 @@
     scroll-behavior: smooth;
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
-    scrollbar-color: var(--black) var(--gray-light);
+    scrollbar-color: rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.08);
     padding: 0.5rem 0 1rem;
     margin: 0 -0.5rem;
     padding-left: 0.5rem;
@@ -883,8 +862,8 @@
     touch-action: pan-x pan-y;
   }
   .projects-row::-webkit-scrollbar { height: 6px; }
-  .projects-row::-webkit-scrollbar-track { background: var(--gray-light); }
-  .projects-row::-webkit-scrollbar-thumb { background: var(--black); }
+  .projects-row::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.08); }
+  .projects-row::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.35); }
   @media (prefers-reduced-motion: reduce) {
     .projects-row { scroll-behavior: auto; }
   }
@@ -915,7 +894,7 @@
     aspect-ratio: 2 / 3;
     width: 100%;
     height: 100%;
-    border: 4px solid var(--black);
+    border: 4px solid rgba(255, 255, 255, 0.22);
     background: #121212;
     overflow: hidden;
     display: flex;
@@ -1770,12 +1749,8 @@
   }
 
   function updateHeaderTheme() {
-    const intro = document.getElementById('presentacion');
     const hdr = document.getElementById('siteHeader');
     if (!hdr) return;
-    let onLight = false;
-    if (intro) onLight = intro.getBoundingClientRect().top < 80;
-    hdr.classList.toggle('site-header--on-light', onLight);
     hdr.classList.toggle('scrolled', window.scrollY > 8);
   }
 
