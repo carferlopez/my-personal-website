@@ -105,6 +105,7 @@
     -webkit-backdrop-filter: none;
     transition: background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, color 0.2s ease;
   }
+  .site-header.scrolled {
     background: rgba(0, 0, 0, 0.72);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
@@ -505,6 +506,10 @@
   }
   @media (min-width: 640px) { .lang-select__option .flag { font-size: 1rem; } }
 
+  /* Mismo criterio que #projectsTitle: primer glifo alineado con la marca en .site-header */
+  .intro-hero-inner .hero-title-wrap {
+    margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
+  }
   .hero-title-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 1rem; }
   @media (min-width: 768px) { .hero-title-wrap { margin-top: 2rem; } }
 
@@ -774,11 +779,12 @@
   }
 
   /* ==================== CONTACT ==================== */
+  /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
     border: 4px solid rgba(255, 255, 255, 0.35);
     background: var(--black);
     color: var(--white);
-    padding: 2rem;
+    padding: 2rem 0;
     display: flex;
     flex-direction: column;
     gap: 2rem;
@@ -786,8 +792,8 @@
     overflow: hidden;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  @media (min-width: 640px) { .contact-box { padding: 3rem; gap: 3rem; min-height: 500px; } }
-  @media (min-width: 768px) { .contact-box { padding: 5rem; } }
+  @media (min-width: 640px) { .contact-box { padding: 3rem 0; gap: 3rem; min-height: 500px; } }
+  @media (min-width: 768px) { .contact-box { padding: 5rem 0; } }
   .contact-box:hover {
     border-color: rgba(255, 255, 255, 0.55);
   }
@@ -1060,9 +1066,7 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.35) rgba(255, 255, 255, 0.08);
     padding: 0.5rem 0 1rem;
-    margin: 0 -0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
+    margin: 0;
     touch-action: pan-x pan-y;
   }
   .projects-row::-webkit-scrollbar { height: 6px; }
@@ -1408,7 +1412,7 @@
     es: {
       typewriter: [
         "CREO PROGRAMAS & PRODUCTOS DIGITALES.",
-        "CREATIVOS, DIFERENTES, PERO SOBRE TODO ÚTILES.",
+        "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
         "ESPERO QUE TE SIRVAN ;)",
       ],
       scrollHint: "COMO POR EJEMPLO ESTOS ↓",
