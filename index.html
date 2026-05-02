@@ -2277,7 +2277,7 @@
     const introEase = 'power3.out';
     const panelFadeDur = 0.14;
     const panelFadeEase = 'power2.out';
-    const exitDur = 0.11;
+    const exitDur = 0.048;
     const mergeDur = SEG - exitDur;
     const nextRevealOffset = exitDur * 0.22;
 
@@ -2330,7 +2330,7 @@
             y: exitY,
             opacity: 0,
             scale: exitScale,
-            ease: 'power2.in',
+            ease: 'power3.in',
             duration: exitDur,
           },
           t0 + mergeDur
