@@ -962,6 +962,20 @@
       justify-content: center;
       flex-wrap: wrap;
     }
+    #proyectos #projectsTitle.projects-vertical-title::before {
+      animation: none;
+      background-position: 50% 50%;
+    }
+    .projects-vertical-marquee__viewport {
+      height: auto !important;
+    }
+    .projects-vertical-marquee__track {
+      animation: none;
+      transform: none;
+    }
+    .projects-vertical-marquee__track > .projects-vertical-title__stack:nth-child(2) {
+      display: none;
+    }
   }
 
   /* WORKS (mismo rótulo en ES/EN): columna lateral, lectura abajo → arriba */
@@ -988,21 +1002,23 @@
   @media (min-width: 768px) {
     .projects-module__body .projects-chevron-wrap { margin-top: 2.25rem; }
   }
-  #proyectos #projectsTitle {
+  #proyectos #projectsTitle.projects-vertical-title {
     margin: 0;
     margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-    /* Ancho = glifo + reserva derecha donde “termina” la S (letras rotadas); sin hueco antes del strap */
     width: max-content;
     flex: 0 0 auto;
     max-width: none;
     box-sizing: border-box;
-    padding: 0;
-    padding-right: calc(0.42 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    overflow: visible;
+    padding-block: clamp(0.5rem, 1.5vw, 1rem);
+    padding-inline: clamp(0.35rem, 1vw, 0.65rem)
+      max(
+        clamp(0.35rem, 1vw, 0.65rem),
+        calc(0.42 * clamp(3.1rem, min(12vw, 15vh), 7.75rem))
+      );
+    overflow: hidden;
     align-self: stretch;
     display: flex;
     flex-direction: column;
-    /* Bloque alineado a la izquierda (logo); pegado arriba — no centrar en la altura del módulo */
     align-items: flex-start;
     justify-content: flex-start;
     min-height: 0;
@@ -1010,12 +1026,60 @@
     position: sticky;
     top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
     z-index: 1;
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
+    isolation: isolate;
+    background: var(--hero-v2-violet-bg);
+    border-radius: clamp(0.45rem, 1.2vw, 0.85rem);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  #proyectos #projectsTitle.projects-vertical-title::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background: linear-gradient(
+      100deg,
+      rgba(55, 10, 90, 1) 0%,
+      var(--hero-v2-violet-bg) 28%,
+      rgba(95, 35, 150, 1) 52%,
+      #3d0670 72%,
+      rgba(75, 20, 118, 1) 100%
+    );
+    background-size: 320% 100%;
+    animation: projects-ticker-violet-shift 22s ease-in-out infinite alternate;
+  }
+  .projects-vertical-marquee__viewport {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    align-self: flex-start;
+    width: max-content;
+    max-width: 100%;
+  }
+  .projects-title-sr {
+    position: relative;
+    z-index: 1;
+  }
+  .projects-vertical-marquee__track {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: max-content;
+    will-change: transform;
+    animation: projects-vertical-marquee 90s linear infinite;
+  }
+  @keyframes projects-vertical-marquee {
+    to { transform: translateY(-50%); }
   }
   @media (min-width: 640px) {
-    #proyectos #projectsTitle {
-      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+    #proyectos #projectsTitle.projects-vertical-title {
+      padding-inline: clamp(0.35rem, 1vw, 0.65rem)
+        max(
+          clamp(0.35rem, 1vw, 0.65rem),
+          calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem))
+        );
     }
   }
   #proyectos #projectsTitle .projects-vertical-title__stack {
@@ -1037,7 +1101,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    /* Celda más baja que 1em: menos hueco vertical entre glifos rotados (-90deg) */
     width: 1em;
     height: 0.84em;
     min-width: 1em;
@@ -1051,7 +1114,17 @@
     text-transform: uppercase;
     margin-block: -0.02em;
     padding: 0;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__stack > span:nth-child(odd) {
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
     -webkit-text-stroke: 0.02em var(--page-orange);
+  }
+  #proyectos #projectsTitle .projects-vertical-title__stack > span:nth-child(even) {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+    -webkit-text-stroke: 0;
+    text-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
   }
   /* O–W suele verse más pegado (formas anchas × rotación); algo más de aire solo entre ellas */
   #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
@@ -1081,14 +1154,28 @@
       align-items: stretch;
       gap: 1.25rem;
     }
-    #proyectos #projectsTitle {
+    #proyectos #projectsTitle.projects-vertical-title {
       position: static;
       align-self: flex-start;
       margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
       width: max-content;
       max-width: none;
       flex: 0 0 auto;
-      padding-right: 0;
+      padding: clamp(0.45rem, 1.5vw, 0.85rem) clamp(0.35rem, 1vw, 0.65rem);
+    }
+    #proyectos #projectsTitle.projects-vertical-title::before {
+      animation: none;
+      background-position: 50% 50%;
+    }
+    .projects-vertical-marquee__viewport {
+      height: auto !important;
+    }
+    .projects-vertical-marquee__track {
+      animation: none;
+      transform: none;
+    }
+    .projects-vertical-marquee__track > .projects-vertical-title__stack:nth-child(2) {
+      display: none;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack {
       flex-direction: row;
@@ -1107,7 +1194,6 @@
       margin-inline: 0;
       line-height: 0.82;
       letter-spacing: -0.08em;
-      -webkit-text-stroke: 0.02em var(--page-orange);
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
@@ -1457,12 +1543,12 @@
     overflow: hidden;
     position: relative;
     flex: 1;
-    min-height: clamp(260px, 50vh, 640px);
+    min-height: clamp(520px, 100vh, 1280px);
     perspective: 1100px;
     perspective-origin: 50% 25%;
   }
   @media (max-width: 639px) {
-    .projects-row { min-height: clamp(220px, 65vw, 420px); }
+    .projects-row { min-height: clamp(440px, 85vw, 840px); }
   }
 
   ul.projects-track {
@@ -1757,7 +1843,12 @@
     <div class="container">
       <div class="projects-module">
         <h2 class="projects-vertical-title" id="projectsTitle">
-          <span class="projects-vertical-title__stack" aria-hidden="true"></span>
+          <div class="projects-vertical-marquee__viewport" id="projectsVerticalMarqueeViewport">
+            <div class="projects-vertical-marquee__track" id="projectsVerticalMarqueeTrack">
+              <span class="projects-vertical-title__stack" aria-hidden="true"></span>
+              <span class="projects-vertical-title__stack" aria-hidden="true"></span>
+            </div>
+          </div>
           <span class="u-sr-only projects-title-sr">WORKS</span>
         </h2>
         <div class="projects-module__body">
@@ -2433,18 +2524,19 @@
   function setProjectsTitleStack(text) {
     const h2 = document.getElementById('projectsTitle');
     if (!h2 || !text) return;
-    const stack = h2.querySelector('.projects-vertical-title__stack');
+    const stacks = h2.querySelectorAll('.projects-vertical-title__stack');
     const sr = h2.querySelector('.projects-title-sr');
     if (sr) sr.textContent = text;
-    if (!stack) return;
-    stack.replaceChildren();
-    for (let i = 0; i < text.length; i++) {
-      const ch = text.charAt(i);
-      const s = document.createElement('span');
-      s.setAttribute('data-glyph', ch);
-      s.textContent = ch;
-      stack.appendChild(s);
-    }
+    stacks.forEach((stack) => {
+      stack.replaceChildren();
+      for (let i = 0; i < text.length; i++) {
+        const ch = text.charAt(i);
+        const s = document.createElement('span');
+        s.setAttribute('data-glyph', ch);
+        s.textContent = ch;
+        stack.appendChild(s);
+      }
+    });
     renderProjectsTicker();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
@@ -2473,27 +2565,49 @@
     track.innerHTML = reduce ? chunk : chunk + chunk;
   }
 
+  function syncVerticalWorksMarqueeViewport() {
+    const vp = document.getElementById('projectsVerticalMarqueeViewport');
+    const track = document.getElementById('projectsVerticalMarqueeTrack');
+    if (!vp || !track) return;
+    const reduce =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce || window.matchMedia('(max-width: 639px)').matches) {
+      vp.style.removeProperty('height');
+      return;
+    }
+    const stacks = track.querySelectorAll('.projects-vertical-title__stack');
+    const first = stacks[0];
+    if (!first) return;
+    const h = Math.ceil(first.getBoundingClientRect().height);
+    if (h > 0) vp.style.height = h + 'px';
+  }
+
   function syncWorksFontToHero() {
-    const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
+    const stacks = document.querySelectorAll('#proyectos #projectsTitle .projects-vertical-title__stack');
+    const stack = stacks[0];
     if (!stack) return;
     const tickerTrack = document.getElementById('projectsTickerTrack');
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .container');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
-        stack.style.removeProperty('font-size');
+        stacks.forEach((st) => { st.style.removeProperty('font-size'); });
         if (tickerTrack) tickerTrack.style.removeProperty('font-size');
+        syncVerticalWorksMarqueeViewport();
         return;
       }
       let lo = 8, hi = 800;
       for (let i = 0; i < 42; i++) {
         const mid = (lo + hi) * 0.5;
-        stack.style.fontSize = mid + 'px';
+        stacks.forEach((st) => { st.style.fontSize = mid + 'px'; });
         if (stack.scrollWidth <= W + 1) lo = mid;
         else hi = mid;
       }
-      stack.style.fontSize = lo + 'px';
+      stacks.forEach((st) => { st.style.fontSize = lo + 'px'; });
       if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
+      syncVerticalWorksMarqueeViewport();
+      requestAnimationFrame(syncVerticalWorksMarqueeViewport);
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
@@ -2503,8 +2617,10 @@
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
     const synced = (fsPx * 0.853) + 'px';
-    stack.style.fontSize = synced;
+    stacks.forEach((st) => { st.style.fontSize = synced; });
     if (tickerTrack) tickerTrack.style.fontSize = synced;
+    syncVerticalWorksMarqueeViewport();
+    requestAnimationFrame(syncVerticalWorksMarqueeViewport);
   }
 
   // ============================================
