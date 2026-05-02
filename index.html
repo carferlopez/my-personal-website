@@ -237,6 +237,14 @@
     color: #ff4d00 !important;
     -webkit-text-fill-color: #ff4d00 !important;
   }
+  /* Móvil portrait: cada línea llena el ancho, el conjunto llena el alto */
+  @media (max-width: 639px) {
+    .hero-v2-title {
+      flex: 1;
+      min-height: 0;
+      justify-content: space-between;
+    }
+  }
 
   .hero-v2-line {
     display: block;
@@ -2138,21 +2146,36 @@
       - parseFloat(cs.paddingBottom);
     if (W < 16 || H < 16) return;
 
-    /* En móvil portrait el alto no restringe: el texto llena el ancho y el usuario hace scroll.
-       En desktop y landscape se mantiene la restricción ancho × alto original. */
-    const constrainHeight = window.innerWidth >= 768 || window.innerHeight > window.innerWidth;
-    let lo = 4;
-    let hi = 800;
-    for (let iter = 0; iter < 42; iter++) {
-      const mid = (lo + hi) * 0.5;
-      lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
-      const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
-      const totH = title.offsetHeight;
-      if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
-      else hi = mid;
+    const isMobilePortrait = window.innerWidth < 640 && window.innerHeight > window.innerWidth;
+
+    if (isMobilePortrait) {
+      /* Móvil portrait: cada línea se escala de forma independiente al ancho completo.
+         El CSS distribuye las líneas para llenar el alto con justify-content: space-between. */
+      lines.forEach((line) => {
+        let lo = 4, hi = 600;
+        for (let iter = 0; iter < 42; iter++) {
+          const mid = (lo + hi) * 0.5;
+          line.style.fontSize = mid + 'px';
+          if (line.scrollWidth <= W + 1) lo = mid;
+          else hi = mid;
+        }
+        line.style.fontSize = lo + 'px';
+      });
+    } else {
+      /* Desktop y landscape: escala uniforme que cabe en ancho × alto */
+      const constrainHeight = window.innerWidth >= 768;
+      let lo = 4, hi = 800;
+      for (let iter = 0; iter < 42; iter++) {
+        const mid = (lo + hi) * 0.5;
+        lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
+        const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
+        const totH = title.offsetHeight;
+        if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
+        else hi = mid;
+      }
+      const best = lo;
+      lines.forEach((line) => { line.style.fontSize = best + 'px'; });
     }
-    const best = lo;
-    lines.forEach((line) => { line.style.fontSize = best + 'px'; });
     syncWorksFontToHero();
   }
 
