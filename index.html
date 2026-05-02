@@ -154,8 +154,12 @@
   }
   .site-header:not(.site-header--on-light) .lang-select__menu {
     background: var(--black);
-    border: 2px solid rgba(255, 255, 255, 0.35);
+    border: 2px solid var(--white);
     color: var(--white);
+  }
+  .site-header:not(.site-header--on-light) .lang-select__option.is-active {
+    background: var(--white);
+    color: var(--black);
   }
   .site-header:not(.site-header--on-light) .lang-select__option:hover {
     background: var(--white);
@@ -477,7 +481,6 @@
     color: var(--black);
     border: 2px solid var(--black);
     z-index: 120;
-    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
   }
   /* El atributo hidden debe ganar a display:flex (si no, el menú se ve siempre) */
   .lang-select__menu[hidden] {
@@ -501,8 +504,8 @@
     color: var(--white);
   }
   .lang-select__option.is-active {
-    outline: 2px solid var(--red);
-    outline-offset: -2px;
+    background: var(--black);
+    color: var(--white);
   }
   .lang-select__option .flag {
     font-size: 0.875rem;
