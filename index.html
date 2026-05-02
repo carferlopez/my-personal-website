@@ -47,9 +47,10 @@
     --gray-mid: #9ca3af;
     --red: #ef4444;
     --hero-v2-orange: #ff4d00;
-    --hero-v2-violet: #aa00ff;
-    /* Fondo del bloque hero V2 (más oscuro que el magenta/violeta de acento) */
+    /* Violeta único en el sitio = fondo del hero de inicio (#420868) */
     --hero-v2-violet-bg: #420868;
+    --hero-v2-violet: var(--hero-v2-violet-bg);
+    --hero-v2-violet-rgb: 66, 8, 104;
     /* Titulares bajo el hero + typewriter: naranja vivo, magenta vivo, amarillo fluorescente (el brutalista no usa estas vars) */
     --page-orange: #ff5a1a;
     --page-magenta: #ff00b2;
@@ -1420,11 +1421,11 @@
     background: conic-gradient(from 200deg, #4d1f00, #200800, #6a3200, #341200, #1a0600);
   }
   .project-poster-inner--orange .project-poster-lock-icon { color: #ff5a1a; }
-  .project-poster-inner--violet { background: #0d0018; border-color: rgba(170,0,255,0.45); }
+  .project-poster-inner--violet { background: #0d0018; border-color: rgba(var(--hero-v2-violet-rgb), 0.45); }
   .project-poster-inner--violet .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #220040, #0a0018, #360062, #180030, #0d0018);
+    background: conic-gradient(from 200deg, #2d0548, #0f0218, #4a0a72, #1a0634, #0d0018);
   }
-  .project-poster-inner--violet .project-poster-lock-icon { color: #aa00ff; }
+  .project-poster-inner--violet .project-poster-lock-icon { color: var(--hero-v2-violet); }
   .project-poster-inner--yellow { background: #0f1000; border-color: rgba(232,255,26,0.45); }
   .project-poster-inner--yellow .project-poster-blur-blob {
     background: conic-gradient(from 200deg, #262a00, #0c0e00, #383d00, #1c1f00, #0e1000);
@@ -2112,7 +2113,10 @@
     const startViz = wide ? { x: '26vw', y: 0 } : { x: 0, y: '16vh' };
 
     const orange = '#ff5a1a';
-    const violet = '#aa00ff';
+    const violet =
+      (typeof getComputedStyle !== 'undefined' &&
+        getComputedStyle(document.documentElement).getPropertyValue('--hero-v2-violet-bg').trim()) ||
+      '#420868';
     const yellow = '#e8ff1a';
 
     const SEG = 1;
