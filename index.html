@@ -354,62 +354,90 @@
     -webkit-text-fill-color: var(--white) !important;
   }
 
-  /* Intro: tres líneas reveladas al scroll (sin typewriter) */
+  /* Presentación: 3 bloques — copy a la izquierda, visual animado a la derecha */
   .intro-hero {
     position: relative;
-    background: var(--white);
-    color: var(--black);
+    background: #060606;
+    color: var(--white);
     padding-top: 5rem;
     overflow-x: hidden;
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
 
-  .intro-hero-inner {
+  .intro-panels {
     display: flex;
     flex-direction: column;
-    min-height: min(200vh, 80rem);
-    padding-bottom: 3rem;
   }
 
-  .intro-hero-inner .intro-lines {
+  .intro-panel {
+    min-height: min(100svh, 56rem);
+    display: flex;
+    align-items: center;
+    padding-block: clamp(2.5rem, 6vw, 5rem);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  }
+  .intro-panel:last-child {
+    border-bottom: none;
+  }
+
+  .intro-panel__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(1.75rem, 5vw, 3.5rem);
+    align-items: center;
+    width: 100%;
+  }
+  @media (min-width: 900px) {
+    .intro-panel__grid {
+      grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr);
+      gap: clamp(2rem, 4vw, 4rem);
+    }
+  }
+
+  .intro-panel__copy {
     margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
+    max-width: 36rem;
+    will-change: transform, opacity;
   }
 
-  .intro-lines {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: clamp(1rem, 4vw, 2.5rem);
-    margin-top: 1rem;
-    max-width: 100%;
-  }
-  @media (min-width: 768px) { .intro-lines { margin-top: 2rem; } }
-
-  .intro-reveal-line {
+  .intro-panel__headline {
     margin: 0;
-    font-size: clamp(1.35rem, 5.2vw, 3.75rem);
+    font-size: clamp(1.4rem, 4.2vw, 2.85rem);
     font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.92;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
     text-transform: uppercase;
     text-wrap: balance;
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;
-    will-change: transform, opacity;
   }
-  @media (min-width: 768px) { .intro-reveal-line { font-size: clamp(1.5rem, 5vw, 4.25rem); } }
+  @media (min-width: 768px) {
+    .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
+  }
 
-  .intro-reveal-line--i0 {
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
+  .intro-panel--0 .intro-panel__headline {
+    background: linear-gradient(
+      105deg,
+      var(--page-orange) 0%,
+      #7ecbff 42%,
+      var(--white) 78%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
-  .intro-reveal-line--i1 {
+  .intro-panel--0 .intro-line__suffix {
+    -webkit-text-fill-color: var(--white);
+    color: var(--white);
+  }
+
+  .intro-panel--1 .intro-panel__headline {
     color: var(--hero-v2-violet);
     -webkit-text-fill-color: var(--hero-v2-violet);
   }
-  .intro-reveal-line--i2 {
+  .intro-panel--2 .intro-panel__headline {
     color: var(--page-yellow);
     -webkit-text-fill-color: var(--page-yellow);
   }
@@ -417,6 +445,130 @@
   .intro-line__suffix {
     color: var(--white);
     -webkit-text-fill-color: var(--white);
+  }
+
+  .intro-panel__viz {
+    position: relative;
+    min-height: clamp(220px, 38vh, 480px);
+    will-change: transform, opacity;
+  }
+  @media (min-width: 900px) {
+    .intro-panel__viz { min-height: clamp(320px, 52vh, 560px); }
+  }
+
+  .intro-viz {
+    position: absolute;
+    inset: 0;
+    border-radius: clamp(0.9rem, 2vw, 1.35rem);
+    overflow: hidden;
+    box-shadow:
+      0 24px 64px rgba(0, 0, 0, 0.55),
+      0 0 0 1px rgba(255, 255, 255, 0.07);
+  }
+
+  .intro-viz__canvas {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .intro-viz__mesh {
+    position: absolute;
+    inset: -35%;
+    background: radial-gradient(ellipse 70% 55% at 30% 40%, var(--viz-a, var(--page-orange)) 0%, transparent 62%),
+      radial-gradient(ellipse 55% 50% at 78% 65%, var(--viz-b, var(--hero-v2-violet)) 0%, transparent 58%),
+      radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.95) 0%, transparent 45%);
+    animation: introVizMesh 14s ease-in-out infinite alternate;
+  }
+
+  .intro-viz--0 { --viz-a: var(--page-orange); --viz-b: #ff6b3d; }
+  .intro-viz--1 { --viz-a: var(--hero-v2-violet); --viz-b: #c94dff; }
+  .intro-viz--2 { --viz-a: var(--page-yellow); --viz-b: var(--page-orange); }
+
+  .intro-viz--1 .intro-viz__mesh { animation-duration: 17s; }
+  .intro-viz--2 .intro-viz__mesh { animation-duration: 12s; }
+
+  @keyframes introVizMesh {
+    0%   { transform: translate(-4%, -2%) scale(1) rotate(0deg); }
+    100% { transform: translate(5%, 4%) scale(1.12) rotate(3deg); }
+  }
+
+  .intro-viz__diagonal {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      154deg,
+      transparent 0%,
+      transparent 44%,
+      rgba(0, 0, 0, 0.88) 44.2%,
+      rgba(0, 0, 0, 0.92) 100%
+    );
+    pointer-events: none;
+  }
+
+  .intro-viz__shard {
+    position: absolute;
+    width: 120%;
+    height: 55%;
+    left: -10%;
+    bottom: -8%;
+    background: var(--shard, var(--black));
+    transform: skewY(-11deg);
+    opacity: 0.94;
+    animation: introVizShard 9s ease-in-out infinite alternate;
+  }
+  .intro-viz--0 .intro-viz__shard { --shard: #1a0a06; }
+  .intro-viz--1 .intro-viz__shard { --shard: #140818; }
+  .intro-viz--2 .intro-viz__shard { --shard: #181203; }
+
+  @keyframes introVizShard {
+    0%   { transform: skewY(-11deg) translateX(-2%); }
+    100% { transform: skewY(-9deg) translateX(3%); }
+  }
+
+  .intro-viz__glyph {
+    position: absolute;
+    right: 6%;
+    bottom: 8%;
+    font-size: clamp(3rem, 14vw, 9rem);
+    font-weight: 900;
+    letter-spacing: -0.07em;
+    line-height: 0.85;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.07);
+    pointer-events: none;
+    user-select: none;
+    transform: rotate(-6deg);
+  }
+
+  .intro-viz__ring {
+    position: absolute;
+    width: clamp(180px, 42vw, 340px);
+    height: clamp(180px, 42vw, 340px);
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    left: 10%;
+    top: 12%;
+    animation: introVizRing 11s linear infinite;
+  }
+  .intro-viz__ring::after {
+    content: "";
+    position: absolute;
+    inset: 18%;
+    border-radius: 50%;
+    border: 1px dashed rgba(255, 255, 255, 0.09);
+  }
+
+  @keyframes introVizRing {
+    to { transform: rotate(360deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-viz__mesh,
+    .intro-viz__shard,
+    .intro-viz__ring {
+      animation: none !important;
+    }
   }
 
   .header-top {
@@ -1482,15 +1634,64 @@
     </div>
   </section>
 
-  <!-- Presentación: tres frases al scroll -->
-  <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
-    <div class="container intro-hero-inner">
-      <h2 class="u-sr-only" id="introHeading">Presentación</h2>
-      <div class="intro-lines">
-        <p class="intro-reveal-line intro-reveal-line--i0" id="introLine0"></p>
-        <p class="intro-reveal-line intro-reveal-line--i1" id="introLine1"></p>
-        <p class="intro-reveal-line intro-reveal-line--i2" id="introLine2"></p>
-      </div>
+  <!-- Presentación: 3 bloques (copy izquierda + visual derecha) -->
+  <section class="intro-hero intro-hero--dark section-pad" id="presentacion" aria-labelledby="introHeading">
+    <h2 class="u-sr-only" id="introHeading">Presentación</h2>
+    <div class="intro-panels">
+      <article class="intro-panel intro-panel--0" data-intro-panel="0">
+        <div class="container intro-panel__grid">
+          <div class="intro-panel__copy">
+            <p class="intro-panel__headline" id="introLine0"></p>
+          </div>
+          <div class="intro-panel__viz" aria-hidden="true">
+            <div class="intro-viz intro-viz--0">
+              <div class="intro-viz__canvas">
+                <div class="intro-viz__mesh"></div>
+                <div class="intro-viz__diagonal"></div>
+                <div class="intro-viz__shard"></div>
+                <span class="intro-viz__glyph" id="introGlyph0" aria-hidden="true">DIGITAL</span>
+                <div class="intro-viz__ring"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="intro-panel intro-panel--1" data-intro-panel="1">
+        <div class="container intro-panel__grid">
+          <div class="intro-panel__copy">
+            <p class="intro-panel__headline" id="introLine1"></p>
+          </div>
+          <div class="intro-panel__viz" aria-hidden="true">
+            <div class="intro-viz intro-viz--1">
+              <div class="intro-viz__canvas">
+                <div class="intro-viz__mesh"></div>
+                <div class="intro-viz__diagonal"></div>
+                <div class="intro-viz__shard"></div>
+                <span class="intro-viz__glyph" id="introGlyph1" aria-hidden="true">ÚTILES</span>
+                <div class="intro-viz__ring"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+      <article class="intro-panel intro-panel--2" data-intro-panel="2">
+        <div class="container intro-panel__grid">
+          <div class="intro-panel__copy">
+            <p class="intro-panel__headline" id="introLine2"></p>
+          </div>
+          <div class="intro-panel__viz" aria-hidden="true">
+            <div class="intro-viz intro-viz--2">
+              <div class="intro-viz__canvas">
+                <div class="intro-viz__mesh"></div>
+                <div class="intro-viz__diagonal"></div>
+                <div class="intro-viz__shard"></div>
+                <span class="intro-viz__glyph" id="introGlyph2" aria-hidden="true">SIRVAN</span>
+                <div class="intro-viz__ring"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -1594,11 +1795,12 @@
   const t = {
     es: {
       typewriter: [
-        "CREO PROGRAMAS & PRODUCTOS DIGITALES.",
+        "PRODUCTOS DIGITALES.",
         "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
-        "ESPERO QUE TE SIRVAN ;)",
+        "ESPERO QUE TE SIRVAN ;",
       ],
       introHeadingLabel: "Presentación",
+      introVizGlyphs: ["DIGITAL", "ÚTILES", "SIRVAN"],
       siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
@@ -1637,11 +1839,12 @@
     },
     en: {
       typewriter: [
-        "I CREATE DIGITAL PROGRAMS & PRODUCTS.",
+        "DIGITAL PRODUCTS.",
         "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
-        "I HOPE YOU FIND THEM HELPFUL ;)",
+        "I HOPE THEY HELP YOU ;",
       ],
       introHeadingLabel: "Introduction",
+      introVizGlyphs: ["DIGITAL", "USEFUL", "YOU"],
       siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
@@ -1860,13 +2063,11 @@
   // ============================================
   // Intro: tres líneas al scroll (GSAP ScrollTrigger)
   // ============================================
-  let introLinesTimeline = null;
+  let introPanelTimelines = [];
 
   function killIntroLinesScrollAnimation() {
-    if (introLinesTimeline) {
-      introLinesTimeline.kill();
-      introLinesTimeline = null;
-    }
+    introPanelTimelines.forEach((tl) => tl.kill());
+    introPanelTimelines = [];
   }
 
   /** Sufijos `.` y `;)` en blanco (clase intro-line__suffix). */
@@ -1874,6 +2075,16 @@
     if (!el) return;
     el.replaceChildren();
     if (!fullWord) return;
+
+    if (fullWord.endsWith(' ;')) {
+      const baseLen = fullWord.length - 2;
+      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
+      const suffix = document.createElement('span');
+      suffix.className = 'intro-line__suffix intro-line__suffix--semi';
+      suffix.textContent = ' ;';
+      el.append(suffix);
+      return;
+    }
 
     if (fullWord.endsWith(';)')) {
       const baseLen = fullWord.length - 2;
@@ -1913,55 +2124,72 @@
   }
 
   function setupIntroLinesScrollAnimation() {
-    const intro = document.getElementById('presentacion');
-    const line0 = document.getElementById('introLine0');
-    const line1 = document.getElementById('introLine1');
-    const line2 = document.getElementById('introLine2');
-    if (!intro || !line0 || !line1 || !line2) return;
+    const introRoot = document.getElementById('presentacion');
+    if (!introRoot) return;
 
     killIntroLinesScrollAnimation();
     fillIntroLinesFromLang();
 
+    const panels = introRoot.querySelectorAll('.intro-panel[data-intro-panel]');
+    if (!panels.length) return;
+
     const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceIntro) {
-      line0.style.opacity = '1';
-      line1.style.opacity = '1';
-      line2.style.opacity = '1';
-      line0.style.transform = 'none';
-      line1.style.transform = 'none';
-      line2.style.transform = 'none';
+      panels.forEach((panel) => {
+        const copy = panel.querySelector('.intro-panel__copy');
+        const viz = panel.querySelector('.intro-panel__viz');
+        if (copy) {
+          copy.style.opacity = '1';
+          copy.style.transform = 'none';
+        }
+        if (viz) {
+          viz.style.opacity = '1';
+          viz.style.transform = 'none';
+        }
+      });
       return;
     }
 
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      line0.style.opacity = '1';
-      line1.style.opacity = '1';
-      line2.style.opacity = '1';
-      line0.style.transform = 'none';
-      line1.style.transform = 'none';
-      line2.style.transform = 'none';
+      panels.forEach((panel) => {
+        const copy = panel.querySelector('.intro-panel__copy');
+        const viz = panel.querySelector('.intro-panel__viz');
+        if (copy) {
+          copy.style.opacity = '1';
+          copy.style.transform = 'none';
+        }
+        if (viz) {
+          viz.style.opacity = '1';
+          viz.style.transform = 'none';
+        }
+      });
       return;
     }
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const pad = Math.min(window.innerWidth * 0.42, 340);
-    gsap.set(line0, { x: -pad, opacity: 0 });
-    gsap.set(line1, { x: pad, opacity: 0 });
-    gsap.set(line2, { x: -pad, opacity: 0 });
+    const slide = Math.min(window.innerWidth * 0.12, 120);
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: intro,
-        start: 'top 70%',
-        end: '+=130%',
-        scrub: 0.4,
-      },
+    panels.forEach((panel) => {
+      const copy = panel.querySelector('.intro-panel__copy');
+      const viz = panel.querySelector('.intro-panel__viz');
+      if (!copy || !viz) return;
+
+      gsap.set(copy, { x: -slide, opacity: 0 });
+      gsap.set(viz, { x: slide, scale: 0.92, opacity: 0 });
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: panel,
+          start: 'top 82%',
+          end: 'top 36%',
+          scrub: 0.5,
+        },
+      });
+      tl.to(copy, { x: 0, opacity: 1, ease: 'power2.out', duration: 1 }, 0);
+      tl.to(viz, { x: 0, scale: 1, opacity: 1, ease: 'power2.out', duration: 1 }, 0);
+      introPanelTimelines.push(tl);
     });
-    tl.to(line0, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 0);
-    tl.to(line1, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 0.85);
-    tl.to(line2, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 1.7);
-    introLinesTimeline = tl;
   }
 
   function setProjectsTitleStack(text) {
@@ -2078,6 +2306,14 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     fillIntroLinesFromLang();
+    const glyphIds = ['introGlyph0', 'introGlyph1', 'introGlyph2'];
+    const gv = t[lang].introVizGlyphs;
+    if (gv && gv.length === 3) {
+      for (let i = 0; i < 3; i++) {
+        const node = document.getElementById(glyphIds[i]);
+        if (node) node.textContent = gv[i];
+      }
+    }
   }
 
   function getContactFormEndpoint() {
@@ -2295,7 +2531,8 @@
     let onLight = false;
     if (introEl) {
       const r = introEl.getBoundingClientRect();
-      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
+      const overlaps = r.top < hdr.offsetHeight && r.bottom > 0;
+      if (overlaps && !introEl.classList.contains('intro-hero--dark')) onLight = true;
     }
     if (!onLight && worksEl) {
       const r = worksEl.getBoundingClientRect();
