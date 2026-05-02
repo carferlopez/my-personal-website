@@ -554,40 +554,28 @@
 
   /* ==================== Terminal prompt (intro: estado inactivo) ==================== */
   .terminal-prompt {
-    font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
-    font-size: clamp(1.5rem, 5.5vw, 2.6rem);
-    font-weight: 700;
-    color: var(--white);
     cursor: pointer;
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    gap: 0;
+    gap: 0.5em;
     flex: 1;
     align-content: center;
     user-select: none;
     -webkit-user-select: none;
-    line-height: 1.2;
+    font-size: clamp(1rem, 3vw, 1.5rem);
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.35);
+    text-transform: uppercase;
+    animation: tw-pulse 2.6s ease-in-out infinite;
   }
-  .terminal-prompt__path { color: var(--page-orange); }
-  .terminal-prompt__dollar { color: var(--white); }
   .terminal-prompt__cursor {
     display: inline-block;
     width: 0.55em;
     height: 0.9em;
-    background: var(--white);
-    margin-left: 0.35em;
+    background: rgba(255,255,255,0.35);
     transform: translateY(0.1em);
     animation: blink 1s step-end infinite;
-  }
-  .terminal-prompt__hint {
-    display: block;
-    width: 100%;
-    font-size: 0.78rem;
-    letter-spacing: 0.13em;
-    color: rgba(255,255,255,0.38);
-    margin-top: 0.85rem;
-    animation: tw-pulse 2.6s ease-in-out infinite;
   }
   html.js .intro-hero.intro-hero--typewriter-armed .terminal-prompt {
     display: none;
@@ -1454,9 +1442,8 @@
   <!-- Antiguo hero: mensaje con typewriter -->
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <div class="container intro-hero-inner">
-      <div class="terminal-prompt" id="terminalPrompt" tabindex="0" role="button" aria-label="Haz clic para iniciar">
-        <span><span class="terminal-prompt__path">~/makes</span><span class="terminal-prompt__dollar"> $</span><span class="terminal-prompt__cursor" aria-hidden="true"></span></span>
-        <span class="terminal-prompt__hint">· click to start</span>
+      <div class="terminal-prompt" id="terminalPrompt" tabindex="0" role="button" aria-label="Pulsa para comenzar">
+        <span>PULSA PARA COMENZAR</span><span class="terminal-prompt__cursor" aria-hidden="true"></span>
       </div>
       <div class="hero-title-wrap">
         <h2 class="hero-title" id="introHeading" data-tw-line="0">
