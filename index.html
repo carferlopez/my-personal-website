@@ -237,12 +237,30 @@
     color: #ff4d00 !important;
     -webkit-text-fill-color: #ff4d00 !important;
   }
-  /* Móvil portrait: cada línea llena el ancho, el conjunto llena el alto */
+  /* Móvil portrait: cada línea llena el ancho, sin gaps, colores por palabra */
   @media (max-width: 639px) {
     .hero-v2-title {
       flex: 1;
       min-height: 0;
-      justify-content: space-between;
+      justify-content: center;
+      gap: 0;
+    }
+    #heroV2Title .hero-v2-line:nth-child(1) {
+      color: var(--white) !important;
+      -webkit-text-fill-color: var(--white) !important;
+    }
+    #heroV2Title .hero-v2-line:nth-child(2) {
+      color: #ff4d00 !important;
+      -webkit-text-fill-color: #ff4d00 !important;
+    }
+    #heroV2Title .hero-v2-line:nth-child(3),
+    #heroV2Title .hero-v2-line:nth-child(3) * {
+      color: var(--hero-v2-violet) !important;
+      -webkit-text-fill-color: var(--hero-v2-violet) !important;
+    }
+    #heroV2Title .hero-v2-line:nth-child(4) {
+      color: var(--page-yellow) !important;
+      -webkit-text-fill-color: var(--page-yellow) !important;
     }
   }
 
@@ -549,6 +567,108 @@
     animation: blink 1s step-end infinite;
   }
   @keyframes blink { 50% { opacity: 0; } }
+  @keyframes tw-pulse { 0%, 100% { opacity: 0.35; } 60% { opacity: 0.68; } }
+
+  /* ==================== Terminal prompt (intro: estado inactivo) ==================== */
+  .terminal-prompt {
+    font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+    font-size: clamp(1.5rem, 5.5vw, 2.6rem);
+    font-weight: 700;
+    color: var(--white);
+    cursor: pointer;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0;
+    flex: 1;
+    align-content: center;
+    user-select: none;
+    -webkit-user-select: none;
+    line-height: 1.2;
+  }
+  .terminal-prompt__path { color: var(--page-orange); }
+  .terminal-prompt__dollar { color: var(--white); }
+  .terminal-prompt__cursor {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.9em;
+    background: var(--white);
+    margin-left: 0.35em;
+    transform: translateY(0.1em);
+    animation: blink 1s step-end infinite;
+  }
+  .terminal-prompt__hint {
+    display: block;
+    width: 100%;
+    font-size: 0.78rem;
+    letter-spacing: 0.13em;
+    color: rgba(255,255,255,0.38);
+    margin-top: 0.85rem;
+    animation: tw-pulse 2.6s ease-in-out infinite;
+  }
+  html.js .intro-hero.intro-hero--typewriter-armed .terminal-prompt {
+    display: none;
+  }
+
+  /* ==================== Hamburguesa móvil ==================== */
+  .hamburger-btn {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    width: 2.25rem;
+    height: 2.25rem;
+    padding: 0.35rem;
+    flex-shrink: 0;
+    color: inherit;
+    margin-left: auto;
+  }
+  .hamburger-btn span {
+    display: block;
+    width: 1.15rem;
+    height: 2px;
+    background: currentColor;
+    border-radius: 1px;
+    transition: transform 0.22s ease, opacity 0.18s ease;
+  }
+  .site-header.nav-open .hamburger-btn span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+  }
+  .site-header.nav-open .hamburger-btn span:nth-child(2) {
+    opacity: 0;
+  }
+  .site-header.nav-open .hamburger-btn span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+  }
+  @media (max-width: 639px) {
+    .hamburger-btn { display: flex; }
+    .header-top { position: relative; }
+    .header-actions {
+      display: none;
+      position: absolute;
+      top: calc(100% + 0.75rem);
+      right: 0;
+      z-index: 200;
+      background: rgba(0,0,0,0.96);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      padding: 1rem 1.25rem 0.85rem;
+      flex-direction: column;
+      gap: 0.75rem;
+      align-items: flex-start;
+      min-width: 11rem;
+      border: 1px solid rgba(255,255,255,0.12);
+      margin-left: 0;
+    }
+    .site-header.nav-open .header-actions {
+      display: flex;
+    }
+    .header-actions > nav {
+      margin-inline-start: 0;
+      gap: 0.75rem;
+    }
+  }
 
   .scroll-hint {
     text-align: center;
@@ -1296,7 +1416,10 @@
     <div class="site-header__inner">
       <div class="header-top">
         <a href="#inicio" class="logo" id="siteLogo" aria-label="Ir al inicio">Carlos Fernández<span class="logo-dot">.</span></a>
-        <div class="header-actions">
+        <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menú" aria-expanded="false" aria-controls="headerActions">
+          <span></span><span></span><span></span>
+        </button>
+        <div class="header-actions" id="headerActions">
           <nav aria-label="Redes y contacto">
             <a href="#contacto" aria-label="Formulario de contacto">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -1348,6 +1471,10 @@
   <!-- Antiguo hero: mensaje con typewriter -->
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <div class="container intro-hero-inner">
+      <div class="terminal-prompt" id="terminalPrompt" tabindex="0" role="button" aria-label="Haz clic para iniciar">
+        <span><span class="terminal-prompt__path">~/makes</span><span class="terminal-prompt__dollar"> $</span><span class="terminal-prompt__cursor" aria-hidden="true"></span></span>
+        <span class="terminal-prompt__hint">· click to start</span>
+      </div>
       <div class="hero-title-wrap">
         <h2 class="hero-title" id="introHeading" data-tw-line="0">
           <span id="typewriter"></span><span class="cursor"></span>
@@ -1860,6 +1987,22 @@
       }, INTRO_TYPEWRITER_DELAY_MS);
     };
 
+    // Terminal prompt: clic (o Enter/Espacio) para arrancar el typewriter
+    const terminalPrompt = document.getElementById('terminalPrompt');
+    if (terminalPrompt) {
+      const onPromptActivate = () => {
+        terminalPrompt.removeEventListener('click', onPromptActivate);
+        terminalPrompt.removeEventListener('keydown', onPromptKey);
+        detach();
+        start();
+      };
+      const onPromptKey = (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPromptActivate(); }
+      };
+      terminalPrompt.addEventListener('click', onPromptActivate);
+      terminalPrompt.addEventListener('keydown', onPromptKey);
+    }
+
     const scrollOpts = { passive: true };
     function detach() {
       window.removeEventListener('scroll', onScrollOrResize, scrollOpts);
@@ -2121,6 +2264,36 @@
   }
 
   // ============================================
+  // Hamburguesa móvil
+  // ============================================
+  function initHamburger() {
+    const btn = document.getElementById('hamburgerBtn');
+    const header = document.getElementById('siteHeader');
+    const actions = document.getElementById('headerActions');
+    if (!btn || !header) return;
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const isOpen = header.classList.toggle('nav-open');
+      btn.setAttribute('aria-expanded', String(isOpen));
+    });
+    document.addEventListener('click', (e) => {
+      if (!header.classList.contains('nav-open')) return;
+      if (!header.contains(e.target)) {
+        header.classList.remove('nav-open');
+        btn.setAttribute('aria-expanded', 'false');
+      }
+    });
+    if (actions) {
+      actions.addEventListener('click', (e) => {
+        if (e.target.tagName === 'A' || e.target.closest('a')) {
+          header.classList.remove('nav-open');
+          btn.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
+  }
+
+  // ============================================
   // Init
   // ============================================
   initLangSelect();
@@ -2128,6 +2301,7 @@
   initContactForm();
   initNewsletterForm();
   initIntroTypewriterOnScroll();
+  initHamburger();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
