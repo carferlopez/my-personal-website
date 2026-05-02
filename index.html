@@ -205,8 +205,8 @@
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--hero-v2-orange);
-    color: var(--white);
+    background: var(--white);
+    color: var(--black);
   }
   .hero-v2-section.hero-v2-section--static {
     height: auto;
@@ -295,8 +295,8 @@
   }
 
   .hero-v2-line .hero-v2-amp {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
+    color: var(--black) !important;
+    -webkit-text-fill-color: var(--black) !important;
   }
   .hero-v2-line .hero-v2-violet,
   .hero-v2-line.hero-v2-line--violet {
@@ -304,8 +304,8 @@
     -webkit-text-fill-color: var(--hero-v2-violet) !important;
   }
   #heroV2Title .hero-v2-amp {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
+    color: var(--black) !important;
+    -webkit-text-fill-color: var(--black) !important;
   }
   #heroV2Title .hero-v2-violet,
   #heroV2Title .hero-v2-line.hero-v2-line--violet {
@@ -2341,10 +2341,16 @@
     const hdr = document.getElementById('siteHeader');
     if (!hdr) return;
     hdr.classList.toggle('scrolled', window.scrollY > 8);
+    /* Sticky (~100vh): la sección hero es 300vh y seguiría activando tema claro encima de la intro */
+    const heroLightEl = document.querySelector('.hero-v2-sticky');
     const introEl = document.getElementById('presentacion');
     const worksEl = document.getElementById('proyectos');
     let onLight = false;
-    if (introEl) {
+    if (heroLightEl) {
+      const r = heroLightEl.getBoundingClientRect();
+      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
+    }
+    if (!onLight && introEl) {
       const r = introEl.getBoundingClientRect();
       onLight = r.top < hdr.offsetHeight && r.bottom > 0;
     }
