@@ -211,8 +211,8 @@
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--white);
-    color: var(--black);
+    background: var(--hero-v2-violet);
+    color: var(--white);
   }
   .hero-v2-section.hero-v2-section--static {
     height: auto;
@@ -246,7 +246,7 @@
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    color: #ff4d00;
+    color: var(--page-yellow);
     /* Mismo --container-pad-x horizontal que el resto de secciones; bloques seguros arriba/abajo */
     padding:
       max(0.75rem, env(safe-area-inset-top, 0px))
@@ -279,8 +279,8 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    color: #ff4d00 !important;
-    -webkit-text-fill-color: #ff4d00 !important;
+    color: var(--page-yellow) !important;
+    -webkit-text-fill-color: var(--page-yellow) !important;
   }
   /* Móvil portrait: cada línea llena el ancho, sin gaps */
   @media (max-width: 639px) {
@@ -295,16 +295,20 @@
   .hero-v2-line {
     display: block;
     white-space: nowrap;
-    color: #ff4d00 !important;
-    -webkit-text-fill-color: #ff4d00 !important;
+    color: var(--page-yellow) !important;
+    -webkit-text-fill-color: var(--page-yellow) !important;
     line-height: 0.88;
   }
 
   /* Por encima del color heredado de .hero-v2-section (p. ej. con capas/GPU) */
   #heroV2Title,
-  #heroV2Title.hero-v2-title {
-    color: var(--hero-v2-orange) !important;
-    -webkit-text-fill-color: var(--hero-v2-orange) !important;
+  #heroV2Title.hero-v2-title,
+  #heroV2Title .hero-v2-line,
+  #heroV2Title .hero-v2-amp,
+  #heroV2Title .hero-v2-violet,
+  #heroV2Title .hero-v2-dot {
+    color: var(--page-yellow) !important;
+    -webkit-text-fill-color: var(--page-yellow) !important;
   }
 
   /* Typewriter: naranja → violeta → amarillo */
@@ -2323,16 +2327,10 @@
     const hdr = document.getElementById('siteHeader');
     if (!hdr) return;
     hdr.classList.toggle('scrolled', window.scrollY > 8);
-    /* Sticky (~100vh): la sección hero es 300vh y seguiría activando tema claro encima de la intro */
-    const heroLightEl = document.querySelector('.hero-v2-sticky');
     const introEl = document.getElementById('presentacion');
     const worksEl = document.getElementById('proyectos');
     let onLight = false;
-    if (heroLightEl) {
-      const r = heroLightEl.getBoundingClientRect();
-      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
-    }
-    if (!onLight && introEl) {
+    if (introEl) {
       const r = introEl.getBoundingClientRect();
       onLight = r.top < hdr.offsetHeight && r.bottom > 0;
     }
