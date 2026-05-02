@@ -2325,69 +2325,6 @@
         t0
       );
 
-      const colorStart = t0 + motionDur * 0.4;
-      const colorDur = 0.14;
-      const colorEase = 'power2.out';
-
-      if (i === 0) {
-        const line0 = document.getElementById('introLine0');
-        if (line0) {
-          tl.fromTo(
-            line0,
-            { color: orange },
-            { color: violet, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-        const suf0 = line0 && line0.querySelector('.intro-line__suffix');
-        if (suf0) {
-          tl.fromTo(
-            suf0,
-            { color: '#000000' },
-            { color: violet, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-      } else if (i === 1) {
-        const line1 = document.getElementById('introLine1');
-        if (line1) {
-          tl.fromTo(
-            line1,
-            { color: violet },
-            { color: yellow, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-        const suf1 = line1 && line1.querySelector('.intro-line__suffix');
-        if (suf1) {
-          tl.fromTo(
-            suf1,
-            { color: '#000000' },
-            { color: yellow, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-      } else if (i === 2) {
-        const line2 = document.getElementById('introLine2');
-        if (line2) {
-          tl.fromTo(
-            line2,
-            { color: yellow },
-            { color: orange, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-        const suf2 = line2 && line2.querySelector('.intro-line__suffix');
-        if (suf2) {
-          tl.fromTo(
-            suf2,
-            { color: '#000000' },
-            { color: orange, ease: colorEase, duration: colorDur },
-            colorStart
-          );
-        }
-      }
-
       if (i < 2) {
         const exitX = wide ? '-122vw' : '-108vw';
         const exitY = wide ? 0 : '-26vh';
@@ -2428,6 +2365,42 @@
       fade2At
     );
     addSegment(2, SEG * 2);
+
+    const introLineColorsStart = [orange, violet, yellow];
+    const introLineColorsMerged = [violet, yellow, orange];
+
+    function introHeadlineCopyVizOverlap(copyRect, vizRect) {
+      return !(
+        copyRect.right < vizRect.left ||
+        copyRect.left > vizRect.right ||
+        copyRect.bottom < vizRect.top ||
+        copyRect.top > vizRect.bottom
+      );
+    }
+
+    function updateIntroHeadlineColorsFromOverlap() {
+      for (let i = 0; i < 3; i++) {
+        const viz = vizEls[i];
+        const lineEl = document.getElementById('introLine' + i);
+        if (!viz || !lineEl) continue;
+        const merged = introHeadlineCopyVizOverlap(
+          lineEl.getBoundingClientRect(),
+          viz.getBoundingClientRect()
+        );
+        const c = merged ? introLineColorsMerged[i] : introLineColorsStart[i];
+        lineEl.style.color = c;
+        lineEl.style.webkitTextFillColor = c;
+        const suf = lineEl.querySelector('.intro-line__suffix');
+        if (suf) {
+          const sc = merged ? introLineColorsMerged[i] : '#000000';
+          suf.style.color = sc;
+          suf.style.webkitTextFillColor = sc;
+        }
+      }
+    }
+
+    tl.eventCallback('onUpdate', updateIntroHeadlineColorsFromOverlap);
+    requestAnimationFrame(updateIntroHeadlineColorsFromOverlap);
 
     introPanelTimelines.push(tl);
   }
