@@ -558,9 +558,7 @@
   /* ==================== Terminal prompt (intro: estado inactivo) ==================== */
   .terminal-prompt {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.5em;
+    display: block;
     flex: 1;
     align-content: center;
     user-select: none;
@@ -570,16 +568,23 @@
     font-weight: 900;
     letter-spacing: -0.05em;
     line-height: 0.85;
+    text-wrap: balance;
+    word-break: normal;
     color: rgba(255,255,255,0.35);
     text-transform: uppercase;
     animation: tw-pulse 2.6s ease-in-out infinite;
   }
+  @media (min-width: 640px)  { .terminal-prompt { font-size: 11vw; } }
+  @media (min-width: 768px)  { .terminal-prompt { font-size: 10vw; } }
+  @media (min-width: 1024px) { .terminal-prompt { font-size: 9vw; } }
+  @media (min-width: 1280px) { .terminal-prompt { font-size: 120px; } }
   .terminal-prompt__cursor {
     display: inline-block;
+    vertical-align: middle;
     width: 0.55em;
-    height: 0.9em;
+    height: 0.85em;
     background: rgba(255,255,255,0.35);
-    transform: translateY(0.1em);
+    transform: translateY(-0.05em);
     animation: blink 1s step-end infinite;
   }
   html.js .intro-hero.intro-hero--typewriter-armed .terminal-prompt {
