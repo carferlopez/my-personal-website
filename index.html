@@ -142,9 +142,6 @@
   .site-header--on-light {
     color: var(--black);
   }
-  .site-header--on-light .logo {
-    color: var(--black);
-  }
   .site-header--on-light .header-top nav a {
     color: var(--black);
   }
@@ -173,7 +170,7 @@
     color: var(--white);
   }
 
-  /* Header sobre hero oscuro (por defecto): nombre todo blanco, punto naranja */
+  /* Header sobre hero/fondo oscuro: nav blanco; marca vía .site-header .logo */
   .site-header:not(.site-header--on-light) .header-top nav a {
     color: var(--white);
   }
@@ -207,6 +204,11 @@
   .site-header:not(.site-header--on-light) .lang-select__option:hover {
     background: var(--white);
     color: var(--black);
+  }
+
+  /* Logo: nombre naranja, punto violeta (tono fondo hero) */
+  .site-header .logo {
+    color: var(--hero-v2-orange);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
@@ -409,7 +411,7 @@
   @media (min-width: 640px) { .logo { font-size: 1.45rem; } }
   @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
   .logo .logo-dot {
-    color: var(--hero-v2-orange);
+    color: var(--hero-v2-violet-bg);
   }
 
   .header-top nav {
