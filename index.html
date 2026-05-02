@@ -366,14 +366,21 @@
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
 
   .intro-panels {
+    display: block;
+  }
+
+  /* Sin JS / reduced-motion: tres bloques en columna. Con .intro-hero--active: un solo viewport, rotación por scroll */
+  .intro-stage {
     display: flex;
     flex-direction: column;
     gap: clamp(5rem, 14vh, 11rem);
+    position: relative;
   }
 
   .intro-panel {
     min-height: 100vh;
     min-height: 100dvh;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -383,6 +390,33 @@
   }
   .intro-panel:last-child {
     border-bottom: none;
+  }
+
+  .intro-hero--active .intro-stage {
+    display: block;
+    min-height: 100vh;
+    min-height: 100dvh;
+    gap: 0;
+  }
+
+  .intro-hero--active .intro-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    box-sizing: border-box;
+    border-bottom: none;
+  }
+
+  .intro-hero--active .intro-panel--0 {
+    z-index: 1;
+  }
+  .intro-hero--active .intro-panel--1 {
+    z-index: 2;
+  }
+  .intro-hero--active .intro-panel--2 {
+    z-index: 3;
   }
 
   .intro-panel__grid {
@@ -1541,6 +1575,7 @@
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <h2 class="u-sr-only" id="introHeading">Presentación</h2>
     <div class="intro-panels">
+      <div class="intro-stage">
       <article class="intro-panel intro-panel--0" data-intro-panel="0">
         <div class="container intro-panel__grid">
           <div class="intro-panel__copy">
@@ -1577,6 +1612,7 @@
           </div>
         </div>
       </article>
+      </div>
     </div>
   </section>
 
@@ -1945,8 +1981,20 @@
   let introPanelTimelines = [];
 
   function killIntroLinesScrollAnimation() {
+    const introRoot = document.getElementById('presentacion');
+    if (introRoot) introRoot.classList.remove('intro-hero--active');
     introPanelTimelines.forEach((tl) => tl.kill());
     introPanelTimelines = [];
+    if (typeof gsap !== 'undefined' && introRoot) {
+      introRoot.querySelectorAll('.intro-panel__copy, .intro-viz').forEach((el) => {
+        gsap.killTweensOf(el);
+        gsap.set(el, { clearProps: 'transform' });
+      });
+      introRoot.querySelectorAll('.intro-panel').forEach((el) => {
+        gsap.killTweensOf(el);
+        gsap.set(el, { clearProps: 'opacity,visibility' });
+      });
+    }
     ['introLine0', 'introLine1', 'introLine2'].forEach((id) => {
       const el = document.getElementById(id);
       if (el) {
@@ -2019,7 +2067,7 @@
     fillIntroLinesFromLang();
 
     const panels = introRoot.querySelectorAll('.intro-panel[data-intro-panel]');
-    if (!panels.length) return;
+    if (panels.length < 3) return;
 
     const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (reduceIntro) {
@@ -2056,6 +2104,8 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
+    introRoot.classList.add('intro-hero--active');
+
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const endScale = wide ? 2.75 : 2.05;
     const startCopy = wide ? { x: '-26vw', y: 0 } : { x: 0, y: '-16vh' };
@@ -2065,14 +2115,20 @@
     const violet = '#aa00ff';
     const yellow = '#e8ff1a';
 
-    /* ~3.65× viewport por bloque: aire para leer en márgenes y merge sin agolpar / sin pegar a WORKS */
-    const pinScrollPx = () => Math.round(window.innerHeight * 3.65);
+    const SEG = 1;
+    /* Tres tramos estrictos en una sola timeline; ~4.25× vh de scroll por bloque */
+    const scrollPerSegmentVh = 4.25;
+    const totalPinScroll = () =>
+      Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
-    function resetIntroPanelVisual(panel) {
+    const copyEls = [];
+    const vizEls = [];
+    panels.forEach((panel) => {
       const copy = panel.querySelector('.intro-panel__copy');
       const vizEl = panel.querySelector('.intro-viz');
       if (!copy || !vizEl) return;
-      gsap.killTweensOf([copy, vizEl]);
+      copyEls.push(copy);
+      vizEls.push(vizEl);
       gsap.set(copy, {
         transformOrigin: wide ? 'left center' : 'center top',
         scale: 1,
@@ -2087,76 +2143,32 @@
         y: startViz.y,
         opacity: 1,
       });
+    });
+
+    if (copyEls.length !== 3) {
+      introRoot.classList.remove('intro-hero--active');
+      return;
     }
 
-    function resetIntroLineColorForPanel(pid) {
-      const id = 'introLine' + pid;
-      const el = document.getElementById(id);
-      if (!el) return;
-      el.style.removeProperty('color');
-      el.querySelectorAll('.intro-line__suffix').forEach((s) => {
-        s.style.removeProperty('color');
-      });
-    }
+    gsap.set(panels[0], { autoAlpha: 1 });
+    gsap.set([panels[1], panels[2]], { autoAlpha: 0 });
 
-    const nav = { sts: [] };
-    const tls = [];
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: introRoot,
+        start: 'top top',
+        end: () => '+=' + totalPinScroll(),
+        pin: true,
+        scrub: true,
+        invalidateOnRefresh: true,
+        anticipatePin: 1,
+      },
+    });
 
-    for (let i = 0; i < panels.length; i++) {
-      const panel = panels[i];
-      const idx = i;
-      const copy = panel.querySelector('.intro-panel__copy');
-      const vizEl = panel.querySelector('.intro-viz');
-      if (!copy || !vizEl) continue;
-
-      gsap.set(copy, {
-        transformOrigin: wide ? 'left center' : 'center top',
-        scale: 1,
-        x: startCopy.x,
-        y: startCopy.y,
-        opacity: 1,
-      });
-      gsap.set(vizEl, {
-        transformOrigin: wide ? 'right center' : 'center bottom',
-        scale: 1,
-        x: startViz.x,
-        y: startViz.y,
-        opacity: 1,
-      });
-
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: panel,
-          start: 'top top',
-          end: () => '+=' + pinScrollPx(),
-          scrub: 0.75,
-          pin: true,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          enabled: i === 0,
-          onLeave: () => {
-            if (idx === 0 && nav.sts[1]) nav.sts[1].enable();
-            if (idx === 1 && nav.sts[2]) nav.sts[2].enable();
-          },
-          onEnterBack: () => {
-            if (idx === 0) {
-              if (nav.sts[1]) nav.sts[1].disable();
-              if (nav.sts[2]) nav.sts[2].disable();
-              if (tls[1]) tls[1].progress(0);
-              if (tls[2]) tls[2].progress(0);
-              resetIntroPanelVisual(panels[1]);
-              resetIntroPanelVisual(panels[2]);
-              resetIntroLineColorForPanel('1');
-              resetIntroLineColorForPanel('2');
-            } else if (idx === 1) {
-              if (nav.sts[2]) nav.sts[2].disable();
-              if (tls[2]) tls[2].progress(0);
-              resetIntroPanelVisual(panels[2]);
-              resetIntroLineColorForPanel('2');
-            }
-          },
-        },
-      });
+    function addSegment(i, t0) {
+      const copy = copyEls[i];
+      const vizEl = vizEls[i];
+      if (!copy || !vizEl) return;
 
       tl.fromTo(
         copy,
@@ -2166,9 +2178,9 @@
           x: 0,
           y: 0,
           ease: 'none',
-          duration: 1,
+          duration: SEG,
         },
-        0
+        t0
       );
       tl.fromTo(
         vizEl,
@@ -2178,16 +2190,15 @@
           x: 0,
           y: 0,
           ease: 'none',
-          duration: 1,
+          duration: SEG,
         },
-        0
+        t0
       );
 
-      const pid = panel.getAttribute('data-intro-panel');
-      const colorStart = 0.4;
+      const colorStart = t0 + 0.4;
       const colorDur = 0.09;
 
-      if (pid === '0') {
+      if (i === 0) {
         const line0 = document.getElementById('introLine0');
         if (line0) {
           tl.fromTo(
@@ -2206,7 +2217,7 @@
             colorStart
           );
         }
-      } else if (pid === '1') {
+      } else if (i === 1) {
         const line1 = document.getElementById('introLine1');
         if (line1) {
           tl.fromTo(
@@ -2225,7 +2236,7 @@
             colorStart
           );
         }
-      } else if (pid === '2') {
+      } else if (i === 2) {
         const line2 = document.getElementById('introLine2');
         if (line2) {
           tl.fromTo(
@@ -2245,16 +2256,19 @@
           );
         }
       }
-
-      const st = tl.scrollTrigger;
-      if (st) nav.sts[idx] = st;
-      tls[idx] = tl;
-      introPanelTimelines.push(tl);
     }
 
-    if (nav.sts.filter(Boolean).length < panels.length) {
-      nav.sts.forEach((s) => s && s.enable());
-    }
+    addSegment(0, 0);
+
+    tl.to(panels[0], { autoAlpha: 0, duration: 0.001 }, SEG);
+    tl.to(panels[1], { autoAlpha: 1, duration: 0.001 }, SEG);
+    addSegment(1, SEG);
+
+    tl.to(panels[1], { autoAlpha: 0, duration: 0.001 }, SEG * 2);
+    tl.to(panels[2], { autoAlpha: 1, duration: 0.001 }, SEG * 2);
+    addSegment(2, SEG * 2);
+
+    introPanelTimelines.push(tl);
   }
 
   function setProjectsTitleStack(text) {
