@@ -819,6 +819,7 @@
   #proyectos.projects-section {
     background: var(--page-yellow);
     color: var(--page-orange);
+    overflow-x: clip;
   }
   #proyectos .projects-strap.subheading {
     color: var(--page-orange);
@@ -832,6 +833,11 @@
   }
   #proyectos .projects-strap a:focus-visible {
     outline-color: var(--black);
+  }
+
+  /* Menos padding superior: el letrero full-bleed enlaza presentación → WORKS */
+  #proyectos.section-pad {
+    padding-top: clamp(0.65rem, 2.5vw, 2rem);
   }
 
   /* Letrero WORKS estilo metro / LED: marquee, mismos px que #projectsTitle vía JS */
@@ -848,6 +854,25 @@
       0 4px 14px rgba(0, 0, 0, 0.18);
     overflow: hidden;
     padding: 0.42rem 0;
+  }
+  /* Separador a todo el ancho de pantalla entre presentación y módulo WORKS */
+  #proyectos > .projects-ticker {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    border-radius: 0;
+    border-inline: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.35);
+    border-bottom: 2px solid rgba(0, 0, 0, 0.5);
+    padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
+    padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
+    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.85),
+      0 6px 24px rgba(0, 0, 0, 0.12);
   }
   .projects-ticker__viewport {
     overflow: hidden;
@@ -1699,6 +1724,11 @@
 
   <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
+    <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
+      <div class="projects-ticker__viewport">
+        <div class="projects-ticker__track" id="projectsTickerTrack"></div>
+      </div>
+    </div>
     <div class="container">
       <div class="projects-module">
         <h2 class="projects-vertical-title" id="projectsTitle">
@@ -1706,11 +1736,6 @@
           <span class="u-sr-only projects-title-sr">WORKS</span>
         </h2>
         <div class="projects-module__body">
-          <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
-            <div class="projects-ticker__viewport">
-              <div class="projects-ticker__track" id="projectsTickerTrack"></div>
-            </div>
-          </div>
           <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
           <div class="projects-chevron-wrap">
             <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
