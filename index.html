@@ -2281,41 +2281,51 @@
     });
 
     const introEase = 'power3.out';
-    const panelFadeDur = 0.16;
-    const panelFadeEase = 'power2.inOut';
-    const panelFadeLead = 0.5;
+    const panelFadeDur = 0.14;
+    const panelFadeEase = 'power2.out';
+    const exitDur = 0.11;
+    const mergeDur = SEG - exitDur;
+    const nextRevealOffset = exitDur * 0.22;
+
+    function nextPanelRevealAt(segIndex) {
+      return segIndex * SEG + mergeDur + nextRevealOffset;
+    }
 
     function addSegment(i, t0) {
       const copy = copyEls[i];
       const vizEl = vizEls[i];
       if (!copy || !vizEl) return;
 
+      const motionDur = i < 2 ? mergeDur : SEG;
+
       tl.fromTo(
         copy,
-        { scale: 1, x: startCopy.x, y: startCopy.y },
+        { scale: 1, x: startCopy.x, y: startCopy.y, opacity: 1 },
         {
           scale: endScale,
           x: 0,
           y: 0,
+          opacity: 1,
           ease: introEase,
-          duration: SEG,
+          duration: motionDur,
         },
         t0
       );
       tl.fromTo(
         vizEl,
-        { scale: 1, x: startViz.x, y: startViz.y },
+        { scale: 1, x: startViz.x, y: startViz.y, opacity: 1 },
         {
           scale: endScale,
           x: 0,
           y: 0,
+          opacity: 1,
           ease: introEase,
-          duration: SEG,
+          duration: motionDur,
         },
         t0
       );
 
-      const colorStart = t0 + 0.36;
+      const colorStart = t0 + motionDur * 0.4;
       const colorDur = 0.14;
       const colorEase = 'power2.out';
 
@@ -2377,11 +2387,29 @@
           );
         }
       }
+
+      if (i < 2) {
+        const exitX = wide ? '-122vw' : '-108vw';
+        const exitY = wide ? 0 : '-26vh';
+        const exitScale = wide ? endScale * 0.91 : endScale * 0.86;
+        tl.to(
+          [copy, vizEl],
+          {
+            x: exitX,
+            y: exitY,
+            opacity: 0,
+            scale: exitScale,
+            ease: 'power2.in',
+            duration: exitDur,
+          },
+          t0 + mergeDur
+        );
+      }
     }
 
     addSegment(0, 0);
 
-    const fade1At = SEG - panelFadeDur * panelFadeLead;
+    const fade1At = nextPanelRevealAt(0);
     tl.to(panels[0], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade1At);
     tl.fromTo(
       panels[1],
@@ -2391,7 +2419,7 @@
     );
     addSegment(1, SEG);
 
-    const fade2At = SEG * 2 - panelFadeDur * panelFadeLead;
+    const fade2At = nextPanelRevealAt(1);
     tl.to(panels[1], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade2At);
     tl.fromTo(
       panels[2],
