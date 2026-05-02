@@ -370,9 +370,11 @@
   }
 
   .intro-panel {
-    min-height: max(130vh, 48rem);
+    min-height: 100vh;
+    min-height: 100dvh;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding-block: clamp(2.5rem, 8vw, 6rem);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     overflow: visible;
@@ -2053,37 +2055,56 @@
     gsap.registerPlugin(ScrollTrigger);
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
-    const endScale = wide ? 2.85 : 2.15;
-    const copyShift = wide ? { x: '18vw', y: 0 } : { x: 0, y: '12vh' };
-    const vizShift = wide ? { x: '-18vw', y: 0 } : { x: 0, y: '-10vh' };
+    const endScale = wide ? 2.75 : 2.05;
+    /* Inicio: copy anclado al margen izquierdo, bloque al derecho; fin: juntos y centrados a escala */
+    const startCopy = wide ? { x: '-26vw', y: 0 } : { x: 0, y: '-16vh' };
+    const startViz = wide ? { x: '26vw', y: 0 } : { x: 0, y: '16vh' };
 
     const orange = '#ff5a1a';
     const violet = '#aa00ff';
+    const yellow = '#e8ff1a';
+
+    const pinScrollPx = () => Math.round(window.innerHeight * 0.92);
 
     panels.forEach((panel) => {
       const copy = panel.querySelector('.intro-panel__copy');
       const vizEl = panel.querySelector('.intro-viz');
       if (!copy || !vizEl) return;
 
-      gsap.set(copy, { transformOrigin: wide ? 'left center' : 'center top', scale: 1, x: 0, y: 0, opacity: 1 });
-      gsap.set(vizEl, { transformOrigin: wide ? 'right center' : 'center bottom', scale: 1, x: 0, y: 0, opacity: 1 });
+      gsap.set(copy, {
+        transformOrigin: wide ? 'left center' : 'center top',
+        scale: 1,
+        x: startCopy.x,
+        y: startCopy.y,
+        opacity: 1,
+      });
+      gsap.set(vizEl, {
+        transformOrigin: wide ? 'right center' : 'center bottom',
+        scale: 1,
+        x: startViz.x,
+        y: startViz.y,
+        opacity: 1,
+      });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
-          start: 'top 88%',
-          end: 'bottom 2%',
-          scrub: 0.55,
+          start: 'top top',
+          end: () => '+=' + pinScrollPx(),
+          scrub: 0.6,
+          pin: true,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
         },
       });
 
       tl.fromTo(
         copy,
-        { scale: 1, x: 0, y: 0 },
+        { scale: 1, x: startCopy.x, y: startCopy.y },
         {
           scale: endScale,
-          x: copyShift.x,
-          y: copyShift.y,
+          x: 0,
+          y: 0,
           ease: 'none',
           duration: 1,
         },
@@ -2091,34 +2112,76 @@
       );
       tl.fromTo(
         vizEl,
-        { scale: 1, x: 0, y: 0 },
+        { scale: 1, x: startViz.x, y: startViz.y },
         {
           scale: endScale,
-          x: vizShift.x,
-          y: vizShift.y,
+          x: 0,
+          y: 0,
           ease: 'none',
           duration: 1,
         },
         0
       );
 
-      if (panel.getAttribute('data-intro-panel') === '0') {
+      const pid = panel.getAttribute('data-intro-panel');
+      const colorStart = 0.66;
+      const colorDur = 0.34;
+
+      if (pid === '0') {
         const line0 = document.getElementById('introLine0');
         if (line0) {
           tl.fromTo(
             line0,
             { color: orange },
-            { color: violet, ease: 'none', duration: 0.28 },
-            0.5
+            { color: violet, ease: 'none', duration: colorDur },
+            colorStart
           );
         }
-        const suf = line0 && line0.querySelector('.intro-line__suffix');
-        if (suf) {
+        const suf0 = line0 && line0.querySelector('.intro-line__suffix');
+        if (suf0) {
           tl.fromTo(
-            suf,
+            suf0,
             { color: '#000000' },
-            { color: violet, ease: 'none', duration: 0.28 },
-            0.5
+            { color: violet, ease: 'none', duration: colorDur },
+            colorStart
+          );
+        }
+      } else if (pid === '1') {
+        const line1 = document.getElementById('introLine1');
+        if (line1) {
+          tl.fromTo(
+            line1,
+            { color: violet },
+            { color: yellow, ease: 'none', duration: colorDur },
+            colorStart
+          );
+        }
+        const suf1 = line1 && line1.querySelector('.intro-line__suffix');
+        if (suf1) {
+          tl.fromTo(
+            suf1,
+            { color: '#000000' },
+            { color: yellow, ease: 'none', duration: colorDur },
+            colorStart
+          );
+        }
+      } else if (pid === '2') {
+        const line2 = document.getElementById('introLine2');
+        if (line2) {
+          tl.fromTo(
+            line2,
+            { color: yellow },
+            { color: orange, ease: 'none', duration: colorDur },
+            colorStart
+          );
+        }
+        const suf2 = line2 && line2.querySelector('.intro-line__suffix');
+        if (suf2) {
+          tl.fromTo(
+            suf2,
+            { color: '#000000' },
+            { color: orange, ease: 'none', duration: colorDur },
+            colorStart
           );
         }
       }
