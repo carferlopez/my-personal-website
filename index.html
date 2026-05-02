@@ -360,7 +360,7 @@
     background: var(--white);
     color: var(--black);
     padding-top: 5rem;
-    padding-bottom: clamp(5rem, 18vh, 12rem);
+    padding-bottom: clamp(8rem, 26vh, 18rem);
     overflow-x: hidden;
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
@@ -368,7 +368,7 @@
   .intro-panels {
     display: flex;
     flex-direction: column;
-    gap: clamp(3rem, 8vh, 6rem);
+    gap: clamp(5rem, 14vh, 11rem);
   }
 
   .intro-panel {
@@ -377,7 +377,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-block: clamp(2.5rem, 8vw, 6rem);
+    padding-block: clamp(3.5rem, 10vw, 8rem);
     border-bottom: 1px solid rgba(0, 0, 0, 0.06);
     overflow: visible;
   }
@@ -388,7 +388,7 @@
   .intro-panel__grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(1.75rem, 5vw, 3.5rem);
+    gap: clamp(2rem, 6vw, 4.5rem);
     align-items: center;
     width: 100%;
     overflow: visible;
@@ -2065,7 +2065,8 @@
     const violet = '#aa00ff';
     const yellow = '#e8ff1a';
 
-    const pinScrollPx = () => Math.round(window.innerHeight * 2.55);
+    /* ~3.65× viewport por bloque: aire para leer en márgenes y merge sin agolpar / sin pegar a WORKS */
+    const pinScrollPx = () => Math.round(window.innerHeight * 3.65);
 
     function resetIntroPanelVisual(panel) {
       const copy = panel.querySelector('.intro-panel__copy');
