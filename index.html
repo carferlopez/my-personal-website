@@ -559,9 +559,11 @@
   /* ==================== Terminal prompt (intro: estado inactivo) ==================== */
   .terminal-prompt {
     cursor: pointer;
-    display: block;
     flex: 1;
-    align-content: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 1rem;
     user-select: none;
     -webkit-user-select: none;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
@@ -575,6 +577,7 @@
     text-transform: uppercase;
     animation: tw-pulse 2.6s ease-in-out infinite;
   }
+  @media (min-width: 768px) { .terminal-prompt { margin-top: 2rem; } }
   @media (min-width: 640px)  { .terminal-prompt { font-size: 11vw; } }
   @media (min-width: 768px)  { .terminal-prompt { font-size: 10vw; } }
   @media (min-width: 1024px) { .terminal-prompt { font-size: 9vw; } }
