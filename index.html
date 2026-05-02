@@ -913,10 +913,10 @@
     -webkit-text-fill-color: var(--page-orange);
     -webkit-text-stroke: 0.02em rgba(0, 0, 0, 0.45);
   }
-  .projects-ticker__word--white {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
-    text-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
+  .projects-ticker__word--black {
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
+    -webkit-text-stroke: 0.018em rgba(255, 255, 255, 0.12);
   }
   @keyframes projects-ticker-marquee {
     to { transform: translateX(-50%); }
@@ -2462,7 +2462,7 @@
       const orange = i % 2 === 0;
       parts.push(
         '<span class="projects-ticker__word ' +
-        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--white') +
+        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') +
         '">' +
         word +
         '</span>'
