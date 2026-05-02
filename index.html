@@ -221,9 +221,16 @@
     color: var(--white);
   }
 
-  /* Logo: nombre y punto naranja */
+  /* Logo: nombre y punto naranja; hover negro */
   .site-header .logo {
     color: var(--hero-v2-orange);
+    transition: color 0.15s ease;
+  }
+  .site-header .logo:hover {
+    color: var(--black);
+  }
+  .site-header .logo:hover .logo-dot {
+    color: var(--black);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
