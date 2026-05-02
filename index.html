@@ -443,10 +443,10 @@
     padding: 0.375rem 0.45rem;
     transition: background-color 0.1s, color 0.1s;
     white-space: nowrap;
-    color: inherit;
+    color: var(--white);
   }
   @media (min-width: 640px) { .lang-select__btn { font-size: 0.75rem; padding: 0.5rem 0.55rem; gap: 0.35rem; } }
-  .lang-select__btn:hover { background: var(--black); color: var(--white); }
+  .lang-select__btn:hover { background: var(--white); color: var(--black); }
   .lang-select__current {
     display: inline-flex;
     align-items: center;
@@ -829,24 +829,25 @@
       width: max-content;
       max-width: none;
       flex: 0 0 auto;
-      padding-right: 0.12em;
+      padding-right: 0;
     }
     #proyectos #projectsTitle .projects-vertical-title__stack {
       flex-direction: row;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: flex-start;
       align-items: baseline;
       min-height: 0;
       column-gap: 0;
-      row-gap: 0.08em;
+      row-gap: 0;
+      font-size: clamp(3rem, 22vw, 12rem);
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: calc(0.853 * clamp(2.85rem, 11vw, 4.25rem));
+      font-size: 1em;
       transform: none;
       margin-block: 0;
       margin-inline: 0;
       line-height: 0.82;
-      letter-spacing: -0.1em;
+      letter-spacing: -0.05em;
       -webkit-text-stroke: 0.02em var(--page-yellow);
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
@@ -1911,37 +1912,9 @@
     typewriter();
   }
 
-  /** Arranca solo con viewport en negro y el titular #presentacion centrado (no antes ni tras pasar ese encuadre). */
   function initIntroTypewriterOnScroll() {
     const intro = document.getElementById('presentacion');
-    const hero = document.getElementById('inicio');
-    const heading = document.getElementById('introHeading');
-    if (!intro || !typeEl || !heading) return;
-
-    /** Mitad vertical del titular cercana al centro del viewport (≈ ±14%). */
-    const CENTER_TOLERANCE_Y = () => Math.max(36, window.innerHeight * 0.14);
-
-    function isHeroClearAndDark() {
-      if (!hero) return true;
-      const rHero = hero.getBoundingClientRect();
-      if (rHero.bottom > 2) return false;
-      if (hero.classList.contains('hero-v2-section--static')) return true;
-      const fadeEl = hero.querySelector('.hero-v2-end-fade');
-      const op = fadeEl ? parseFloat(getComputedStyle(fadeEl).opacity) || 0 : 1;
-      return op >= 0.99;
-    }
-
-    function isHeadingVerticallyCentered() {
-      const r = heading.getBoundingClientRect();
-      if (r.height < 2) return false;
-      const mid = r.top + r.height * 0.5;
-      const vc = window.innerHeight * 0.5;
-      return Math.abs(mid - vc) <= CENTER_TOLERANCE_Y();
-    }
-
-    function typewriterRevealReady() {
-      return isHeroClearAndDark() && isHeadingVerticallyCentered();
-    }
+    if (!intro || !typeEl) return;
 
     const start = () => {
       if (introTypewriterUnlocked) return;
@@ -1960,13 +1933,11 @@
       }, INTRO_TYPEWRITER_DELAY_MS);
     };
 
-    // Terminal prompt: clic (o Enter/Espacio) para arrancar el typewriter
     const terminalPrompt = document.getElementById('terminalPrompt');
     if (terminalPrompt) {
       const onPromptActivate = () => {
         terminalPrompt.removeEventListener('click', onPromptActivate);
         terminalPrompt.removeEventListener('keydown', onPromptKey);
-        detach();
         start();
       };
       const onPromptKey = (e) => {
@@ -1975,43 +1946,6 @@
       terminalPrompt.addEventListener('click', onPromptActivate);
       terminalPrompt.addEventListener('keydown', onPromptKey);
     }
-
-    const scrollOpts = { passive: true };
-    function detach() {
-      window.removeEventListener('scroll', onScrollOrResize, scrollOpts);
-      window.removeEventListener('resize', onScrollOrResize, scrollOpts);
-      window.removeEventListener('hashchange', onScrollOrResize);
-      window.removeEventListener('load', onScrollOrResize);
-      if (io) io.disconnect();
-    }
-
-    function tryStart() {
-      if (introTypewriterUnlocked) return;
-      if (!typewriterRevealReady()) return;
-      detach();
-      start();
-    }
-
-    function onScrollOrResize() {
-      requestAnimationFrame(tryStart);
-    }
-
-    /** Refuerzo: cruzar banda vertical central (~24% alto), y validar después con geometría. */
-    let io = null;
-    if (typeof IntersectionObserver !== 'undefined') {
-      io = new IntersectionObserver(() => requestAnimationFrame(tryStart), {
-        root: null,
-        threshold: [0, 0.02, 0.25, 0.75, 1],
-        rootMargin: '-38% 0px -38% 0px',
-      });
-      io.observe(heading);
-    }
-
-    window.addEventListener('scroll', onScrollOrResize, scrollOpts);
-    window.addEventListener('resize', onScrollOrResize, scrollOpts);
-    window.addEventListener('hashchange', onScrollOrResize);
-    window.addEventListener('load', onScrollOrResize);
-    requestAnimationFrame(tryStart);
   }
 
   function setProjectsTitleStack(text) {
@@ -2032,12 +1966,21 @@
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
-  /** Escalado respecto al hero: 0.9×1.05 ≈ 94,5 %. */
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
     if (window.matchMedia('(max-width: 639px)').matches) {
-      stack.style.removeProperty('font-size');
+      const container = document.querySelector('#proyectos .container');
+      const W = container ? container.offsetWidth : document.body.clientWidth;
+      if (W < 16) { stack.style.removeProperty('font-size'); return; }
+      let lo = 8, hi = 800;
+      for (let i = 0; i < 42; i++) {
+        const mid = (lo + hi) * 0.5;
+        stack.style.fontSize = mid + 'px';
+        if (stack.scrollWidth <= W + 1) lo = mid;
+        else hi = mid;
+      }
+      stack.style.fontSize = lo + 'px';
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
