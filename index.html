@@ -205,7 +205,7 @@
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--page-yellow);
+    background: var(--hero-v2-orange);
     color: var(--white);
   }
   .hero-v2-section.hero-v2-section--static {
@@ -313,11 +313,16 @@
     -webkit-text-fill-color: var(--hero-v2-violet) !important;
   }
 
-  /* Por encima del color blanco heredado de .hero-v2-section (p. ej. con capas/GPU) */
+  /* Por encima del color heredado de .hero-v2-section (p. ej. con capas/GPU) */
   #heroV2Title,
   #heroV2Title.hero-v2-title {
     color: #ff4d00 !important;
     -webkit-text-fill-color: #ff4d00 !important;
+  }
+  #heroV2Title .hero-v2-line:nth-child(1),
+  #heroV2Title .hero-v2-line:nth-child(2) {
+    color: var(--page-yellow) !important;
+    -webkit-text-fill-color: var(--page-yellow) !important;
   }
 
   /* Typewriter: naranja → violeta → amarillo */
@@ -2323,14 +2328,9 @@
     if (!hdr) return;
     hdr.classList.toggle('scrolled', window.scrollY > 8);
     const introEl = document.getElementById('presentacion');
-    const heroV2El = document.querySelector('.hero-v2-section');
     let onLight = false;
     if (introEl) {
       const r = introEl.getBoundingClientRect();
-      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
-    }
-    if (!onLight && heroV2El) {
-      const r = heroV2El.getBoundingClientRect();
       onLight = r.top < hdr.offsetHeight && r.bottom > 0;
     }
     hdr.classList.toggle('site-header--on-light', onLight);
