@@ -2255,6 +2255,11 @@
       },
     });
 
+    const introEase = 'power3.out';
+    const panelFadeDur = 0.16;
+    const panelFadeEase = 'power2.inOut';
+    const panelFadeLead = 0.5;
+
     function addSegment(i, t0) {
       const copy = copyEls[i];
       const vizEl = vizEls[i];
@@ -2267,7 +2272,7 @@
           scale: endScale,
           x: 0,
           y: 0,
-          ease: 'none',
+          ease: introEase,
           duration: SEG,
         },
         t0
@@ -2279,14 +2284,15 @@
           scale: endScale,
           x: 0,
           y: 0,
-          ease: 'none',
+          ease: introEase,
           duration: SEG,
         },
         t0
       );
 
-      const colorStart = t0 + 0.4;
-      const colorDur = 0.09;
+      const colorStart = t0 + 0.36;
+      const colorDur = 0.14;
+      const colorEase = 'power2.out';
 
       if (i === 0) {
         const line0 = document.getElementById('introLine0');
@@ -2294,7 +2300,7 @@
           tl.fromTo(
             line0,
             { color: orange },
-            { color: violet, ease: 'none', duration: colorDur },
+            { color: violet, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2303,7 +2309,7 @@
           tl.fromTo(
             suf0,
             { color: '#000000' },
-            { color: violet, ease: 'none', duration: colorDur },
+            { color: violet, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2313,7 +2319,7 @@
           tl.fromTo(
             line1,
             { color: violet },
-            { color: yellow, ease: 'none', duration: colorDur },
+            { color: yellow, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2322,7 +2328,7 @@
           tl.fromTo(
             suf1,
             { color: '#000000' },
-            { color: yellow, ease: 'none', duration: colorDur },
+            { color: yellow, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2332,7 +2338,7 @@
           tl.fromTo(
             line2,
             { color: yellow },
-            { color: orange, ease: 'none', duration: colorDur },
+            { color: orange, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2341,7 +2347,7 @@
           tl.fromTo(
             suf2,
             { color: '#000000' },
-            { color: orange, ease: 'none', duration: colorDur },
+            { color: orange, ease: colorEase, duration: colorDur },
             colorStart
           );
         }
@@ -2350,12 +2356,24 @@
 
     addSegment(0, 0);
 
-    tl.to(panels[0], { autoAlpha: 0, duration: 0.001 }, SEG);
-    tl.to(panels[1], { autoAlpha: 1, duration: 0.001 }, SEG);
+    const fade1At = SEG - panelFadeDur * panelFadeLead;
+    tl.to(panels[0], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade1At);
+    tl.fromTo(
+      panels[1],
+      { autoAlpha: 0 },
+      { autoAlpha: 1, ease: panelFadeEase, duration: panelFadeDur },
+      fade1At
+    );
     addSegment(1, SEG);
 
-    tl.to(panels[1], { autoAlpha: 0, duration: 0.001 }, SEG * 2);
-    tl.to(panels[2], { autoAlpha: 1, duration: 0.001 }, SEG * 2);
+    const fade2At = SEG * 2 - panelFadeDur * panelFadeLead;
+    tl.to(panels[1], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade2At);
+    tl.fromTo(
+      panels[2],
+      { autoAlpha: 0 },
+      { autoAlpha: 1, ease: panelFadeEase, duration: panelFadeDur },
+      fade2At
+    );
     addSegment(2, SEG * 2);
 
     introPanelTimelines.push(tl);
