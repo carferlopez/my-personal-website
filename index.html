@@ -161,13 +161,17 @@
     border: 2px solid var(--black);
     color: var(--black);
   }
+  .site-header--on-light .lang-select__option {
+    background: transparent;
+    color: var(--black);
+  }
   .site-header--on-light .lang-select__option.is-active {
-    background: var(--black);
-    color: var(--white);
+    background: transparent;
+    color: var(--hero-v2-orange);
   }
   .site-header--on-light .lang-select__option:hover {
-    background: var(--black);
-    color: var(--white);
+    background: transparent;
+    color: var(--hero-v2-orange);
   }
 
   /* Header sobre hero/fondo oscuro: nav y ES/EN naranja; marca vía .site-header .logo */
@@ -204,13 +208,17 @@
     border: 2px solid var(--white);
     color: var(--white);
   }
+  .site-header:not(.site-header--on-light) .lang-select__option {
+    background: transparent;
+    color: var(--hero-v2-orange);
+  }
   .site-header:not(.site-header--on-light) .lang-select__option.is-active {
-    background: var(--white);
-    color: var(--black);
+    background: transparent;
+    color: var(--white);
   }
   .site-header:not(.site-header--on-light) .lang-select__option:hover {
-    background: var(--white);
-    color: var(--black);
+    background: transparent;
+    color: var(--white);
   }
 
   /* Logo: nombre y punto naranja */
@@ -550,16 +558,17 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     padding: 0.45rem 0.55rem;
-    transition: background-color 0.1s, color 0.1s;
+    transition: color 0.15s ease;
+    background: transparent;
   }
   @media (min-width: 640px) { .lang-select__option { font-size: 0.75rem; } }
   .lang-select__option:hover {
-    background: var(--black);
-    color: var(--white);
+    background: transparent;
+    color: var(--hero-v2-orange);
   }
   .lang-select__option.is-active {
-    background: var(--black);
-    color: var(--white);
+    background: transparent;
+    color: var(--hero-v2-orange);
   }
   .lang-select__option .flag {
     font-size: 0.875rem;
