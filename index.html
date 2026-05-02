@@ -354,11 +354,11 @@
     -webkit-text-fill-color: var(--white) !important;
   }
 
-  /* Presentación: 3 bloques — copy a la izquierda, visual animado a la derecha */
+  /* Presentación: fondo blanco; copy + bloque plano del color del titular; merge al scroll vía GSAP */
   .intro-hero {
     position: relative;
-    background: #060606;
-    color: var(--white);
+    background: var(--white);
+    color: var(--black);
     padding-top: 5rem;
     overflow-x: hidden;
   }
@@ -370,11 +370,12 @@
   }
 
   .intro-panel {
-    min-height: min(100svh, 56rem);
+    min-height: max(130vh, 48rem);
     display: flex;
     align-items: center;
-    padding-block: clamp(2.5rem, 6vw, 5rem);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-block: clamp(2.5rem, 8vw, 6rem);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    overflow: visible;
   }
   .intro-panel:last-child {
     border-bottom: none;
@@ -386,6 +387,7 @@
     gap: clamp(1.75rem, 5vw, 3.5rem);
     align-items: center;
     width: 100%;
+    overflow: visible;
   }
   @media (min-width: 900px) {
     .intro-panel__grid {
@@ -395,9 +397,11 @@
   }
 
   .intro-panel__copy {
+    position: relative;
+    z-index: 2;
     margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
     max-width: 36rem;
-    will-change: transform, opacity;
+    will-change: transform;
   }
 
   .intro-panel__headline {
@@ -416,41 +420,27 @@
     .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
   }
 
+  /* Mismos colores que el typewriter: naranja → violeta → amarillo */
   .intro-panel--0 .intro-panel__headline {
-    background: linear-gradient(
-      105deg,
-      var(--page-orange) 0%,
-      #7ecbff 42%,
-      var(--white) 78%
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+    color: var(--page-orange);
   }
-  .intro-panel--0 .intro-line__suffix {
-    -webkit-text-fill-color: var(--white);
-    color: var(--white);
-  }
-
   .intro-panel--1 .intro-panel__headline {
     color: var(--hero-v2-violet);
-    -webkit-text-fill-color: var(--hero-v2-violet);
   }
   .intro-panel--2 .intro-panel__headline {
     color: var(--page-yellow);
-    -webkit-text-fill-color: var(--page-yellow);
   }
 
   .intro-line__suffix {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--black);
   }
 
   .intro-panel__viz {
     position: relative;
+    z-index: 1;
     min-height: clamp(220px, 38vh, 480px);
-    will-change: transform, opacity;
+    will-change: transform;
+    overflow: visible;
   }
   @media (min-width: 900px) {
     .intro-panel__viz { min-height: clamp(320px, 52vh, 560px); }
@@ -462,113 +452,22 @@
     border-radius: clamp(0.9rem, 2vw, 1.35rem);
     overflow: hidden;
     box-shadow:
-      0 24px 64px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(255, 255, 255, 0.07);
+      0 20px 50px rgba(0, 0, 0, 0.12),
+      0 0 0 1px rgba(0, 0, 0, 0.06);
+    will-change: transform;
   }
 
-  .intro-viz__canvas {
+  .intro-viz__solid {
     position: absolute;
     inset: 0;
-    overflow: hidden;
+    border-radius: inherit;
+    background: var(--page-orange);
   }
-
-  .intro-viz__mesh {
-    position: absolute;
-    inset: -35%;
-    background: radial-gradient(ellipse 70% 55% at 30% 40%, var(--viz-a, var(--page-orange)) 0%, transparent 62%),
-      radial-gradient(ellipse 55% 50% at 78% 65%, var(--viz-b, var(--hero-v2-violet)) 0%, transparent 58%),
-      radial-gradient(circle at 50% 100%, rgba(0, 0, 0, 0.95) 0%, transparent 45%);
-    animation: introVizMesh 14s ease-in-out infinite alternate;
+  .intro-viz--1 .intro-viz__solid {
+    background: var(--hero-v2-violet);
   }
-
-  .intro-viz--0 { --viz-a: var(--page-orange); --viz-b: #ff6b3d; }
-  .intro-viz--1 { --viz-a: var(--hero-v2-violet); --viz-b: #c94dff; }
-  .intro-viz--2 { --viz-a: var(--page-yellow); --viz-b: var(--page-orange); }
-
-  .intro-viz--1 .intro-viz__mesh { animation-duration: 17s; }
-  .intro-viz--2 .intro-viz__mesh { animation-duration: 12s; }
-
-  @keyframes introVizMesh {
-    0%   { transform: translate(-4%, -2%) scale(1) rotate(0deg); }
-    100% { transform: translate(5%, 4%) scale(1.12) rotate(3deg); }
-  }
-
-  .intro-viz__diagonal {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      154deg,
-      transparent 0%,
-      transparent 44%,
-      rgba(0, 0, 0, 0.88) 44.2%,
-      rgba(0, 0, 0, 0.92) 100%
-    );
-    pointer-events: none;
-  }
-
-  .intro-viz__shard {
-    position: absolute;
-    width: 120%;
-    height: 55%;
-    left: -10%;
-    bottom: -8%;
-    background: var(--shard, var(--black));
-    transform: skewY(-11deg);
-    opacity: 0.94;
-    animation: introVizShard 9s ease-in-out infinite alternate;
-  }
-  .intro-viz--0 .intro-viz__shard { --shard: #1a0a06; }
-  .intro-viz--1 .intro-viz__shard { --shard: #140818; }
-  .intro-viz--2 .intro-viz__shard { --shard: #181203; }
-
-  @keyframes introVizShard {
-    0%   { transform: skewY(-11deg) translateX(-2%); }
-    100% { transform: skewY(-9deg) translateX(3%); }
-  }
-
-  .intro-viz__glyph {
-    position: absolute;
-    right: 6%;
-    bottom: 8%;
-    font-size: clamp(3rem, 14vw, 9rem);
-    font-weight: 900;
-    letter-spacing: -0.07em;
-    line-height: 0.85;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.07);
-    pointer-events: none;
-    user-select: none;
-    transform: rotate(-6deg);
-  }
-
-  .intro-viz__ring {
-    position: absolute;
-    width: clamp(180px, 42vw, 340px);
-    height: clamp(180px, 42vw, 340px);
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    left: 10%;
-    top: 12%;
-    animation: introVizRing 11s linear infinite;
-  }
-  .intro-viz__ring::after {
-    content: "";
-    position: absolute;
-    inset: 18%;
-    border-radius: 50%;
-    border: 1px dashed rgba(255, 255, 255, 0.09);
-  }
-
-  @keyframes introVizRing {
-    to { transform: rotate(360deg); }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .intro-viz__mesh,
-    .intro-viz__shard,
-    .intro-viz__ring {
-      animation: none !important;
-    }
+  .intro-viz--2 .intro-viz__solid {
+    background: var(--page-yellow);
   }
 
   .header-top {
@@ -1634,8 +1533,8 @@
     </div>
   </section>
 
-  <!-- Presentación: 3 bloques (copy izquierda + visual derecha) -->
-  <section class="intro-hero intro-hero--dark section-pad" id="presentacion" aria-labelledby="introHeading">
+  <!-- Presentación: 3 bloques (copy izquierda + bloque de color derecha; merge al scroll) -->
+  <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <h2 class="u-sr-only" id="introHeading">Presentación</h2>
     <div class="intro-panels">
       <article class="intro-panel intro-panel--0" data-intro-panel="0">
@@ -1645,13 +1544,7 @@
           </div>
           <div class="intro-panel__viz" aria-hidden="true">
             <div class="intro-viz intro-viz--0">
-              <div class="intro-viz__canvas">
-                <div class="intro-viz__mesh"></div>
-                <div class="intro-viz__diagonal"></div>
-                <div class="intro-viz__shard"></div>
-                <span class="intro-viz__glyph" id="introGlyph0" aria-hidden="true">DIGITAL</span>
-                <div class="intro-viz__ring"></div>
-              </div>
+              <div class="intro-viz__solid"></div>
             </div>
           </div>
         </div>
@@ -1663,13 +1556,7 @@
           </div>
           <div class="intro-panel__viz" aria-hidden="true">
             <div class="intro-viz intro-viz--1">
-              <div class="intro-viz__canvas">
-                <div class="intro-viz__mesh"></div>
-                <div class="intro-viz__diagonal"></div>
-                <div class="intro-viz__shard"></div>
-                <span class="intro-viz__glyph" id="introGlyph1" aria-hidden="true">ÚTILES</span>
-                <div class="intro-viz__ring"></div>
-              </div>
+              <div class="intro-viz__solid"></div>
             </div>
           </div>
         </div>
@@ -1681,13 +1568,7 @@
           </div>
           <div class="intro-panel__viz" aria-hidden="true">
             <div class="intro-viz intro-viz--2">
-              <div class="intro-viz__canvas">
-                <div class="intro-viz__mesh"></div>
-                <div class="intro-viz__diagonal"></div>
-                <div class="intro-viz__shard"></div>
-                <span class="intro-viz__glyph" id="introGlyph2" aria-hidden="true">SIRVAN</span>
-                <div class="intro-viz__ring"></div>
-              </div>
+              <div class="intro-viz__solid"></div>
             </div>
           </div>
         </div>
@@ -1799,9 +1680,6 @@
         "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
         "ESPERO QUE TE SIRVAN ;",
       ],
-      introHeadingLabel: "Presentación",
-      introVizGlyphs: ["DIGITAL", "ÚTILES", "SIRVAN"],
-      siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
       contactSub: "Suscríbete a mi newsletter y entérate cada vez que publique algo.",
@@ -1843,9 +1721,6 @@
         "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
         "I HOPE THEY HELP YOU ;",
       ],
-      introHeadingLabel: "Introduction",
-      introVizGlyphs: ["DIGITAL", "USEFUL", "YOU"],
-      siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
       contactSub: "When I publish something, you’ll hear it first. No spam.",
@@ -2068,6 +1943,15 @@
   function killIntroLinesScrollAnimation() {
     introPanelTimelines.forEach((tl) => tl.kill());
     introPanelTimelines = [];
+    ['introLine0', 'introLine1', 'introLine2'].forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.style.removeProperty('color');
+        el.querySelectorAll('.intro-line__suffix').forEach((s) => {
+          s.style.removeProperty('color');
+        });
+      }
+    });
   }
 
   /** Sufijos `.` y `;)` en blanco (clase intro-line__suffix). */
@@ -2137,14 +2021,14 @@
     if (reduceIntro) {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
-        const viz = panel.querySelector('.intro-panel__viz');
+        const vizEl = panel.querySelector('.intro-viz');
         if (copy) {
           copy.style.opacity = '1';
           copy.style.transform = 'none';
         }
-        if (viz) {
-          viz.style.opacity = '1';
-          viz.style.transform = 'none';
+        if (vizEl) {
+          vizEl.style.opacity = '1';
+          vizEl.style.transform = 'none';
         }
       });
       return;
@@ -2153,14 +2037,14 @@
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
-        const viz = panel.querySelector('.intro-panel__viz');
+        const vizEl = panel.querySelector('.intro-viz');
         if (copy) {
           copy.style.opacity = '1';
           copy.style.transform = 'none';
         }
-        if (viz) {
-          viz.style.opacity = '1';
-          viz.style.transform = 'none';
+        if (vizEl) {
+          vizEl.style.opacity = '1';
+          vizEl.style.transform = 'none';
         }
       });
       return;
@@ -2168,26 +2052,77 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    const slide = Math.min(window.innerWidth * 0.12, 120);
+    const wide = window.matchMedia('(min-width: 900px)').matches;
+    const endScale = wide ? 2.85 : 2.15;
+    const copyShift = wide ? { x: '18vw', y: 0 } : { x: 0, y: '12vh' };
+    const vizShift = wide ? { x: '-18vw', y: 0 } : { x: 0, y: '-10vh' };
+
+    const orange = '#ff5a1a';
+    const violet = '#aa00ff';
 
     panels.forEach((panel) => {
       const copy = panel.querySelector('.intro-panel__copy');
-      const viz = panel.querySelector('.intro-panel__viz');
-      if (!copy || !viz) return;
+      const vizEl = panel.querySelector('.intro-viz');
+      if (!copy || !vizEl) return;
 
-      gsap.set(copy, { x: -slide, opacity: 0 });
-      gsap.set(viz, { x: slide, scale: 0.92, opacity: 0 });
+      gsap.set(copy, { transformOrigin: wide ? 'left center' : 'center top', scale: 1, x: 0, y: 0, opacity: 1 });
+      gsap.set(vizEl, { transformOrigin: wide ? 'right center' : 'center bottom', scale: 1, x: 0, y: 0, opacity: 1 });
 
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: panel,
-          start: 'top 82%',
-          end: 'top 36%',
-          scrub: 0.5,
+          start: 'top 88%',
+          end: 'bottom 2%',
+          scrub: 0.55,
         },
       });
-      tl.to(copy, { x: 0, opacity: 1, ease: 'power2.out', duration: 1 }, 0);
-      tl.to(viz, { x: 0, scale: 1, opacity: 1, ease: 'power2.out', duration: 1 }, 0);
+
+      tl.fromTo(
+        copy,
+        { scale: 1, x: 0, y: 0 },
+        {
+          scale: endScale,
+          x: copyShift.x,
+          y: copyShift.y,
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+      tl.fromTo(
+        vizEl,
+        { scale: 1, x: 0, y: 0 },
+        {
+          scale: endScale,
+          x: vizShift.x,
+          y: vizShift.y,
+          ease: 'none',
+          duration: 1,
+        },
+        0
+      );
+
+      if (panel.getAttribute('data-intro-panel') === '0') {
+        const line0 = document.getElementById('introLine0');
+        if (line0) {
+          tl.fromTo(
+            line0,
+            { color: orange },
+            { color: violet, ease: 'none', duration: 0.28 },
+            0.5
+          );
+        }
+        const suf = line0 && line0.querySelector('.intro-line__suffix');
+        if (suf) {
+          tl.fromTo(
+            suf,
+            { color: '#000000' },
+            { color: violet, ease: 'none', duration: 0.28 },
+            0.5
+          );
+        }
+      }
+
       introPanelTimelines.push(tl);
     });
   }
@@ -2306,14 +2241,6 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     fillIntroLinesFromLang();
-    const glyphIds = ['introGlyph0', 'introGlyph1', 'introGlyph2'];
-    const gv = t[lang].introVizGlyphs;
-    if (gv && gv.length === 3) {
-      for (let i = 0; i < 3; i++) {
-        const node = document.getElementById(glyphIds[i]);
-        if (node) node.textContent = gv[i];
-      }
-    }
   }
 
   function getContactFormEndpoint() {
