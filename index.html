@@ -115,10 +115,16 @@
     -webkit-backdrop-filter: none;
     transition: background 0.35s ease, backdrop-filter 0.35s ease, -webkit-backdrop-filter 0.35s ease, color 0.2s ease;
   }
+  /* Scroll: banda oscura solo sobre fondos oscuros; sobre hero/secciones claras banda clara para que el logo siga negro */
   .site-header.scrolled {
-    background: rgba(0, 0, 0, 0.72);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
+  }
+  .site-header.scrolled.site-header--on-light {
+    background: rgba(255, 255, 255, 0.9);
+  }
+  .site-header.scrolled:not(.site-header--on-light) {
+    background: rgba(0, 0, 0, 0.72);
   }
 
   .site-header__inner {
