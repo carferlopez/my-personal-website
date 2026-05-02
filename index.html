@@ -1470,9 +1470,6 @@
           <span id="typewriter"></span><span class="cursor"></span>
         </h2>
       </div>
-      <div class="scroll-hint scroll-hint--intro">
-        <a href="#proyectos" id="scrollHint">COMO POR EJEMPLO ESTOS ↓</a>
-      </div>
     </div>
   </section>
 
@@ -1581,7 +1578,6 @@
         "ESPERO QUE TE SIRVAN ;)",
       ],
       terminalPrompt: "PULSA PARA COMENZAR",
-      scrollHint: "COMO POR EJEMPLO ESTOS ↓",
       siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
@@ -1625,7 +1621,6 @@
         "I HOPE YOU FIND THEM HELPFUL ;)",
       ],
       terminalPrompt: "CLICK TO START",
-      scrollHint: "CHECK THEM OUT ↓",
       siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
@@ -2021,7 +2016,6 @@
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
     const tpEl = document.getElementById('terminalPromptText');
     if (tpEl && d.terminalPrompt) tpEl.textContent = d.terminalPrompt;
-    document.getElementById('scrollHint').textContent = d.scrollHint;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
