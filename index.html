@@ -1454,7 +1454,7 @@
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <div class="container intro-hero-inner">
       <div class="terminal-prompt" id="terminalPrompt" tabindex="0" role="button" aria-label="Pulsa para comenzar">
-        <span>PULSA PARA COMENZAR</span><span class="terminal-prompt__cursor" aria-hidden="true"></span>
+        <span id="terminalPromptText">PULSA PARA COMENZAR</span><span class="terminal-prompt__cursor" aria-hidden="true"></span>
       </div>
       <div class="hero-title-wrap">
         <h2 class="hero-title" id="introHeading" data-tw-line="0">
@@ -1571,6 +1571,7 @@
         "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
         "ESPERO QUE TE SIRVAN ;)",
       ],
+      terminalPrompt: "PULSA PARA COMENZAR",
       scrollHint: "COMO POR EJEMPLO ESTOS ↓",
       siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
@@ -1614,6 +1615,7 @@
         "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
         "I HOPE YOU FIND THEM HELPFUL ;)",
       ],
+      terminalPrompt: "CLICK TO START",
       scrollHint: "CHECK THEM OUT ↓",
       siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
@@ -2008,6 +2010,8 @@
     try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     const logoLink = document.getElementById('siteLogo');
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
+    const tpEl = document.getElementById('terminalPromptText');
+    if (tpEl && d.terminalPrompt) tpEl.textContent = d.terminalPrompt;
     document.getElementById('scrollHint').textContent = d.scrollHint;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
