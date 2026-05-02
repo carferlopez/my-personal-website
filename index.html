@@ -942,16 +942,16 @@
     -webkit-text-fill-color: var(--hero-v2-violet);
   }
   #contacto #contactMark {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
   }
   #contactDividerText {
-    color: var(--page-yellow);
-    -webkit-text-fill-color: var(--page-yellow);
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
   }
   .contact-divider-mark {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -990,10 +990,14 @@
   }
 
   /* ==================== CONTACT ==================== */
+  #contacto {
+    background: var(--white);
+    color: var(--black);
+  }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
-    background: var(--black);
-    color: var(--white);
+    background: transparent;
+    color: var(--black);
     padding: 1.25rem 0;
     display: flex;
     flex-direction: column;
@@ -1004,7 +1008,7 @@
   @media (min-width: 768px) { .contact-box { padding: 3rem 0; gap: 3rem; min-height: 500px; } }
   @media (min-width: 1024px) { .contact-box { padding: 5rem 0; } }
 
-  .contact-sub { color: var(--white); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
+  .contact-sub { color: var(--black); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
   @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
 
@@ -1023,16 +1027,16 @@
   @media (min-width: 640px) { .contact-btn { padding: 0.6rem 1.2rem; font-size: 1.05rem; } }
   @media (min-width: 768px) { .contact-btn { font-size: 1.15rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
-  /* Botones y campos sobre caja oscura */
+  /* Botones sobre fondo claro */
   .contact-box .contact-btn {
-    color: var(--white);
+    color: var(--black);
     background: transparent;
-    border-color: var(--white);
+    border-color: var(--black);
   }
   .contact-box .contact-btn:hover {
-    background: var(--white);
-    color: var(--black);
-    border-color: var(--white);
+    background: var(--black);
+    color: var(--white);
+    border-color: var(--black);
   }
 
 
@@ -1049,26 +1053,17 @@
     opacity: 0.85;
   }
   .contact-alt-link {
-    border: 2px solid rgba(255, 255, 255, 0.55);
+    border: 2px solid rgba(0, 0, 0, 0.35);
     background: transparent;
-    color: var(--white);
+    color: var(--black);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
   }
-  .contact-alt-link:hover { background: var(--white); color: var(--black); }
-  .contact-box:hover .contact-alt-link {
-    border-color: rgba(255, 255, 255, 0.65);
-    background: transparent;
-    color: var(--white);
-  }
-  .contact-box:hover .contact-alt-link:hover {
-    background: var(--white);
-    color: var(--black);
-  }
+  .contact-alt-link:hover { background: var(--black); color: var(--white); border-color: var(--black); }
 
   .newsletter-form { margin-top: 2rem; }
   .newsletter-form__row {
@@ -1084,12 +1079,12 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid rgba(255, 255, 255, 0.45);
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--white);
+    border: 3px solid rgba(0, 0, 0, 0.25);
+    background: var(--white);
+    color: var(--black);
   }
   @media (min-width: 640px) { .newsletter-form__input { font-size: 1.05rem; } }
-  .newsletter-form__input::placeholder { color: rgba(255, 255, 255, 0.4); }
+  .newsletter-form__input::placeholder { color: rgba(0, 0, 0, 0.45); }
 
   .contact-divider {
     margin-top: 2.5rem;
@@ -1164,9 +1159,9 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid rgba(255, 255, 255, 0.45);
-    background: rgba(255, 255, 255, 0.06);
-    color: var(--white);
+    border: 3px solid rgba(0, 0, 0, 0.25);
+    background: var(--white);
+    color: var(--black);
     min-width: 0;
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
@@ -1186,7 +1181,7 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--white);
+    color: var(--black);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
@@ -2355,6 +2350,11 @@
     }
     if (!onLight && worksEl) {
       const r = worksEl.getBoundingClientRect();
+      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
+    }
+    const contactEl = document.getElementById('contacto');
+    if (!onLight && contactEl) {
+      const r = contactEl.getBoundingClientRect();
       onLight = r.top < hdr.offsetHeight && r.bottom > 0;
     }
     hdr.classList.toggle('site-header--on-light', onLight);
