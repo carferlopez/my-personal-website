@@ -354,48 +354,69 @@
     -webkit-text-fill-color: var(--white) !important;
   }
 
-  /* Typewriter: naranja → violeta → amarillo */
-  #introHeading[data-tw-line="0"] #typewriter {
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
-  }
-  #introHeading[data-tw-line="1"] #typewriter {
-    color: var(--hero-v2-violet);
-    -webkit-text-fill-color: var(--hero-v2-violet);
-  }
-  #introHeading[data-tw-line="2"] #typewriter {
-    color: var(--page-yellow);
-    -webkit-text-fill-color: var(--page-yellow);
-  }
-
-  /* ==================== INTRO (antiguo hero: typewriter) ==================== */
+  /* Intro: tres líneas reveladas al scroll (sin typewriter) */
   .intro-hero {
     position: relative;
     background: var(--white);
     color: var(--black);
     padding-top: 5rem;
+    overflow-x: hidden;
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
-
-  .intro-hero:not(.intro-hero--typewriter-armed) .hero-title .cursor {
-    visibility: hidden;
-  }
-
-  html.js .intro-hero .hero-title-wrap,
-  html.js .intro-hero .scroll-hint--intro {
-    opacity: 0;
-    transition: opacity 0.55s ease;
-  }
-  html.js .intro-hero.intro-hero--typewriter-armed .hero-title-wrap,
-  html.js .intro-hero.intro-hero--typewriter-armed .scroll-hint--intro {
-    opacity: 1;
-  }
 
   .intro-hero-inner {
     display: flex;
     flex-direction: column;
-    min-height: min(88svh, 52rem);
-    padding-bottom: 2rem;
+    min-height: min(200vh, 80rem);
+    padding-bottom: 3rem;
+  }
+
+  .intro-hero-inner .intro-lines {
+    margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
+  }
+
+  .intro-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: clamp(1rem, 4vw, 2.5rem);
+    margin-top: 1rem;
+    max-width: 100%;
+  }
+  @media (min-width: 768px) { .intro-lines { margin-top: 2rem; } }
+
+  .intro-reveal-line {
+    margin: 0;
+    font-size: clamp(1.35rem, 5.2vw, 3.75rem);
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    line-height: 0.92;
+    text-transform: uppercase;
+    text-wrap: balance;
+    word-break: normal;
+    overflow-wrap: normal;
+    hyphens: none;
+    will-change: transform, opacity;
+  }
+  @media (min-width: 768px) { .intro-reveal-line { font-size: clamp(1.5rem, 5vw, 4.25rem); } }
+
+  .intro-reveal-line--i0 {
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
+  }
+  .intro-reveal-line--i1 {
+    color: var(--hero-v2-violet);
+    -webkit-text-fill-color: var(--hero-v2-violet);
+  }
+  .intro-reveal-line--i2 {
+    color: var(--page-yellow);
+    -webkit-text-fill-color: var(--page-yellow);
+  }
+
+  .intro-line__suffix {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
   }
 
   .header-top {
@@ -582,88 +603,6 @@
     line-height: 1;
   }
   @media (min-width: 640px) { .lang-select__option .flag { font-size: 1rem; } }
-
-  /* Mismo criterio que #projectsTitle: primer glifo alineado con la marca en .site-header */
-  .intro-hero-inner .hero-title-wrap,
-  .intro-hero-inner .terminal-prompt {
-    margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
-  }
-  .hero-title-wrap { flex: 1; display: flex; flex-direction: column; justify-content: center; margin-top: 1rem; }
-  @media (min-width: 768px) { .hero-title-wrap { margin-top: 2rem; } }
-
-  .hero-title {
-    font-size: 12vw;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.85;
-    text-transform: uppercase;
-    min-height: 40vh;
-    text-wrap: balance;
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
-  }
-  @media (min-width: 640px) { .hero-title { font-size: 11vw; } }
-  @media (min-width: 768px) { .hero-title { font-size: 10vw; min-height: 50vh; } }
-  @media (min-width: 1024px) { .hero-title { font-size: 9vw; } }
-  @media (min-width: 1280px) { .hero-title { font-size: 120px; min-height: 60vh; } }
-
-  .hero-title #typewriter .typewriter-suffix--period,
-  .hero-title #typewriter .typewriter-suffix--wink {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
-  }
-
-  .cursor {
-    display: inline-block;
-    width: 0.55em;
-    height: 0.9em;
-    background: var(--black);
-    margin-left: 0.5rem;
-    transform: translateY(0.1em);
-    animation: blink 1s step-end infinite;
-  }
-  @keyframes blink { 50% { opacity: 0; } }
-  @keyframes tw-pulse { 0%, 100% { opacity: 0.35; } 60% { opacity: 0.68; } }
-
-  /* ==================== Terminal prompt (intro: estado inactivo) ==================== */
-  .terminal-prompt {
-    cursor: pointer;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    margin-top: 1rem;
-    user-select: none;
-    -webkit-user-select: none;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    font-size: 12vw;
-    font-weight: 900;
-    letter-spacing: -0.05em;
-    line-height: 0.85;
-    text-wrap: balance;
-    word-break: normal;
-    color: rgba(0,0,0,0.3);
-    text-transform: uppercase;
-    animation: tw-pulse 2.6s ease-in-out infinite;
-  }
-  @media (min-width: 768px) { .terminal-prompt { margin-top: 2rem; } }
-  @media (min-width: 640px)  { .terminal-prompt { font-size: 11vw; } }
-  @media (min-width: 768px)  { .terminal-prompt { font-size: 10vw; } }
-  @media (min-width: 1024px) { .terminal-prompt { font-size: 9vw; } }
-  @media (min-width: 1280px) { .terminal-prompt { font-size: 120px; } }
-  .terminal-prompt__cursor {
-    display: inline-block;
-    vertical-align: middle;
-    width: 0.55em;
-    height: 0.85em;
-    background: rgba(0,0,0,0.35);
-    transform: translateY(-0.05em);
-    animation: blink 1s step-end infinite;
-  }
-  html.js .intro-hero.intro-hero--typewriter-armed .terminal-prompt {
-    display: none;
-  }
 
   /* ==================== Hamburguesa móvil ==================== */
   .hamburger-btn {
@@ -1543,16 +1482,14 @@
     </div>
   </section>
 
-  <!-- Antiguo hero: mensaje con typewriter -->
+  <!-- Presentación: tres frases al scroll -->
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <div class="container intro-hero-inner">
-      <div class="terminal-prompt" id="terminalPrompt" tabindex="0" role="button" aria-label="Pulsa para comenzar">
-        <span id="terminalPromptText">PULSA PARA COMENZAR</span><span class="terminal-prompt__cursor" aria-hidden="true"></span>
-      </div>
-      <div class="hero-title-wrap">
-        <h2 class="hero-title" id="introHeading" data-tw-line="0">
-          <span id="typewriter"></span><span class="cursor"></span>
-        </h2>
+      <h2 class="u-sr-only" id="introHeading">Presentación</h2>
+      <div class="intro-lines">
+        <p class="intro-reveal-line intro-reveal-line--i0" id="introLine0"></p>
+        <p class="intro-reveal-line intro-reveal-line--i1" id="introLine1"></p>
+        <p class="intro-reveal-line intro-reveal-line--i2" id="introLine2"></p>
       </div>
     </div>
   </section>
@@ -1661,7 +1598,7 @@
         "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
         "ESPERO QUE TE SIRVAN ;)",
       ],
-      terminalPrompt: "PULSA PARA COMENZAR",
+      introHeadingLabel: "Presentación",
       siteLogoAria: "Ir al inicio",
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
@@ -1704,7 +1641,7 @@
         "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
         "I HOPE YOU FIND THEM HELPFUL ;)",
       ],
-      terminalPrompt: "CLICK TO START",
+      introHeadingLabel: "Introduction",
       siteLogoAria: "Go to home",
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
@@ -1921,128 +1858,110 @@
   }
 
   // ============================================
-  // Typewriter
+  // Intro: tres líneas al scroll (GSAP ScrollTrigger)
   // ============================================
-  const typeEl = document.getElementById('typewriter');
-  const introHeadingEl = document.getElementById('introHeading');
-  let wordIndex = 0, charIndex = 0, isDeleting = false, typeTimeout;
-  /** Avanza en cada cambio de frase: naranja → magenta → amarillo (misma triada que el resto de titulares). */
-  let typewriterNeonIx = 0;
-  /** El carrusel de frases solo arranca cuando el hero ya está en negro y el titular #introHeading va centrado en pantalla. */
-  let introTypewriterUnlocked = false;
-  let introRevealTimer = null;
-  const INTRO_TYPEWRITER_DELAY_MS = 420;
+  let introLinesTimeline = null;
 
-  function syncTypewriterNeonDataset() {
-    if (introHeadingEl) introHeadingEl.dataset.twLine = String(typewriterNeonIx % 3);
+  function killIntroLinesScrollAnimation() {
+    if (introLinesTimeline) {
+      introLinesTimeline.kill();
+      introLinesTimeline = null;
+    }
   }
 
-  /** Sufijo `.` y `;)` en blanco. (El punto del logo `.logo-dot` no pasa por aquí.) */
-  function renderTypewriter(text, fullWord) {
-    if (!typeEl) return;
-    typeEl.replaceChildren();
-    if (!text) return;
+  /** Sufijos `.` y `;)` en blanco (clase intro-line__suffix). */
+  function fillIntroLineElement(el, fullWord) {
+    if (!el) return;
+    el.replaceChildren();
+    if (!fullWord) return;
 
     if (fullWord.endsWith(';)')) {
       const baseLen = fullWord.length - 2;
-      if (text.length <= baseLen) {
-        typeEl.textContent = text;
-        return;
-      }
-      typeEl.append(document.createTextNode(text.slice(0, baseLen)));
+      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
       const suffix = document.createElement('span');
-      suffix.className = 'typewriter-suffix typewriter-suffix--wink';
-      suffix.textContent = text.slice(baseLen);
-      typeEl.append(suffix);
+      suffix.className = 'intro-line__suffix intro-line__suffix--wink';
+      suffix.textContent = ';)';
+      el.append(suffix);
       return;
     }
 
     if (fullWord.endsWith('.')) {
       const baseLen = fullWord.length - 1;
-      if (text.length <= baseLen) {
-        typeEl.textContent = text;
-        return;
-      }
-      typeEl.append(document.createTextNode(text.slice(0, baseLen)));
+      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
       const suffix = document.createElement('span');
-      suffix.className = 'typewriter-suffix typewriter-suffix--period';
-      suffix.textContent = text.slice(baseLen);
-      typeEl.append(suffix);
+      suffix.className = 'intro-line__suffix intro-line__suffix--period';
+      suffix.textContent = '.';
+      el.append(suffix);
       return;
     }
 
-    typeEl.textContent = text;
+    el.textContent = fullWord;
   }
 
-  function typewriter() {
-    syncTypewriterNeonDataset();
+  function fillIntroLinesFromLang() {
     const words = t[lang].typewriter;
-    const currentWord = words[wordIndex];
-    if (isDeleting) charIndex--; else charIndex++;
-    renderTypewriter(currentWord.substring(0, charIndex), currentWord);
-
-    let speed = isDeleting ? 30 : 70;
-    if (!isDeleting && charIndex === currentWord.length) {
-      speed = 2500; isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-      isDeleting = false;
-      wordIndex = (wordIndex + 1) % words.length;
-      typewriterNeonIx = (typewriterNeonIx + 1) % 3;
-      speed = 500;
-    }
-    typeTimeout = setTimeout(typewriter, speed);
+    if (!words || words.length < 3) return;
+    fillIntroLineElement(document.getElementById('introLine0'), words[0]);
+    fillIntroLineElement(document.getElementById('introLine1'), words[1]);
+    fillIntroLineElement(document.getElementById('introLine2'), words[2]);
   }
 
-  function restartTypewriter() {
-    clearTimeout(typeTimeout);
-    clearTimeout(introRevealTimer);
-    introRevealTimer = null;
-    wordIndex = 0;
-    charIndex = 0;
-    isDeleting = false;
-    typewriterNeonIx = 0;
-    syncTypewriterNeonDataset();
-    if (!introTypewriterUnlocked) {
-      if (typeEl) typeEl.replaceChildren();
+  function refreshIntroLinesAfterLangChange() {
+    fillIntroLinesFromLang();
+    killIntroLinesScrollAnimation();
+    setupIntroLinesScrollAnimation();
+  }
+
+  function setupIntroLinesScrollAnimation() {
+    const intro = document.getElementById('presentacion');
+    const line0 = document.getElementById('introLine0');
+    const line1 = document.getElementById('introLine1');
+    const line2 = document.getElementById('introLine2');
+    if (!intro || !line0 || !line1 || !line2) return;
+
+    killIntroLinesScrollAnimation();
+    fillIntroLinesFromLang();
+
+    const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduceIntro) {
+      line0.style.opacity = '1';
+      line1.style.opacity = '1';
+      line2.style.opacity = '1';
+      line0.style.transform = 'none';
+      line1.style.transform = 'none';
+      line2.style.transform = 'none';
       return;
     }
-    typewriter();
-  }
 
-  function initIntroTypewriterOnScroll() {
-    const intro = document.getElementById('presentacion');
-    if (!intro || !typeEl) return;
-
-    const start = () => {
-      if (introTypewriterUnlocked) return;
-      introTypewriterUnlocked = true;
-      intro.classList.add('intro-hero--typewriter-armed');
-      clearTimeout(typeTimeout);
-      clearTimeout(introRevealTimer);
-      wordIndex = 0;
-      charIndex = 0;
-      isDeleting = false;
-      typewriterNeonIx = 0;
-      syncTypewriterNeonDataset();
-      introRevealTimer = setTimeout(() => {
-        introRevealTimer = null;
-        typewriter();
-      }, INTRO_TYPEWRITER_DELAY_MS);
-    };
-
-    const terminalPrompt = document.getElementById('terminalPrompt');
-    if (terminalPrompt) {
-      const onPromptActivate = () => {
-        terminalPrompt.removeEventListener('click', onPromptActivate);
-        terminalPrompt.removeEventListener('keydown', onPromptKey);
-        start();
-      };
-      const onPromptKey = (e) => {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onPromptActivate(); }
-      };
-      terminalPrompt.addEventListener('click', onPromptActivate);
-      terminalPrompt.addEventListener('keydown', onPromptKey);
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      line0.style.opacity = '1';
+      line1.style.opacity = '1';
+      line2.style.opacity = '1';
+      line0.style.transform = 'none';
+      line1.style.transform = 'none';
+      line2.style.transform = 'none';
+      return;
     }
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    const pad = Math.min(window.innerWidth * 0.42, 340);
+    gsap.set(line0, { x: -pad, opacity: 0 });
+    gsap.set(line1, { x: pad, opacity: 0 });
+    gsap.set(line2, { x: -pad, opacity: 0 });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: intro,
+        start: 'top 70%',
+        end: '+=130%',
+        scrub: 0.4,
+      },
+    });
+    tl.to(line0, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 0);
+    tl.to(line1, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 0.85);
+    tl.to(line2, { x: 0, opacity: 1, duration: 1, ease: 'power2.out' }, 1.7);
+    introLinesTimeline = tl;
   }
 
   function setProjectsTitleStack(text) {
@@ -2098,8 +2017,8 @@
     try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     const logoLink = document.getElementById('siteLogo');
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
-    const tpEl = document.getElementById('terminalPromptText');
-    if (tpEl && d.terminalPrompt) tpEl.textContent = d.terminalPrompt;
+    const introH = document.getElementById('introHeading');
+    if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
     document.getElementById('contactSub').textContent = d.contactSub;
@@ -2158,6 +2077,7 @@
     if (o4) o4.textContent = d.contactTopicOtro;
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
+    fillIntroLinesFromLang();
   }
 
   function getContactFormEndpoint() {
@@ -2263,7 +2183,7 @@
           if (next !== lang) {
             lang = next;
             applyLang();
-            restartTypewriter();
+            refreshIntroLinesAfterLangChange();
           }
         }
         setLangMenuOpen(false);
@@ -2314,7 +2234,6 @@
   applyLang();
   initContactForm();
   initNewsletterForm();
-  initIntroTypewriterOnScroll();
   initHamburger();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
@@ -2394,6 +2313,7 @@
   window.addEventListener('resize', () => {
     fitHeroV2Lines();
     updateHeaderTheme();
+    setupIntroLinesScrollAnimation();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   });
   window.addEventListener('load', () => {
@@ -2428,6 +2348,8 @@
       0.74
     );
   }
+
+  setupIntroLinesScrollAnimation();
 </script>
 
 </body>
