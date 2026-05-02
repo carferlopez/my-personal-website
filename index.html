@@ -2127,8 +2127,9 @@
       );
 
       const pid = panel.getAttribute('data-intro-panel');
-      const colorStart = 0.66;
-      const colorDur = 0.34;
+      /* Color en el primer contacto visual texto↔cuadro (antes ~66% retrasaba demasiado) */
+      const colorStart = 0.4;
+      const colorDur = 0.09;
 
       if (pid === '0') {
         const line0 = document.getElementById('introLine0');
