@@ -756,6 +756,25 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--red); }
 
+  /* WORKS: fondo amarillo fluor; copy y título en naranja de página */
+  #proyectos.projects-section {
+    background: var(--page-yellow);
+    color: var(--page-orange);
+  }
+  #proyectos .projects-strap.subheading {
+    color: var(--page-orange);
+  }
+  #proyectos .projects-strap__lead,
+  #proyectos .projects-strap__intro {
+    color: var(--page-orange);
+  }
+  #proyectos .projects-strap a {
+    color: var(--page-orange);
+  }
+  #proyectos .projects-strap a:focus-visible {
+    outline-color: var(--black);
+  }
+
   /* WORKS (mismo rótulo en ES/EN): columna lateral, lectura abajo → arriba */
   .projects-module {
     display: flex;
@@ -802,8 +821,8 @@
     position: sticky;
     top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
     z-index: 1;
-    color: var(--page-yellow);
-    -webkit-text-fill-color: var(--page-yellow);
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
   }
   @media (min-width: 640px) {
     #proyectos #projectsTitle {
@@ -843,7 +862,7 @@
     text-transform: uppercase;
     margin-block: -0.02em;
     padding: 0;
-    -webkit-text-stroke: 0.02em var(--page-yellow);
+    -webkit-text-stroke: 0.02em var(--page-orange);
   }
   /* O–W suele verse más pegado (formas anchas × rotación); algo más de aire solo entre ellas */
   #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
@@ -899,7 +918,7 @@
       margin-inline: 0;
       line-height: 0.82;
       letter-spacing: -0.08em;
-      -webkit-text-stroke: 0.02em var(--page-yellow);
+      -webkit-text-stroke: 0.02em var(--page-orange);
     }
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
     #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
@@ -2328,9 +2347,14 @@
     if (!hdr) return;
     hdr.classList.toggle('scrolled', window.scrollY > 8);
     const introEl = document.getElementById('presentacion');
+    const worksEl = document.getElementById('proyectos');
     let onLight = false;
     if (introEl) {
       const r = introEl.getBoundingClientRect();
+      onLight = r.top < hdr.offsetHeight && r.bottom > 0;
+    }
+    if (!onLight && worksEl) {
+      const r = worksEl.getBoundingClientRect();
       onLight = r.top < hdr.offsetHeight && r.bottom > 0;
     }
     hdr.classList.toggle('site-header--on-light', onLight);
