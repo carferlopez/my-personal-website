@@ -834,6 +834,86 @@
     outline-color: var(--black);
   }
 
+  /* Letrero WORKS estilo metro / LED: marquee, mismos px que #projectsTitle vía JS */
+  .projects-ticker {
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 0.85rem;
+    background: #080808;
+    border: 3px solid var(--black);
+    border-radius: 2px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.07),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.8),
+      0 4px 14px rgba(0, 0, 0, 0.18);
+    overflow: hidden;
+    padding: 0.42rem 0;
+  }
+  .projects-ticker__viewport {
+    overflow: hidden;
+    width: 100%;
+    mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+  }
+  .projects-ticker__track {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: max-content;
+    font-weight: 900;
+    line-height: 1.05;
+    will-change: transform;
+    animation: projects-ticker-marquee 24s linear infinite;
+  }
+  .projects-ticker__chunk {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-inline-end: 4rem;
+  }
+  .projects-ticker__word {
+    flex-shrink: 0;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-inline-end: 2.75rem;
+    line-height: 1;
+  }
+  .projects-ticker__word:last-child {
+    margin-inline-end: 0;
+  }
+  .projects-ticker__word--orange {
+    color: var(--page-orange);
+    -webkit-text-fill-color: var(--page-orange);
+    -webkit-text-stroke: 0.02em rgba(0, 0, 0, 0.45);
+  }
+  .projects-ticker__word--white {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+    text-shadow: 0 0 14px rgba(255, 255, 255, 0.22);
+  }
+  @keyframes projects-ticker-marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .projects-ticker__track {
+      animation: none;
+      transform: none;
+      padding-inline: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 100%;
+      row-gap: 0.35rem;
+    }
+    .projects-ticker__chunk {
+      padding-inline-end: 0;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
   /* WORKS (mismo rótulo en ES/EN): columna lateral, lectura abajo → arriba */
   .projects-module {
     display: flex;
@@ -1626,6 +1706,11 @@
           <span class="u-sr-only projects-title-sr">WORKS</span>
         </h2>
         <div class="projects-module__body">
+          <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
+            <div class="projects-ticker__viewport">
+              <div class="projects-ticker__track" id="projectsTickerTrack"></div>
+            </div>
+          </div>
           <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
           <div class="projects-chevron-wrap">
             <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
@@ -2291,16 +2376,46 @@
       s.textContent = ch;
       stack.appendChild(s);
     }
+    renderProjectsTicker();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
+  }
+
+  function renderProjectsTicker() {
+    const track = document.getElementById('projectsTickerTrack');
+    if (!track) return;
+    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
+    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const n = 18;
+    const parts = [];
+    for (let i = 0; i < n; i++) {
+      const orange = i % 2 === 0;
+      parts.push(
+        '<span class="projects-ticker__word ' +
+        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--white') +
+        '">' +
+        word +
+        '</span>'
+      );
+    }
+    const chunk = '<span class="projects-ticker__chunk">' + parts.join('') + '</span>';
+    const reduce =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.innerHTML = reduce ? chunk : chunk + chunk;
   }
 
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
+    const tickerTrack = document.getElementById('projectsTickerTrack');
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .container');
       const W = container ? container.offsetWidth : document.body.clientWidth;
-      if (W < 16) { stack.style.removeProperty('font-size'); return; }
+      if (W < 16) {
+        stack.style.removeProperty('font-size');
+        if (tickerTrack) tickerTrack.style.removeProperty('font-size');
+        return;
+      }
       let lo = 8, hi = 800;
       for (let i = 0; i < 42; i++) {
         const mid = (lo + hi) * 0.5;
@@ -2309,6 +2424,7 @@
         else hi = mid;
       }
       stack.style.fontSize = lo + 'px';
+      if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
@@ -2317,7 +2433,9 @@
     if (!fs) fs = getComputedStyle(line).fontSize;
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
-    stack.style.fontSize = (fsPx * 0.853) + 'px';
+    const synced = (fsPx * 0.853) + 'px';
+    stack.style.fontSize = synced;
+    if (tickerTrack) tickerTrack.style.fontSize = synced;
   }
 
   // ============================================
