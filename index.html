@@ -360,7 +360,7 @@
     background: var(--white);
     color: var(--black);
     padding-top: 5rem;
-    padding-bottom: clamp(8rem, 26vh, 18rem);
+    padding-bottom: clamp(10rem, 32vh, 22rem);
     overflow-x: hidden;
   }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
@@ -2116,8 +2116,9 @@
     const yellow = '#e8ff1a';
 
     const SEG = 1;
-    /* Tres tramos estrictos en una sola timeline; ~4.25× vh de scroll por bloque */
-    const scrollPerSegmentVh = 4.25;
+    /* Cada tramo (texto + cuadro completo) dispone de scrollPerSegmentVh × innerHeight px.
+       Total presentación ≈ ×3 (p. ej. 5.75 → ~17.25 alturas de ventana) para leer márgenes, merge y color. */
+    const scrollPerSegmentVh = 5.75;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
