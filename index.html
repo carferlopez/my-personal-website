@@ -48,6 +48,8 @@
     --red: #ef4444;
     --hero-v2-orange: #ff4d00;
     --hero-v2-violet: #aa00ff;
+    /* Fondo del bloque hero V2 (más oscuro que el magenta/violeta de acento) */
+    --hero-v2-violet-bg: #420868;
     /* Titulares bajo el hero + typewriter: naranja vivo, magenta vivo, amarillo fluorescente (el brutalista no usa estas vars) */
     --page-orange: #ff5a1a;
     --page-magenta: #ff00b2;
@@ -211,7 +213,7 @@
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--hero-v2-violet);
+    background: var(--hero-v2-violet-bg);
     color: var(--white);
   }
   .hero-v2-section.hero-v2-section--static {
@@ -304,11 +306,22 @@
   #heroV2Title,
   #heroV2Title.hero-v2-title,
   #heroV2Title .hero-v2-line,
-  #heroV2Title .hero-v2-amp,
-  #heroV2Title .hero-v2-violet,
-  #heroV2Title .hero-v2-dot {
+  #heroV2Title .hero-v2-amp {
     color: var(--page-yellow) !important;
     -webkit-text-fill-color: var(--page-yellow) !important;
+  }
+  #heroV2Title .hero-v2-line:nth-child(1) {
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
+  }
+  #heroV2Title .hero-v2-line:nth-child(3) .hero-v2-violet {
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
+  }
+  #heroV2Title .hero-v2-line:nth-child(4),
+  #heroV2Title .hero-v2-line:nth-child(4) .hero-v2-dot {
+    color: var(--hero-v2-orange) !important;
+    -webkit-text-fill-color: var(--hero-v2-orange) !important;
   }
 
   /* Typewriter: naranja → violeta → amarillo */
