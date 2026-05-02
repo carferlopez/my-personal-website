@@ -2058,7 +2058,6 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const endScale = wide ? 2.75 : 2.05;
-    /* Inicio: copy anclado al margen izquierdo, bloque al derecho; fin: juntos y centrados a escala */
     const startCopy = wide ? { x: '-26vw', y: 0 } : { x: 0, y: '-16vh' };
     const startViz = wide ? { x: '26vw', y: 0 } : { x: 0, y: '16vh' };
 
@@ -2066,13 +2065,48 @@
     const violet = '#aa00ff';
     const yellow = '#e8ff1a';
 
-    /* ~2.55× viewport por bloque: tiempo de lectura en márgenes + merge sin choque con WORKS */
     const pinScrollPx = () => Math.round(window.innerHeight * 2.55);
 
-    panels.forEach((panel) => {
+    function resetIntroPanelVisual(panel) {
       const copy = panel.querySelector('.intro-panel__copy');
       const vizEl = panel.querySelector('.intro-viz');
       if (!copy || !vizEl) return;
+      gsap.killTweensOf([copy, vizEl]);
+      gsap.set(copy, {
+        transformOrigin: wide ? 'left center' : 'center top',
+        scale: 1,
+        x: startCopy.x,
+        y: startCopy.y,
+        opacity: 1,
+      });
+      gsap.set(vizEl, {
+        transformOrigin: wide ? 'right center' : 'center bottom',
+        scale: 1,
+        x: startViz.x,
+        y: startViz.y,
+        opacity: 1,
+      });
+    }
+
+    function resetIntroLineColorForPanel(pid) {
+      const id = 'introLine' + pid;
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.style.removeProperty('color');
+      el.querySelectorAll('.intro-line__suffix').forEach((s) => {
+        s.style.removeProperty('color');
+      });
+    }
+
+    const nav = { sts: [] };
+    const tls = [];
+
+    for (let i = 0; i < panels.length; i++) {
+      const panel = panels[i];
+      const idx = i;
+      const copy = panel.querySelector('.intro-panel__copy');
+      const vizEl = panel.querySelector('.intro-viz');
+      if (!copy || !vizEl) continue;
 
       gsap.set(copy, {
         transformOrigin: wide ? 'left center' : 'center top',
@@ -2098,6 +2132,28 @@
           pin: true,
           anticipatePin: 1,
           invalidateOnRefresh: true,
+          enabled: i === 0,
+          onLeave: () => {
+            if (idx === 0 && nav.sts[1]) nav.sts[1].enable();
+            if (idx === 1 && nav.sts[2]) nav.sts[2].enable();
+          },
+          onEnterBack: () => {
+            if (idx === 0) {
+              if (nav.sts[1]) nav.sts[1].disable();
+              if (nav.sts[2]) nav.sts[2].disable();
+              if (tls[1]) tls[1].progress(0);
+              if (tls[2]) tls[2].progress(0);
+              resetIntroPanelVisual(panels[1]);
+              resetIntroPanelVisual(panels[2]);
+              resetIntroLineColorForPanel('1');
+              resetIntroLineColorForPanel('2');
+            } else if (idx === 1) {
+              if (nav.sts[2]) nav.sts[2].disable();
+              if (tls[2]) tls[2].progress(0);
+              resetIntroPanelVisual(panels[2]);
+              resetIntroLineColorForPanel('2');
+            }
+          },
         },
       });
 
@@ -2127,7 +2183,6 @@
       );
 
       const pid = panel.getAttribute('data-intro-panel');
-      /* Color en el primer contacto visual texto↔cuadro (antes ~66% retrasaba demasiado) */
       const colorStart = 0.4;
       const colorDur = 0.09;
 
@@ -2190,8 +2245,15 @@
         }
       }
 
+      const st = tl.scrollTrigger;
+      if (st) nav.sts[idx] = st;
+      tls[idx] = tl;
       introPanelTimelines.push(tl);
-    });
+    }
+
+    if (nav.sts.filter(Boolean).length < panels.length) {
+      nav.sts.forEach((s) => s && s.enable());
+    }
   }
 
   function setProjectsTitleStack(text) {
