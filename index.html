@@ -424,16 +424,17 @@
     position: relative;
     z-index: 2;
     margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
-    max-width: 36rem;
+    /* Bloque ~cuadrado: líneas cortas (ch) + más tipografía abajo */
+    max-width: min(26ch, 34rem, 92vw);
     will-change: transform;
   }
 
   .intro-panel__headline {
     margin: 0;
-    font-size: clamp(1.4rem, 4.2vw, 2.85rem);
+    font-size: clamp(1.45rem, 4.35vw, 2.95rem);
     font-weight: 900;
     letter-spacing: -0.04em;
-    line-height: 1.05;
+    line-height: 1.1;
     text-transform: uppercase;
     text-wrap: balance;
     word-break: normal;
@@ -441,17 +442,27 @@
     hyphens: none;
   }
   @media (min-width: 768px) {
-    .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
+    .intro-panel__headline { font-size: clamp(1.7rem, 3.4vw, 3.25rem); }
   }
-  /* Escritorio ancho: columna más estrecha + más interlineado → bloque más alto, menos barra horizontal */
-  @media (min-width: 900px) {
+  /* Tablet: mismo criterio cuadrado, escala intermedia */
+  @media (min-width: 640px) and (max-width: 899px) {
     .intro-panel__copy {
-      max-width: min(22rem, 32vw);
+      max-width: min(24ch, 30rem, 88vw);
     }
     .intro-panel__headline {
-      font-size: clamp(1.85rem, 2.35vw, 2.95rem);
-      line-height: 1.18;
-      letter-spacing: -0.038em;
+      font-size: clamp(1.85rem, 3.6vw, 2.85rem);
+      line-height: 1.11;
+    }
+  }
+  /* Escritorio: tipografía grande en columna tipo bloque (relación alto/ancho cercana) */
+  @media (min-width: 900px) {
+    .intro-panel__copy {
+      max-width: min(22ch, 28rem, 36vw);
+    }
+    .intro-panel__headline {
+      font-size: clamp(2.2rem, 3.05vw, 3.85rem);
+      line-height: 1.1;
+      letter-spacing: -0.042em;
     }
   }
 
@@ -854,12 +865,12 @@
     }
     .intro-hero.intro-hero--active .intro-panel__copy {
       margin-inline: auto;
-      max-width: min(100%, 22rem);
+      max-width: min(100%, 20ch, 90vw);
       text-align: center;
     }
     .intro-panel__headline {
-      font-size: clamp(0.98rem, 4.75vw, 1.45rem);
-      line-height: 1.12;
+      font-size: clamp(1.05rem, 5.5vw, 1.75rem);
+      line-height: 1.11;
       overflow-wrap: anywhere;
       word-break: break-word;
       hyphens: auto;
@@ -1976,7 +1987,7 @@
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
     /* Móvil: escala suave; escritorio: zoom moderado (columna ya es estrecha, evita barras ultra anchas) */
-    const endScale = wide ? 2.25 : narrowMobile ? 1.08 : 2.05;
+    const endScale = wide ? 2.4 : narrowMobile ? 1.12 : 2.1;
     const startCopy = wide
       ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
       : { x: 0, y: 0, opacity: 0, scale: 0.94 };
