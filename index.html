@@ -460,7 +460,7 @@
     .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
   }
 
-  /* Mismos colores que el typewriter: naranja → violeta → lima (+ sufijo naranja en bloque 3) */
+  /* Bloque 3: titular lima hasta solapar con el cuadro amarillo; al solapar → naranja (JS). */
   .intro-panel--0 .intro-panel__headline {
     color: var(--page-orange);
   }
@@ -471,7 +471,7 @@
     color: var(--page-lime);
   }
   .intro-panel--2 .intro-line__suffix {
-    color: var(--page-orange);
+    color: var(--page-lime);
   }
 
   .intro-line__suffix {
@@ -510,12 +510,7 @@
     background: var(--hero-v2-violet);
   }
   .intro-viz--2 .intro-viz__solid {
-    background: linear-gradient(
-      152deg,
-      var(--page-lime) 0%,
-      var(--page-orange) 58%,
-      var(--page-orange) 100%
-    );
+    background: var(--page-yellow);
   }
 
   .header-top {
@@ -2426,7 +2421,7 @@
           const sc = merged
             ? introLineColorsMerged[i]
             : i === 2
-              ? orange
+              ? lime
               : '#000000';
           suf.style.color = sc;
           suf.style.webkitTextFillColor = sc;
