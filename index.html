@@ -2573,14 +2573,27 @@
       end: 'bottom top',
       scrub: 0.8,
     };
+    const heroMobileReverse =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
     const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
-    heroTl.fromTo(
-      '#heroV2Title',
-      { scale: 1, rotationZ: 0 },
-      { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
-      0
-    );
-    /* Fade a negro en el ~último cuarto del recorrido (tras el zoom) */
+    /* Escritorio: zoom in al bajar. Móvil: al revés — de pantalla completa girada al titular “de reposo”. */
+    if (heroMobileReverse) {
+      heroTl.fromTo(
+        '#heroV2Title',
+        { scale: 7, rotationZ: 22 },
+        { scale: 1, rotationZ: 0, ease: 'none', duration: 1 },
+        0
+      );
+    } else {
+      heroTl.fromTo(
+        '#heroV2Title',
+        { scale: 1, rotationZ: 0 },
+        { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
+        0
+      );
+    }
+    /* Fade a color de página en el último tramo del hero */
     heroTl.fromTo(
       '.hero-v2-end-fade',
       { opacity: 0 },
