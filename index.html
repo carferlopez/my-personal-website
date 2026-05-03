@@ -1857,35 +1857,19 @@
         t0 + durApp
       );
 
-      if (i < 2) {
-        tl.to(
-          copy,
-          {
-            scale: flyS,
-            x: 0,
-            y: 0,
-            z: flyZ,
-            opacity: 0,
-            ease: 'power3.in',
-            duration: durFly,
-          },
-          t0 + durApp + durHold
-        );
-      } else {
-        tl.to(
-          copy,
-          {
-            scale: readS,
-            x: 0,
-            y: 0,
-            z: 0,
-            opacity: 1,
-            ease: 'power2.out',
-            duration: durFly,
-          },
-          t0 + durApp + durHold
-        );
-      }
+      tl.to(
+        copy,
+        {
+          scale: flyS,
+          x: 0,
+          y: 0,
+          z: flyZ,
+          opacity: 0,
+          ease: 'power3.in',
+          duration: durFly,
+        },
+        t0 + durApp + durHold
+      );
     }
 
     addSegment(0, 0);
