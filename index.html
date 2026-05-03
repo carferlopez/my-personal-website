@@ -7,7 +7,7 @@
 <title>Carlos Fernández — Systems Architect & Creative Developer</title>
 <meta name="description" content="Construyo productos digitales en solitario: lanzar rápido, usuarios reales, sin ruido corporativo.">
 <meta name="author" content="Carlos Fernández">
-<meta name="theme-color" content="#000000">
+<meta name="theme-color" content="#76124d">
 
 <!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
 
 <!-- Favicon (SVG inline, sin archivo extra) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22black%22/><circle cx=%2278%22 cy=%2278%22 r=%2220%22 fill=%22%23eeff00%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%2376124d%22/><circle cx=%2278%22 cy=%2278%22 r=%2220%22 fill=%22%23eeff00%22/></svg>">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,18 +42,19 @@
   :root {
     --black: #000;
     --white: #fff;
-    /* Paleta sitio: negro de fondo, amarillo fluorescente como texto principal, blanco para acentos / inversiones */
+    /* Paleta sitio: magenta de fondo, amarillo fluorescente como texto principal, blanco para acentos / inversiones */
+    --page-bg: #76124d;
     --page-lime: #eeff00;
     --text-primary: var(--page-lime);
     --gray: #a0a070;
     --gray-light: #e5e7eb;
     --gray-mid: #9ca3af;
     --hero-v2-orange: var(--page-lime);
-    --hero-v2-violet-bg: #000;
+    --hero-v2-violet-bg: var(--page-bg);
     --hero-v2-violet: var(--white);
     --hero-v2-violet-rgb: 255, 255, 255;
     --page-orange: var(--page-lime);
-    --page-magenta: var(--white);
+    --page-magenta: var(--page-bg);
     --page-yellow: var(--white);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 0.5rem;
@@ -75,7 +76,7 @@
 
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-    background: var(--black);
+    background: var(--page-bg);
     color: var(--page-lime);
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
@@ -121,7 +122,7 @@
   .site-header.scrolled {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(118, 18, 77, 0.9);
   }
 
   .site-header__inner {
@@ -133,7 +134,7 @@
   }
   @media (min-width: 768px) { .site-header__inner { gap: 0.625rem; } }
 
-  /* Cabecera: amarillo fluorescente por defecto, blanco en hover / activo (sitio en paleta oscura única) */
+  /* Cabecera: amarillo fluorescente por defecto, blanco en hover / activo (fondo del sitio en magenta) */
   .site-header .header-top nav a {
     color: var(--page-lime);
   }
@@ -163,7 +164,7 @@
     color: var(--white);
   }
   .site-header .lang-select__menu {
-    background: var(--black);
+    background: var(--page-bg);
     border: 2px solid rgba(238, 255, 0, 0.45);
     color: var(--page-lime);
   }
@@ -203,12 +204,12 @@
     min-height: 100svh;
   }
 
-  /* Último tramo del hero: fundido a negro antes de mostrar la presentación / typewriter */
+  /* Último tramo del hero: fundido al magenta de página antes de la presentación */
   .hero-v2-end-fade {
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: var(--black);
+    background: var(--page-bg);
     pointer-events: none;
     opacity: 0;
   }
@@ -312,10 +313,10 @@
     -webkit-text-fill-color: var(--white) !important;
   }
 
-  /* Presentación: mismo fondo negro; amarillo fluorescente + bloques planos; merge al scroll vía GSAP */
+  /* Presentación: mismo fondo magenta; amarillo fluorescente + bloques planos */
   .intro-hero {
     position: relative;
-    background: var(--black);
+    background: var(--page-bg);
     color: var(--page-lime);
     padding-top: 5rem;
     padding-bottom: clamp(10rem, 32vh, 22rem);
@@ -617,7 +618,7 @@
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
-    background: var(--black);
+    background: var(--page-bg);
     color: var(--page-lime);
     border: 2px solid rgba(238, 255, 0, 0.45);
     z-index: 120;
@@ -695,7 +696,7 @@
       top: calc(100% + 0.75rem);
       right: 0;
       z-index: 200;
-      background: rgba(0,0,0,0.96);
+      background: rgba(118, 18, 77, 0.97);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       padding: 1rem 1.25rem 0.85rem;
@@ -779,9 +780,9 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--white); }
 
-  /* WORKS: mismo fondo oscuro; copy en amarillo fluorescente, acentos en blanco */
+  /* WORKS: fondo magenta; copy en amarillo fluorescente, acentos en blanco */
   #proyectos.projects-section {
-    background: var(--black);
+    background: var(--page-bg);
     color: var(--page-lime);
     overflow-x: clip;
   }
@@ -814,7 +815,7 @@
     width: 100%;
     max-width: 100%;
     margin: 0 0 0.85rem;
-    background: var(--black);
+    background: var(--page-bg);
     border: 1px solid rgba(238, 255, 0, 0.2);
     border-radius: 2px;
     box-shadow: inset 0 1px 0 rgba(238, 255, 0, 0.08);
@@ -829,11 +830,11 @@
     pointer-events: none;
     background: linear-gradient(
       100deg,
-      #060601 0%,
-      #121005 28%,
-      #1c1a06 52%,
-      #080802 72%,
-      #000000 100%
+      #080205 0%,
+      rgb(35, 12, 30) 28%,
+      rgb(48, 16, 38) 52%,
+      #12060e 72%,
+      var(--page-bg) 100%
     );
     background-size: 320% 100%;
     animation: projects-ticker-violet-shift 22s ease-in-out infinite alternate;
@@ -1141,7 +1142,7 @@
 
   /* ==================== CONTACT ==================== */
   #contacto {
-    background: var(--black);
+    background: var(--page-bg);
     color: var(--page-lime);
   }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
@@ -1483,7 +1484,7 @@
     width: 100%;
     height: 100%;
     border: 4px solid rgba(238, 255, 0, 0.22);
-    background: #0a0a0a;
+    background: #2a0f22;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1531,25 +1532,25 @@
     top: -20%;
     width: 150%;
     height: 150%;
-    background: conic-gradient(from 200deg, #1e1e1e, #0a0a0a, #2d2d2d, #151515, #0f0f0f);
+    background: conic-gradient(from 200deg, #3a1830, #180a14, #482238, #241020, #1a0c16);
     filter: blur(22px);
   }
   @media (prefers-reduced-motion: reduce) {
     .project-poster-blur-blob { filter: blur(0); opacity: 0.85; }
   }
-  .project-poster-inner--orange { background: #070700; border-color: rgba(238, 255, 0, 0.4); }
+  .project-poster-inner--orange { background: #2d1224; border-color: rgba(238, 255, 0, 0.4); }
   .project-poster-inner--orange .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #181806, #050400, #222010, #0e0d02, #070700);
+    background: conic-gradient(from 200deg, #482038, #160812, #5a2a48, #281018, #2d1224);
   }
   .project-poster-inner--orange .project-poster-lock-icon { color: var(--page-lime); }
-  .project-poster-inner--violet { background: #050505; border-color: rgba(255, 255, 255, 0.28); }
+  .project-poster-inner--violet { background: #281020; border-color: rgba(255, 255, 255, 0.28); }
   .project-poster-inner--violet .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #121212, #060606, #1a1a1a, #0c0c0c, #050505);
+    background: conic-gradient(from 200deg, #382830, #140c12, #483848, #20181c, #281020);
   }
   .project-poster-inner--violet .project-poster-lock-icon { color: var(--white); }
-  .project-poster-inner--yellow { background: #060800; border-color: rgba(238, 255, 0, 0.28); }
+  .project-poster-inner--yellow { background: #321828; border-color: rgba(238, 255, 0, 0.28); }
   .project-poster-inner--yellow .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #1a1908, #060501, #262410, #0c0b03, #060800);
+    background: conic-gradient(from 200deg, #462238, #180c12, #5a3048, #24141c, #321828);
   }
   .project-poster-inner--yellow .project-poster-lock-icon { color: var(--page-lime); }
   .project-poster-blur-grid {
@@ -1630,7 +1631,7 @@
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.78) 100%);
+    background: linear-gradient(180deg, transparent 45%, rgba(15, 4, 14, 0.82) 100%);
     pointer-events: none;
   }
 </style>
