@@ -792,33 +792,46 @@
   @media (min-width: 640px) { .section-pad { padding: 3rem 0; } }
   @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
 
-  /* Móvil: menos blanco entre bloques (hero sigue en 300vh; intro pin conserva el mismo end en px vía JS) */
+  /* Móvil: sin animaciones de scroll — menos aire entre bloques */
   @media (max-width: 639px) {
     .section-pad {
-      padding-top: 1.35rem;
-      padding-bottom: 1.35rem;
+      padding-top: 0.75rem;
+      padding-bottom: 0.75rem;
+    }
+    .hero-v2-section.hero-v2-section--static {
+      min-height: 0;
+    }
+    .hero-v2-section.hero-v2-section--static .hero-v2-sticky {
+      position: relative;
+      height: auto;
+      min-height: 0;
+      max-height: none;
+      padding-bottom: clamp(1rem, 4vw, 2rem);
+    }
+    #heroV2Title {
+      will-change: auto;
     }
     .intro-hero {
-      padding-top: 2.75rem;
-      padding-bottom: clamp(3.5rem, 11vw, 6.5rem);
+      padding-top: 2rem;
+      padding-bottom: clamp(2rem, 6vw, 3.5rem);
     }
     .intro-stage {
-      gap: clamp(2.25rem, 7vh, 4.5rem);
+      gap: clamp(1.25rem, 4vh, 2.25rem);
     }
     .intro-panel {
-      padding-block: clamp(2rem, 5.5vw, 3.75rem);
+      min-height: auto !important;
+      padding-block: clamp(1.25rem, 4vw, 2rem);
     }
     #proyectos.section-pad {
-      padding-top: clamp(0.35rem, 1.5vw, 1rem);
-      padding-bottom: clamp(0.65rem, 3vw, 1.35rem);
+      padding-top: clamp(0.25rem, 1vw, 0.65rem);
+      padding-bottom: clamp(0.45rem, 2vw, 1rem);
     }
     .projects-works-inner {
       padding-top: 0;
-      padding-bottom: clamp(1rem, 3vw, 2rem);
+      padding-bottom: clamp(0.65rem, 2.5vw, 1.35rem);
     }
     .projects-works-stack {
-      min-height: min(88vh, 1000px);
-      min-height: min(88svh, 1000px);
+      min-height: 0;
     }
     .contact-box {
       padding: 1rem 0;
@@ -855,6 +868,11 @@
       width: 100%;
       min-width: 0;
       min-height: clamp(150px, 38vmin, 300px);
+    }
+    .projects-ticker__track,
+    .projects-vertical-ticker__track {
+      animation: none !important;
+      transform: none !important;
     }
   }
 
@@ -1892,7 +1910,7 @@
   function refreshIntroLinesAfterLangChange() {
     fillIntroLinesFromLang();
     killIntroLinesScrollAnimation();
-    setupIntroLinesScrollAnimation();
+    syncViewportAnimationMode();
   }
 
   function setupIntroLinesScrollAnimation() {
@@ -1906,7 +1924,10 @@
     if (panels.length < 3) return;
 
     const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceIntro) {
+    const mobileAnimationsOff =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    if (reduceIntro || mobileAnimationsOff) {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
         const vizEl = panel.querySelector('.intro-viz');
@@ -2162,6 +2183,66 @@
     introPanelTimelines.push(tl);
   }
 
+  function killHeroScrollAnimation() {
+    const hero = document.querySelector('.hero-v2-section');
+    if (typeof gsap !== 'undefined') {
+      gsap.killTweensOf('#heroV2Title');
+      gsap.killTweensOf('.hero-v2-end-fade');
+      gsap.set('#heroV2Title', { clearProps: 'transform' });
+    }
+    if (typeof ScrollTrigger !== 'undefined' && hero) {
+      ScrollTrigger.getAll().forEach((st) => {
+        if (st.trigger === hero) st.kill();
+      });
+    }
+  }
+
+  function initHeroScrollAnimation() {
+    if (reduceMotion) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    if (window.matchMedia('(max-width: 639px)').matches) return;
+    gsap.registerPlugin(ScrollTrigger);
+    killHeroScrollAnimation();
+    const heroScroll = {
+      trigger: '.hero-v2-section',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 0.8,
+    };
+    const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
+    heroTl.fromTo(
+      '#heroV2Title',
+      { scale: 1, rotationZ: 0 },
+      { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
+      0
+    );
+    heroTl.fromTo(
+      '.hero-v2-end-fade',
+      { opacity: 0 },
+      { opacity: 1, ease: 'none', duration: 0.26 },
+      0.74
+    );
+  }
+
+  function syncViewportAnimationMode() {
+    const hero = document.querySelector('.hero-v2-section');
+    const mob =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    if (hero) {
+      if (mob || reduceMotion) {
+        hero.classList.add('hero-v2-section--static');
+        killHeroScrollAnimation();
+      } else {
+        hero.classList.remove('hero-v2-section--static');
+        initHeroScrollAnimation();
+      }
+    }
+    setupIntroLinesScrollAnimation();
+    fitHeroV2Lines();
+    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+  }
+
   function setProjectsTitleStack(text) {
     const h2 = document.getElementById('projectsTitle');
     if (!h2 || !text) return;
@@ -2218,7 +2299,10 @@
     const reduce =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.innerHTML = reduce ? chunk : chunk + chunk;
+    const mobileStatic =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    track.innerHTML = reduce || mobileStatic ? chunk : chunk + chunk;
   }
 
   function renderProjectsVerticalTicker() {
@@ -2228,7 +2312,10 @@
     const reduce =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduce) {
+    const mobileStatic =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    if (reduce || mobileStatic) {
       track.innerHTML =
         '<span class="projects-vertical-ticker__chunk">' +
         buildVerticalWorksColumn(raw, true) +
@@ -2494,7 +2581,6 @@
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const heroV2Section = document.querySelector('.hero-v2-section');
 
   function fitHeroV2Lines() {
     const sticky = document.querySelector('.hero-v2-sticky');
@@ -2551,64 +2637,15 @@
 
   window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
   window.addEventListener('resize', () => {
-    fitHeroV2Lines();
     updateHeaderTheme();
-    setupIntroLinesScrollAnimation();
-    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    syncViewportAnimationMode();
   });
   window.addEventListener('load', () => {
-    fitHeroV2Lines();
-    if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    syncViewportAnimationMode();
   });
   updateHeaderTheme();
 
-  if (heroV2Section && reduceMotion) heroV2Section.classList.add('hero-v2-section--static');
-  fitHeroV2Lines();
-
-  if (!reduceMotion && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-    const heroScroll = {
-      trigger: '.hero-v2-section',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 0.8,
-    };
-    const heroMobileReverse =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
-    /* Escritorio: zoom in al bajar. Móvil: al revés — de pantalla completa girada al titular “de reposo”. */
-    if (heroMobileReverse) {
-      /* Más recorrido de scroll para el zoom inverso; fade después para no tapar el final. */
-      heroTl.fromTo(
-        '#heroV2Title',
-        { scale: 7, rotationZ: 22 },
-        { scale: 1, rotationZ: 0, ease: 'none', duration: 0.68 },
-        0
-      );
-      heroTl.fromTo(
-        '.hero-v2-end-fade',
-        { opacity: 0 },
-        { opacity: 1, ease: 'none', duration: 0.2 },
-        0.8
-      );
-    } else {
-      heroTl.fromTo(
-        '#heroV2Title',
-        { scale: 1, rotationZ: 0 },
-        { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
-        0
-      );
-      heroTl.fromTo(
-        '.hero-v2-end-fade',
-        { opacity: 0 },
-        { opacity: 1, ease: 'none', duration: 0.26 },
-        0.74
-      );
-    }
-  }
-
-  setupIntroLinesScrollAnimation();
+  syncViewportAnimationMode();
 </script>
 
 </body>
