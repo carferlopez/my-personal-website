@@ -232,9 +232,9 @@
     align-items: stretch;
     overflow: hidden;
     color: var(--page-lime);
-    /* Mismo --container-pad-x horizontal que el resto de secciones; bloques seguros arriba/abajo */
+    /* Reserva bajo el header fijo para que el titular no invada el logo */
     padding:
-      max(0.75rem, env(safe-area-inset-top, 0px))
+      max(5rem, calc(env(safe-area-inset-top, 0px) + 4.75rem))
       max(var(--container-pad-x), env(safe-area-inset-right, 0px))
       max(0.75rem, env(safe-area-inset-bottom, 0px))
       max(var(--container-pad-x), env(safe-area-inset-left, 0px));
@@ -242,7 +242,7 @@
   @media (min-width: 768px) {
     .hero-v2-sticky {
       padding:
-        max(1rem, env(safe-area-inset-top, 0px))
+        max(5.25rem, calc(env(safe-area-inset-top, 0px) + 5rem))
         max(var(--container-pad-x), env(safe-area-inset-right, 0px))
         max(1rem, env(safe-area-inset-bottom, 0px))
         max(var(--container-pad-x), env(safe-area-inset-left, 0px));
@@ -254,10 +254,13 @@
     max-width: 100%;
     box-sizing: border-box;
     flex-shrink: 0;
+    margin: 0;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.03em;
-    line-height: 0.88;
+    /* Interlineado mínimo entre las 4 líneas (bloque más bajo, menos solape con el logo) */
+    line-height: 0.62;
+    gap: 0;
     will-change: transform;
     transform-origin: 50% 50%;
     position: relative;
@@ -282,7 +285,9 @@
     white-space: nowrap;
     color: var(--page-lime) !important;
     -webkit-text-fill-color: var(--page-lime) !important;
-    line-height: 0.88;
+    line-height: 0.62;
+    margin: 0;
+    padding: 0;
   }
 
   /* Por encima del color heredado de .hero-v2-section (p. ej. con capas/GPU) */
