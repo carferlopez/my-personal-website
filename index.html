@@ -824,6 +824,38 @@
       padding: 1rem 0;
       gap: 1rem;
     }
+    /* Presentación: titulares que cruzan los cuadros — ancho útil, cortes y escala */
+    html {
+      overflow-x: hidden;
+    }
+    .intro-hero.intro-hero--active {
+      overflow-x: visible;
+    }
+    .intro-panel__grid {
+      min-width: 0;
+      gap: clamp(1.25rem, 4vw, 2rem);
+    }
+    .intro-panel__copy {
+      max-width: none;
+      width: 100%;
+      min-width: 0;
+      margin-inline-start: 0;
+      box-sizing: border-box;
+    }
+    .intro-panel__headline {
+      font-size: clamp(0.98rem, 4.75vw, 1.45rem);
+      line-height: 1.12;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+      max-width: 100%;
+    }
+    .intro-panel__viz {
+      width: 100%;
+      min-width: 0;
+      min-height: clamp(150px, 38vmin, 300px);
+    }
   }
 
   .big-heading {
@@ -1911,7 +1943,9 @@
     introRoot.classList.add('intro-hero--active');
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
-    const endScale = wide ? 2.75 : 2.05;
+    const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
+    /* Móvil: menos zoom para que texto+cuadro no sobrepasen el viewport (overflow del padre). */
+    const endScale = wide ? 2.75 : narrowMobile ? 1.46 : 2.05;
     /* Escritorio: texto y bloque entran desde los lados. Móvil: fade-in + zoom suave (sin vuelo lateral). */
     const startCopy = wide
       ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
