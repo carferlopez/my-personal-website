@@ -788,233 +788,15 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--white); }
 
-  /* WORKS: imagen de fondo a pantalla completa + velo naranja; copy en lima / blanco */
+  /* WORKS: espacio reservado; mismo naranja que el resto del sitio (#FF6600) */
   #proyectos.projects-section {
-    background: transparent;
-    color: var(--page-lime);
-    overflow-x: clip;
-    position: relative;
+    background: var(--page-bg);
+    min-height: min(100vh, 1400px);
+    min-height: min(100dvh, 1400px);
   }
-  #proyectos .projects-strap.subheading {
-    color: var(--page-lime);
-  }
-  #proyectos .projects-strap__lead,
-  #proyectos .projects-strap__intro {
-    color: var(--page-lime);
-  }
-  #proyectos .projects-strap__lead {
-    color: var(--white);
-  }
-  #proyectos .projects-strap a {
-    color: var(--white);
-  }
-  #proyectos .projects-strap a:focus-visible {
-    outline-color: var(--page-lime);
-  }
-
   #proyectos.section-pad {
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
     padding-bottom: clamp(2rem, 6vw, 4rem);
-  }
-
-  .projects-hero-stack {
-    position: relative;
-    min-height: min(100vh, 1400px);
-    min-height: min(100dvh, 1400px);
-    display: flex;
-    flex-direction: column;
-  }
-  .projects-hero-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    pointer-events: none;
-  }
-  .projects-hero-bg__img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    transform: scale(1.02);
-  }
-  /* Velo naranja semitransparente (#FF6600 a ~55%) */
-  .projects-hero-bg__wash {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: rgba(255, 102, 0, 0.55);
-    pointer-events: none;
-  }
-  .projects-hero-inner {
-    position: relative;
-    z-index: 2;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding-top: clamp(0.5rem, 2vw, 1.25rem);
-    padding-bottom: clamp(1.5rem, 4vw, 3rem);
-  }
-
-  /* WORKS (mismo rótulo en ES/EN): columna lateral, lectura abajo → arriba */
-  .projects-module {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 0;
-    margin-top: 0;
-    min-width: 0;
-  }
-  .projects-hero-inner .projects-module--fullscreen {
-    flex: 1;
-    min-height: 0;
-  }
-  .projects-module__body {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-  }
-  .projects-module__body .projects-strap.subheading {
-    margin-top: 0;
-  }
-  .projects-module__body .projects-slide-stage {
-    margin-top: 1.35rem;
-  }
-  @media (min-width: 768px) {
-    .projects-module__body .projects-slide-stage { margin-top: 1.75rem; }
-  }
-  #proyectos #projectsTitle {
-    margin: 0;
-    margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-    width: max-content;
-    flex: 0 0 auto;
-    max-width: none;
-    box-sizing: border-box;
-    padding: 0;
-    padding-right: calc(0.42 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    overflow: visible;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-height: 0;
-    max-height: 100%;
-    position: sticky;
-    top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
-    z-index: 1;
-    color: var(--page-orange);
-    -webkit-text-fill-color: var(--page-orange);
-  }
-  @media (min-width: 640px) {
-    #proyectos #projectsTitle {
-      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-    }
-  }
-  #proyectos #projectsTitle .projects-vertical-title__stack {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: flex-start;
-    flex: 0 0 auto;
-    width: max-content;
-    align-self: flex-start;
-    min-height: 0;
-    /* Fallback ~94,5 % del hero (hero×0.945); desktop syncWorksFontToHero aplica ese factor en px */
-    font-size: calc(0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    row-gap: 0;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__stack > span {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1em;
-    height: 0.84em;
-    min-width: 1em;
-    min-height: 0.84em;
-    transform: rotate(-90deg);
-    transform-origin: center center;
-    font-size: 1em;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    margin-block: -0.02em;
-    padding: 0;
-    -webkit-text-stroke: 0.02em var(--page-orange);
-  }
-  /* O–W suele verse más pegado (formas anchas × rotación); algo más de aire solo entre ellas */
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
-    margin-block-start: 0.09em;
-    margin-block-end: -0.02em;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"],
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="S"] {
-    margin-block: -0.058em;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"] {
-    margin-block-start: -0.16em;
-  }
-  @media (min-width: 640px) {
-    #proyectos #projectsTitle .projects-vertical-title__stack {
-      font-size: calc(0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-      row-gap: 0;
-    }
-  }
-  @media (max-width: 639px) {
-    .projects-module {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1.25rem;
-    }
-    #proyectos #projectsTitle {
-      position: static;
-      align-self: flex-start;
-      margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-      width: max-content;
-      max-width: none;
-      flex: 0 0 auto;
-      padding-right: 0;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__stack {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-items: baseline;
-      min-height: 0;
-      column-gap: 0;
-      row-gap: 0;
-      font-size: clamp(3rem, 22vw, 12rem);
-    }
-    #proyectos #projectsTitle .projects-vertical-title__stack > span {
-      font-size: 1em;
-      transform: none;
-      margin-block: 0;
-      margin-inline: 0;
-      line-height: 0.82;
-      letter-spacing: -0.08em;
-      -webkit-text-stroke: 0.02em var(--page-orange);
-    }
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="O"],
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"],
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="S"] {
-      margin-inline: -0.055em;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="R"],
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="K"],
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="S"] {
-      margin-inline-start: -0.11em;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__stack > span[data-glyph="W"] {
-      margin-block: 0;
-      margin-inline-start: 0.09em;
-    }
   }
 
   #contacto .contact-box > h2.big-heading {
@@ -1064,10 +846,6 @@
   @media (min-width: 640px) { .subheading { font-size: 1.125rem; } }
   @media (min-width: 768px) { .subheading { font-size: 1.25rem; } }
   @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
-
-  .projects-section .projects-strap.subheading {
-    margin-top: 0;
-  }
 
   /* ==================== CONTACT ==================== */
   #contacto {
@@ -1300,180 +1078,6 @@
     overflow: hidden;
   }
 
-  /* ==================== WORKS: slides a pantalla completa ==================== */
-  .projects-strap {
-    margin-top: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.7rem;
-    text-align: left;
-    max-width: 100%;
-  }
-  .projects-strap__lead {
-    display: block;
-    color: var(--white);
-    font-weight: 900;
-    letter-spacing: 0.02em;
-    line-height: 1.25;
-    font-size: 1.05em;
-  }
-  @media (min-width: 640px) { .projects-strap__lead { font-size: 1.08em; } }
-  @media (min-width: 768px) { .projects-strap__lead { font-size: 1.1em; } }
-  @media (min-width: 1024px) { .projects-strap__lead { font-size: 1.12em; } }
-  .projects-strap__intro {
-    display: block;
-    color: var(--page-lime);
-    font-weight: 500;
-    line-height: 1.5;
-  }
-  .projects-strap a {
-    color: var(--white);
-    font-weight: 700;
-    text-decoration: underline;
-    text-underline-offset: 0.12em;
-    cursor: pointer;
-  }
-  .projects-strap a:hover { opacity: 0.85; }
-  .projects-strap a:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
-  .projects-slide-stage {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    min-height: min(78vh, 920px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .projects-chev {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: var(--white);
-    color: var(--black);
-    border: 2px solid var(--white);
-    font-size: 1.5rem;
-    line-height: 1;
-    transition: background 0.15s, color 0.15s, opacity 0.15s, border-color 0.15s;
-    backdrop-filter: blur(4px);
-  }
-  .projects-chev:hover:not(:disabled) {
-    background: var(--page-lime);
-    border-color: var(--page-lime);
-    color: var(--black);
-  }
-  .projects-chev:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
-  .projects-chev:disabled { opacity: 0.3; cursor: not-allowed; }
-  .projects-chev--off { visibility: hidden; pointer-events: none; opacity: 0; }
-  .projects-chev--prev {
-    left: max(0.65rem, env(safe-area-inset-left, 0px));
-  }
-  .projects-chev--next {
-    right: max(0.65rem, env(safe-area-inset-right, 0px));
-  }
-
-  .projects-slide-area {
-    position: relative;
-    width: 100%;
-    max-width: min(100vw - 7rem, 1200px);
-    margin-inline: auto;
-    padding-inline: max(3.25rem, env(safe-area-inset-left, 0px)) max(3.25rem, env(safe-area-inset-right, 0px));
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0.75rem;
-    min-height: min(72vh, 880px);
-  }
-  .projects-slide-frame {
-    position: relative;
-    flex: 1;
-    min-height: min(62vh, 800px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 3px solid rgba(238, 255, 0, 0.35);
-    background: rgba(0, 0, 0, 0.12);
-    overflow: hidden;
-  }
-  .projects-slide-img {
-    display: block;
-    width: 100%;
-    height: 100%;
-    max-height: min(70vh, 820px);
-    object-fit: contain;
-    object-position: center;
-  }
-  .projects-slide-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    width: 100%;
-    min-height: min(52vh, 560px);
-    padding: 2rem 1rem;
-    text-align: center;
-    background: linear-gradient(145deg, rgba(60, 20, 0, 0.65), rgba(20, 6, 2, 0.85));
-  }
-  .projects-slide-placeholder[hidden] {
-    display: none !important;
-  }
-  .projects-slide-placeholder__lock {
-    color: var(--page-lime);
-    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.45));
-  }
-  .projects-slide-placeholder__lock svg {
-    width: 3rem;
-    height: 3rem;
-    display: block;
-  }
-  .projects-slide-placeholder__title {
-    font-size: clamp(1rem, 2.8vw, 1.35rem);
-    font-weight: 800;
-    letter-spacing: 0.02em;
-    color: var(--white);
-    max-width: 28rem;
-    line-height: 1.35;
-  }
-  .projects-slide-caption {
-    font-size: clamp(0.9rem, 2.2vw, 1.1rem);
-    font-weight: 600;
-    color: var(--page-lime);
-    line-height: 1.45;
-    text-wrap: pretty;
-  }
-  .projects-slide-caption__title {
-    display: block;
-    color: var(--white);
-    font-weight: 900;
-    margin-bottom: 0.25rem;
-  }
-  .projects-slide-caption__blurb {
-    display: block;
-    font-weight: 500;
-    opacity: 0.95;
-  }
-  .projects-slide-open {
-    display: inline-block;
-    margin-top: 0.5rem;
-    font-weight: 800;
-    color: var(--white);
-    text-decoration: underline;
-    text-underline-offset: 0.15em;
-  }
-  .projects-slide-open:hover { opacity: 0.88; }
-  .projects-slide-open:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
-  .projects-slide-open[hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -1579,46 +1183,8 @@
     </div>
   </section>
 
-  <!-- ==================== WORKS (fondo fullscreen + slides) ==================== -->
-  <section id="proyectos" class="section-pad projects-section projects-section--fullscreen" aria-labelledby="projectsTitle">
-    <div class="projects-hero-stack">
-      <div class="projects-hero-bg" aria-hidden="true">
-        <img id="worksHeroBgImg" class="projects-hero-bg__img" src="" alt="" width="1920" height="1080" decoding="async" fetchpriority="low" />
-        <div class="projects-hero-bg__wash"></div>
-      </div>
-      <div class="container projects-hero-inner">
-        <div class="projects-module projects-module--fullscreen">
-          <h2 class="projects-vertical-title" id="projectsTitle">
-            <span class="projects-vertical-title__stack" aria-hidden="true"></span>
-            <span class="u-sr-only projects-title-sr">WORKS</span>
-          </h2>
-          <div class="projects-module__body">
-            <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
-            <div class="projects-slide-stage" id="projectsSlideStage">
-              <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsSlideArea" aria-label="Anterior">‹</button>
-              <div class="projects-slide-area" id="projectsSlideArea" role="region" aria-live="polite" aria-label="Proyectos">
-                <div class="projects-slide-frame" id="projectsSlideFrame">
-                  <img id="projectsSlideImg" class="projects-slide-img" alt="" width="1200" height="800" decoding="async" hidden />
-                  <div id="projectsSlidePlaceholder" class="projects-slide-placeholder" hidden>
-                    <span class="projects-slide-placeholder__lock" aria-hidden="true">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-                    </span>
-                    <span id="projectsSlidePlaceholderTitle" class="projects-slide-placeholder__title"></span>
-                  </div>
-                </div>
-                <p id="projectsSlideCaption" class="projects-slide-caption">
-                  <span id="projectsSlideCaptionTitle" class="projects-slide-caption__title"></span>
-                  <span id="projectsSlideCaptionBlurb" class="projects-slide-caption__blurb"></span>
-                </p>
-                <a id="projectsSlideOpen" class="projects-slide-open" href="#" target="_blank" rel="noopener noreferrer" hidden></a>
-              </div>
-              <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsSlideArea" aria-label="Siguiente">›</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <!-- WORKS: espacio reservado (#proyectos para anclas); sin contenido -->
+  <section id="proyectos" class="section-pad projects-section" aria-hidden="true"></section>
 
   <!-- ==================== CONTACT ==================== -->
   <section id="contacto" class="section-pad">
@@ -1729,14 +1295,7 @@
       ],
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
-      contactAltLabel: "O si prefieres:",
-      projectsTitle: "WORKS",
-      projectsStrapLead: "🚧 EN CONSTRUCCIÓN 🚧",
-      projectsStrapBody: "Mientras esperas, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a> 🏀",
-      projectChevPrev: "Anterior",
-      projectChevNext: "Siguiente",
-      projectsSlideRegion: "Proyectos",
-      projectOpenLabel: "Abrir proyecto"
+      contactAltLabel: "O si prefieres:"
     },
     en: {
       typewriter: [
@@ -1772,14 +1331,7 @@
       ],
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
-      contactAltLabel: "Or if you prefer:",
-      projectsTitle: "WORKS",
-      projectsStrapLead: "🚧 UNDER CONSTRUCTION 🚧",
-      projectsStrapBody: "While you wait, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a> 🏀",
-      projectChevPrev: "Previous",
-      projectChevNext: "Next",
-      projectsSlideRegion: "Projects",
-      projectOpenLabel: "Open project"
+      contactAltLabel: "Or if you prefer:"
     }
   };
 
@@ -1788,150 +1340,6 @@
     const _ls = localStorage.getItem('carlosmakes_lang');
     if (_ls === 'en' || _ls === 'es') lang = _ls;
   } catch (e) {}
-
-  /** Imagen de fondo de la sección WORKS (fullscreen); cada proyecto puede sobrescribir con heroBg. */
-  const WORKS_SECTION_BG_URL =
-    'https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=2400&q=80';
-
-  /**
-   * Catálogo de proyectos / apps.
-   * slideImage o poster: imagen del slide a pantalla completa.
-   * Opcional heroBg: sustituye solo el fondo de la sección al mostrar ese proyecto.
-   * Live: status 'live', url https…, poster o slideImage.
-   */
-  const projectsCatalog = [
-    {
-      id: 'p1',
-      status: 'coming',
-      title: { es: 'App interna de flujos con IA', en: 'Internal AI flow app' },
-      blurb: { es: 'Orquestación de agentes y tareas en equipo.', en: 'Agent and task orchestration for teams.' },
-      url: null,
-      poster: null
-    },
-    {
-      id: 'p2',
-      status: 'coming',
-      title: { es: 'Kit de producto reutilizable', en: 'Reusable product kit' },
-      blurb: { es: 'Plantillas y conectores para lanzar más rápido.', en: 'Templates and connectors to ship faster.' },
-      url: null,
-      poster: null
-    },
-    {
-      id: 'p3',
-      status: 'coming',
-      title: { es: 'Análisis de feedback con LLM', en: 'LLM feedback analysis' },
-      blurb: { es: 'Resumen y clustering asistido por lenguaje.', en: 'Language-assisted summarization and clustering.' },
-      url: null,
-      poster: null
-    },
-  ];
-
-  function safePosterUrl(u) {
-    if (!u || typeof u !== 'string') return null;
-    const t = u.trim();
-    if (t.startsWith('/') || t.startsWith('https://') || t.startsWith('http://')) return t;
-    return null;
-  }
-
-  function worksBgUrlForProject(p) {
-    const u = p && safePosterUrl(p.heroBg);
-    return u || WORKS_SECTION_BG_URL;
-  }
-
-  function projectSlideImageUrl(p) {
-    if (!p) return null;
-    return safePosterUrl(p.slideImage) || safePosterUrl(p.poster);
-  }
-
-  function isProjectLive(p) {
-    return !!(p && p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://')));
-  }
-
-  let projectsCardIndex = 0;
-
-  function updateProjectsChevrons() {
-    const prev = document.getElementById('projectsPrev');
-    const next = document.getElementById('projectsNext');
-    if (!prev || !next) return;
-    const total = projectsCatalog.length;
-    const show = total > 1;
-    prev.disabled = !show;
-    next.disabled = !show;
-    prev.classList.toggle('projects-chev--off', !show);
-    next.classList.toggle('projects-chev--off', !show);
-  }
-
-  function updateWorksSlide() {
-    const img = document.getElementById('projectsSlideImg');
-    const placeholder = document.getElementById('projectsSlidePlaceholder');
-    const phTitle = document.getElementById('projectsSlidePlaceholderTitle');
-    const capTitle = document.getElementById('projectsSlideCaptionTitle');
-    const capBlurb = document.getElementById('projectsSlideCaptionBlurb');
-    const openLink = document.getElementById('projectsSlideOpen');
-    const bgImg = document.getElementById('worksHeroBgImg');
-    const p = projectsCatalog[projectsCardIndex];
-    if (!p) return;
-
-    const titlePlain = p.title[lang] || p.title.es;
-    const blurb = (p.blurb && (p.blurb[lang] || p.blurb.es)) || '';
-    const src = projectSlideImageUrl(p);
-    const live = isProjectLive(p);
-
-    if (bgImg) {
-      bgImg.src = worksBgUrlForProject(p);
-    }
-
-    if (capTitle) capTitle.textContent = titlePlain;
-    if (capBlurb) capBlurb.textContent = blurb;
-
-    if (openLink) {
-      if (live) {
-        openLink.href = p.url;
-        const d = t[lang];
-        openLink.textContent = (d && d.projectOpenLabel) ? d.projectOpenLabel : 'Open';
-        openLink.hidden = false;
-      } else {
-        openLink.hidden = true;
-        openLink.removeAttribute('href');
-      }
-    }
-
-    if (img && placeholder) {
-      if (src) {
-        img.src = src;
-        img.alt = titlePlain;
-        img.hidden = false;
-        placeholder.hidden = true;
-      } else {
-        img.removeAttribute('src');
-        img.hidden = true;
-        img.alt = '';
-        placeholder.hidden = false;
-        if (phTitle) phTitle.textContent = titlePlain;
-      }
-    }
-
-    updateProjectsChevrons();
-  }
-
-  function goToProjectCard(index) {
-    const total = projectsCatalog.length;
-    if (total < 1) return;
-    projectsCardIndex = ((index % total) + total) % total;
-    updateWorksSlide();
-  }
-
-  function initWorksSlideNav() {
-    const stage = document.getElementById('projectsSlideStage');
-    const prev = document.getElementById('projectsPrev');
-    const next = document.getElementById('projectsNext');
-    if (!stage || !prev || !next) return;
-    if (stage.dataset.ready === '1') return;
-    stage.dataset.ready = '1';
-
-    prev.addEventListener('click', () => goToProjectCard(projectsCardIndex - 1));
-    next.addEventListener('click', () => goToProjectCard(projectsCardIndex + 1));
-  }
 
   // ============================================
   // Intro: tres líneas al scroll (GSAP ScrollTrigger)
@@ -2257,54 +1665,6 @@
     introPanelTimelines.push(tl);
   }
 
-  function setProjectsTitleStack(text) {
-    const h2 = document.getElementById('projectsTitle');
-    if (!h2 || !text) return;
-    const stack = h2.querySelector('.projects-vertical-title__stack');
-    const sr = h2.querySelector('.projects-title-sr');
-    if (sr) sr.textContent = text;
-    if (!stack) return;
-    stack.replaceChildren();
-    for (let i = 0; i < text.length; i++) {
-      const ch = text.charAt(i);
-      const s = document.createElement('span');
-      s.setAttribute('data-glyph', ch);
-      s.textContent = ch;
-      stack.appendChild(s);
-    }
-    queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
-  }
-
-  function syncWorksFontToHero() {
-    const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
-    if (!stack) return;
-    if (window.matchMedia('(max-width: 639px)').matches) {
-      const container = document.querySelector('#proyectos .projects-hero-inner');
-      const W = container ? container.offsetWidth : document.body.clientWidth;
-      if (W < 16) {
-        stack.style.removeProperty('font-size');
-        return;
-      }
-      let lo = 8, hi = 800;
-      for (let i = 0; i < 42; i++) {
-        const mid = (lo + hi) * 0.5;
-        stack.style.fontSize = mid + 'px';
-        if (stack.scrollWidth <= W + 1) lo = mid;
-        else hi = mid;
-      }
-      stack.style.fontSize = lo + 'px';
-      return;
-    }
-    const line = document.querySelector('#heroV2Title .hero-v2-line');
-    if (!line) return;
-    let fs = line.style.fontSize;
-    if (!fs) fs = getComputedStyle(line).fontSize;
-    let fsPx = parseFloat(fs);
-    if (!Number.isFinite(fsPx) || fsPx <= 0) return;
-    const synced = (fsPx * 0.853) + 'px';
-    stack.style.fontSize = synced;
-  }
-
   // ============================================
   // Idioma
   // ============================================
@@ -2321,20 +1681,6 @@
     document.getElementById('contactSub').textContent = d.contactSub;
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
-    setProjectsTitleStack(d.projectsTitle);
-    const projectsStrapEl = document.getElementById('projectsStrap');
-    if (projectsStrapEl && d.projectsStrapLead && d.projectsStrapBody) {
-      projectsStrapEl.innerHTML = '<span class="projects-strap__lead" id="projectsStrapLead">' + d.projectsStrapLead + '</span><span class="projects-strap__intro" id="projectsStrapIntro">' + d.projectsStrapBody + '</span>';
-    }
-    const projectsSlideArea = document.getElementById('projectsSlideArea');
-    if (projectsSlideArea && d.projectsSlideRegion) projectsSlideArea.setAttribute('aria-label', d.projectsSlideRegion);
-    const projectsPrev = document.getElementById('projectsPrev');
-    const projectsNext = document.getElementById('projectsNext');
-    if (projectsPrev) projectsPrev.setAttribute('aria-label', d.projectChevPrev);
-    if (projectsNext) projectsNext.setAttribute('aria-label', d.projectChevNext);
-    initWorksSlideNav();
-    updateWorksSlide();
-
     const langSelCur = document.getElementById('langSelectCurrent');
     const langSelBtn = document.getElementById('langSelectBtn');
     if (langSelCur) {
@@ -2579,7 +1925,6 @@
       const best = lo;
       lines.forEach((line) => { line.style.fontSize = best + 'px'; });
     }
-    syncWorksFontToHero();
   }
 
   function updateHeaderTheme() {
