@@ -814,9 +814,25 @@
     .intro-hero.intro-hero--active {
       overflow-x: visible;
     }
+    /* Con animación: cada frase ocupa el alto útil y queda centrada al pin del scroll */
+    .intro-hero.intro-hero--active .intro-panel {
+      min-height: 100vh !important;
+      min-height: 100dvh !important;
+      align-items: center;
+      justify-content: center;
+      padding-block: clamp(2rem, 8vmin, 4rem);
+      padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
+        max(var(--container-pad-x), env(safe-area-inset-right, 0px));
+      box-sizing: border-box;
+    }
     .intro-panel__grid {
       min-width: 0;
       gap: clamp(1.25rem, 4vw, 2rem);
+    }
+    .intro-hero.intro-hero--active .intro-panel__grid {
+      justify-items: center;
+      width: 100%;
+      align-content: center;
     }
     .intro-panel__copy {
       max-width: none;
@@ -824,6 +840,11 @@
       min-width: 0;
       margin-inline-start: 0;
       box-sizing: border-box;
+    }
+    .intro-hero.intro-hero--active .intro-panel__copy {
+      margin-inline: auto;
+      max-width: min(100%, 22rem);
+      text-align: center;
     }
     .intro-panel__headline {
       font-size: clamp(0.98rem, 4.75vw, 1.45rem);
@@ -833,6 +854,10 @@
       hyphens: auto;
       -webkit-hyphens: auto;
       max-width: 100%;
+    }
+    .intro-hero.intro-hero--active .intro-panel__headline {
+      text-align: center;
+      text-wrap: balance;
     }
     .projects-ticker__track,
     .projects-vertical-ticker__track {
@@ -1939,13 +1964,15 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    const endScale = wide ? 2.75 : narrowMobile ? 1.46 : 2.05;
+    /* Móvil: escala suave para que el bloque entero quepa centrado; escritorio: zoom dramático */
+    const endScale = wide ? 2.75 : narrowMobile ? 1.08 : 2.05;
     const startCopy = wide
       ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
-      : { x: 0, y: 0, opacity: 0, scale: 0.92 };
+      : { x: 0, y: 0, opacity: 0, scale: 0.94 };
 
     const SEG = 1;
-    const scrollPerSegmentVh = narrowMobile ? 2.38 : wide ? 3.35 : 2.72;
+    /* Móvil: un poco más de scroll por frase = tiempo de lectura con el texto ya fijo */
+    const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
@@ -2000,24 +2027,59 @@
 
       const motionDur = i < 2 ? mergeDur : SEG;
 
-      tl.fromTo(
-        copy,
-        {
-          scale: startCopy.scale,
-          x: startCopy.x,
-          y: startCopy.y,
-          opacity: startCopy.opacity,
-        },
-        {
-          scale: endScale,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          ease: introEase,
-          duration: motionDur,
-        },
-        t0
-      );
+      if (narrowMobile) {
+        const enterDur = Math.min(0.3, motionDur * 0.34);
+        const holdDur = Math.max(0, motionDur - enterDur);
+        tl.fromTo(
+          copy,
+          {
+            scale: startCopy.scale,
+            x: startCopy.x,
+            y: startCopy.y,
+            opacity: startCopy.opacity,
+          },
+          {
+            scale: endScale,
+            x: 0,
+            y: 0,
+            opacity: 1,
+            ease: introEase,
+            duration: enterDur,
+          },
+          t0
+        );
+        tl.to(
+          copy,
+          {
+            scale: endScale,
+            x: 0,
+            y: 0,
+            opacity: 1,
+            ease: 'none',
+            duration: holdDur,
+          },
+          t0 + enterDur
+        );
+      } else {
+        tl.fromTo(
+          copy,
+          {
+            scale: startCopy.scale,
+            x: startCopy.x,
+            y: startCopy.y,
+            opacity: startCopy.opacity,
+          },
+          {
+            scale: endScale,
+            x: 0,
+            y: 0,
+            opacity: 1,
+            ease: introEase,
+            duration: motionDur,
+          },
+          t0
+        );
+      }
 
       if (i < 2) {
         const exit = wide
