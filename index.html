@@ -458,8 +458,15 @@
   .intro-panel--2 .intro-panel__headline {
     color: var(--page-lime);
   }
-  .intro-panel--2 .intro-line__suffix {
+  /* Puntos y ;) fuera del color principal del bloque */
+  .intro-panel--0 .intro-line__suffix--period {
+    color: var(--white);
+  }
+  .intro-panel--1 .intro-line__suffix--period {
     color: var(--page-lime);
+  }
+  .intro-panel--2 .intro-line__suffix--wink {
+    color: var(--white);
   }
 
   .intro-line__suffix {
@@ -2203,11 +2210,11 @@
         lineEl.style.webkitTextFillColor = c;
         const suf = lineEl.querySelector('.intro-line__suffix');
         if (suf) {
-          const sc = merged
-            ? overlapOrange
-            : i === 2
-              ? lime
-              : 'rgba(255, 255, 255, 0.52)';
+          let sc;
+          if (merged) sc = overlapOrange;
+          else if (i === 0) sc = white;
+          else if (i === 1) sc = lime;
+          else sc = white;
           suf.style.color = sc;
           suf.style.webkitTextFillColor = sc;
         }
