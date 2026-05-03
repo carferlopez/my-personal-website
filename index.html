@@ -1872,8 +1872,13 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const endScale = wide ? 2.75 : 2.05;
-    const startCopy = wide ? { x: '-26vw', y: 0 } : { x: 0, y: '-16vh' };
-    const startViz = wide ? { x: '26vw', y: 0 } : { x: 0, y: '16vh' };
+    /* Escritorio: texto y bloque entran desde los lados. Móvil: fade-in + zoom suave (sin vuelo lateral). */
+    const startCopy = wide
+      ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
+      : { x: 0, y: 0, opacity: 0, scale: 0.92 };
+    const startViz = wide
+      ? { x: '26vw', y: 0, opacity: 1, scale: 1 }
+      : { x: 0, y: 0, opacity: 0, scale: 0.92 };
 
     const SEG = 1;
     /* Menos scroll por tramo; merge lineal para que al acabar el centrado arranque ya la salida (sin cola del ease). */
@@ -1890,18 +1895,18 @@
       copyEls.push(copy);
       vizEls.push(vizEl);
       gsap.set(copy, {
-        transformOrigin: wide ? 'left center' : 'center top',
-        scale: 1,
+        transformOrigin: wide ? 'left center' : 'center center',
+        scale: startCopy.scale,
         x: startCopy.x,
         y: startCopy.y,
-        opacity: 1,
+        opacity: startCopy.opacity,
       });
       gsap.set(vizEl, {
-        transformOrigin: wide ? 'right center' : 'center bottom',
-        scale: 1,
+        transformOrigin: wide ? 'right center' : 'center center',
+        scale: startViz.scale,
         x: startViz.x,
         y: startViz.y,
-        opacity: 1,
+        opacity: startViz.opacity,
       });
     });
 
@@ -1945,7 +1950,12 @@
 
       tl.fromTo(
         copy,
-        { scale: 1, x: startCopy.x, y: startCopy.y, opacity: 1 },
+        {
+          scale: startCopy.scale,
+          x: startCopy.x,
+          y: startCopy.y,
+          opacity: startCopy.opacity,
+        },
         {
           scale: endScale,
           x: 0,
@@ -1958,7 +1968,12 @@
       );
       tl.fromTo(
         vizEl,
-        { scale: 1, x: startViz.x, y: startViz.y, opacity: 1 },
+        {
+          scale: startViz.scale,
+          x: startViz.x,
+          y: startViz.y,
+          opacity: startViz.opacity,
+        },
         {
           scale: endScale,
           x: 0,
@@ -1971,16 +1986,26 @@
       );
 
       if (i < 2) {
-        const exitX = wide ? '-122vw' : '-108vw';
-        const exitY = wide ? 0 : '-26vh';
-        const exitScale = wide ? endScale * 0.91 : endScale * 0.86;
+        const exit = wide
+          ? {
+              x: '-122vw',
+              y: 0,
+              opacity: 0,
+              scale: endScale * 0.91,
+            }
+          : {
+              x: 0,
+              y: '-18vh',
+              opacity: 0,
+              scale: endScale * 0.82,
+            };
         tl.to(
           [copy, vizEl],
           {
-            x: exitX,
-            y: exitY,
-            opacity: 0,
-            scale: exitScale,
+            x: exit.x,
+            y: exit.y,
+            opacity: exit.opacity,
+            scale: exit.scale,
             ease: 'power3.in',
             duration: exitDur,
           },
