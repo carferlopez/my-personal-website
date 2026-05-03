@@ -792,6 +792,40 @@
   @media (min-width: 640px) { .section-pad { padding: 3rem 0; } }
   @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
 
+  /* Móvil: menos blanco entre bloques (hero sigue en 300vh; intro pin conserva el mismo end en px vía JS) */
+  @media (max-width: 639px) {
+    .section-pad {
+      padding-top: 1.35rem;
+      padding-bottom: 1.35rem;
+    }
+    .intro-hero {
+      padding-top: 2.75rem;
+      padding-bottom: clamp(3.5rem, 11vw, 6.5rem);
+    }
+    .intro-stage {
+      gap: clamp(2.25rem, 7vh, 4.5rem);
+    }
+    .intro-panel {
+      padding-block: clamp(2rem, 5.5vw, 3.75rem);
+    }
+    #proyectos.section-pad {
+      padding-top: clamp(0.35rem, 1.5vw, 1rem);
+      padding-bottom: clamp(0.65rem, 3vw, 1.35rem);
+    }
+    .projects-works-inner {
+      padding-top: 0;
+      padding-bottom: clamp(1rem, 3vw, 2rem);
+    }
+    .projects-works-stack {
+      min-height: min(88vh, 1000px);
+      min-height: min(88svh, 1000px);
+    }
+    .contact-box {
+      padding: 1rem 0;
+      gap: 1rem;
+    }
+  }
+
   .big-heading {
     font-size: 7.5vw;
     font-weight: 900;
