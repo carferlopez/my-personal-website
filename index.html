@@ -922,7 +922,8 @@
 
   #proyectos.section-pad {
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
-    padding-bottom: clamp(2rem, 6vw, 4rem);
+    /* Menos aire antes del contacto: el carril WORKS puede “llegar” casi al titular */
+    padding-bottom: clamp(1rem, 4vw, 2.5rem);
   }
 
   .projects-works-stack {
@@ -981,11 +982,6 @@
     top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
     z-index: 1;
   }
-  @media (min-width: 640px) {
-    #proyectos #projectsTitle {
-      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-    }
-  }
   .projects-vertical-ticker {
     flex: 0 0 auto;
     min-height: 0;
@@ -995,7 +991,7 @@
     flex-direction: column;
     align-self: stretch;
   }
-  /* Ventana = alto de una columna WORKS (pila de letras); JS mide .projects-vertical-title__column */
+  /* Escritorio: la ventana crece con la columna hasta casi el bloque contacto (flex en la cadena). */
   .projects-vertical-ticker__viewport {
     position: relative;
     overflow: hidden;
@@ -1005,19 +1001,29 @@
     max-width: 100%;
     min-height: 0;
     background: transparent;
-    /* Fallback ~5 glifos × 0.84em sobre la escala del track */
     height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
     max-height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
   }
   @media (min-width: 640px) {
+    #proyectos #projectsTitle {
+      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      flex: 1;
+      min-height: 0;
+    }
+    .projects-vertical-ticker {
+      flex: 1;
+      min-height: 0;
+    }
     .projects-vertical-ticker__viewport {
-      height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-      max-height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      flex: 1 1 auto;
+      align-self: stretch;
+      min-height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      height: auto;
+      max-height: none;
     }
   }
   @media (max-width: 639px) {
     .projects-vertical-ticker__viewport {
-      /* Una fila WORKS en horizontal dentro del carril */
       height: calc(1.12 * clamp(3rem, 22vw, 12rem));
       max-height: calc(1.12 * clamp(3rem, 22vw, 12rem));
     }
@@ -2138,33 +2144,15 @@
     track.innerHTML = chunk + chunk;
   }
 
-  function syncVerticalTickerViewportToColumnHeight() {
-    const vp = document.querySelector('.projects-vertical-ticker__viewport');
-    const vTrack = document.getElementById('projectsVerticalTickerTrack');
-    if (!vp || !vTrack) return;
-    const col = vTrack.querySelector('.projects-vertical-title__column');
-    if (!col) return;
-    const h = col.offsetHeight;
-    if (!(h > 0)) return;
-    const px = Math.ceil(h);
-    vp.style.height = px + 'px';
-    vp.style.maxHeight = px + 'px';
-  }
-
   function syncWorksFontToHero() {
     const vTrack = document.getElementById('projectsVerticalTickerTrack');
     const tickerTrack = document.getElementById('projectsTickerTrack');
-    const vViewport = document.querySelector('.projects-vertical-ticker__viewport');
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .projects-works-inner');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
         if (vTrack) vTrack.style.removeProperty('font-size');
         if (tickerTrack) tickerTrack.style.removeProperty('font-size');
-        if (vViewport) {
-          vViewport.style.removeProperty('height');
-          vViewport.style.removeProperty('max-height');
-        }
         return;
       }
       if (!vTrack) return;
@@ -2177,29 +2165,17 @@
       }
       vTrack.style.fontSize = lo + 'px';
       if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
-      syncVerticalTickerViewportToColumnHeight();
-      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
-    if (!line) {
-      syncVerticalTickerViewportToColumnHeight();
-      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
-      return;
-    }
+    if (!line) return;
     let fs = line.style.fontSize;
     if (!fs) fs = getComputedStyle(line).fontSize;
     let fsPx = parseFloat(fs);
-    if (!Number.isFinite(fsPx) || fsPx <= 0) {
-      syncVerticalTickerViewportToColumnHeight();
-      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
-      return;
-    }
+    if (!Number.isFinite(fsPx) || fsPx <= 0) return;
     const synced = (fsPx * 0.853) + 'px';
     if (vTrack) vTrack.style.fontSize = synced;
     if (tickerTrack) tickerTrack.style.fontSize = synced;
-    syncVerticalTickerViewportToColumnHeight();
-    requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
   }
 
   // ============================================
