@@ -346,7 +346,7 @@
     -webkit-text-fill-color: var(--white) !important;
   }
 
-  /* Presentación: mismo fondo que la página; amarillo fluorescente + bloques planos */
+  /* Presentación: mismo fondo que la página; titulares en lima / blanco */
   .intro-hero {
     position: relative;
     background: var(--page-bg);
@@ -413,17 +413,11 @@
 
   .intro-panel__grid {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: clamp(2rem, 6vw, 4.5rem);
     align-items: center;
     width: 100%;
     overflow: visible;
-  }
-  @media (min-width: 900px) {
-    .intro-panel__grid {
-      grid-template-columns: minmax(0, 0.4fr) minmax(0, 1fr);
-      gap: clamp(2rem, 4vw, 4rem);
-    }
   }
 
   .intro-panel__copy {
@@ -450,7 +444,7 @@
     .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
   }
 
-  /* Bloque 2: acento blanco; bloques 1 y 3 en amarillo fluorescente; solapado → JS. */
+  /* Línea 2 en blanco; 1 y 3 en lima; puntos / ;) con reglas de sufijo */
   .intro-panel--0 .intro-panel__headline {
     color: var(--page-lime);
   }
@@ -473,39 +467,6 @@
 
   .intro-line__suffix {
     color: rgba(255, 255, 255, 0.55);
-  }
-
-  .intro-panel__viz {
-    position: relative;
-    z-index: 1;
-    min-height: clamp(220px, 38vh, 480px);
-    will-change: transform;
-    overflow: visible;
-  }
-  @media (min-width: 900px) {
-    .intro-panel__viz { min-height: clamp(320px, 52vh, 560px); }
-  }
-
-  .intro-viz {
-    position: absolute;
-    inset: 0;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: none;
-    will-change: transform;
-  }
-
-  .intro-viz__solid {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: var(--page-orange);
-  }
-  .intro-viz--1 .intro-viz__solid {
-    background: var(--hero-v2-violet);
-  }
-  .intro-viz--2 .intro-viz__solid {
-    background: var(--page-lime);
   }
 
   .header-top {
@@ -846,7 +807,7 @@
       padding: 1rem 0;
       gap: 1rem;
     }
-    /* Presentación: titulares que cruzan los cuadros — ancho útil, cortes y escala */
+    /* Presentación: titulares a ancho útil */
     html {
       overflow-x: hidden;
     }
@@ -872,11 +833,6 @@
       hyphens: auto;
       -webkit-hyphens: auto;
       max-width: 100%;
-    }
-    .intro-panel__viz {
-      width: 100%;
-      min-width: 0;
-      min-height: clamp(150px, 38vmin, 300px);
     }
     .projects-ticker__track,
     .projects-vertical-ticker__track {
@@ -1649,7 +1605,7 @@
     </div>
   </section>
 
-  <!-- Presentación: 3 bloques (copy izquierda + bloque de color derecha; merge al scroll) -->
+  <!-- Presentación: 3 frases animadas al scroll (solo texto) -->
   <section class="intro-hero section-pad" id="presentacion" aria-labelledby="introHeading">
     <h2 class="u-sr-only" id="introHeading">Presentación</h2>
     <div class="intro-panels">
@@ -1659,11 +1615,6 @@
           <div class="intro-panel__copy">
             <p class="intro-panel__headline" id="introLine0"></p>
           </div>
-          <div class="intro-panel__viz" aria-hidden="true">
-            <div class="intro-viz intro-viz--0">
-              <div class="intro-viz__solid"></div>
-            </div>
-          </div>
         </div>
       </article>
       <article class="intro-panel intro-panel--1" data-intro-panel="1">
@@ -1671,22 +1622,12 @@
           <div class="intro-panel__copy">
             <p class="intro-panel__headline" id="introLine1"></p>
           </div>
-          <div class="intro-panel__viz" aria-hidden="true">
-            <div class="intro-viz intro-viz--1">
-              <div class="intro-viz__solid"></div>
-            </div>
-          </div>
         </div>
       </article>
       <article class="intro-panel intro-panel--2" data-intro-panel="2">
         <div class="container intro-panel__grid">
           <div class="intro-panel__copy">
             <p class="intro-panel__headline" id="introLine2"></p>
-          </div>
-          <div class="intro-panel__viz" aria-hidden="true">
-            <div class="intro-viz intro-viz--2">
-              <div class="intro-viz__solid"></div>
-            </div>
           </div>
         </div>
       </article>
@@ -1886,7 +1827,7 @@
     introPanelTimelines.forEach((tl) => tl.kill());
     introPanelTimelines = [];
     if (typeof gsap !== 'undefined' && introRoot) {
-      introRoot.querySelectorAll('.intro-panel__copy, .intro-viz').forEach((el) => {
+      introRoot.querySelectorAll('.intro-panel__copy').forEach((el) => {
         gsap.killTweensOf(el);
         gsap.set(el, { clearProps: 'transform' });
       });
@@ -1970,20 +1911,12 @@
     if (panels.length < 3) return;
 
     const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobileAnimationsOff =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    if (reduceIntro || mobileAnimationsOff) {
+    if (reduceIntro) {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
-        const vizEl = panel.querySelector('.intro-viz');
         if (copy) {
           copy.style.opacity = '1';
           copy.style.transform = 'none';
-        }
-        if (vizEl) {
-          vizEl.style.opacity = '1';
-          vizEl.style.transform = 'none';
         }
       });
       return;
@@ -1992,14 +1925,9 @@
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
-        const vizEl = panel.querySelector('.intro-viz');
         if (copy) {
           copy.style.opacity = '1';
           copy.style.transform = 'none';
-        }
-        if (vizEl) {
-          vizEl.style.opacity = '1';
-          vizEl.style.transform = 'none';
         }
       });
       return;
@@ -2011,43 +1939,27 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Móvil: menos zoom para que texto+cuadro no sobrepasen el viewport (overflow del padre). */
     const endScale = wide ? 2.75 : narrowMobile ? 1.46 : 2.05;
-    /* Escritorio: texto y bloque entran desde los lados. Móvil: fade-in + zoom suave (sin vuelo lateral). */
     const startCopy = wide
       ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
       : { x: 0, y: 0, opacity: 0, scale: 0.92 };
-    const startViz = wide
-      ? { x: '26vw', y: 0, opacity: 1, scale: 1 }
-      : { x: 0, y: 0, opacity: 0, scale: 0.92 };
 
     const SEG = 1;
-    /* Vh por tramo × 3 = pin total. En columnas estrechas menos scroll para el mismo timeline → el merge entra antes y termina antes de “pasar” de pantalla. */
     const scrollPerSegmentVh = narrowMobile ? 2.38 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
     const copyEls = [];
-    const vizEls = [];
     panels.forEach((panel) => {
       const copy = panel.querySelector('.intro-panel__copy');
-      const vizEl = panel.querySelector('.intro-viz');
-      if (!copy || !vizEl) return;
+      if (!copy) return;
       copyEls.push(copy);
-      vizEls.push(vizEl);
       gsap.set(copy, {
         transformOrigin: wide ? 'left center' : 'center center',
         scale: startCopy.scale,
         x: startCopy.x,
         y: startCopy.y,
         opacity: startCopy.opacity,
-      });
-      gsap.set(vizEl, {
-        transformOrigin: wide ? 'right center' : 'center center',
-        scale: startViz.scale,
-        x: startViz.x,
-        y: startViz.y,
-        opacity: startViz.opacity,
       });
     });
 
@@ -2084,8 +1996,7 @@
 
     function addSegment(i, t0) {
       const copy = copyEls[i];
-      const vizEl = vizEls[i];
-      if (!copy || !vizEl) return;
+      if (!copy) return;
 
       const motionDur = i < 2 ? mergeDur : SEG;
 
@@ -2096,24 +2007,6 @@
           x: startCopy.x,
           y: startCopy.y,
           opacity: startCopy.opacity,
-        },
-        {
-          scale: endScale,
-          x: 0,
-          y: 0,
-          opacity: 1,
-          ease: introEase,
-          duration: motionDur,
-        },
-        t0
-      );
-      tl.fromTo(
-        vizEl,
-        {
-          scale: startViz.scale,
-          x: startViz.x,
-          y: startViz.y,
-          opacity: startViz.opacity,
         },
         {
           scale: endScale,
@@ -2141,7 +2034,7 @@
               scale: endScale * 0.82,
             };
         tl.to(
-          [copy, vizEl],
+          copy,
           {
             x: exit.x,
             y: exit.y,
@@ -2176,55 +2069,6 @@
       fade2At
     );
     addSegment(2, SEG * 2);
-
-    const lime =
-      (typeof getComputedStyle !== 'undefined' &&
-        getComputedStyle(document.documentElement).getPropertyValue('--page-lime').trim()) ||
-      '#eeff00';
-    const overlapOrange =
-      (typeof getComputedStyle !== 'undefined' &&
-        getComputedStyle(document.documentElement).getPropertyValue('--page-bg').trim()) ||
-      '#FF6600';
-    const white = '#ffffff';
-    const introLineColorsStart = [lime, white, lime];
-    const introLineColorsMerged = [overlapOrange, overlapOrange, overlapOrange];
-
-    function introHeadlineCopyVizOverlap(copyRect, vizRect) {
-      return !(
-        copyRect.right < vizRect.left ||
-        copyRect.left > vizRect.right ||
-        copyRect.bottom < vizRect.top ||
-        copyRect.top > vizRect.bottom
-      );
-    }
-
-    function updateIntroHeadlineColorsFromOverlap() {
-      for (let i = 0; i < 3; i++) {
-        const viz = vizEls[i];
-        const lineEl = document.getElementById('introLine' + i);
-        if (!viz || !lineEl) continue;
-        const merged = introHeadlineCopyVizOverlap(
-          lineEl.getBoundingClientRect(),
-          viz.getBoundingClientRect()
-        );
-        const c = merged ? introLineColorsMerged[i] : introLineColorsStart[i];
-        lineEl.style.color = c;
-        lineEl.style.webkitTextFillColor = c;
-        const suf = lineEl.querySelector('.intro-line__suffix');
-        if (suf) {
-          let sc;
-          if (merged) sc = overlapOrange;
-          else if (i === 0) sc = white;
-          else if (i === 1) sc = lime;
-          else sc = white;
-          suf.style.color = sc;
-          suf.style.webkitTextFillColor = sc;
-        }
-      }
-    }
-
-    tl.eventCallback('onUpdate', updateIntroHeadlineColorsFromOverlap);
-    requestAnimationFrame(updateIntroHeadlineColorsFromOverlap);
 
     introPanelTimelines.push(tl);
   }
