@@ -7,7 +7,7 @@
 <title>Carlos Fernández — Systems Architect & Creative Developer</title>
 <meta name="description" content="Construyo productos digitales en solitario: lanzar rápido, usuarios reales, sin ruido corporativo.">
 <meta name="author" content="Carlos Fernández">
-<meta name="theme-color" content="#F56C27">
+<meta name="theme-color" content="#FF6600">
 
 <!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
 
 <!-- Favicon (SVG inline, sin archivo extra) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23F56C27%22/><circle cx=%2278%22 cy=%2278%22 r=%2220%22 fill=%22%23eeff00%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FF6600%22/><circle cx=%2278%22 cy=%2278%22 r=%2220%22 fill=%22%23eeff00%22/></svg>">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +42,8 @@
   :root {
     --black: #000;
     --white: #fff;
-    /* Paleta sitio: naranja #F56C27 de fondo, amarillo fluorescente como texto principal, blanco para acentos */
-    --page-bg: #F56C27;
+    /* Paleta sitio: naranja puro #FF6600 de fondo, amarillo fluorescente como texto principal, blanco para acentos */
+    --page-bg: #FF6600;
     --page-lime: #eeff00;
     --text-primary: var(--page-lime);
     --gray: #a0a070;
@@ -122,7 +122,7 @@
   .site-header.scrolled {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    background: rgba(245, 108, 39, 0.9);
+    background: rgba(255, 102, 0, 0.9);
   }
 
   .site-header__inner {
@@ -704,7 +704,7 @@
       top: calc(100% + 0.75rem);
       right: 0;
       z-index: 200;
-      background: rgba(245, 108, 39, 0.97);
+      background: rgba(255, 102, 0, 0.97);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       padding: 1rem 1.25rem 0.85rem;
@@ -1466,7 +1466,7 @@
     width: 100%;
     height: 100%;
     border: 4px solid rgba(238, 255, 0, 0.22);
-    background: #4a220f;
+    background: #4d1600;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -1514,25 +1514,25 @@
     top: -20%;
     width: 150%;
     height: 150%;
-    background: conic-gradient(from 200deg, #6b3418, #2a1008, #7a401c, #401a0c, #351408);
+    background: conic-gradient(from 200deg, #802600, #301000, #993000, #501800, #401000);
     filter: blur(22px);
   }
   @media (prefers-reduced-motion: reduce) {
     .project-poster-blur-blob { filter: blur(0); opacity: 0.85; }
   }
-  .project-poster-inner--orange { background: #522410; border-color: rgba(238, 255, 0, 0.4); }
+  .project-poster-inner--orange { background: #5c1e00; border-color: rgba(238, 255, 0, 0.4); }
   .project-poster-inner--orange .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #7a3a18, #301408, #8c481f, #401c0c, #522410);
+    background: conic-gradient(from 200deg, #993000, #351004, #b03800, #501004, #5c1e00);
   }
   .project-poster-inner--orange .project-poster-lock-icon { color: var(--page-lime); }
-  .project-poster-inner--violet { background: #3d2418; border-color: rgba(255, 255, 255, 0.28); }
+  .project-poster-inner--violet { background: #481e12; border-color: rgba(255, 255, 255, 0.28); }
   .project-poster-inner--violet .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #553428, #1c100c, #644038, #302018, #3d2418);
+    background: conic-gradient(from 200deg, #602818, #241008, #703428, #381610, #481e12);
   }
   .project-poster-inner--violet .project-poster-lock-icon { color: var(--white); }
-  .project-poster-inner--yellow { background: #5c3014; border-color: rgba(238, 255, 0, 0.28); }
+  .project-poster-inner--yellow { background: #6b2400; border-color: rgba(238, 255, 0, 0.28); }
   .project-poster-inner--yellow .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #783c18, #24100a, #884818, #36140c, #5c3014);
+    background: conic-gradient(from 200deg, #802c00, #2a0c00, #903400, #401000, #6b2400);
   }
   .project-poster-inner--yellow .project-poster-lock-icon { color: var(--page-lime); }
   .project-poster-blur-grid {
@@ -2364,7 +2364,7 @@
     const overlapOrange =
       (typeof getComputedStyle !== 'undefined' &&
         getComputedStyle(document.documentElement).getPropertyValue('--page-bg').trim()) ||
-      '#F56C27';
+      '#FF6600';
     const white = '#ffffff';
     const introLineColorsStart = [lime, white, lime];
     const introLineColorsMerged = [overlapOrange, overlapOrange, overlapOrange];
