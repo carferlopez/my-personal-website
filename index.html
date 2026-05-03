@@ -915,6 +915,42 @@
     overflow: hidden;
     padding: 0.42rem 0;
   }
+  /* Móvil: 7 líneas WORKS apiladas (JS); el ticker horizontal va oculto */
+  @media (max-width: 639px) {
+    #proyectos > .projects-ticker {
+      display: none !important;
+    }
+    .projects-works-mobile-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      width: 100vw;
+      max-width: none;
+      margin-left: calc(50% - 50vw);
+      margin-right: calc(50% - 50vw);
+      margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
+      padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
+      padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
+      padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+      box-sizing: border-box;
+      z-index: 3;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .projects-works-mobile-stack__line {
+      display: block;
+      text-align: center;
+      letter-spacing: -0.06em;
+      text-transform: uppercase;
+      padding-block: clamp(0.12rem, 0.9vw, 0.28rem);
+    }
+  }
+  @media (min-width: 640px) {
+    .projects-works-mobile-stack {
+      display: none !important;
+    }
+  }
+
   #proyectos > .projects-ticker {
     width: 100vw;
     max-width: none;
@@ -1656,6 +1692,7 @@
         <div class="projects-ticker__track" id="projectsTickerTrack"></div>
       </div>
     </div>
+    <div class="projects-works-mobile-stack" id="projectsWorksMobileStack" role="presentation" aria-hidden="true"></div>
     <div class="projects-works-stack">
       <div class="container projects-works-inner">
         <div class="projects-module projects-module--minimal">
@@ -2240,6 +2277,12 @@
     }
     setupIntroLinesScrollAnimation();
     fitHeroV2Lines();
+    if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
+      renderProjectsMobileWorksStack();
+      renderProjectsTicker();
+      renderProjectsVerticalTicker();
+      queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
+    }
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -2248,6 +2291,7 @@
     if (!h2 || !text) return;
     const sr = h2.querySelector('.projects-title-sr');
     if (sr) sr.textContent = text;
+    renderProjectsMobileWorksStack();
     renderProjectsTicker();
     renderProjectsVerticalTicker();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
@@ -2290,19 +2334,50 @@
     );
   }
 
+  /** Móvil: 7 líneas WORKS apiladas (alterna lima / blanco); desktop limpia el nodo. */
+  function renderProjectsMobileWorksStack() {
+    const el = document.getElementById('projectsWorksMobileStack');
+    if (!el) return;
+    const mobileStatic =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    if (!mobileStatic) {
+      el.innerHTML = '';
+      return;
+    }
+    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
+    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const n = 7;
+    const parts = [];
+    for (let i = 0; i < n; i++) {
+      const orange = i % 2 === 0;
+      parts.push(
+        '<div class="projects-works-mobile-stack__line projects-ticker__word ' +
+        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') + '">' +
+        word +
+        '</div>'
+      );
+    }
+    el.innerHTML = parts.join('');
+  }
+
   function renderProjectsTicker() {
     const track = document.getElementById('projectsTickerTrack');
     if (!track) return;
+    const mobileStatic =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(max-width: 639px)').matches;
+    if (mobileStatic) {
+      track.innerHTML = '';
+      return;
+    }
     const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
     const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const chunk = '<span class="projects-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
     const reduce =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobileStatic =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    track.innerHTML = reduce || mobileStatic ? chunk : chunk + chunk;
+    track.innerHTML = reduce ? chunk : chunk + chunk;
   }
 
   function renderProjectsVerticalTicker() {
@@ -2333,12 +2408,14 @@
   function syncWorksFontToHero() {
     const vTrack = document.getElementById('projectsVerticalTickerTrack');
     const tickerTrack = document.getElementById('projectsTickerTrack');
+    const mobileStack = document.getElementById('projectsWorksMobileStack');
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .projects-works-inner');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
         if (vTrack) vTrack.style.removeProperty('font-size');
         if (tickerTrack) tickerTrack.style.removeProperty('font-size');
+        if (mobileStack) mobileStack.style.removeProperty('font-size');
         return;
       }
       if (!vTrack) return;
@@ -2350,9 +2427,11 @@
         else hi = mid;
       }
       vTrack.style.fontSize = lo + 'px';
-      if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
+      if (mobileStack) mobileStack.style.fontSize = lo + 'px';
+      if (tickerTrack) tickerTrack.style.removeProperty('font-size');
       return;
     }
+    if (mobileStack) mobileStack.style.removeProperty('font-size');
     const line = document.querySelector('#heroV2Title .hero-v2-line');
     if (!line) return;
     let fs = line.style.fontSize;
