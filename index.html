@@ -727,18 +727,21 @@
     padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
     font-weight: 700;
     letter-spacing: 0.5em;
-    color: var(--page-lime);
+    color: var(--black);
+    background: var(--white);
+    border: 3px solid var(--white);
     pointer-events: auto;
     animation: float 3s ease-in-out infinite;
     font-size: 0.875rem;
-    transition: background-color 0.1s, color 0.1s;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   @media (min-width: 640px) { .scroll-hint a { font-size: 1rem; } }
   @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
   @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
   .scroll-hint a:hover {
-    background: var(--white);
+    background: var(--page-lime);
     color: var(--black);
+    border-color: var(--page-lime);
   }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
@@ -1169,21 +1172,21 @@
     font-weight: 900;
     text-transform: capitalize;
     display: inline-block;
-    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   @media (min-width: 640px) { .contact-btn { padding: 0.6rem 1.2rem; font-size: 1.05rem; } }
   @media (min-width: 768px) { .contact-btn { font-size: 1.15rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
-  /* Botones sobre fondo oscuro */
+  /* Botones: blanco por defecto; hover / contraste en amarillo fluorescente */
   .contact-box .contact-btn {
-    color: var(--page-lime);
-    background: transparent;
-    border-color: var(--page-lime);
-  }
-  .contact-box .contact-btn:hover {
-    background: var(--white);
     color: var(--black);
+    background: var(--white);
     border-color: var(--white);
+  }
+  .contact-box .contact-btn:hover:not(:disabled) {
+    background: var(--page-lime);
+    color: var(--black);
+    border-color: var(--page-lime);
   }
 
 
@@ -1200,17 +1203,21 @@
     opacity: 0.85;
   }
   .contact-alt-link {
-    border: 2px solid rgba(238, 255, 0, 0.45);
-    background: transparent;
-    color: var(--page-lime);
+    border: 2px solid var(--white);
+    background: var(--white);
+    color: var(--black);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
     font-weight: 800;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    transition: background-color 0.1s, color 0.1s, border-color 0.1s;
+    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
-  .contact-alt-link:hover { background: var(--white); color: var(--black); border-color: var(--white); }
+  .contact-alt-link:hover {
+    background: var(--page-lime);
+    color: var(--black);
+    border-color: var(--page-lime);
+  }
 
   .newsletter-form { margin-top: 2rem; }
   .newsletter-form__row {
@@ -1226,12 +1233,21 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid rgba(238, 255, 0, 0.4);
-    background: #0a0a0a;
-    color: var(--page-lime);
+    border: 3px solid var(--white);
+    background: var(--white);
+    color: var(--black);
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
   @media (min-width: 640px) { .newsletter-form__input { font-size: 1.05rem; } }
-  .newsletter-form__input::placeholder { color: rgba(238, 255, 0, 0.38); }
+  .newsletter-form__input::placeholder { color: rgba(0, 0, 0, 0.45); }
+  .newsletter-form__input:hover {
+    border-color: var(--page-lime);
+  }
+  .newsletter-form__input:focus {
+    border-color: var(--page-lime);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--page-lime);
+  }
 
   .contact-divider {
     margin-top: 2.5rem;
@@ -1306,15 +1322,28 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid rgba(238, 255, 0, 0.4);
-    background: #0a0a0a;
-    color: var(--page-lime);
+    border: 3px solid var(--white);
+    background: var(--white);
+    color: var(--black);
     min-width: 0;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .contact-form__input:hover,
+  .contact-form__select:hover,
+  .contact-form__textarea:hover {
+    border-color: var(--page-lime);
+  }
+  .contact-form__input:focus,
+  .contact-form__select:focus,
+  .contact-form__textarea:focus {
+    border-color: var(--page-lime);
+    outline: none;
+    box-shadow: 0 0 0 1px var(--page-lime);
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
   .contact-form__select option {
-    color: var(--page-lime);
-    background: var(--black);
+    color: var(--black);
+    background: var(--white);
   }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
@@ -1396,15 +1425,19 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.55);
-    color: var(--white);
-    border: 2px solid rgba(238, 255, 0, 0.35);
+    background: var(--white);
+    color: var(--black);
+    border: 2px solid var(--white);
     font-size: 1.5rem;
     line-height: 1;
     transition: background 0.15s, color 0.15s, opacity 0.15s, border-color 0.15s;
     backdrop-filter: blur(4px);
   }
-  .projects-chev:hover { background: var(--white); border-color: var(--white); color: var(--black); }
+  .projects-chev:hover:not(:disabled) {
+    background: var(--page-lime);
+    border-color: var(--page-lime);
+    color: var(--black);
+  }
   .projects-chev:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
   .projects-chev:disabled { opacity: 0.3; cursor: not-allowed; }
   .projects-chev--off { visibility: hidden; pointer-events: none; opacity: 0; }
