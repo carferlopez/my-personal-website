@@ -808,10 +808,9 @@
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
   }
 
-  /* Letrero WORKS: marquee sin banda rellena; fondo transparente (solo el texto en movimiento) */
+  /* Letrero WORKS: solo texto en movimiento; sin banda, sin máscara ni sombras que lean a negro */
   .projects-ticker {
     position: relative;
-    isolation: isolate;
     width: 100%;
     max-width: 100%;
     margin: 0 0 0.85rem;
@@ -841,8 +840,9 @@
     z-index: 1;
     overflow: hidden;
     width: 100%;
-    mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
-    -webkit-mask-image: linear-gradient(90deg, transparent, #000 3%, #000 97%, transparent);
+    background: transparent;
+    mask-image: none;
+    -webkit-mask-image: none;
   }
   .projects-ticker__track {
     display: inline-flex;
@@ -853,6 +853,7 @@
     line-height: 1.05;
     will-change: transform;
     animation: projects-ticker-marquee 90s linear infinite;
+    background: transparent;
   }
   .projects-ticker__chunk {
     display: inline-flex;
@@ -882,7 +883,7 @@
     color: var(--white);
     -webkit-text-fill-color: var(--white);
     -webkit-text-stroke: 0;
-    text-shadow: 0 0 18px rgba(0, 0, 0, 0.35);
+    text-shadow: none;
   }
   @keyframes projects-ticker-marquee {
     to { transform: translateX(-50%); }
