@@ -290,12 +290,18 @@
     color: var(--page-lime) !important;
     -webkit-text-fill-color: var(--page-lime) !important;
   }
-  /* Móvil portrait: cada línea llena el ancho, sin gaps */
+  /* Móvil: titular cerca del logo (sin centrar en toda la pantalla; proporción más parecida al desktop) */
   @media (max-width: 639px) {
+    .hero-v2-sticky {
+      justify-content: flex-start;
+      align-items: stretch;
+      padding-top: max(4.15rem, calc(env(safe-area-inset-top, 0px) + 3.7rem));
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+    }
     .hero-v2-title {
-      flex: 1;
+      flex: 0 1 auto;
       min-height: 0;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 0;
     }
   }
