@@ -399,6 +399,15 @@
     width: 100%;
     box-sizing: border-box;
     border-bottom: none;
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Más arriba que el centro geométrico: bloque “centrado” en la mitad superior */
+    justify-content: flex-start;
+    padding-top: clamp(5.25rem, 16vmin, 11rem);
+    padding-bottom: clamp(1.75rem, 9vmin, 5rem);
   }
 
   .intro-hero--active .intro-panel--0 {
@@ -836,13 +845,14 @@
     .intro-hero.intro-hero--active {
       overflow-x: visible;
     }
-    /* Con animación: cada frase ocupa el alto útil y queda centrada al pin del scroll */
+    /* Pin móvil: misma zona alta que escritorio + safe area */
     .intro-hero.intro-hero--active .intro-panel {
       min-height: 100vh !important;
       min-height: 100dvh !important;
+      justify-content: flex-start !important;
       align-items: center;
-      justify-content: center;
-      padding-block: clamp(2rem, 8vmin, 4rem);
+      padding-top: clamp(4.75rem, 13vmin, 9rem) !important;
+      padding-bottom: clamp(1rem, 5vmin, 2.75rem) !important;
       padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
         max(var(--container-pad-x), env(safe-area-inset-right, 0px));
       box-sizing: border-box;
@@ -1695,14 +1705,16 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Móvil: escala suave; escritorio: zoom moderado (columna ya es estrecha, evita barras ultra anchas) */
-    const endScale = wide ? 2.4 : narrowMobile ? 1.12 : 2.1;
-    const startCopy = wide
-      ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
-      : { x: 0, y: 0, opacity: 0, scale: 0.94 };
+    /* Solo fade + escala (sin vuelo lateral); escala final moderada */
+    const endScale = wide ? 1.88 : narrowMobile ? 1.04 : 1.68;
+    const startCopy = {
+      x: 0,
+      y: 0,
+      opacity: 0,
+      scale: wide ? 0.78 : narrowMobile ? 0.88 : 0.82,
+    };
 
     const SEG = 1;
-    /* Móvil: un poco más de scroll por frase = tiempo de lectura con el texto ya fijo */
     const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
@@ -1713,10 +1725,10 @@
       if (!copy) return;
       copyEls.push(copy);
       gsap.set(copy, {
-        transformOrigin: wide ? 'left center' : 'center center',
+        transformOrigin: 'center center',
         scale: startCopy.scale,
-        x: startCopy.x,
-        y: startCopy.y,
+        x: 0,
+        y: 0,
         opacity: startCopy.opacity,
       });
     });
@@ -1758,82 +1770,48 @@
       if (!copy) return;
 
       const motionDur = i < 2 ? mergeDur : SEG;
+      const enterDur = Math.min(0.32, motionDur * 0.36);
+      const holdDur = Math.max(0, motionDur - enterDur);
 
-      if (narrowMobile) {
-        const enterDur = Math.min(0.3, motionDur * 0.34);
-        const holdDur = Math.max(0, motionDur - enterDur);
-        tl.fromTo(
-          copy,
-          {
-            scale: startCopy.scale,
-            x: startCopy.x,
-            y: startCopy.y,
-            opacity: startCopy.opacity,
-          },
-          {
-            scale: endScale,
-            x: 0,
-            y: 0,
-            opacity: 1,
-            ease: introEase,
-            duration: enterDur,
-          },
-          t0
-        );
-        tl.to(
-          copy,
-          {
-            scale: endScale,
-            x: 0,
-            y: 0,
-            opacity: 1,
-            ease: 'none',
-            duration: holdDur,
-          },
-          t0 + enterDur
-        );
-      } else {
-        tl.fromTo(
-          copy,
-          {
-            scale: startCopy.scale,
-            x: startCopy.x,
-            y: startCopy.y,
-            opacity: startCopy.opacity,
-          },
-          {
-            scale: endScale,
-            x: 0,
-            y: 0,
-            opacity: 1,
-            ease: introEase,
-            duration: motionDur,
-          },
-          t0
-        );
-      }
+      tl.fromTo(
+        copy,
+        {
+          scale: startCopy.scale,
+          x: 0,
+          y: 0,
+          opacity: startCopy.opacity,
+        },
+        {
+          scale: endScale,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          ease: introEase,
+          duration: enterDur,
+        },
+        t0
+      );
+      tl.to(
+        copy,
+        {
+          scale: endScale,
+          x: 0,
+          y: 0,
+          opacity: 1,
+          ease: 'none',
+          duration: holdDur,
+        },
+        t0 + enterDur
+      );
 
       if (i < 2) {
-        const exit = wide
-          ? {
-              x: '-72vw',
-              y: 0,
-              opacity: 0,
-              scale: endScale * 0.94,
-            }
-          : {
-              x: 0,
-              y: '-14vh',
-              opacity: 0,
-              scale: endScale * 0.88,
-            };
         tl.to(
           copy,
           {
-            x: exit.x,
-            y: exit.y,
-            opacity: exit.opacity,
-            scale: exit.scale,
+            x: 0,
+            y: 0,
+            opacity: 0,
+            scale: endScale * 0.76,
             ease: 'sine.inOut',
             duration: exitDur,
           },
