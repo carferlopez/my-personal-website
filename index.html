@@ -1955,8 +1955,8 @@
       : { x: 0, y: 0, opacity: 0, scale: 0.92 };
 
     const SEG = 1;
-    /* Menos scroll por tramo; merge lineal para que al acabar el centrado arranque ya la salida (sin cola del ease). */
-    const scrollPerSegmentVh = 3.35;
+    /* Vh por tramo × 3 = pin total. En columnas estrechas menos scroll para el mismo timeline → el merge entra antes y termina antes de “pasar” de pantalla. */
+    const scrollPerSegmentVh = narrowMobile ? 2.38 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
