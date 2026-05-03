@@ -182,14 +182,19 @@
   }
 
   .site-header .logo {
+    color: var(--white);
+    transition: color 0.15s ease, opacity 0.15s ease;
+  }
+  .site-header .logo .logo-dot {
     color: var(--page-lime);
     transition: color 0.15s ease;
   }
   .site-header .logo:hover {
     color: var(--white);
+    opacity: 0.92;
   }
   .site-header .logo:hover .logo-dot {
-    color: var(--white);
+    color: var(--page-lime);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
