@@ -433,46 +433,62 @@
     position: relative;
     z-index: 2;
     margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
-    /* Bloque ~cuadrado: líneas cortas (ch) + más tipografía abajo */
-    max-width: min(26ch, 34rem, 92vw);
+    width: min(94vw, 78rem);
+    max-width: min(94vw, 78rem);
+    box-sizing: border-box;
     will-change: transform;
   }
 
   .intro-panel__headline {
     margin: 0;
-    font-size: clamp(1.45rem, 4.35vw, 2.95rem);
     font-weight: 900;
     letter-spacing: -0.04em;
-    line-height: 1.1;
+    line-height: 1.05;
     text-transform: uppercase;
-    text-wrap: balance;
+    text-wrap: pretty;
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;
+    /* Escala con el ancho de pantalla; caja ancha → pocas líneas */
+    font-size: clamp(1.35rem, 2.1vw + 0.55rem, 3.15rem);
   }
   @media (min-width: 768px) {
-    .intro-panel__headline { font-size: clamp(1.7rem, 3.4vw, 3.25rem); }
+    .intro-panel__headline {
+      font-size: clamp(1.5rem, 2.35vw + 0.45rem, 3.35rem);
+      line-height: 1.04;
+    }
   }
-  /* Tablet: mismo criterio cuadrado, escala intermedia */
   @media (min-width: 640px) and (max-width: 899px) {
     .intro-panel__copy {
-      max-width: min(24ch, 30rem, 88vw);
+      width: min(94vw, 64rem);
+      max-width: min(94vw, 64rem);
     }
     .intro-panel__headline {
-      font-size: clamp(1.85rem, 3.6vw, 2.85rem);
-      line-height: 1.11;
+      font-size: clamp(1.55rem, 2.5vw + 0.5rem, 3.05rem);
     }
   }
-  /* Escritorio: tipografía grande en columna tipo bloque (relación alto/ancho cercana) */
   @media (min-width: 900px) {
     .intro-panel__copy {
-      max-width: min(22ch, 28rem, 36vw);
+      width: min(94vw, 88rem);
+      max-width: min(94vw, 88rem);
     }
     .intro-panel__headline {
-      font-size: clamp(2.2rem, 3.05vw, 3.85rem);
-      line-height: 1.1;
+      font-size: clamp(1.65rem, 2.15vw + 0.85rem, 3.5rem);
+      line-height: 1.03;
       letter-spacing: -0.042em;
     }
+  }
+
+  /* Pin scroll: caja centrada, proporción ancha (escritorio) / cuadrada (móvil) */
+  .intro-hero.intro-hero--active .intro-panel__copy {
+    margin-inline: auto;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    width: min(94vw, 88rem);
+    max-width: min(94vw, 88rem);
+  }
+  .intro-hero.intro-hero--active .intro-panel__headline {
+    text-align: center;
   }
 
   /* Línea 2 en blanco; 1 y 3 en lima; puntos / ;) con reglas de sufijo */
@@ -875,21 +891,28 @@
     }
     .intro-hero.intro-hero--active .intro-panel__copy {
       margin-inline: auto;
-      max-width: min(100%, 20ch, 90vw);
+      width: min(88vw, 72vmin, 50dvh);
+      max-width: min(88vw, 72vmin, 50dvh);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(0.55rem, 2.8vmin, 1.1rem);
       text-align: center;
     }
     .intro-panel__headline {
-      font-size: clamp(1.05rem, 5.5vw, 1.75rem);
-      line-height: 1.11;
-      overflow-wrap: anywhere;
-      word-break: break-word;
-      hyphens: auto;
-      -webkit-hyphens: auto;
+      font-size: clamp(1rem, 4.5vw, 1.65rem);
+      line-height: 1.07;
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: none;
       max-width: 100%;
     }
     .intro-hero.intro-hero--active .intro-panel__headline {
       text-align: center;
-      text-wrap: balance;
+      text-wrap: pretty;
+      font-size: clamp(0.78rem, 3.85vmin, 1.32rem);
+      line-height: 1.06;
     }
   }
 
