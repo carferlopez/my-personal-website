@@ -142,10 +142,11 @@
     background: transparent;
     color: var(--white);
   }
-  /* ES/EN: blanco en reposo → amarillo al pasar el ratón / foco / menú abierto */
+  /* ES/EN: reposo blanco; hover/foco/abierto = bloque entero relleno amarillo fluor, texto negro (legible) */
   .site-header .lang-select__btn {
     color: var(--white);
-    transition: color 0.15s ease;
+    background: transparent;
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
   .site-header .lang-select__btn .lang-select__chev {
     color: inherit;
@@ -155,13 +156,18 @@
   .site-header .lang-select__btn:hover,
   .site-header .lang-select__btn:focus-visible,
   .site-header .lang-select.is-open .lang-select__btn {
-    background: transparent;
-    color: var(--page-lime);
+    background: var(--page-lime);
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
   }
   .site-header .lang-select__btn:hover .lang-select__chev,
   .site-header .lang-select__btn:focus-visible .lang-select__chev,
   .site-header .lang-select.is-open .lang-select__btn .lang-select__chev {
     opacity: 1;
+  }
+  .site-header .lang-select__btn:focus-visible {
+    outline: 2px solid var(--black);
+    outline-offset: 2px;
   }
   .site-header .hamburger-btn {
     color: var(--page-lime);
@@ -177,14 +183,17 @@
   .site-header .lang-select__option {
     background: transparent;
     color: var(--page-lime);
+    transition: background-color 0.15s ease, color 0.15s ease;
   }
   .site-header .lang-select__option.is-active {
     background: transparent;
     color: var(--white);
   }
-  .site-header .lang-select__option:hover {
-    background: transparent;
-    color: var(--page-lime);
+  .site-header .lang-select__option:hover,
+  .site-header .lang-select__option:focus-visible {
+    background: var(--page-lime);
+    color: var(--black);
+    -webkit-text-fill-color: var(--black);
   }
 
   .site-header .logo {
