@@ -389,6 +389,8 @@
     min-height: 100vh;
     min-height: 100dvh;
     gap: 0;
+    perspective: 120vmin;
+    transform-style: preserve-3d;
   }
 
   .intro-hero--active .intro-panel {
@@ -449,12 +451,11 @@
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;
-    /* Escala con el ancho de pantalla; caja ancha → pocas líneas */
-    font-size: clamp(1.35rem, 2.1vw + 0.55rem, 3.15rem);
+    font-size: clamp(2rem, 3.8vw + 0.85rem, 4.75rem);
   }
   @media (min-width: 768px) {
     .intro-panel__headline {
-      font-size: clamp(1.5rem, 2.35vw + 0.45rem, 3.35rem);
+      font-size: clamp(2.15rem, 4.1vw + 0.9rem, 5.1rem);
       line-height: 1.04;
     }
   }
@@ -464,7 +465,7 @@
       max-width: min(94vw, 64rem);
     }
     .intro-panel__headline {
-      font-size: clamp(1.55rem, 2.5vw + 0.5rem, 3.05rem);
+      font-size: clamp(2.1rem, 4.2vw + 0.85rem, 4.85rem);
     }
   }
   @media (min-width: 900px) {
@@ -473,7 +474,7 @@
       max-width: min(94vw, 88rem);
     }
     .intro-panel__headline {
-      font-size: clamp(1.65rem, 2.15vw + 0.85rem, 3.5rem);
+      font-size: clamp(2.25rem, 3.6vw + 1.35rem, 5.75rem);
       line-height: 1.03;
       letter-spacing: -0.042em;
     }
@@ -891,18 +892,19 @@
     }
     .intro-hero.intro-hero--active .intro-panel__copy {
       margin-inline: auto;
-      width: min(88vw, 72vmin, 50dvh);
-      max-width: min(88vw, 72vmin, 50dvh);
+      width: min(92vw, 82vmin, 58dvh);
+      max-width: min(92vw, 82vmin, 58dvh);
       aspect-ratio: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(0.55rem, 2.8vmin, 1.1rem);
+      padding: clamp(0.5rem, 2.5vmin, 1rem);
       text-align: center;
+      overflow: visible;
     }
     .intro-panel__headline {
-      font-size: clamp(1rem, 4.5vw, 1.65rem);
-      line-height: 1.07;
+      font-size: clamp(1.45rem, 6.2vw, 2.5rem);
+      line-height: 1.06;
       overflow-wrap: normal;
       word-break: normal;
       hyphens: none;
@@ -911,8 +913,8 @@
     .intro-hero.intro-hero--active .intro-panel__headline {
       text-align: center;
       text-wrap: pretty;
-      font-size: clamp(0.78rem, 3.85vmin, 1.32rem);
-      line-height: 1.06;
+      font-size: clamp(1.2rem, 6.8vmin, 2.15rem);
+      line-height: 1.05;
     }
   }
 
@@ -1728,19 +1730,21 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Solo fade + escala (sin vuelo lateral); escala final moderada */
-    const endScale = wide ? 1.88 : narrowMobile ? 1.04 : 1.68;
+    /* Desde el centro muy pequeño → zoom fuerte “como acercándose”; salida se aleja encogiendo */
+    const endScale = wide ? 2.85 : narrowMobile ? 1.58 : 2.35;
     const startCopy = {
       x: 0,
       y: 0,
       opacity: 0,
-      scale: wide ? 0.78 : narrowMobile ? 0.88 : 0.82,
+      scale: wide ? 0.32 : narrowMobile ? 0.38 : 0.36,
     };
 
     const SEG = 1;
     const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
+
+    const startZ = wide ? -620 : narrowMobile ? -160 : -480;
 
     const copyEls = [];
     panels.forEach((panel) => {
@@ -1749,9 +1753,12 @@
       copyEls.push(copy);
       gsap.set(copy, {
         transformOrigin: 'center center',
+        transformPerspective: 1100,
+        force3D: true,
         scale: startCopy.scale,
         x: 0,
         y: 0,
+        z: startZ,
         opacity: startCopy.opacity,
       });
     });
@@ -1776,7 +1783,7 @@
       },
     });
 
-    const introEase = 'none';
+    const introEase = 'power2.out';
     const panelFadeDur = 0.26;
     const panelFadeEase = 'power2.inOut';
     /* Salida más larga y suave (antes ~0.048 era casi un parpadeo al hacer scrub) */
@@ -1802,12 +1809,14 @@
           scale: startCopy.scale,
           x: 0,
           y: 0,
+          z: startZ,
           opacity: startCopy.opacity,
         },
         {
           scale: endScale,
           x: 0,
           y: 0,
+          z: 0,
           opacity: 1,
           ease: introEase,
           duration: enterDur,
@@ -1820,6 +1829,7 @@
           scale: endScale,
           x: 0,
           y: 0,
+          z: 0,
           opacity: 1,
           ease: 'none',
           duration: holdDur,
@@ -1833,9 +1843,10 @@
           {
             x: 0,
             y: 0,
+            z: startZ * 1.05,
             opacity: 0,
-            scale: endScale * 0.76,
-            ease: 'sine.inOut',
+            scale: Math.max(0.32, startCopy.scale * 0.9),
+            ease: 'power2.in',
             duration: exitDur,
           },
           t0 + mergeDur
