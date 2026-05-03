@@ -453,6 +453,24 @@
     hyphens: none;
     font-size: clamp(2rem, 3.8vw + 0.85rem, 4.75rem);
   }
+  /* Bloque multi-línea como el hero (SYSTEMS / ARCHITECT / …): una fila por span */
+  .intro-panel__headline.intro-panel__headline--stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(0.02em, 0.28vw, 0.08em);
+    width: max-content;
+    max-width: min(96vw, 58rem);
+    margin-inline: auto;
+    text-align: center;
+  }
+  .intro-headline__line {
+    display: block;
+    white-space: nowrap;
+    line-height: 0.9;
+    letter-spacing: inherit;
+  }
   @media (min-width: 768px) {
     .intro-panel__headline {
       font-size: clamp(2.15rem, 4.1vw + 0.9rem, 5.1rem);
@@ -1417,21 +1435,21 @@
       <article class="intro-panel intro-panel--0" data-intro-panel="0">
         <div class="container intro-panel__grid">
           <div class="intro-panel__copy">
-            <p class="intro-panel__headline" id="introLine0"></p>
+            <p class="intro-panel__headline intro-panel__headline--stack" id="introLine0"></p>
           </div>
         </div>
       </article>
       <article class="intro-panel intro-panel--1" data-intro-panel="1">
         <div class="container intro-panel__grid">
           <div class="intro-panel__copy">
-            <p class="intro-panel__headline" id="introLine1"></p>
+            <p class="intro-panel__headline intro-panel__headline--stack" id="introLine1"></p>
           </div>
         </div>
       </article>
       <article class="intro-panel intro-panel--2" data-intro-panel="2">
         <div class="container intro-panel__grid">
           <div class="intro-panel__copy">
-            <p class="intro-panel__headline" id="introLine2"></p>
+            <p class="intro-panel__headline intro-panel__headline--stack" id="introLine2"></p>
           </div>
         </div>
       </article>
@@ -1528,9 +1546,9 @@
   const t = {
     es: {
       typewriter: [
-        "DISEÑO PRODUCTOS DIGITALES.",
-        "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
-        "ESPERO QUE TE SIRVAN ;)",
+        ['DISEÑO', 'PRODUCTOS', 'DIGITALES.'],
+        ['SENCILLOS DE USAR,', 'PERO SOBRE TODO', 'ÚTILES.'],
+        ['ESPERO QUE TE', 'SIRVAN ;)'],
       ],
       contactTitle: "NO TE PIERDAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
@@ -1564,9 +1582,9 @@
     },
     en: {
       typewriter: [
-        "DIGITAL PRODUCT DESIGN.",
-        "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
-        "I HOPE THEY HELP YOU ;)",
+        ['DIGITAL PRODUCT', 'DESIGN.'],
+        ['SIMPLE TO USE,', 'BUT ABOVE ALL,', 'USEFUL.'],
+        ['I HOPE THEY', 'HELP YOU ;)'],
       ],
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
@@ -1638,51 +1656,56 @@
     });
   }
 
-  /** Sufijos `.` y `;)` en blanco (clase intro-line__suffix). */
-  function fillIntroLineElement(el, fullWord) {
+  function normalizeTypewriterBlock(entry) {
+    if (Array.isArray(entry)) return entry.map((s) => String(s));
+    return [String(entry)];
+  }
+
+  /** Varias líneas por bloque (como hero-v2-line); la última puede llevar sufijos . o ;). */
+  function fillIntroHeadlineStack(el, lines) {
     if (!el) return;
     el.replaceChildren();
-    if (!fullWord) return;
-
-    if (fullWord.endsWith(' ;')) {
-      const baseLen = fullWord.length - 2;
-      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
-      const suffix = document.createElement('span');
-      suffix.className = 'intro-line__suffix intro-line__suffix--semi';
-      suffix.textContent = ' ;';
-      el.append(suffix);
-      return;
-    }
-
-    if (fullWord.endsWith(';)')) {
-      const baseLen = fullWord.length - 2;
-      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
-      const suffix = document.createElement('span');
-      suffix.className = 'intro-line__suffix intro-line__suffix--wink';
-      suffix.textContent = ';)';
-      el.append(suffix);
-      return;
-    }
-
-    if (fullWord.endsWith('.')) {
-      const baseLen = fullWord.length - 1;
-      el.append(document.createTextNode(fullWord.slice(0, baseLen)));
-      const suffix = document.createElement('span');
-      suffix.className = 'intro-line__suffix intro-line__suffix--period';
-      suffix.textContent = '.';
-      el.append(suffix);
-      return;
-    }
-
-    el.textContent = fullWord;
+    const arr = normalizeTypewriterBlock(lines);
+    if (!arr.length) return;
+    arr.forEach((raw, idx) => {
+      const isLast = idx === arr.length - 1;
+      const row = document.createElement('span');
+      row.className = 'intro-headline__line';
+      const s = String(raw);
+      if (isLast && s.endsWith(' ;')) {
+        const baseLen = s.length - 2;
+        row.append(document.createTextNode(s.slice(0, baseLen)));
+        const suffix = document.createElement('span');
+        suffix.className = 'intro-line__suffix intro-line__suffix--semi';
+        suffix.textContent = ' ;';
+        row.append(suffix);
+      } else if (isLast && s.endsWith(';)')) {
+        const baseLen = s.length - 2;
+        row.append(document.createTextNode(s.slice(0, baseLen)));
+        const suffix = document.createElement('span');
+        suffix.className = 'intro-line__suffix intro-line__suffix--wink';
+        suffix.textContent = ';)';
+        row.append(suffix);
+      } else if (isLast && s.endsWith('.')) {
+        const baseLen = s.length - 1;
+        row.append(document.createTextNode(s.slice(0, baseLen)));
+        const suffix = document.createElement('span');
+        suffix.className = 'intro-line__suffix intro-line__suffix--period';
+        suffix.textContent = '.';
+        row.append(suffix);
+      } else {
+        row.textContent = s;
+      }
+      el.appendChild(row);
+    });
   }
 
   function fillIntroLinesFromLang() {
     const words = t[lang].typewriter;
     if (!words || words.length < 3) return;
-    fillIntroLineElement(document.getElementById('introLine0'), words[0]);
-    fillIntroLineElement(document.getElementById('introLine1'), words[1]);
-    fillIntroLineElement(document.getElementById('introLine2'), words[2]);
+    fillIntroHeadlineStack(document.getElementById('introLine0'), words[0]);
+    fillIntroHeadlineStack(document.getElementById('introLine1'), words[1]);
+    fillIntroHeadlineStack(document.getElementById('introLine2'), words[2]);
   }
 
   function refreshIntroLinesAfterLangChange() {
