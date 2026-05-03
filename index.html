@@ -198,33 +198,18 @@
 
   .site-header .logo {
     color: var(--white);
-    transition: opacity 0.15s ease;
-  }
-  .site-header .logo .logo-given {
-    color: var(--white);
-    transition: color 0.15s ease;
-  }
-  .site-header .logo .logo-surname {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-    transition: color 0.15s ease, -webkit-text-fill-color 0.15s ease;
+    transition: color 0.15s ease, opacity 0.15s ease;
   }
   .site-header .logo .logo-dot {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
-    transition: color 0.15s ease, -webkit-text-fill-color 0.15s ease;
+    color: var(--page-lime);
+    transition: color 0.15s ease;
   }
   .site-header .logo:hover {
-    opacity: 1;
-  }
-  .site-header .logo:hover .logo-given,
-  .site-header .logo:hover .logo-surname {
     color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    opacity: 1;
   }
   .site-header .logo:hover .logo-dot {
     color: var(--white);
-    -webkit-text-fill-color: var(--white);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
@@ -550,10 +535,6 @@
   @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
   .logo .logo-dot {
     color: var(--hero-v2-orange);
-  }
-  .logo .logo-surname {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
   }
 
   .header-top nav {
@@ -1609,7 +1590,7 @@
 <header class="site-header" id="siteHeader">
     <div class="site-header__inner">
       <div class="header-top">
-        <a href="#inicio" class="logo" id="siteLogo" aria-label="Ir al inicio"><span class="logo-given">Carlos </span><span class="logo-surname">Fernández</span><span class="logo-dot">.</span></a>
+        <a href="#inicio" class="logo" id="siteLogo" aria-label="Ir al inicio">Carlos Fernández<span class="logo-dot">.</span></a>
         <button class="hamburger-btn" id="hamburgerBtn" aria-label="Menú" aria-expanded="false" aria-controls="headerActions">
           <span></span><span></span><span></span>
         </button>
