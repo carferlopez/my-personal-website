@@ -830,7 +830,8 @@
     max-width: none;
     margin-left: calc(50% - 50vw);
     margin-right: calc(50% - 50vw);
-    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    /* Junto al marquee vertical: casi sin hueco bajo la franja horizontal */
+    margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
     border-radius: 0;
     border: none;
     padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
@@ -938,7 +939,7 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
-    padding-top: clamp(0.5rem, 2vw, 1.25rem);
+    padding-top: clamp(0, 0.2vw, 0.12rem);
     padding-bottom: clamp(1.5rem, 4vw, 3rem);
   }
   .projects-works-inner .projects-module--minimal {
@@ -959,6 +960,8 @@
   }
   #proyectos #projectsTitle {
     margin: 0;
+    /* Sube el marquee vertical hasta casi unirlo con la franja horizontal */
+    margin-top: calc(-1 * clamp(0.1rem, 0.5vw, 0.26rem));
     margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
     width: max-content;
     flex: 0 0 auto;
@@ -1119,6 +1122,7 @@
       position: static;
       align-self: flex-start;
       margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
+      margin-top: calc(-1 * clamp(0.06rem, 0.45vw, 0.2rem));
       width: max-content;
       flex: 0 0 auto;
       padding-right: 0;
