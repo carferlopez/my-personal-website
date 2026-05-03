@@ -443,6 +443,17 @@
   @media (min-width: 768px) {
     .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
   }
+  /* Escritorio ancho: columna más estrecha + más interlineado → bloque más alto, menos barra horizontal */
+  @media (min-width: 900px) {
+    .intro-panel__copy {
+      max-width: min(22rem, 32vw);
+    }
+    .intro-panel__headline {
+      font-size: clamp(1.85rem, 2.35vw, 2.95rem);
+      line-height: 1.18;
+      letter-spacing: -0.038em;
+    }
+  }
 
   /* Línea 2 en blanco; 1 y 3 en lima; puntos / ;) con reglas de sufijo */
   .intro-panel--0 .intro-panel__headline {
@@ -1964,8 +1975,8 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Móvil: escala suave para que el bloque entero quepa centrado; escritorio: zoom dramático */
-    const endScale = wide ? 2.75 : narrowMobile ? 1.08 : 2.05;
+    /* Móvil: escala suave; escritorio: zoom moderado (columna ya es estrecha, evita barras ultra anchas) */
+    const endScale = wide ? 2.25 : narrowMobile ? 1.08 : 2.05;
     const startCopy = wide
       ? { x: '-26vw', y: 0, opacity: 1, scale: 1 }
       : { x: 0, y: 0, opacity: 0, scale: 0.94 };
