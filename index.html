@@ -2579,11 +2579,19 @@
     const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
     /* Escritorio: zoom in al bajar. Móvil: al revés — de pantalla completa girada al titular “de reposo”. */
     if (heroMobileReverse) {
+      /* El título llega a escala 1 antes (~55% del scroll del hero): así se ve el estado final
+         antes del fade y antes de que el ojo “salga” hacia la siguiente sección. */
       heroTl.fromTo(
         '#heroV2Title',
         { scale: 7, rotationZ: 22 },
-        { scale: 1, rotationZ: 0, ease: 'none', duration: 1 },
+        { scale: 1, rotationZ: 0, ease: 'none', duration: 0.55 },
         0
+      );
+      heroTl.fromTo(
+        '.hero-v2-end-fade',
+        { opacity: 0 },
+        { opacity: 1, ease: 'none', duration: 0.24 },
+        0.76
       );
     } else {
       heroTl.fromTo(
@@ -2592,14 +2600,13 @@
         { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
         0
       );
+      heroTl.fromTo(
+        '.hero-v2-end-fade',
+        { opacity: 0 },
+        { opacity: 1, ease: 'none', duration: 0.26 },
+        0.74
+      );
     }
-    /* Fade a color de página en el último tramo del hero */
-    heroTl.fromTo(
-      '.hero-v2-end-fade',
-      { opacity: 0 },
-      { opacity: 1, ease: 'none', duration: 0.26 },
-      0.74
-    );
   }
 
   setupIntroLinesScrollAnimation();
