@@ -788,11 +788,12 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--white); }
 
-  /* WORKS: fondo de página; copy en amarillo fluorescente, acentos en blanco */
+  /* WORKS: imagen de fondo a pantalla completa + velo naranja; copy en lima / blanco */
   #proyectos.projects-section {
-    background: var(--page-bg);
+    background: transparent;
     color: var(--page-lime);
     overflow-x: clip;
+    position: relative;
   }
   #proyectos .projects-strap.subheading {
     color: var(--page-lime);
@@ -811,107 +812,49 @@
     outline-color: var(--page-lime);
   }
 
-  /* Menos padding superior: el letrero full-bleed enlaza presentación → WORKS */
   #proyectos.section-pad {
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
+    padding-bottom: clamp(2rem, 6vw, 4rem);
   }
 
-  /* Letrero WORKS: solo texto en movimiento; sin banda, sin máscara ni sombras que lean a negro */
-  .projects-ticker {
+  .projects-hero-stack {
     position: relative;
-    width: 100%;
-    max-width: 100%;
-    margin: 0 0 0.85rem;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
+    min-height: min(100vh, 1400px);
+    min-height: min(100dvh, 1400px);
+    display: flex;
+    flex-direction: column;
+  }
+  .projects-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     overflow: hidden;
-    padding: 0.42rem 0;
+    pointer-events: none;
   }
-  /* Separador a todo el ancho de pantalla entre presentación y módulo WORKS */
-  #proyectos > .projects-ticker {
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-bottom: clamp(1rem, 3vw, 1.75rem);
-    border-radius: 0;
-    border: none;
-    padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
-    padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
-    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
-    box-shadow: none;
+  .projects-hero-bg__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.02);
   }
-  .projects-ticker__viewport {
-    position: relative;
+  /* Velo naranja semitransparente (#FF6600 a ~55%) */
+  .projects-hero-bg__wash {
+    position: absolute;
+    inset: 0;
     z-index: 1;
-    overflow: hidden;
-    width: 100%;
-    background: transparent;
-    mask-image: none;
-    -webkit-mask-image: none;
+    background: rgba(255, 102, 0, 0.55);
+    pointer-events: none;
   }
-  .projects-ticker__track {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: max-content;
-    font-weight: 900;
-    line-height: 1.05;
-    will-change: transform;
-    animation: projects-ticker-marquee 90s linear infinite;
-    background: transparent;
-  }
-  .projects-ticker__chunk {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding-inline-end: 4rem;
-  }
-  .projects-ticker__word {
-    flex-shrink: 0;
-    font-weight: 900;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    margin-inline-end: 2.75rem;
-    line-height: 1;
-  }
-  .projects-ticker__word:last-child {
-    margin-inline-end: 0;
-  }
-  .projects-ticker__word--orange {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-    -webkit-text-stroke: 0.02em var(--page-lime);
-  }
-  /* Ramos pares del marquee: blanco (legible sobre el fondo de página) */
-  .projects-ticker__word--black {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
-    -webkit-text-stroke: 0;
-    text-shadow: none;
-  }
-  @keyframes projects-ticker-marquee {
-    to { transform: translateX(-50%); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .projects-ticker__track {
-      animation: none;
-      transform: none;
-      padding-inline: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 100%;
-      row-gap: 0.35rem;
-    }
-    .projects-ticker__chunk {
-      padding-inline-end: 0;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+  .projects-hero-inner {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    padding-top: clamp(0.5rem, 2vw, 1.25rem);
+    padding-bottom: clamp(1.5rem, 4vw, 3rem);
   }
 
   /* WORKS (mismo rótulo en ES/EN): columna lateral, lectura abajo → arriba */
@@ -923,6 +866,10 @@
     margin-top: 0;
     min-width: 0;
   }
+  .projects-hero-inner .projects-module--fullscreen {
+    flex: 1;
+    min-height: 0;
+  }
   .projects-module__body {
     flex: 1;
     min-width: 0;
@@ -932,11 +879,11 @@
   .projects-module__body .projects-strap.subheading {
     margin-top: 0;
   }
-  .projects-module__body .projects-chevron-wrap {
-    margin-top: 1.75rem;
+  .projects-module__body .projects-slide-stage {
+    margin-top: 1.35rem;
   }
   @media (min-width: 768px) {
-    .projects-module__body .projects-chevron-wrap { margin-top: 2.25rem; }
+    .projects-module__body .projects-slide-stage { margin-top: 1.75rem; }
   }
   #proyectos #projectsTitle {
     margin: 0;
@@ -1353,7 +1300,7 @@
     overflow: hidden;
   }
 
-  /* ==================== PROYECTOS (carrusel estilo Netflix) ==================== */
+  /* ==================== WORKS: slides a pantalla completa ==================== */
   .projects-strap {
     margin-top: 0;
     display: flex;
@@ -1361,7 +1308,6 @@
     align-items: flex-start;
     gap: 0.7rem;
     text-align: left;
-    /* Ancho del .container (misma anchura que el carrusel de posters) */
     max-width: 100%;
   }
   .projects-strap__lead {
@@ -1390,19 +1336,24 @@
   }
   .projects-strap a:hover { opacity: 0.85; }
   .projects-strap a:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
-  .projects-chevron-wrap {
+  .projects-slide-stage {
     position: relative;
-    margin-top: 0;
     flex: 1;
     min-width: 0;
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    min-height: min(78vh, 920px);
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: center;
   }
   .projects-chev {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    z-index: 4;
+    z-index: 5;
     width: 3rem;
     height: 3rem;
     display: flex;
@@ -1424,198 +1375,105 @@
   .projects-chev:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
   .projects-chev:disabled { opacity: 0.3; cursor: not-allowed; }
   .projects-chev--off { visibility: hidden; pointer-events: none; opacity: 0; }
-  .projects-chev--prev { left: 0.75rem; }
-  .projects-chev--next { right: 0.75rem; }
-
-  .projects-row {
-    overflow: hidden;
-    position: relative;
-    flex: 1;
-    min-height: clamp(260px, 50vh, 640px);
-    perspective: 1100px;
-    perspective-origin: 50% 25%;
+  .projects-chev--prev {
+    left: max(0.65rem, env(safe-area-inset-left, 0px));
   }
-  @media (max-width: 639px) {
-    .projects-row { min-height: clamp(220px, 65vw, 420px); }
+  .projects-chev--next {
+    right: max(0.65rem, env(safe-area-inset-right, 0px));
   }
 
-  ul.projects-track {
-    list-style: none;
-    margin: 0;
-    padding: 0;
+  .projects-slide-area {
     position: relative;
     width: 100%;
-    height: 100%;
-  }
-
-  .project-poster {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity   0.52s ease,
-                filter    0.52s ease;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .project-poster { transition: none; }
-  }
-
-  .project-poster-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    border: 4px solid rgba(238, 255, 0, 0.22);
-    background: #4d1600;
-    overflow: hidden;
+    max-width: min(100vw - 7rem, 1200px);
+    margin-inline: auto;
+    padding-inline: max(3.25rem, env(safe-area-inset-left, 0px)) max(3.25rem, env(safe-area-inset-right, 0px));
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: flex-end;
-    padding: 0;
-    transition: border-color 0.2s ease;
+    gap: 0.75rem;
+    min-height: min(72vh, 880px);
   }
-  @media (prefers-reduced-motion: reduce) {
-    .project-poster-inner { transition: none; }
-  }
-
-  li.project-poster { display: list-item; }
-  .project-poster-link, .project-poster-dummy {
-    display: block;
-    height: 100%;
-    color: inherit;
-    text-decoration: none;
-  }
-  li.project-poster:hover .project-poster-inner,
-  li.project-poster:focus-within .project-poster-inner {
-    border-color: rgba(238, 255, 0, 0.55);
-  }
-  .project-poster-dummy { cursor: default; }
-  .project-poster-dummy:focus { outline: none; }
-  .project-poster-dummy:focus-visible .project-poster-inner {
-    outline: 3px solid var(--page-lime);
-    outline-offset: 2px;
-  }
-  .project-poster-link:focus { outline: none; }
-  .project-poster-link:focus-visible .project-poster-inner {
-    outline: 3px solid var(--page-lime);
-    outline-offset: 2px;
-  }
-
-  /* Miniatura “en obras”: capa difuminada + candado (sin título en la carátula) */
-  .project-poster-blurstack {
-    position: absolute;
-    inset: 0;
-    overflow: hidden;
-  }
-  .project-poster-blur-blob {
-    position: absolute;
-    left: -25%;
-    top: -20%;
-    width: 150%;
-    height: 150%;
-    background: conic-gradient(from 200deg, #802600, #301000, #993000, #501800, #401000);
-    filter: blur(22px);
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .project-poster-blur-blob { filter: blur(0); opacity: 0.85; }
-  }
-  .project-poster-inner--orange { background: #5c1e00; border-color: rgba(238, 255, 0, 0.4); }
-  .project-poster-inner--orange .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #993000, #351004, #b03800, #501004, #5c1e00);
-  }
-  .project-poster-inner--orange .project-poster-lock-icon { color: var(--page-lime); }
-  .project-poster-inner--violet { background: #481e12; border-color: rgba(255, 255, 255, 0.28); }
-  .project-poster-inner--violet .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #602818, #241008, #703428, #381610, #481e12);
-  }
-  .project-poster-inner--violet .project-poster-lock-icon { color: var(--white); }
-  .project-poster-inner--yellow { background: #6b2400; border-color: rgba(238, 255, 0, 0.28); }
-  .project-poster-inner--yellow .project-poster-blur-blob {
-    background: conic-gradient(from 200deg, #802c00, #2a0c00, #903400, #401000, #6b2400);
-  }
-  .project-poster-inner--yellow .project-poster-lock-icon { color: var(--page-lime); }
-  .project-poster-blur-grid {
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 4px);
-    filter: blur(1px);
-    opacity: 0.5;
-  }
-  .project-poster-veil {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: rgba(0, 0, 0, 0.42);
-    pointer-events: none;
-  }
-  .project-poster-lock {
+  .projects-slide-frame {
     position: relative;
-    z-index: 2;
     flex: 1;
-    min-height: 4rem;
+    min-height: min(62vh, 800px);
     display: flex;
     align-items: center;
     justify-content: center;
+    border: 3px solid rgba(238, 255, 0, 0.35);
+    background: rgba(0, 0, 0, 0.12);
+    overflow: hidden;
   }
-  .project-poster-lock-icon {
-    width: 2.8rem;
-    height: 2.8rem;
-    color: rgba(255, 255, 255, 0.9);
-    filter: drop-shadow(0 2px 10px rgba(0, 0, 0, 0.55));
+  .projects-slide-img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: min(70vh, 820px);
+    object-fit: contain;
+    object-position: center;
   }
-  @media (min-width: 640px) { .project-poster-lock-icon { width: 3.1rem; height: 3.1rem; } }
-
-  .project-poster-badge-wrap {
-    position: relative;
-    z-index: 2;
-    padding: 0.5rem 0.4rem 0.65rem;
+  .projects-slide-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 100%;
+    min-height: min(52vh, 560px);
+    padding: 2rem 1rem;
     text-align: center;
+    background: linear-gradient(145deg, rgba(60, 20, 0, 0.65), rgba(20, 6, 2, 0.85));
   }
-
-  .project-poster-badge {
-    position: relative;
-    display: inline-block;
-    padding: 0.2rem 0.45rem;
-    font-size: 0.55rem;
+  .projects-slide-placeholder[hidden] {
+    display: none !important;
+  }
+  .projects-slide-placeholder__lock {
+    color: var(--page-lime);
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.45));
+  }
+  .projects-slide-placeholder__lock svg {
+    width: 3rem;
+    height: 3rem;
+    display: block;
+  }
+  .projects-slide-placeholder__title {
+    font-size: clamp(1rem, 2.8vw, 1.35rem);
     font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--black);
-    background: var(--page-lime);
-    border: 2px solid var(--white);
+    letter-spacing: 0.02em;
+    color: var(--white);
+    max-width: 28rem;
+    line-height: 1.35;
   }
-  @media (min-width: 640px) { .project-poster-badge { font-size: 0.6rem; padding: 0.25rem 0.5rem; } }
-  .project-poster-badge--live {
-    background: var(--white);
-    color: var(--black);
-    border-color: var(--page-lime);
+  .projects-slide-caption {
+    font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+    font-weight: 600;
+    color: var(--page-lime);
+    line-height: 1.45;
+    text-wrap: pretty;
   }
-  .project-poster-badge--float {
-    position: absolute;
-    top: 0.45rem;
-    right: 0.45rem;
-    z-index: 4;
-    margin: 0;
+  .projects-slide-caption__title {
+    display: block;
+    color: var(--white);
+    font-weight: 900;
+    margin-bottom: 0.25rem;
   }
-
-  /* Proyecto publicado: solo carátula (sin candado) + badge */
-  .project-poster-inner--live-poster {
-    padding: 0;
+  .projects-slide-caption__blurb {
+    display: block;
+    font-weight: 500;
+    opacity: 0.95;
   }
-  .project-poster--live .project-poster-bg--img {
-    position: absolute;
-    inset: 0;
-    background-size: cover;
-    background-position: center;
+  .projects-slide-open {
+    display: inline-block;
+    margin-top: 0.5rem;
+    font-weight: 800;
+    color: var(--white);
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
   }
-  .project-poster--live .project-poster-vignette {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    background: linear-gradient(180deg, transparent 45%, rgba(20, 8, 4, 0.85) 100%);
-    pointer-events: none;
-  }
+  .projects-slide-open:hover { opacity: 0.88; }
+  .projects-slide-open:focus-visible { outline: 3px solid var(--page-lime); outline-offset: 2px; }
+  .projects-slide-open[hidden] { display: none !important; }
 </style>
 </head>
 <body>
@@ -1721,27 +1579,41 @@
     </div>
   </section>
 
-  <!-- ==================== PROYECTOS (carrusel estilo Netflix) ==================== -->
-  <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
-    <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
-      <div class="projects-ticker__viewport">
-        <div class="projects-ticker__track" id="projectsTickerTrack"></div>
+  <!-- ==================== WORKS (fondo fullscreen + slides) ==================== -->
+  <section id="proyectos" class="section-pad projects-section projects-section--fullscreen" aria-labelledby="projectsTitle">
+    <div class="projects-hero-stack">
+      <div class="projects-hero-bg" aria-hidden="true">
+        <img id="worksHeroBgImg" class="projects-hero-bg__img" src="" alt="" width="1920" height="1080" decoding="async" fetchpriority="low" />
+        <div class="projects-hero-bg__wash"></div>
       </div>
-    </div>
-    <div class="container">
-      <div class="projects-module">
-        <h2 class="projects-vertical-title" id="projectsTitle">
-          <span class="projects-vertical-title__stack" aria-hidden="true"></span>
-          <span class="u-sr-only projects-title-sr">WORKS</span>
-        </h2>
-        <div class="projects-module__body">
-          <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
-          <div class="projects-chevron-wrap">
-            <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsRow" aria-label="Anterior">‹</button>
-            <div class="projects-row" id="projectsRow" data-projects-scroll>
-              <ul class="projects-track" id="projectsTrack" role="list"></ul>
+      <div class="container projects-hero-inner">
+        <div class="projects-module projects-module--fullscreen">
+          <h2 class="projects-vertical-title" id="projectsTitle">
+            <span class="projects-vertical-title__stack" aria-hidden="true"></span>
+            <span class="u-sr-only projects-title-sr">WORKS</span>
+          </h2>
+          <div class="projects-module__body">
+            <p class="subheading projects-strap" id="projectsStrap"><span class="projects-strap__lead" id="projectsStrapLead">🚧 EN CONSTRUCCIÓN 🚧</span><span class="projects-strap__intro" id="projectsStrapIntro">Mientras esperas, puedes jugar a <a href="encestar.html" target="_blank" rel="noopener noreferrer">este mini juego de basket</a> 🏀</span></p>
+            <div class="projects-slide-stage" id="projectsSlideStage">
+              <button type="button" class="projects-chev projects-chev--prev" id="projectsPrev" aria-controls="projectsSlideArea" aria-label="Anterior">‹</button>
+              <div class="projects-slide-area" id="projectsSlideArea" role="region" aria-live="polite" aria-label="Proyectos">
+                <div class="projects-slide-frame" id="projectsSlideFrame">
+                  <img id="projectsSlideImg" class="projects-slide-img" alt="" width="1200" height="800" decoding="async" hidden />
+                  <div id="projectsSlidePlaceholder" class="projects-slide-placeholder" hidden>
+                    <span class="projects-slide-placeholder__lock" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                    </span>
+                    <span id="projectsSlidePlaceholderTitle" class="projects-slide-placeholder__title"></span>
+                  </div>
+                </div>
+                <p id="projectsSlideCaption" class="projects-slide-caption">
+                  <span id="projectsSlideCaptionTitle" class="projects-slide-caption__title"></span>
+                  <span id="projectsSlideCaptionBlurb" class="projects-slide-caption__blurb"></span>
+                </p>
+                <a id="projectsSlideOpen" class="projects-slide-open" href="#" target="_blank" rel="noopener noreferrer" hidden></a>
+              </div>
+              <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsSlideArea" aria-label="Siguiente">›</button>
             </div>
-            <button type="button" class="projects-chev projects-chev--next" id="projectsNext" aria-controls="projectsRow" aria-label="Siguiente">›</button>
           </div>
         </div>
       </div>
@@ -1863,7 +1735,8 @@
       projectsStrapBody: "Mientras esperas, puedes jugar a <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">este mini juego de basket</a> 🏀",
       projectChevPrev: "Anterior",
       projectChevNext: "Siguiente",
-      projectsRowLabel: "Carrusel de trabajos"
+      projectsSlideRegion: "Proyectos",
+      projectOpenLabel: "Abrir proyecto"
     },
     en: {
       typewriter: [
@@ -1905,7 +1778,8 @@
       projectsStrapBody: "While you wait, you can play <a href=\"encestar.html\" target=\"_blank\" rel=\"noopener noreferrer\">this basket mini-game</a> 🏀",
       projectChevPrev: "Previous",
       projectChevNext: "Next",
-      projectsRowLabel: "Work carousel"
+      projectsSlideRegion: "Projects",
+      projectOpenLabel: "Open project"
     }
   };
 
@@ -1915,10 +1789,15 @@
     if (_ls === 'en' || _ls === 'es') lang = _ls;
   } catch (e) {}
 
+  /** Imagen de fondo de la sección WORKS (fullscreen); cada proyecto puede sobrescribir con heroBg. */
+  const WORKS_SECTION_BG_URL =
+    'https://images.unsplash.com/photo-1557682250-33bd709cbe85?auto=format&fit=crop&w=2400&q=80';
+
   /**
    * Catálogo de proyectos / apps.
-   * Cuando algo pase a producción: status 'live', url pública, poster (opcional, ruta a imagen carátula).
-   * Ejemplo live: { status: 'live', url: 'https://…', poster: '/covers/mi-app.png' }
+   * slideImage o poster: imagen del slide a pantalla completa.
+   * Opcional heroBg: sustituye solo el fondo de la sección al mostrar ese proyecto.
+   * Live: status 'live', url https…, poster o slideImage.
    */
   const projectsCatalog = [
     {
@@ -1947,14 +1826,6 @@
     },
   ];
 
-  function escapeHtml(s) {
-    return String(s ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
-  }
-
   function safePosterUrl(u) {
     if (!u || typeof u !== 'string') return null;
     const t = u.trim();
@@ -1962,95 +1833,21 @@
     return null;
   }
 
-  const PROJECT_LOCK_SVG = '<svg class="project-poster-lock-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
-  const PROJECT_BLUR_LAYERS = '<div class="project-poster-blurstack" aria-hidden="true"><div class="project-poster-blur-blob"></div><div class="project-poster-blur-grid"></div></div><div class="project-poster-veil" aria-hidden="true"></div>';
-
-  const CARD_COLORS = ['orange', 'violet', 'yellow'];
-
-  function buildLockedCardHtml(colorClass) {
-    return `<div class="project-poster-inner project-poster-inner--${colorClass}">
-      ${PROJECT_BLUR_LAYERS}
-      <div class="project-poster-lock">${PROJECT_LOCK_SVG}</div>
-    </div>`;
+  function worksBgUrlForProject(p) {
+    const u = p && safePosterUrl(p.heroBg);
+    return u || WORKS_SECTION_BG_URL;
   }
 
-  function buildLiveCardHtml(posterUrl, badgeLiveHtml) {
-    return `<div class="project-poster-inner project-poster-inner--live-poster project-poster--live">
-      <div class="project-poster-bg--img" style="background-image: url(${JSON.stringify(posterUrl)})" aria-hidden="true"></div>
-      <div class="project-poster-vignette" aria-hidden="true"></div>
-      <span class="project-poster-badge project-poster-badge--live project-poster-badge--float">${badgeLiveHtml}</span>
-    </div>`;
+  function projectSlideImageUrl(p) {
+    if (!p) return null;
+    return safePosterUrl(p.slideImage) || safePosterUrl(p.poster);
   }
 
-  function renderProjects() {
-    const track = document.getElementById('projectsTrack');
-    if (!track) return;
-
-    const parts = projectsCatalog.map((p, i) => {
-      const n = i + 1;
-      const isLive = p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://'));
-      const poster = safePosterUrl(p.poster);
-      const titlePlain = p.title[lang] || p.title.es;
-      const liveLabel = lang === 'es' ? 'abrir en nueva pestaña' : 'opens in new tab';
-      const aria = escapeHtml(titlePlain + (isLive ? ' — ' + liveLabel : ''));
-      const colorClass = CARD_COLORS[i % CARD_COLORS.length];
-
-      let body;
-      if (isLive && poster) {
-        const numLabel = escapeHtml(lang === 'es' ? 'PROYECTO ' + n : 'PROJECT ' + n);
-        body = buildLiveCardHtml(poster, numLabel);
-      } else {
-        body = buildLockedCardHtml(colorClass);
-      }
-
-      if (isLive) {
-        return '<li class="project-poster" role="listitem"><a class="project-poster-link" href="' + escapeHtml(p.url) + '" target="_blank" rel="noopener noreferrer" aria-label="' + aria + '">' + body + '</a></li>';
-      }
-      return '<li class="project-poster" role="listitem"><div class="project-poster-dummy" tabindex="0" aria-label="' + aria + '">' + body + '</div></li>';
-    });
-
-    track.innerHTML = parts.join('');
+  function isProjectLive(p) {
+    return !!(p && p.status === 'live' && typeof p.url === 'string' && (p.url.startsWith('http://') || p.url.startsWith('https://')));
   }
 
   let projectsCardIndex = 0;
-
-  /* Estados del carrusel 3D:
-     índice 0 = offset -2 (entrando/saliendo por izq)
-     índice 1 = offset -1 (fondo izquierdo)
-     índice 2 = offset  0 (frente)
-     índice 3 = offset +1 (fondo derecho)
-     índice 4 = offset +2 (entrando/saliendo por der)  */
-  const CARD_3D = [
-    { tx: '-72%', ty: '-4%',  scale: '0.40', ry:  '28deg', opacity: '0',    blur: '0',    z: 0 },
-    { tx: '-40%', ty: '-12%', scale: '0.58', ry:  '18deg', opacity: '0.82', blur: '1.5px',z: 1 },
-    { tx:   '0%', ty:  '4%',  scale: '0.78', ry:   '0deg', opacity: '1',    blur: '0',    z: 3 },
-    { tx:  '40%', ty: '-12%', scale: '0.58', ry: '-18deg', opacity: '0.82', blur: '1.5px',z: 1 },
-    { tx:  '72%', ty: '-4%',  scale: '0.40', ry: '-28deg', opacity: '0',    blur: '0',    z: 0 },
-  ];
-
-  function cardStateForOffset(offset) {
-    const clamped = Math.max(-2, Math.min(2, offset));
-    return CARD_3D[clamped + 2];
-  }
-
-  function applyCard3D() {
-    const track = document.getElementById('projectsTrack');
-    if (!track) return;
-    const cards = track.querySelectorAll('.project-poster');
-    const total = cards.length;
-    cards.forEach((card, i) => {
-      /* Offset circular: el más corto de los dos caminos posibles */
-      let offset = ((i - projectsCardIndex) % total + total) % total;
-      if (offset > Math.floor(total / 2)) offset -= total;
-      const s = cardStateForOffset(offset);
-      card.style.transform = 'translateX(' + s.tx + ') translateY(' + s.ty + ') scale(' + s.scale + ') rotateY(' + s.ry + ')';
-      card.style.opacity = s.opacity;
-      card.style.filter = s.blur === '0' ? 'none' : 'blur(' + s.blur + ')';
-      card.style.zIndex = String(s.z);
-      card.style.pointerEvents = offset === 0 ? '' : 'none';
-      card.setAttribute('aria-hidden', offset === 0 ? 'false' : 'true');
-    });
-  }
 
   function updateProjectsChevrons() {
     const prev = document.getElementById('projectsPrev');
@@ -2064,25 +1861,76 @@
     next.classList.toggle('projects-chev--off', !show);
   }
 
-  function goToProjectCard(index) {
-    const total = projectsCatalog.length;
-    projectsCardIndex = ((index % total) + total) % total;
-    applyCard3D();
+  function updateWorksSlide() {
+    const img = document.getElementById('projectsSlideImg');
+    const placeholder = document.getElementById('projectsSlidePlaceholder');
+    const phTitle = document.getElementById('projectsSlidePlaceholderTitle');
+    const capTitle = document.getElementById('projectsSlideCaptionTitle');
+    const capBlurb = document.getElementById('projectsSlideCaptionBlurb');
+    const openLink = document.getElementById('projectsSlideOpen');
+    const bgImg = document.getElementById('worksHeroBgImg');
+    const p = projectsCatalog[projectsCardIndex];
+    if (!p) return;
+
+    const titlePlain = p.title[lang] || p.title.es;
+    const blurb = (p.blurb && (p.blurb[lang] || p.blurb.es)) || '';
+    const src = projectSlideImageUrl(p);
+    const live = isProjectLive(p);
+
+    if (bgImg) {
+      bgImg.src = worksBgUrlForProject(p);
+    }
+
+    if (capTitle) capTitle.textContent = titlePlain;
+    if (capBlurb) capBlurb.textContent = blurb;
+
+    if (openLink) {
+      if (live) {
+        openLink.href = p.url;
+        const d = t[lang];
+        openLink.textContent = (d && d.projectOpenLabel) ? d.projectOpenLabel : 'Open';
+        openLink.hidden = false;
+      } else {
+        openLink.hidden = true;
+        openLink.removeAttribute('href');
+      }
+    }
+
+    if (img && placeholder) {
+      if (src) {
+        img.src = src;
+        img.alt = titlePlain;
+        img.hidden = false;
+        placeholder.hidden = true;
+      } else {
+        img.removeAttribute('src');
+        img.hidden = true;
+        img.alt = '';
+        placeholder.hidden = false;
+        if (phTitle) phTitle.textContent = titlePlain;
+      }
+    }
+
     updateProjectsChevrons();
   }
 
-  function initProjectsCarousel() {
-    const row = document.getElementById('projectsRow');
+  function goToProjectCard(index) {
+    const total = projectsCatalog.length;
+    if (total < 1) return;
+    projectsCardIndex = ((index % total) + total) % total;
+    updateWorksSlide();
+  }
+
+  function initWorksSlideNav() {
+    const stage = document.getElementById('projectsSlideStage');
     const prev = document.getElementById('projectsPrev');
     const next = document.getElementById('projectsNext');
-    if (!row || !prev || !next) return;
-    if (row.dataset.ready) return;
-    row.dataset.ready = '1';
+    if (!stage || !prev || !next) return;
+    if (stage.dataset.ready === '1') return;
+    stage.dataset.ready = '1';
 
     prev.addEventListener('click', () => goToProjectCard(projectsCardIndex - 1));
     next.addEventListener('click', () => goToProjectCard(projectsCardIndex + 1));
-    applyCard3D();
-    updateProjectsChevrons();
   }
 
   // ============================================
@@ -2424,44 +2272,17 @@
       s.textContent = ch;
       stack.appendChild(s);
     }
-    renderProjectsTicker();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
-  }
-
-  function renderProjectsTicker() {
-    const track = document.getElementById('projectsTickerTrack');
-    if (!track) return;
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
-    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const n = 18;
-    const parts = [];
-    for (let i = 0; i < n; i++) {
-      const orange = i % 2 === 0;
-      parts.push(
-        '<span class="projects-ticker__word ' +
-        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') +
-        '">' +
-        word +
-        '</span>'
-      );
-    }
-    const chunk = '<span class="projects-ticker__chunk">' + parts.join('') + '</span>';
-    const reduce =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.innerHTML = reduce ? chunk : chunk + chunk;
   }
 
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
-    const tickerTrack = document.getElementById('projectsTickerTrack');
     if (window.matchMedia('(max-width: 639px)').matches) {
-      const container = document.querySelector('#proyectos .container');
+      const container = document.querySelector('#proyectos .projects-hero-inner');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
         stack.style.removeProperty('font-size');
-        if (tickerTrack) tickerTrack.style.removeProperty('font-size');
         return;
       }
       let lo = 8, hi = 800;
@@ -2472,7 +2293,6 @@
         else hi = mid;
       }
       stack.style.fontSize = lo + 'px';
-      if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
@@ -2483,7 +2303,6 @@
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
     const synced = (fsPx * 0.853) + 'px';
     stack.style.fontSize = synced;
-    if (tickerTrack) tickerTrack.style.fontSize = synced;
   }
 
   // ============================================
@@ -2507,15 +2326,14 @@
     if (projectsStrapEl && d.projectsStrapLead && d.projectsStrapBody) {
       projectsStrapEl.innerHTML = '<span class="projects-strap__lead" id="projectsStrapLead">' + d.projectsStrapLead + '</span><span class="projects-strap__intro" id="projectsStrapIntro">' + d.projectsStrapBody + '</span>';
     }
-    const projectsRow = document.getElementById('projectsRow');
-    if (projectsRow) projectsRow.setAttribute('aria-label', d.projectsRowLabel);
+    const projectsSlideArea = document.getElementById('projectsSlideArea');
+    if (projectsSlideArea && d.projectsSlideRegion) projectsSlideArea.setAttribute('aria-label', d.projectsSlideRegion);
     const projectsPrev = document.getElementById('projectsPrev');
     const projectsNext = document.getElementById('projectsNext');
     if (projectsPrev) projectsPrev.setAttribute('aria-label', d.projectChevPrev);
     if (projectsNext) projectsNext.setAttribute('aria-label', d.projectChevNext);
-    renderProjects();
-    initProjectsCarousel();
-    requestAnimationFrame(updateProjectsChevrons);
+    initWorksSlideNav();
+    updateWorksSlide();
 
     const langSelCur = document.getElementById('langSelectCurrent');
     const langSelBtn = document.getElementById('langSelectBtn');
