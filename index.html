@@ -2033,9 +2033,10 @@
     });
 
     const introEase = 'none';
-    const panelFadeDur = 0.14;
-    const panelFadeEase = 'power2.out';
-    const exitDur = 0.048;
+    const panelFadeDur = 0.26;
+    const panelFadeEase = 'power2.inOut';
+    /* Salida más larga y suave (antes ~0.048 era casi un parpadeo al hacer scrub) */
+    const exitDur = 0.175;
     const mergeDur = SEG - exitDur;
     const nextRevealOffset = exitDur * 0.22;
 
@@ -2106,16 +2107,16 @@
       if (i < 2) {
         const exit = wide
           ? {
-              x: '-122vw',
+              x: '-72vw',
               y: 0,
               opacity: 0,
-              scale: endScale * 0.91,
+              scale: endScale * 0.94,
             }
           : {
               x: 0,
-              y: '-18vh',
+              y: '-14vh',
               opacity: 0,
-              scale: endScale * 0.82,
+              scale: endScale * 0.88,
             };
         tl.to(
           copy,
@@ -2124,7 +2125,7 @@
             y: exit.y,
             opacity: exit.opacity,
             scale: exit.scale,
-            ease: 'power3.in',
+            ease: 'sine.inOut',
             duration: exitDur,
           },
           t0 + mergeDur
