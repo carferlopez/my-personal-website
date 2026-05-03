@@ -955,11 +955,11 @@
     font-weight: 900;
     line-height: 1.05;
     will-change: transform;
-    animation: projects-ticker-marquee 90s linear infinite;
+    animation: projects-ticker-marquee-ltr 90s linear infinite;
     background: transparent;
   }
   .projects-ticker__track--rev {
-    animation-direction: reverse;
+    animation: projects-ticker-marquee-rtl 90s linear infinite;
   }
   .projects-ticker__chunk {
     display: inline-flex;
@@ -987,8 +987,13 @@
     -webkit-text-stroke: 0;
     text-shadow: none;
   }
-  @keyframes projects-ticker-marquee {
+  @keyframes projects-ticker-marquee-ltr {
+    from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+  @keyframes projects-ticker-marquee-rtl {
+    from { transform: translateX(-50%); }
+    to { transform: translateX(0); }
   }
   @media (prefers-reduced-motion: reduce) {
     .projects-ticker__track {
@@ -1953,7 +1958,7 @@
 
   const PROJECTS_TICKER_ROWS = 7;
 
-  /** Siete carriles horizontales; filas impares en sentido contrario (CSS .projects-ticker__track--rev). */
+  /** Siete carriles horizontales; filas impares RTL (misma duración 90s que LTR vía keyframes). */
   function renderProjectsTickersBelt() {
     const belt = document.getElementById('projectsTickersBelt');
     if (!belt) return;
