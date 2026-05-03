@@ -389,8 +389,13 @@
     min-height: 100vh;
     min-height: 100dvh;
     gap: 0;
-    perspective: 120vmin;
+    perspective: min(1400px, 180vw);
+    perspective-origin: 50% 45%;
     transform-style: preserve-3d;
+  }
+
+  .intro-hero.intro-hero--active {
+    overflow: hidden;
   }
 
   .intro-hero--active .intro-panel {
@@ -406,10 +411,20 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    /* Más arriba que el centro geométrico: bloque “centrado” en la mitad superior */
-    justify-content: flex-start;
-    padding-top: clamp(5.25rem, 16vmin, 11rem);
-    padding-bottom: clamp(1.75rem, 9vmin, 5rem);
+    justify-content: center;
+    padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
+      max(var(--container-pad-x), env(safe-area-inset-right, 0px));
+    padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  }
+
+  .intro-hero--active .intro-panel__grid {
+    flex: 1;
+    display: flex;
+    min-height: 0;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
   }
 
   .intro-hero--active .intro-panel--0 {
@@ -439,6 +454,13 @@
     max-width: min(94vw, 78rem);
     box-sizing: border-box;
     will-change: transform;
+  }
+  .intro-hero--active .intro-panel__copy {
+    margin-inline: auto;
+    margin-inline-start: auto;
+    margin-inline-end: auto;
+    width: auto;
+    max-width: min(94vw, 88rem);
   }
 
   .intro-panel__headline {
@@ -471,6 +493,11 @@
     line-height: 0.9;
     letter-spacing: inherit;
   }
+  .intro-hero--active .intro-headline__line {
+    text-shadow:
+      0 0 clamp(0.35rem, 1.5vw, 1.25rem) rgba(238, 255, 0, 0.22),
+      0 0 clamp(1rem, 3vw, 2.5rem) rgba(238, 255, 0, 0.08);
+  }
   @media (min-width: 768px) {
     .intro-panel__headline {
       font-size: clamp(2.15rem, 4.1vw + 0.9rem, 5.1rem);
@@ -498,14 +525,6 @@
     }
   }
 
-  /* Pin scroll: caja centrada, proporción ancha (escritorio) / cuadrada (móvil) */
-  .intro-hero.intro-hero--active .intro-panel__copy {
-    margin-inline: auto;
-    margin-inline-start: auto;
-    margin-inline-end: auto;
-    width: min(94vw, 88rem);
-    max-width: min(94vw, 88rem);
-  }
   .intro-hero.intro-hero--active .intro-panel__headline {
     text-align: center;
   }
@@ -877,17 +896,14 @@
     html {
       overflow-x: hidden;
     }
-    .intro-hero.intro-hero--active {
-      overflow-x: visible;
-    }
-    /* Pin móvil: misma zona alta que escritorio + safe area */
+    /* Pin móvil: centrado en el marco como escritorio */
     .intro-hero.intro-hero--active .intro-panel {
       min-height: 100vh !important;
       min-height: 100dvh !important;
-      justify-content: flex-start !important;
+      justify-content: center !important;
       align-items: center;
-      padding-top: clamp(4.75rem, 13vmin, 9rem) !important;
-      padding-bottom: clamp(1rem, 5vmin, 2.75rem) !important;
+      padding-top: max(0.75rem, env(safe-area-inset-top, 0px)) !important;
+      padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
       padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
         max(var(--container-pad-x), env(safe-area-inset-right, 0px));
       box-sizing: border-box;
@@ -910,15 +926,13 @@
     }
     .intro-hero.intro-hero--active .intro-panel__copy {
       margin-inline: auto;
-      width: min(92vw, 82vmin, 58dvh);
-      max-width: min(92vw, 82vmin, 58dvh);
-      aspect-ratio: 1;
+      width: auto;
+      max-width: min(92vw, 40rem);
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: clamp(0.5rem, 2.5vmin, 1rem);
+      padding: clamp(0.35rem, 2vmin, 0.85rem);
       text-align: center;
-      overflow: visible;
     }
     .intro-panel__headline {
       font-size: clamp(1.45rem, 6.2vw, 2.5rem);
@@ -1753,21 +1767,17 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Desde el centro muy pequeño → zoom fuerte “como acercándose”; salida se aleja encogiendo */
-    const endScale = wide ? 2.85 : narrowMobile ? 1.58 : 2.35;
-    const startCopy = {
-      x: 0,
-      y: 0,
-      opacity: 0,
-      scale: wide ? 0.32 : narrowMobile ? 0.38 : 0.36,
-    };
+    /* Tipo títulos Superman (1978): muy lejos + pequeño → tamaño legible → “atraviesa” la cámara y desvanece */
+    const startS = wide ? 0.05 : narrowMobile ? 0.1 : 0.065;
+    const readS = wide ? 1.04 : narrowMobile ? 1 : 1.03;
+    const flyS = wide ? 12 : narrowMobile ? 4.2 : 9;
+    const flyZ = wide ? 2400 : narrowMobile ? 680 : 1700;
+    const startZ0 = wide ? -3400 : narrowMobile ? -1200 : -2600;
 
     const SEG = 1;
     const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
     const totalPinScroll = () =>
       Math.round(window.innerHeight * scrollPerSegmentVh * 3);
-
-    const startZ = wide ? -620 : narrowMobile ? -160 : -480;
 
     const copyEls = [];
     panels.forEach((panel) => {
@@ -1775,14 +1785,14 @@
       if (!copy) return;
       copyEls.push(copy);
       gsap.set(copy, {
-        transformOrigin: 'center center',
-        transformPerspective: 1100,
+        transformOrigin: '50% 50%',
+        transformPerspective: wide ? 2200 : 1400,
         force3D: true,
-        scale: startCopy.scale,
+        scale: startS,
         x: 0,
         y: 0,
-        z: startZ,
-        opacity: startCopy.opacity,
+        z: startZ0,
+        opacity: 0,
       });
     });
 
@@ -1806,7 +1816,7 @@
       },
     });
 
-    const introEase = 'power2.out';
+    const introEaseApproach = 'power2.out';
     const panelFadeDur = 0.26;
     const panelFadeEase = 'power2.inOut';
     /* Salida más larga y suave (antes ~0.048 era casi un parpadeo al hacer scrub) */
@@ -1823,56 +1833,57 @@
       if (!copy) return;
 
       const motionDur = i < 2 ? mergeDur : SEG;
-      const enterDur = Math.min(0.32, motionDur * 0.36);
-      const holdDur = Math.max(0, motionDur - enterDur);
+      const durApp = motionDur * (i < 2 ? 0.28 : 0.3);
+      const durHold = motionDur * (i < 2 ? 0.34 : 0.48);
+      const durFly = Math.max(0.06, motionDur - durApp - durHold);
 
       tl.fromTo(
         copy,
+        { scale: startS, x: 0, y: 0, z: startZ0, opacity: 0 },
         {
-          scale: startCopy.scale,
-          x: 0,
-          y: 0,
-          z: startZ,
-          opacity: startCopy.opacity,
-        },
-        {
-          scale: endScale,
+          scale: readS,
           x: 0,
           y: 0,
           z: 0,
           opacity: 1,
-          ease: introEase,
-          duration: enterDur,
+          ease: introEaseApproach,
+          duration: durApp,
         },
         t0
       );
       tl.to(
         copy,
-        {
-          scale: endScale,
-          x: 0,
-          y: 0,
-          z: 0,
-          opacity: 1,
-          ease: 'none',
-          duration: holdDur,
-        },
-        t0 + enterDur
+        { scale: readS, x: 0, y: 0, z: 0, opacity: 1, ease: 'none', duration: durHold },
+        t0 + durApp
       );
 
       if (i < 2) {
         tl.to(
           copy,
           {
+            scale: flyS,
             x: 0,
             y: 0,
-            z: startZ * 1.05,
+            z: flyZ,
             opacity: 0,
-            scale: Math.max(0.32, startCopy.scale * 0.9),
-            ease: 'power2.in',
-            duration: exitDur,
+            ease: 'power3.in',
+            duration: durFly,
           },
-          t0 + mergeDur
+          t0 + durApp + durHold
+        );
+      } else {
+        tl.to(
+          copy,
+          {
+            scale: readS,
+            x: 0,
+            y: 0,
+            z: 0,
+            opacity: 1,
+            ease: 'power2.out',
+            duration: durFly,
+          },
+          t0 + durApp + durHold
         );
       }
     }
