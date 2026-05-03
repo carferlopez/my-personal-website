@@ -2363,9 +2363,13 @@
       (typeof getComputedStyle !== 'undefined' &&
         getComputedStyle(document.documentElement).getPropertyValue('--page-lime').trim()) ||
       '#eeff00';
+    const overlapOrange =
+      (typeof getComputedStyle !== 'undefined' &&
+        getComputedStyle(document.documentElement).getPropertyValue('--page-bg').trim()) ||
+      '#F56C27';
     const white = '#ffffff';
     const introLineColorsStart = [lime, white, lime];
-    const introLineColorsMerged = [white, lime, white];
+    const introLineColorsMerged = [overlapOrange, overlapOrange, overlapOrange];
 
     function introHeadlineCopyVizOverlap(copyRect, vizRect) {
       return !(
@@ -2391,7 +2395,7 @@
         const suf = lineEl.querySelector('.intro-line__suffix');
         if (suf) {
           const sc = merged
-            ? introLineColorsMerged[i]
+            ? overlapOrange
             : i === 2
               ? lime
               : 'rgba(255, 255, 255, 0.52)';
