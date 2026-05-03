@@ -995,7 +995,7 @@
     flex-direction: column;
     align-self: stretch;
   }
-  /* Ventana ~ altura del ticker horizontal (JS la iguala al px); fallback ≈ padding + 1 línea */
+  /* Ventana = alto de una columna WORKS (pila de letras); JS mide .projects-vertical-title__column */
   .projects-vertical-ticker__viewport {
     position: relative;
     overflow: hidden;
@@ -1005,19 +1005,21 @@
     max-width: 100%;
     min-height: 0;
     background: transparent;
-    height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    max-height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
+    /* Fallback ~5 glifos × 0.84em sobre la escala del track */
+    height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
+    max-height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
   }
   @media (min-width: 640px) {
     .projects-vertical-ticker__viewport {
-      height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-      max-height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+      max-height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
     }
   }
   @media (max-width: 639px) {
     .projects-vertical-ticker__viewport {
-      height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * clamp(3rem, 22vw, 12rem));
-      max-height: calc(2 * clamp(0.45rem, 1.2vw, 0.65rem) + 1.05 * clamp(3rem, 22vw, 12rem));
+      /* Una fila WORKS en horizontal dentro del carril */
+      height: calc(1.12 * clamp(3rem, 22vw, 12rem));
+      max-height: calc(1.12 * clamp(3rem, 22vw, 12rem));
     }
   }
   .projects-vertical-ticker__track {
@@ -2136,14 +2138,17 @@
     track.innerHTML = chunk + chunk;
   }
 
-  function syncVerticalTickerViewportToHorizontalStrip() {
-    const strip = document.querySelector('#proyectos > .projects-ticker');
+  function syncVerticalTickerViewportToColumnHeight() {
     const vp = document.querySelector('.projects-vertical-ticker__viewport');
-    if (!strip || !vp) return;
-    const h = strip.offsetHeight;
+    const vTrack = document.getElementById('projectsVerticalTickerTrack');
+    if (!vp || !vTrack) return;
+    const col = vTrack.querySelector('.projects-vertical-title__column');
+    if (!col) return;
+    const h = col.offsetHeight;
     if (!(h > 0)) return;
-    vp.style.height = h + 'px';
-    vp.style.maxHeight = h + 'px';
+    const px = Math.ceil(h);
+    vp.style.height = px + 'px';
+    vp.style.maxHeight = px + 'px';
   }
 
   function syncWorksFontToHero() {
@@ -2172,25 +2177,29 @@
       }
       vTrack.style.fontSize = lo + 'px';
       if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
-      syncVerticalTickerViewportToHorizontalStrip();
+      syncVerticalTickerViewportToColumnHeight();
+      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
     if (!line) {
-      syncVerticalTickerViewportToHorizontalStrip();
+      syncVerticalTickerViewportToColumnHeight();
+      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
       return;
     }
     let fs = line.style.fontSize;
     if (!fs) fs = getComputedStyle(line).fontSize;
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) {
-      syncVerticalTickerViewportToHorizontalStrip();
+      syncVerticalTickerViewportToColumnHeight();
+      requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
       return;
     }
     const synced = (fsPx * 0.853) + 'px';
     if (vTrack) vTrack.style.fontSize = synced;
     if (tickerTrack) tickerTrack.style.fontSize = synced;
-    syncVerticalTickerViewportToHorizontalStrip();
+    syncVerticalTickerViewportToColumnHeight();
+    requestAnimationFrame(syncVerticalTickerViewportToColumnHeight);
   }
 
   // ============================================
