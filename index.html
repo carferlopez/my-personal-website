@@ -881,8 +881,7 @@
       text-align: center;
       text-wrap: balance;
     }
-    .projects-ticker__track,
-    .projects-vertical-ticker__track {
+    #proyectos .projects-tickers-belt .projects-ticker__track {
       animation: none !important;
       transform: none !important;
     }
@@ -905,7 +904,7 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--white); }
 
-  /* WORKS: naranja plano; ticker horizontal + título vertical */
+  /* WORKS: franja de marquees horizontales (7 filas, sentidos alternos) */
   #proyectos.projects-section {
     background: var(--page-bg);
     color: var(--page-lime);
@@ -913,69 +912,35 @@
     position: relative;
   }
 
-  /* Letrero WORKS: texto en bucle (marquee) */
+  #proyectos > .projects-tickers-belt {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
+    padding-top: clamp(0.35rem, 1vw, 0.55rem);
+    padding-bottom: clamp(0.35rem, 1vw, 0.55rem);
+    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    z-index: 3;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.06rem, 0.45vw, 0.14rem);
+  }
+
   .projects-ticker {
     position: relative;
     z-index: 3;
     width: 100%;
     max-width: 100%;
-    margin: 0 0 0.85rem;
+    margin: 0;
     background: transparent;
     border: none;
     border-radius: 0;
     box-shadow: none;
     overflow: hidden;
-    padding: 0.42rem 0;
-  }
-  /* Móvil: 6 líneas WORKS apiladas (JS); el ticker horizontal va oculto */
-  @media (max-width: 639px) {
-    #proyectos > .projects-ticker {
-      display: none !important;
-    }
-    .projects-works-mobile-stack {
-      display: flex;
-      flex-direction: column;
-      align-items: stretch;
-      width: 100vw;
-      max-width: none;
-      margin-left: calc(50% - 50vw);
-      margin-right: calc(50% - 50vw);
-      margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
-      padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
-      padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
-      padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
-      box-sizing: border-box;
-      z-index: 3;
-      font-weight: 900;
-      line-height: 1;
-    }
-    .projects-works-mobile-stack__line {
-      display: block;
-      text-align: center;
-      letter-spacing: -0.06em;
-      text-transform: uppercase;
-      padding-block: clamp(0.12rem, 0.9vw, 0.28rem);
-    }
-  }
-  @media (min-width: 640px) {
-    .projects-works-mobile-stack {
-      display: none !important;
-    }
-  }
-
-  #proyectos > .projects-ticker {
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    /* Junto al marquee vertical: casi sin hueco bajo la franja horizontal */
-    margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
-    border-radius: 0;
-    border: none;
-    padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
-    padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
-    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
-    box-shadow: none;
+    padding: clamp(0.12rem, 0.55vw, 0.28rem) 0;
   }
   .projects-ticker__viewport {
     position: relative;
@@ -996,6 +961,9 @@
     will-change: transform;
     animation: projects-ticker-marquee 90s linear infinite;
     background: transparent;
+  }
+  .projects-ticker__track--rev {
+    animation-direction: reverse;
   }
   .projects-ticker__chunk {
     display: inline-flex;
@@ -1042,20 +1010,6 @@
       justify-content: center;
       flex-wrap: wrap;
     }
-    .projects-vertical-ticker__track {
-      animation: none;
-      transform: none;
-      padding-block: 0.5rem;
-      justify-content: center;
-      align-items: center;
-      flex-wrap: nowrap;
-      max-height: none;
-      height: auto;
-    }
-    .projects-vertical-ticker__viewport {
-      min-height: 0;
-      overflow: visible;
-    }
   }
 
   #proyectos.section-pad {
@@ -1066,8 +1020,7 @@
 
   .projects-works-stack {
     position: relative;
-    min-height: min(100vh, 1400px);
-    min-height: min(100dvh, 1400px);
+    min-height: clamp(8rem, 28vh, 18rem);
     display: flex;
     flex-direction: column;
   }
@@ -1081,238 +1034,6 @@
     padding-top: clamp(0, 0.2vw, 0.12rem);
     padding-bottom: clamp(1.5rem, 4vw, 3rem);
   }
-  .projects-works-inner .projects-module--minimal {
-    flex: 1;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* WORKS: columna lateral; marquee vertical con pilas de letras (misma lectura que antes) */
-  .projects-module {
-    display: flex;
-    flex-direction: row;
-    align-items: stretch;
-    gap: 0;
-    margin-top: 0;
-    min-width: 0;
-  }
-  #proyectos #projectsTitle {
-    margin: 0;
-    /* Sube el marquee vertical hasta casi unirlo con la franja horizontal */
-    margin-top: calc(-1 * clamp(0.1rem, 0.5vw, 0.26rem));
-    margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-    width: max-content;
-    flex: 0 0 auto;
-    max-width: none;
-    box-sizing: border-box;
-    padding: 0;
-    padding-right: calc(0.42 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    overflow: visible;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    min-height: 0;
-    max-height: 100%;
-    position: sticky;
-    top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
-    z-index: 1;
-  }
-  .projects-vertical-ticker {
-    flex: 0 0 auto;
-    min-height: 0;
-    width: max-content;
-    max-width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-self: stretch;
-  }
-  /* Escritorio: la ventana crece con la columna hasta casi el bloque contacto (flex en la cadena). */
-  .projects-vertical-ticker__viewport {
-    position: relative;
-    overflow: hidden;
-    flex: 0 0 auto;
-    align-self: flex-start;
-    width: max-content;
-    max-width: 100%;
-    min-height: 0;
-    background: transparent;
-    height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-    max-height: calc(4.4 * 0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-  }
-  @media (min-width: 640px) {
-    #proyectos #projectsTitle {
-      padding-right: calc(0.42 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-      flex: 1;
-      min-height: 0;
-    }
-    .projects-vertical-ticker {
-      flex: 1;
-      min-height: 0;
-    }
-    .projects-vertical-ticker__viewport {
-      flex: 1 1 auto;
-      align-self: stretch;
-      min-height: calc(4.4 * 0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-      height: auto;
-      max-height: none;
-    }
-  }
-  @media (max-width: 639px) {
-    .projects-vertical-ticker__viewport {
-      height: calc(1.12 * clamp(3rem, 22vw, 12rem));
-      max-height: calc(1.12 * clamp(3rem, 22vw, 12rem));
-    }
-  }
-  .projects-vertical-ticker__track {
-    display: inline-flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    height: max-content;
-    width: max-content;
-    font-weight: 900;
-    line-height: 1.05;
-    will-change: transform;
-    animation: projects-vertical-ticker-marquee 90s linear infinite;
-    background: transparent;
-    /* Base antes de syncWorksFontToHero; móvil lo sustituye el binario en px */
-    font-size: calc(0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
-  }
-  @media (min-width: 640px) {
-    .projects-vertical-ticker__track {
-      font-size: calc(0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
-    }
-  }
-  @media (max-width: 639px) {
-    .projects-vertical-ticker__track {
-      font-size: clamp(3rem, 22vw, 12rem);
-    }
-  }
-  .projects-vertical-ticker__chunk {
-    display: inline-flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding-block-end: 0;
-  }
-  /* Una repetición “WORKS”: misma pila vertical que el diseño original (column-reverse + -90°) */
-  #proyectos #projectsTitle .projects-vertical-title__column {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    justify-content: flex-start;
-    flex: 0 0 auto;
-    flex-shrink: 0;
-    width: max-content;
-    align-self: center;
-    min-height: 0;
-    font-size: 1em;
-    row-gap: 0;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column > span {
-    flex: 0 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 1em;
-    height: 0.84em;
-    min-width: 1em;
-    min-height: 0.84em;
-    transform: rotate(-90deg);
-    transform-origin: center center;
-    font-size: 1em;
-    font-weight: 900;
-    line-height: 1;
-    letter-spacing: 0;
-    text-transform: uppercase;
-    margin-block: -0.02em;
-    padding: 0;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--orange > span {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-    -webkit-text-stroke: 0.02em var(--page-lime);
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--black > span {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
-    -webkit-text-stroke: 0;
-    text-shadow: none;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="W"] {
-    margin-block-start: 0.09em;
-    margin-block-end: -0.02em;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="O"],
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
-    margin-block: -0.058em;
-  }
-  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"] {
-    margin-block-start: -0.16em;
-  }
-  @keyframes projects-vertical-ticker-marquee {
-    to { transform: translateY(-50%); }
-  }
-  @media (max-width: 639px) {
-    .projects-module {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1.25rem;
-    }
-    #proyectos #projectsTitle {
-      position: static;
-      align-self: flex-start;
-      margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
-      margin-top: calc(-1 * clamp(0.06rem, 0.45vw, 0.2rem));
-      width: max-content;
-      flex: 0 0 auto;
-      padding-right: 0;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column {
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: flex-start;
-      align-items: baseline;
-      min-height: 0;
-      column-gap: 0;
-      row-gap: 0;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column > span {
-      font-size: 1em;
-      transform: none;
-      margin-block: 0;
-      margin-inline: 0;
-      line-height: 0.82;
-      letter-spacing: -0.08em;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--orange > span {
-      -webkit-text-stroke: 0.02em var(--page-lime);
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--black > span {
-      -webkit-text-stroke: 0;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="O"],
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
-      margin-inline: -0.055em;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
-      margin-inline-start: -0.11em;
-    }
-    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="W"] {
-      margin-block: 0;
-      margin-inline-start: 0.09em;
-    }
-  }
-
   #contacto .contact-box > h2.big-heading {
     color: var(--page-lime);
     -webkit-text-fill-color: var(--page-lime);
@@ -1682,27 +1403,14 @@
     </div>
   </section>
 
-  <!-- ==================== WORKS (naranja plano + ticker + título vertical) ==================== -->
+  <!-- ==================== WORKS: 7 marquees horizontales (direcciones alternas) ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
-    <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
-      <div class="projects-ticker__viewport">
-        <div class="projects-ticker__track" id="projectsTickerTrack"></div>
-      </div>
-    </div>
-    <div class="projects-works-mobile-stack" id="projectsWorksMobileStack" role="presentation" aria-hidden="true"></div>
+    <h2 class="u-sr-only" id="projectsTitle">
+      <span class="projects-title-sr">WORKS</span>
+    </h2>
+    <div class="projects-tickers-belt" id="projectsTickersBelt" role="presentation" aria-hidden="true"></div>
     <div class="projects-works-stack">
-      <div class="container projects-works-inner">
-        <div class="projects-module projects-module--minimal">
-          <h2 class="projects-vertical-title" id="projectsTitle">
-            <div class="projects-vertical-ticker" aria-hidden="true">
-              <div class="projects-vertical-ticker__viewport">
-                <div class="projects-vertical-ticker__track" id="projectsVerticalTickerTrack"></div>
-              </div>
-            </div>
-            <span class="u-sr-only projects-title-sr">WORKS</span>
-          </h2>
-        </div>
-      </div>
+      <div class="container projects-works-inner"></div>
     </div>
   </section>
 
@@ -2216,9 +1924,7 @@
     setupIntroLinesScrollAnimation();
     fitHeroV2Lines();
     if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
-      renderProjectsMobileWorksStack();
-      renderProjectsTicker();
-      renderProjectsVerticalTicker();
+      renderProjectsTickersBelt();
       queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
     }
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
@@ -2229,9 +1935,7 @@
     if (!h2 || !text) return;
     const sr = h2.querySelector('.projects-title-sr');
     if (sr) sr.textContent = text;
-    renderProjectsMobileWorksStack();
-    renderProjectsTicker();
-    renderProjectsVerticalTicker();
+    renderProjectsTickersBelt();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
@@ -2251,125 +1955,63 @@
     return parts.join('');
   }
 
-  /** Una columna = mismo diseño que el título vertical original (letras con rotación). */
-  function buildVerticalWorksColumn(rawWord, orange) {
-    const cls = orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black';
-    let inner = '';
-    for (let i = 0; i < rawWord.length; i++) {
-      const ch = rawWord.charAt(i);
-      const escText = ch.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      const escGlyph = ch
-        .replace(/&/g, '&amp;')
-        .replace(/"/g, '&quot;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-      inner += '<span data-glyph="' + escGlyph + '">' + escText + '</span>';
-    }
-    return (
-      '<span class="projects-vertical-title__column projects-ticker__word ' + cls + '">' +
-      inner +
-      '</span>'
-    );
-  }
+  const PROJECTS_TICKER_ROWS = 7;
 
-  /** Móvil: 7 líneas WORKS apiladas (alterna lima / blanco); desktop limpia el nodo. */
-  function renderProjectsMobileWorksStack() {
-    const el = document.getElementById('projectsWorksMobileStack');
-    if (!el) return;
-    const mobileStatic =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    if (!mobileStatic) {
-      el.innerHTML = '';
-      return;
-    }
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
-    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const n = 6;
-    const parts = [];
-    for (let i = 0; i < n; i++) {
-      const orange = i % 2 === 0;
-      parts.push(
-        '<div class="projects-works-mobile-stack__line projects-ticker__word ' +
-        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') + '">' +
-        word +
-        '</div>'
-      );
-    }
-    el.innerHTML = parts.join('');
-  }
-
-  function renderProjectsTicker() {
-    const track = document.getElementById('projectsTickerTrack');
-    if (!track) return;
-    const mobileStatic =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    if (mobileStatic) {
-      track.innerHTML = '';
-      return;
-    }
+  /** Siete carriles horizontales; filas impares en sentido contrario (CSS .projects-ticker__track--rev). */
+  function renderProjectsTickersBelt() {
+    const belt = document.getElementById('projectsTickersBelt');
+    if (!belt) return;
     const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
     const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const chunk = '<span class="projects-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
     const reduce =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.innerHTML = reduce ? chunk : chunk + chunk;
-  }
-
-  function renderProjectsVerticalTicker() {
-    const track = document.getElementById('projectsVerticalTickerTrack');
-    if (!track) return;
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
-    const reduce =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const mobileStatic =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-    if (reduce || mobileStatic) {
-      track.innerHTML =
-        '<span class="projects-vertical-ticker__chunk">' +
-        buildVerticalWorksColumn(raw, true) +
-        '</span>';
-      return;
+    const inner = reduce ? chunk : chunk + chunk;
+    belt.replaceChildren();
+    for (let i = 0; i < PROJECTS_TICKER_ROWS; i++) {
+      const row = document.createElement('div');
+      row.className = 'projects-ticker projects-ticker--belt-row';
+      const vp = document.createElement('div');
+      vp.className = 'projects-ticker__viewport';
+      const track = document.createElement('div');
+      track.className =
+        'projects-ticker__track' +
+        (i % 2 === 1 ? ' projects-ticker__track--rev' : '');
+      track.id = 'projectsTickerTrack' + i;
+      track.innerHTML = inner;
+      vp.appendChild(track);
+      row.appendChild(vp);
+      belt.appendChild(row);
     }
-    const parts = [];
-    for (let i = 0; i < 18; i++) {
-      parts.push(buildVerticalWorksColumn(raw, i % 2 === 0));
-    }
-    const chunk = '<span class="projects-vertical-ticker__chunk">' + parts.join('') + '</span>';
-    track.innerHTML = chunk + chunk;
   }
 
   function syncWorksFontToHero() {
-    const vTrack = document.getElementById('projectsVerticalTickerTrack');
-    const tickerTrack = document.getElementById('projectsTickerTrack');
-    const mobileStack = document.getElementById('projectsWorksMobileStack');
+    const tracks = document.querySelectorAll('#projectsTickersBelt .projects-ticker__track');
+    if (!tracks.length) return;
+
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .projects-works-inner');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
-        if (vTrack) vTrack.style.removeProperty('font-size');
-        if (tickerTrack) tickerTrack.style.removeProperty('font-size');
-        if (mobileStack) mobileStack.style.removeProperty('font-size');
+        tracks.forEach((tr) => tr.style.removeProperty('font-size'));
         return;
       }
-      if (!vTrack) return;
+      const ref = tracks[0];
       let lo = 8, hi = 800;
       for (let i = 0; i < 42; i++) {
         const mid = (lo + hi) * 0.5;
-        vTrack.style.fontSize = mid + 'px';
-        if (vTrack.scrollWidth <= W + 1) lo = mid;
+        ref.style.fontSize = mid + 'px';
+        if (ref.scrollWidth <= W + 1) lo = mid;
         else hi = mid;
       }
-      vTrack.style.fontSize = lo + 'px';
-      if (mobileStack) mobileStack.style.fontSize = lo + 'px';
-      if (tickerTrack) tickerTrack.style.removeProperty('font-size');
+      const fs = lo + 'px';
+      tracks.forEach((tr) => { tr.style.fontSize = fs; });
       return;
     }
-    if (mobileStack) mobileStack.style.removeProperty('font-size');
+
+    tracks.forEach((tr) => tr.style.removeProperty('font-size'));
+
     const line = document.querySelector('#heroV2Title .hero-v2-line');
     if (!line) return;
     let fs = line.style.fontSize;
@@ -2377,8 +2019,7 @@
     let fsPx = parseFloat(fs);
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
     const synced = (fsPx * 0.853) + 'px';
-    if (vTrack) vTrack.style.fontSize = synced;
-    if (tickerTrack) tickerTrack.style.fontSize = synced;
+    tracks.forEach((tr) => { tr.style.fontSize = synced; });
   }
 
   // ============================================
