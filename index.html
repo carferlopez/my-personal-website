@@ -365,6 +365,50 @@
     padding-bottom: clamp(10rem, 32vh, 22rem);
     overflow-x: hidden;
   }
+  /* Fundido con hero (violeta/negro → blanco) y con WORKS (blanco → toque violeta → blanco) */
+  #presentacion.intro-hero::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: clamp(4rem, 14vh, 9rem);
+    transform: translateY(-58%);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      var(--hero-v2-violet-bg) 0%,
+      rgba(8, 2, 16, 0.88) 22%,
+      rgba(0, 0, 0, 0.72) 48%,
+      rgba(255, 255, 255, 0.88) 82%,
+      var(--white) 100%
+    );
+  }
+  #presentacion.intro-hero::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: clamp(3.25rem, 10vh, 6.5rem);
+    transform: translateY(42%);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      var(--white) 0%,
+      rgba(66, 8, 104, 0.1) 38%,
+      rgba(255, 255, 255, 0.92) 88%,
+      var(--white) 100%
+    );
+  }
+  .intro-hero .intro-panels {
+    position: relative;
+    z-index: 1;
+  }
   @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
 
   .intro-panels {
@@ -826,9 +870,32 @@
 
   /* WORKS: fondo blanco; copy y título en naranja de página */
   #proyectos.projects-section {
+    position: relative;
     background: var(--white);
     color: var(--page-orange);
     overflow-x: clip;
+  }
+  #proyectos.projects-section::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: clamp(2.75rem, 7vh, 4.25rem);
+    transform: translateY(-48%);
+    pointer-events: none;
+    z-index: 1;
+    background: linear-gradient(
+      180deg,
+      var(--white) 0%,
+      rgba(66, 8, 104, 0.05) 45%,
+      var(--white) 100%
+    );
+  }
+  #proyectos.projects-section > .container {
+    position: relative;
+    z-index: 2;
   }
   #proyectos .projects-strap.subheading {
     color: var(--page-orange);
@@ -882,6 +949,8 @@
   }
   /* Separador a todo el ancho de pantalla entre presentación y módulo WORKS */
   #proyectos > .projects-ticker {
+    position: relative;
+    z-index: 3;
     width: 100vw;
     max-width: none;
     margin-left: calc(50% - 50vw);
@@ -1183,8 +1252,31 @@
 
   /* ==================== CONTACT ==================== */
   #contacto {
+    position: relative;
     background: var(--white);
     color: var(--black);
+  }
+  #contacto::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: clamp(2.5rem, 7vh, 4rem);
+    transform: translateY(-45%);
+    pointer-events: none;
+    z-index: 0;
+    background: linear-gradient(
+      180deg,
+      var(--white) 0%,
+      rgba(0, 0, 0, 0.04) 50%,
+      var(--white) 100%
+    );
+  }
+  #contacto > .container {
+    position: relative;
+    z-index: 1;
   }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
