@@ -55,6 +55,7 @@
     --page-orange: #ff5a1a;
     --page-magenta: #ff00b2;
     --page-yellow: #e8ff1a;
+    --page-lime: #c4e800;
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 0.5rem;
     --logo-text-inset: calc(var(--container-pad-x) - 0.5rem + 0.375rem);
@@ -459,7 +460,7 @@
     .intro-panel__headline { font-size: clamp(1.55rem, 3.2vw, 3.15rem); }
   }
 
-  /* Mismos colores que el typewriter: naranja → violeta → amarillo */
+  /* Mismos colores que el typewriter: naranja → violeta → lima (+ sufijo naranja en bloque 3) */
   .intro-panel--0 .intro-panel__headline {
     color: var(--page-orange);
   }
@@ -467,7 +468,10 @@
     color: var(--hero-v2-violet);
   }
   .intro-panel--2 .intro-panel__headline {
-    color: var(--page-yellow);
+    color: var(--page-lime);
+  }
+  .intro-panel--2 .intro-line__suffix {
+    color: var(--page-orange);
   }
 
   .intro-line__suffix {
@@ -506,7 +510,12 @@
     background: var(--hero-v2-violet);
   }
   .intro-viz--2 .intro-viz__solid {
-    background: var(--page-yellow);
+    background: linear-gradient(
+      152deg,
+      var(--page-lime) 0%,
+      var(--page-orange) 58%,
+      var(--page-orange) 100%
+    );
   }
 
   .header-top {
@@ -1848,7 +1857,7 @@
       typewriter: [
         "DISEÑO PRODUCTOS DIGITALES.",
         "SENCILLOS DE USAR, PERO SOBRE TODO ÚTILES.",
-        "ESPERO QUE TE SIRVAN ;",
+        "ESPERO QUE TE SIRVAN ;)",
       ],
       contactTitle: "NO TE PIERDAS NINGUNA DE LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
       contactMark: ".",
@@ -1889,7 +1898,7 @@
       typewriter: [
         "DIGITAL PRODUCT DESIGN.",
         "SIMPLE TO USE, BUT ABOVE ALL, USEFUL.",
-        "I HOPE THEY HELP YOU ;",
+        "I HOPE THEY HELP YOU ;)",
       ],
       contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
       contactMark: ".",
@@ -2384,7 +2393,11 @@
     );
     addSegment(2, SEG * 2);
 
-    const introLineColorsStart = [orange, violet, yellow];
+    const lime =
+      (typeof getComputedStyle !== 'undefined' &&
+        getComputedStyle(document.documentElement).getPropertyValue('--page-lime').trim()) ||
+      '#c4e800';
+    const introLineColorsStart = [orange, violet, lime];
     const introLineColorsMerged = [violet, yellow, orange];
 
     function introHeadlineCopyVizOverlap(copyRect, vizRect) {
@@ -2410,7 +2423,11 @@
         lineEl.style.webkitTextFillColor = c;
         const suf = lineEl.querySelector('.intro-line__suffix');
         if (suf) {
-          const sc = merged ? introLineColorsMerged[i] : '#000000';
+          const sc = merged
+            ? introLineColorsMerged[i]
+            : i === 2
+              ? orange
+              : '#000000';
           suf.style.color = sc;
           suf.style.webkitTextFillColor = sc;
         }
