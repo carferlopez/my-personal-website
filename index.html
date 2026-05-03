@@ -827,6 +827,103 @@
     outline-color: var(--page-lime);
   }
 
+  /* Letrero WORKS: texto en bucle (marquee) */
+  .projects-ticker {
+    position: relative;
+    z-index: 3;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 0 0.85rem;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    padding: 0.42rem 0;
+  }
+  #proyectos > .projects-ticker {
+    width: 100vw;
+    max-width: none;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+    margin-bottom: clamp(1rem, 3vw, 1.75rem);
+    border-radius: 0;
+    border: none;
+    padding-top: clamp(0.45rem, 1.2vw, 0.65rem);
+    padding-bottom: clamp(0.45rem, 1.2vw, 0.65rem);
+    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
+    box-shadow: none;
+  }
+  .projects-ticker__viewport {
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+    width: 100%;
+    background: transparent;
+    mask-image: none;
+    -webkit-mask-image: none;
+  }
+  .projects-ticker__track {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: max-content;
+    font-weight: 900;
+    line-height: 1.05;
+    will-change: transform;
+    animation: projects-ticker-marquee 90s linear infinite;
+    background: transparent;
+  }
+  .projects-ticker__chunk {
+    display: inline-flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    padding-inline-end: 4rem;
+  }
+  .projects-ticker__word {
+    flex-shrink: 0;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-inline-end: 2.75rem;
+    line-height: 1;
+  }
+  .projects-ticker__word:last-child {
+    margin-inline-end: 0;
+  }
+  .projects-ticker__word--orange {
+    color: var(--page-lime);
+    -webkit-text-fill-color: var(--page-lime);
+    -webkit-text-stroke: 0.02em var(--page-lime);
+  }
+  .projects-ticker__word--black {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+  }
+  @keyframes projects-ticker-marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .projects-ticker__track {
+      animation: none;
+      transform: none;
+      padding-inline: 0.5rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      width: 100%;
+      max-width: 100%;
+      row-gap: 0.35rem;
+    }
+    .projects-ticker__chunk {
+      padding-inline-end: 0;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+  }
+
   #proyectos.section-pad {
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
     padding-bottom: clamp(2rem, 6vw, 4rem);
@@ -1596,6 +1693,11 @@
 
   <!-- ==================== WORKS (fondo fullscreen + slides) ==================== -->
   <section id="proyectos" class="section-pad projects-section projects-section--fullscreen" aria-labelledby="projectsTitle">
+    <div class="projects-ticker" id="projectsTicker" role="presentation" aria-hidden="true">
+      <div class="projects-ticker__viewport">
+        <div class="projects-ticker__track" id="projectsTickerTrack"></div>
+      </div>
+    </div>
     <div class="projects-hero-stack">
       <div class="projects-hero-bg" aria-hidden="true">
         <img id="worksHeroBgImg" class="projects-hero-bg__img" src="" alt="" width="1920" height="1080" decoding="async" fetchpriority="low" />
@@ -2287,17 +2389,44 @@
       s.textContent = ch;
       stack.appendChild(s);
     }
+    renderProjectsTicker();
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
+  }
+
+  function renderProjectsTicker() {
+    const track = document.getElementById('projectsTickerTrack');
+    if (!track) return;
+    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
+    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const n = 18;
+    const parts = [];
+    for (let i = 0; i < n; i++) {
+      const orange = i % 2 === 0;
+      parts.push(
+        '<span class="projects-ticker__word ' +
+        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') +
+        '">' +
+        word +
+        '</span>'
+      );
+    }
+    const chunk = '<span class="projects-ticker__chunk">' + parts.join('') + '</span>';
+    const reduce =
+      typeof window.matchMedia !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    track.innerHTML = reduce ? chunk : chunk + chunk;
   }
 
   function syncWorksFontToHero() {
     const stack = document.querySelector('#proyectos #projectsTitle .projects-vertical-title__stack');
     if (!stack) return;
+    const tickerTrack = document.getElementById('projectsTickerTrack');
     if (window.matchMedia('(max-width: 639px)').matches) {
       const container = document.querySelector('#proyectos .projects-hero-inner');
       const W = container ? container.offsetWidth : document.body.clientWidth;
       if (W < 16) {
         stack.style.removeProperty('font-size');
+        if (tickerTrack) tickerTrack.style.removeProperty('font-size');
         return;
       }
       let lo = 8, hi = 800;
@@ -2308,6 +2437,7 @@
         else hi = mid;
       }
       stack.style.fontSize = lo + 'px';
+      if (tickerTrack) tickerTrack.style.fontSize = lo + 'px';
       return;
     }
     const line = document.querySelector('#heroV2Title .hero-v2-line');
@@ -2318,6 +2448,7 @@
     if (!Number.isFinite(fsPx) || fsPx <= 0) return;
     const synced = (fsPx * 0.853) + 'px';
     stack.style.fontSize = synced;
+    if (tickerTrack) tickerTrack.style.fontSize = synced;
   }
 
   // ============================================
