@@ -295,7 +295,8 @@
     .hero-v2-sticky {
       justify-content: flex-start;
       align-items: stretch;
-      padding-top: max(4.15rem, calc(env(safe-area-inset-top, 0px) + 3.7rem));
+      /* Más aire bajo el logo / nombre para que el titular no quede pegado */
+      padding-top: max(5.15rem, calc(env(safe-area-inset-top, 0px) + 4.65rem));
       padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
     }
     .hero-v2-title {
@@ -303,6 +304,7 @@
       min-height: 0;
       justify-content: flex-start;
       gap: 0;
+      margin-top: clamp(0.35rem, 2vw, 1rem);
     }
   }
 
