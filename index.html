@@ -1811,9 +1811,7 @@
       },
     });
 
-    const introEaseApproach = 'power2.out';
     const panelFadeDur = 0.26;
-    const panelFadeEase = 'power2.inOut';
     /* Salida más larga y suave (antes ~0.048 era casi un parpadeo al hacer scrub) */
     const exitDur = 0.175;
     const mergeDur = SEG - exitDur;
@@ -1827,10 +1825,10 @@
       const copy = copyEls[i];
       if (!copy) return;
 
-      const motionDur = i < 2 ? mergeDur : SEG;
-      const durApp = motionDur * (i < 2 ? 0.28 : 0.3);
-      const durHold = motionDur * (i < 2 ? 0.34 : 0.48);
-      const durFly = Math.max(0.06, motionDur - durApp - durHold);
+      /* Sin “hold”: el scroll mueve siempre escala/Z/opacidad (ease none = 1:1 con el scrub). */
+      const motionDur = SEG;
+      const durApproach = motionDur * 0.48;
+      const durExit = motionDur - durApproach;
 
       tl.fromTo(
         copy,
@@ -1841,17 +1839,11 @@
           y: 0,
           z: 0,
           opacity: 1,
-          ease: introEaseApproach,
-          duration: durApp,
+          ease: 'none',
+          duration: durApproach,
         },
         t0
       );
-      tl.to(
-        copy,
-        { scale: readS, x: 0, y: 0, z: 0, opacity: 1, ease: 'none', duration: durHold },
-        t0 + durApp
-      );
-
       tl.to(
         copy,
         {
@@ -1860,34 +1852,35 @@
           y: 0,
           z: flyZ,
           opacity: 0,
-          ease: 'power3.in',
-          duration: durFly,
+          ease: 'none',
+          duration: durExit,
         },
-        t0 + durApp + durHold
+        t0 + durApproach
       );
     }
 
-    addSegment(0, 0);
-
     const fade1At = nextPanelRevealAt(0);
-    tl.to(panels[0], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade1At);
+    const fade2At = nextPanelRevealAt(1);
+
+    addSegment(0, 0);
+    tl.to(panels[0], { autoAlpha: 0, ease: 'none', duration: panelFadeDur }, fade1At);
     tl.fromTo(
       panels[1],
       { autoAlpha: 0 },
-      { autoAlpha: 1, ease: panelFadeEase, duration: panelFadeDur },
+      { autoAlpha: 1, ease: 'none', duration: panelFadeDur },
       fade1At
     );
-    addSegment(1, SEG);
+    /* Solape con la frase anterior: al bajar/subir el scroll no hay tramo muerto entre textos. */
+    addSegment(1, fade1At);
 
-    const fade2At = nextPanelRevealAt(1);
-    tl.to(panels[1], { autoAlpha: 0, ease: panelFadeEase, duration: panelFadeDur }, fade2At);
+    tl.to(panels[1], { autoAlpha: 0, ease: 'none', duration: panelFadeDur }, fade2At);
     tl.fromTo(
       panels[2],
       { autoAlpha: 0 },
-      { autoAlpha: 1, ease: panelFadeEase, duration: panelFadeDur },
+      { autoAlpha: 1, ease: 'none', duration: panelFadeDur },
       fade2At
     );
-    addSegment(2, SEG * 2);
+    addSegment(2, fade2At);
 
     introPanelTimelines.push(tl);
   }
