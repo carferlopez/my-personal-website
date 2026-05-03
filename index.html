@@ -908,7 +908,8 @@
       transform: none;
       padding-block: 0.5rem;
       justify-content: center;
-      flex-wrap: wrap;
+      align-items: center;
+      flex-wrap: nowrap;
       max-height: none;
       height: auto;
     }
@@ -947,7 +948,7 @@
     flex-direction: column;
   }
 
-  /* WORKS: columna lateral; mismo marquee que arriba pero en vertical (translateY -50%) */
+  /* WORKS: columna lateral; marquee vertical con pilas de letras (misma lectura que antes) */
   .projects-module {
     display: flex;
     flex-direction: row;
@@ -960,8 +961,7 @@
     margin: 0;
     margin-left: calc(var(--logo-text-inset) - var(--container-pad-x));
     width: max-content;
-    flex: 1;
-    min-height: 0;
+    flex: 0 0 auto;
     max-width: none;
     box-sizing: border-box;
     padding: 0;
@@ -972,6 +972,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    min-height: 0;
+    max-height: 100%;
     position: sticky;
     top: max(5.25rem, env(safe-area-inset-top, 0px) + 3.75rem);
     z-index: 1;
@@ -1003,6 +1005,7 @@
     display: inline-flex;
     flex-direction: column;
     flex-wrap: nowrap;
+    align-items: center;
     height: max-content;
     width: max-content;
     font-weight: 900;
@@ -1010,6 +1013,18 @@
     will-change: transform;
     animation: projects-vertical-ticker-marquee 90s linear infinite;
     background: transparent;
+    /* Base antes de syncWorksFontToHero; móvil lo sustituye el binario en px */
+    font-size: calc(0.853 * clamp(3.1rem, min(12vw, 15vh), 7.75rem));
+  }
+  @media (min-width: 640px) {
+    .projects-vertical-ticker__track {
+      font-size: calc(0.853 * clamp(3.4rem, min(13vw, 16vh), 8.5rem));
+    }
+  }
+  @media (max-width: 639px) {
+    .projects-vertical-ticker__track {
+      font-size: clamp(3rem, 22vw, 12rem);
+    }
   }
   .projects-vertical-ticker__chunk {
     display: inline-flex;
@@ -1018,8 +1033,62 @@
     align-items: center;
     padding-block-end: 0;
   }
-  .projects-vertical-ticker__track .projects-ticker__word {
+  /* Una repetición “WORKS”: misma pila vertical que el diseño original (column-reverse + -90°) */
+  #proyectos #projectsTitle .projects-vertical-title__column {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    justify-content: flex-start;
+    flex: 0 0 auto;
     flex-shrink: 0;
+    width: max-content;
+    align-self: center;
+    min-height: 0;
+    font-size: 1em;
+    row-gap: 0;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column > span {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1em;
+    height: 0.84em;
+    min-width: 1em;
+    min-height: 0.84em;
+    transform: rotate(-90deg);
+    transform-origin: center center;
+    font-size: 1em;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: uppercase;
+    margin-block: -0.02em;
+    padding: 0;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--orange > span {
+    color: var(--page-lime);
+    -webkit-text-fill-color: var(--page-lime);
+    -webkit-text-stroke: 0.02em var(--page-lime);
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--black > span {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="W"] {
+    margin-block-start: 0.09em;
+    margin-block-end: -0.02em;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="O"],
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
+    margin-block: -0.058em;
+  }
+  #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"] {
+    margin-block-start: -0.16em;
   }
   @keyframes projects-vertical-ticker-marquee {
     to { transform: translateY(-50%); }
@@ -1037,6 +1106,44 @@
       width: max-content;
       flex: 0 0 auto;
       padding-right: 0;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      align-items: baseline;
+      min-height: 0;
+      column-gap: 0;
+      row-gap: 0;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column > span {
+      font-size: 1em;
+      transform: none;
+      margin-block: 0;
+      margin-inline: 0;
+      line-height: 0.82;
+      letter-spacing: -0.08em;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--orange > span {
+      -webkit-text-stroke: 0.02em var(--page-lime);
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column.projects-ticker__word--black > span {
+      -webkit-text-stroke: 0;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="O"],
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
+      margin-inline: -0.055em;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="R"],
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="K"],
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="S"] {
+      margin-inline-start: -0.11em;
+    }
+    #proyectos #projectsTitle .projects-vertical-title__column > span[data-glyph="W"] {
+      margin-block: 0;
+      margin-inline-start: 0.09em;
     }
     .projects-vertical-ticker__viewport {
       min-height: min(38vh, 420px);
@@ -1957,6 +2064,27 @@
     return parts.join('');
   }
 
+  /** Una columna = mismo diseño que el título vertical original (letras con rotación). */
+  function buildVerticalWorksColumn(rawWord, orange) {
+    const cls = orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black';
+    let inner = '';
+    for (let i = 0; i < rawWord.length; i++) {
+      const ch = rawWord.charAt(i);
+      const escText = ch.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      const escGlyph = ch
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+      inner += '<span data-glyph="' + escGlyph + '">' + escText + '</span>';
+    }
+    return (
+      '<span class="projects-vertical-title__column projects-ticker__word ' + cls + '">' +
+      inner +
+      '</span>'
+    );
+  }
+
   function renderProjectsTicker() {
     const track = document.getElementById('projectsTickerTrack');
     if (!track) return;
@@ -1973,12 +2101,22 @@
     const track = document.getElementById('projectsVerticalTickerTrack');
     if (!track) return;
     const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
-    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const chunk = '<span class="projects-vertical-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
     const reduce =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    track.innerHTML = reduce ? chunk : chunk + chunk;
+    if (reduce) {
+      track.innerHTML =
+        '<span class="projects-vertical-ticker__chunk">' +
+        buildVerticalWorksColumn(raw, true) +
+        '</span>';
+      return;
+    }
+    const parts = [];
+    for (let i = 0; i < 18; i++) {
+      parts.push(buildVerticalWorksColumn(raw, i % 2 === 0));
+    }
+    const chunk = '<span class="projects-vertical-ticker__chunk">' + parts.join('') + '</span>';
+    track.innerHTML = chunk + chunk;
   }
 
   function syncWorksFontToHero() {
