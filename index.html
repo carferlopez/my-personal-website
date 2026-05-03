@@ -922,7 +922,7 @@
     overflow: hidden;
     padding: 0.42rem 0;
   }
-  /* Móvil: 7 líneas WORKS apiladas (JS); el ticker horizontal va oculto */
+  /* Móvil: 6 líneas WORKS apiladas (JS); el ticker horizontal va oculto */
   @media (max-width: 639px) {
     #proyectos > .projects-ticker {
       display: none !important;
@@ -2354,7 +2354,7 @@
     }
     const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
     const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const n = 7;
+    const n = 6;
     const parts = [];
     for (let i = 0; i < n; i++) {
       const orange = i % 2 === 0;
