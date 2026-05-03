@@ -142,19 +142,25 @@
     background: transparent;
     color: var(--white);
   }
+  /* ES/EN: blanco en reposo → amarillo al pasar el ratón / foco / menú abierto */
   .site-header .lang-select__btn {
-    color: var(--page-lime);
+    color: var(--white);
+    transition: color 0.15s ease;
   }
   .site-header .lang-select__btn .lang-select__chev {
-    color: var(--page-lime);
-    opacity: 0.9;
+    color: inherit;
+    opacity: 0.88;
+    transition: opacity 0.15s ease;
   }
-  .site-header .lang-select__btn:hover {
+  .site-header .lang-select__btn:hover,
+  .site-header .lang-select__btn:focus-visible,
+  .site-header .lang-select.is-open .lang-select__btn {
     background: transparent;
     color: var(--page-lime);
   }
-  .site-header .lang-select__btn:hover .lang-select__chev {
-    color: var(--page-lime);
+  .site-header .lang-select__btn:hover .lang-select__chev,
+  .site-header .lang-select__btn:focus-visible .lang-select__chev,
+  .site-header .lang-select.is-open .lang-select__btn .lang-select__chev {
     opacity: 1;
   }
   .site-header .hamburger-btn {
