@@ -7,7 +7,7 @@
 <title>Carlos Fernández — Designed like art. Built like software.</title>
 <meta name="description" content="Productos digitales construidos en solitario con la estética del diseño y el rigor del software. Carlos Fernández, creative technologist.">
 <meta name="author" content="Carlos Fernández">
-<meta name="theme-color" content="#FF6600">
+<meta name="theme-color" content="#000000">
 
 <!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
 
 <!-- Favicon (SVG inline, sin archivo extra) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FF6600%22/><circle cx=%2278%22 cy=%2278%22 r=%2217%22 fill=%22%23eeff00%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23000000%22/><circle cx=%2278%22 cy=%2278%22 r=%2217%22 fill=%22%23eeff00%22/></svg>">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,8 +42,8 @@
   :root {
     --black: #000;
     --white: #fff;
-    /* Paleta sitio: naranja puro #FF6600 de fondo, amarillo fluorescente como texto principal, blanco para acentos */
-    --page-bg: #FF6600;
+    /* Paleta sitio: negro #000000 de fondo, amarillo fluorescente como texto principal, blanco para acentos */
+    --page-bg: #000000;
     --page-lime: #eeff00;
     --text-primary: var(--page-lime);
     --gray: #a0a070;
@@ -53,9 +53,9 @@
     --hero-v2-violet-bg: var(--page-bg);
     --hero-v2-violet: var(--white);
     --hero-v2-violet-rgb: 255, 255, 255;
-    --page-orange: var(--page-lime);
+    --page-orange: var(--white);
     --page-magenta: var(--page-bg);
-    --page-yellow: var(--white);
+    --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 0.5rem;
     --logo-text-inset: calc(var(--container-pad-x) - 0.5rem + 0.375rem);
@@ -77,7 +77,7 @@
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--white);
     -webkit-font-smoothing: antialiased;
     line-height: 1.5;
   }
@@ -217,7 +217,7 @@
     height: 300vh;
     position: relative;
     background: var(--hero-v2-violet-bg);
-    color: var(--page-lime);
+    color: var(--white);
   }
   .hero-v2-section.hero-v2-section--static {
     height: auto;
@@ -251,7 +251,7 @@
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    color: var(--page-lime);
+    color: var(--white);
     /* Reserva bajo el header fijo para que el titular no invada el logo */
     padding:
       max(5rem, calc(env(safe-area-inset-top, 0px) + 4.75rem))
@@ -287,8 +287,8 @@
     z-index: 1;
     display: flex;
     flex-direction: column;
-    color: var(--page-lime) !important;
-    -webkit-text-fill-color: var(--page-lime) !important;
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
   }
   /* Móvil: titular cerca del logo (sin centrar en toda la pantalla; proporción más parecida al desktop) */
   @media (max-width: 639px) {
@@ -311,8 +311,8 @@
   .hero-v2-line {
     display: block;
     white-space: nowrap;
-    color: var(--page-lime) !important;
-    -webkit-text-fill-color: var(--page-lime) !important;
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
     line-height: 0.84;
     margin: 0;
     padding: 0;
@@ -322,31 +322,19 @@
   #heroV2Title,
   #heroV2Title.hero-v2-title,
   #heroV2Title .hero-v2-line {
+    color: var(--white) !important;
+    -webkit-text-fill-color: var(--white) !important;
+  }
+  #heroV2Title .hero-v2-dot {
     color: var(--page-lime) !important;
     -webkit-text-fill-color: var(--page-lime) !important;
   }
-  #heroV2Title .hero-v2-line:nth-child(1) {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
-  }
-  #heroV2Title .hero-v2-line:nth-child(2) .hero-v2-dot {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
-  }
-  #heroV2Title .hero-v2-line:nth-child(3) {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
-  }
-  #heroV2Title .hero-v2-line:nth-child(4) .hero-v2-dot {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
-  }
 
-  /* Presentación: mismo fondo que la página; titulares en lima / blanco */
+  /* Presentación: mismo fondo que la página; titulares en blanco */
   .intro-hero {
     position: relative;
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--white);
     padding-top: 5rem;
     padding-bottom: clamp(10rem, 32vh, 22rem);
     overflow-x: hidden;
@@ -520,25 +508,17 @@
     text-align: center;
   }
 
-  /* Línea 2 en blanco; 1 y 3 en lima; puntos / ;) con reglas de sufijo */
-  .intro-panel--0 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  .intro-panel--1 .intro-panel__headline {
-    color: var(--white);
-  }
+  /* Todas las headlines en blanco; puntos / ;) en lima */
+  .intro-panel--0 .intro-panel__headline,
+  .intro-panel--1 .intro-panel__headline,
   .intro-panel--2 .intro-panel__headline {
-    color: var(--page-lime);
+    color: var(--white);
   }
   /* Puntos y ;) fuera del color principal del bloque */
-  .intro-panel--0 .intro-line__suffix--period {
-    color: var(--white);
-  }
-  .intro-panel--1 .intro-line__suffix--period {
-    color: var(--page-lime);
-  }
+  .intro-panel--0 .intro-line__suffix--period,
+  .intro-panel--1 .intro-line__suffix--period,
   .intro-panel--2 .intro-line__suffix--wink {
-    color: var(--white);
+    color: var(--page-lime);
   }
 
   .intro-line__suffix {
