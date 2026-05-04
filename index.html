@@ -1087,6 +1087,96 @@
     padding-top: clamp(0, 0.2vw, 0.12rem);
     padding-bottom: clamp(1.5rem, 4vw, 3rem);
   }
+  /* ==================== WORKS SLIDER ==================== */
+  .works-slider-wrap {
+    padding-top: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+  }
+  .works-slider {
+    overflow: hidden;
+  }
+  .works-slider__track {
+    display: flex;
+    gap: 1.5rem;
+    transition: transform 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  .works-card {
+    flex: 0 0 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    background: #1c1c1e;
+    border-radius: 18px;
+    overflow: hidden;
+    display: block;
+    color: var(--white);
+    text-decoration: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .works-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
+  }
+  .works-card__media {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #000;
+  }
+  .works-card__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .works-card:hover .works-card__media img {
+    transform: scale(1.03);
+  }
+  .works-card__body {
+    padding: 1.25rem 1.5rem 1.5rem;
+  }
+  .works-card__tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--page-lime);
+    margin-bottom: 0.5rem;
+  }
+  .works-card__title {
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    color: var(--white);
+  }
+  .works-slider__arrows {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 1.5rem;
+  }
+  .works-slider__arrow {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s ease;
+    flex-shrink: 0;
+  }
+  .works-slider__arrow:hover:not(:disabled) {
+    background: rgba(255,255,255,0.2);
+  }
+  .works-slider__arrow:disabled {
+    opacity: 0.25;
+    cursor: default;
+  }
+
   #contacto .contact-box > h2.big-heading {
     color: var(--page-lime);
     -webkit-text-fill-color: var(--page-lime);
@@ -1466,14 +1556,37 @@
     </div>
   </section>
 
-  <!-- ==================== WORKS: 7 marquees horizontales (direcciones alternas) ==================== -->
+  <!-- ==================== WORKS ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <h2 class="u-sr-only" id="projectsTitle">
       <span class="projects-title-sr">WORKS</span>
     </h2>
     <div class="projects-tickers-belt" id="projectsTickersBelt" role="presentation" aria-hidden="true"></div>
-    <div class="projects-works-stack">
-      <div class="container projects-works-inner"></div>
+
+    <div class="container works-slider-wrap">
+      <div class="works-slider" id="worksSlider">
+        <div class="works-slider__track" id="worksSliderTrack">
+
+          <a class="works-card" href="https://youtu.be/R9Dxr0nCtvc" target="_blank" rel="noopener noreferrer">
+            <div class="works-card__media">
+              <img src="https://img.youtube.com/vi/R9Dxr0nCtvc/maxresdefault.jpg" alt="Project video" loading="lazy">
+            </div>
+            <div class="works-card__body">
+              <span class="works-card__tag">Video</span>
+              <h3 class="works-card__title">Título del proyecto</h3>
+            </div>
+          </a>
+
+        </div>
+      </div>
+      <div class="works-slider__arrows">
+        <button class="works-slider__arrow" id="worksArrowPrev" aria-label="Anterior" disabled>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button class="works-slider__arrow" id="worksArrowNext" aria-label="Siguiente" disabled>
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M7.5 5L12.5 10L7.5 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
     </div>
   </section>
 
@@ -1482,15 +1595,6 @@
     <div class="container">
       <div class="contact-box">
         <h2 class="big-heading"><span id="contactTitle">NO TE PIERDAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO</span><span class="red" id="contactMark">.</span></h2>
-        <p class="contact-sub" id="contactSub">Suscríbete a mi newsletter y entérate cada vez que publique algo.</p>
-
-        <form class="newsletter-form" id="newsletterForm" novalidate>
-          <div class="newsletter-form__row">
-            <input class="newsletter-form__input" type="email" id="nl-email" name="email" required autocomplete="email" placeholder="tu@email.com" />
-            <button type="submit" class="contact-btn newsletter-form__submit" id="nlSubmit">Suscribirme</button>
-          </div>
-        </form>
-
         <div class="contact-divider">
           <p class="big-heading big-heading--mid"><span id="contactDividerText">O SI LO PREFIERES, CONTÁCTAME A TRAVÉS DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
@@ -1985,7 +2089,7 @@
     return parts.join('');
   }
 
-  const PROJECTS_TICKER_ROWS = 7;
+  const PROJECTS_TICKER_ROWS = 1;
 
   /** Siete carriles horizontales; filas impares RTL (misma duración 90s que LTR vía keyframes). */
   function renderProjectsTickersBelt() {
@@ -2331,6 +2435,36 @@
   window.addEventListener('load', () => {
     syncViewportAnimationMode();
   });
+
+  // ============================================
+  // Works slider
+  // ============================================
+  (function () {
+    const track = document.getElementById('worksSliderTrack');
+    const btnPrev = document.getElementById('worksArrowPrev');
+    const btnNext = document.getElementById('worksArrowNext');
+    if (!track || !btnPrev || !btnNext) return;
+
+    let current = 0;
+
+    function getCards() { return Array.from(track.children); }
+
+    function update() {
+      const cards = getCards();
+      const total = cards.length;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const cardW = track.parentElement.offsetWidth;
+      track.style.transform = 'translateX(' + (-(cardW + gap) * current) + 'px)';
+      btnPrev.disabled = current === 0;
+      btnNext.disabled = current === total - 1;
+    }
+
+    btnPrev.addEventListener('click', () => { if (current > 0) { current--; update(); } });
+    btnNext.addEventListener('click', () => { const total = getCards().length; if (current < total - 1) { current++; update(); } });
+
+    window.addEventListener('resize', update);
+    update();
+  }());
   updateHeaderTheme();
 
   syncViewportAnimationMode();
