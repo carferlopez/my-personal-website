@@ -1120,16 +1120,34 @@
     aspect-ratio: 16/9;
     overflow: hidden;
     background: #000;
+    position: relative;
   }
-  .works-card__media img {
+  .works-card__poster {
+    position: absolute;
+    inset: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: opacity 0.6s ease, transform 0.4s ease;
+    z-index: 1;
   }
-  .works-card:hover .works-card__media img {
+  .works-card__media.is-playing .works-card__poster {
+    opacity: 0;
+  }
+  .works-card:hover .works-card__poster {
     transform: scale(1.03);
+  }
+  .works-card__media.is-playing:hover .works-card__poster {
+    transform: none;
+  }
+  .works-card__video-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    pointer-events: none;
   }
   .works-card__body {
     padding: 1.25rem 1.5rem 1.5rem;
@@ -1568,8 +1586,8 @@
         <div class="works-slider__track" id="worksSliderTrack">
 
           <a class="works-card" href="https://youtu.be/R9Dxr0nCtvc" target="_blank" rel="noopener noreferrer">
-            <div class="works-card__media">
-              <img src="https://img.youtube.com/vi/R9Dxr0nCtvc/maxresdefault.jpg" alt="Project video" loading="lazy">
+            <div class="works-card__media" data-yt-id="R9Dxr0nCtvc">
+              <img class="works-card__poster" src="https://img.youtube.com/vi/R9Dxr0nCtvc/maxresdefault.jpg" alt="Project video" loading="lazy">
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
@@ -2465,6 +2483,46 @@
 
     window.addEventListener('resize', update);
     update();
+  }());
+
+  // ============================================
+  // Works cards — autoplay video on scroll
+  // ============================================
+  (function () {
+    if (!('IntersectionObserver' in window)) return;
+
+    function buildSrc(id) {
+      return 'https://www.youtube.com/embed/' + id +
+        '?autoplay=1&mute=1&loop=1&playlist=' + id +
+        '&controls=0&playsinline=1&rel=0';
+    }
+
+    const obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        const media = entry.target;
+        const id = media.dataset.ytId;
+        if (entry.isIntersecting) {
+          if (!media.querySelector('iframe')) {
+            const iframe = document.createElement('iframe');
+            iframe.className = 'works-card__video-frame';
+            iframe.src = buildSrc(id);
+            iframe.allow = 'autoplay; encrypted-media';
+            media.appendChild(iframe);
+            media.classList.add('is-playing');
+          }
+        } else {
+          const iframe = media.querySelector('iframe');
+          if (iframe) {
+            iframe.remove();
+            media.classList.remove('is-playing');
+          }
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.works-card__media[data-yt-id]').forEach(function (el) {
+      obs.observe(el);
+    });
   }());
   updateHeaderTheme();
 
