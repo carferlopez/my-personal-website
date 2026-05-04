@@ -1569,7 +1569,7 @@
 
           <div class="works-card">
             <div class="works-card__media">
-              <video class="works-card__video" src="assets/work_gh.mp4" muted loop playsinline preload="none"></video>
+              <video class="works-card__video" src="assets/work_gh.mp4" muted loop playsinline preload="metadata"></video>
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
@@ -2473,20 +2473,29 @@
   (function () {
     if (!('IntersectionObserver' in window)) return;
 
-    const obs = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        const video = entry.target;
-        if (entry.isIntersecting) {
-          video.play().catch(function () {});
-        } else {
-          video.pause();
-        }
-      });
-    }, { threshold: 0.5 });
+    function setupVideoObserver() {
+      const obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          const video = entry.target;
+          if (entry.isIntersecting) {
+            video.load();
+            video.play().catch(function () {});
+          } else {
+            video.pause();
+          }
+        });
+      }, { threshold: 0.25 });
 
-    document.querySelectorAll('.works-card__video').forEach(function (v) {
-      obs.observe(v);
-    });
+      document.querySelectorAll('.works-card__video').forEach(function (v) {
+        obs.observe(v);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', setupVideoObserver);
+    } else {
+      setupVideoObserver();
+    }
   }());
   updateHeaderTheme();
 
