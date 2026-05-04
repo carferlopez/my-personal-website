@@ -329,6 +329,10 @@
     color: var(--page-lime) !important;
     -webkit-text-fill-color: var(--page-lime) !important;
   }
+  #heroV2Title .hero-v2-violet {
+    color: var(--page-lime) !important;
+    -webkit-text-fill-color: var(--page-lime) !important;
+  }
 
   /* Presentación: mismo fondo que la página; titulares en blanco */
   .intro-hero {
@@ -519,6 +523,11 @@
   .intro-panel--1 .intro-line__suffix--period,
   .intro-panel--2 .intro-line__suffix--wink {
     color: var(--page-lime);
+  }
+
+  .intro-accent {
+    color: var(--page-lime);
+    -webkit-text-fill-color: var(--page-lime);
   }
 
   .intro-line__suffix {
@@ -1547,7 +1556,7 @@
   const t = {
     es: {
       typewriter: [
-        ['CONSTRUYO APPS', 'CON ALMA DE VIDEOJUEGO', 'Y OJO DE CINE.'],
+        ['CONSTRUYO {APPS}', 'CON ALMA DE {VIDEOJUEGO}', 'Y OJO DE {CINE}.'],
         ['APRENDÍ MIRANDO A', 'SPIELBERG, TORIYAMA,', 'FINCHER, NOLAN,', 'SCOTT, MIYAMOTO,', 'KOJIMA.'],
         ['AHORA INTENTO', 'PLASMARLO EN MIS', 'CREACIONES.'],
       ],
@@ -1583,7 +1592,7 @@
     },
     en: {
       typewriter: [
-        ['I BUILD APPS', 'WITH THE SOUL OF A GAME', 'AND THE EYE OF CINEMA.'],
+        ['I BUILD {APPS}', 'WITH THE SOUL OF A {GAME}', 'AND THE EYE OF {CINEMA}.'],
         ['I LEARNED WATCHING', 'SPIELBERG, TORIYAMA,', 'FINCHER, NOLAN,', 'SCOTT, MIYAMOTO,', 'KOJIMA.'],
         ['NOW I STRIVE', 'TO CAPTURE IT IN', 'MY CREATIONS.'],
       ],
@@ -1662,6 +1671,20 @@
     return [String(entry)];
   }
 
+  function appendAccentedText(parent, text) {
+    text.split(/\{([^}]+)\}/).forEach((part, i) => {
+      if (!part) return;
+      if (i % 2 === 0) {
+        parent.append(document.createTextNode(part));
+      } else {
+        const span = document.createElement('span');
+        span.className = 'intro-accent';
+        span.textContent = part;
+        parent.append(span);
+      }
+    });
+  }
+
   /** Varias líneas por bloque (como hero-v2-line); la última puede llevar sufijos . o ;). */
   function fillIntroHeadlineStack(el, lines) {
     if (!el) return;
@@ -1674,28 +1697,25 @@
       row.className = 'intro-headline__line';
       const s = String(raw);
       if (isLast && s.endsWith(' ;')) {
-        const baseLen = s.length - 2;
-        row.append(document.createTextNode(s.slice(0, baseLen)));
+        appendAccentedText(row, s.slice(0, s.length - 2));
         const suffix = document.createElement('span');
         suffix.className = 'intro-line__suffix intro-line__suffix--semi';
         suffix.textContent = ' ;';
         row.append(suffix);
       } else if (isLast && s.endsWith(';)')) {
-        const baseLen = s.length - 2;
-        row.append(document.createTextNode(s.slice(0, baseLen)));
+        appendAccentedText(row, s.slice(0, s.length - 2));
         const suffix = document.createElement('span');
         suffix.className = 'intro-line__suffix intro-line__suffix--wink';
         suffix.textContent = ';)';
         row.append(suffix);
       } else if (isLast && s.endsWith('.')) {
-        const baseLen = s.length - 1;
-        row.append(document.createTextNode(s.slice(0, baseLen)));
+        appendAccentedText(row, s.slice(0, s.length - 1));
         const suffix = document.createElement('span');
         suffix.className = 'intro-line__suffix intro-line__suffix--period';
         suffix.textContent = '.';
         row.append(suffix);
       } else {
-        row.textContent = s;
+        appendAccentedText(row, s);
       }
       el.appendChild(row);
     });
