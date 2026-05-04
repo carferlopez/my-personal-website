@@ -1566,7 +1566,7 @@
 
           <div class="works-card">
             <div class="works-card__media">
-              <video class="works-card__video" src="assets/work_gh.mp4" autoplay muted loop playsinline preload="auto"></video>
+              <video class="works-card__video" src="assets/work_gh.mp4" autoplay muted playsinline preload="auto"></video>
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
@@ -2574,8 +2574,10 @@
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Unmute just in case it was muted? No, keep it muted.
-            entry.target.play().catch(err => console.warn('Autoplay prevented', err));
+            // Reproduce solo si no ha llegado ya al final
+            if (!entry.target.ended) {
+              entry.target.play().catch(err => console.warn('Autoplay prevented', err));
+            }
           } else {
             entry.target.pause();
           }
