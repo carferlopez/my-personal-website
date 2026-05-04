@@ -2564,6 +2564,31 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   })();
+
+  // ============================================
+  // Video Autoplay on Scroll
+  // ============================================
+  document.addEventListener("DOMContentLoaded", function() {
+    const videos = document.querySelectorAll('.works-card__video');
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Unmute just in case it was muted? No, keep it muted.
+            entry.target.play().catch(err => console.warn('Autoplay prevented', err));
+          } else {
+            entry.target.pause();
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      videos.forEach(v => {
+        observer.observe(v);
+        // Start paused until scrolled into view
+        v.pause();
+      });
+    }
+  });
 </script>
 
 </body>
