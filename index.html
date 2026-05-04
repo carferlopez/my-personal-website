@@ -1112,10 +1112,6 @@
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
-  .works-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 40px rgba(0,0,0,0.6);
-  }
   .works-card__media {
     aspect-ratio: 16/9;
     overflow: hidden;
@@ -1134,12 +1130,6 @@
   }
   .works-card__media.is-playing .works-card__poster {
     opacity: 0;
-  }
-  .works-card:hover .works-card__poster {
-    transform: scale(1.03);
-  }
-  .works-card__media.is-playing:hover .works-card__poster {
-    transform: none;
   }
   .works-card__video-frame {
     position: absolute;
@@ -1585,7 +1575,7 @@
       <div class="works-slider" id="worksSlider">
         <div class="works-slider__track" id="worksSliderTrack">
 
-          <a class="works-card" href="https://youtu.be/R9Dxr0nCtvc" target="_blank" rel="noopener noreferrer">
+          <div class="works-card">
             <div class="works-card__media" data-yt-id="R9Dxr0nCtvc">
               <img class="works-card__poster" src="https://img.youtube.com/vi/R9Dxr0nCtvc/maxresdefault.jpg" alt="Project video" loading="lazy">
             </div>
@@ -1593,7 +1583,7 @@
               <span class="works-card__tag">Video</span>
               <h3 class="works-card__title">Título del proyecto</h3>
             </div>
-          </a>
+          </div>
 
         </div>
       </div>
