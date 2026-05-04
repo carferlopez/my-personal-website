@@ -1591,7 +1591,7 @@
   <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
-        <h2 class="big-heading"><span id="contactTitle">NO TE PIERDAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO</span><span class="red" id="contactMark">.</span></h2>
+        <!-- Título eliminado -->
         <div class="contact-divider">
           <p class="big-heading big-heading--mid"><span id="contactDividerText">O SI LO PREFIERES, CONTÁCTAME A TRAVÉS DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
@@ -2164,8 +2164,10 @@
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
     const introH = document.getElementById('introHeading');
     if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
-    document.getElementById('contactTitle').textContent = d.contactTitle;
-    document.getElementById('contactMark').textContent = d.contactMark;
+    const contactTitleEl = document.getElementById('contactTitle');
+    if (contactTitleEl) contactTitleEl.textContent = d.contactTitle;
+    const contactMarkEl = document.getElementById('contactMark');
+    if (contactMarkEl) contactMarkEl.textContent = d.contactMark;
     const contactSubEl = document.getElementById('contactSub');
     if (contactSubEl) contactSubEl.textContent = d.contactSub;
     const contactAltL = document.getElementById('contactAltLabel');
