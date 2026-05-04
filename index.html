@@ -1593,7 +1593,7 @@
       <div class="contact-box">
         <!-- Título eliminado -->
         <div class="contact-divider">
-          <p class="big-heading big-heading--mid"><span id="contactDividerText">¿TE GUSTA LO QUE VES? SI TE GUSTARÍA PROPONER UNA COLABORACIÓN, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerText">¿TE GUSTA LO QUE VES?<br>SI TE GUSTARÍA PROPONER UNA COLABORACIÓN, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
@@ -1666,7 +1666,7 @@
       contactEmailPh: "tu@email.com",
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
-      contactDivider: "¿TE GUSTA LO QUE VES? SI TE GUSTARÍA PROPONER UNA COLABORACIÓN, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
+      contactDivider: "¿TE GUSTA LO QUE VES?<br>SI TE GUSTARÍA PROPONER UNA COLABORACIÓN, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
@@ -1702,7 +1702,7 @@
       contactEmailPh: "your@email.com",
       contactBtnLabel: "Subscribe",
       langMenuAria: "Language menu",
-      contactDivider: "LIKE WHAT YOU SEE? IF YOU'D LIKE TO PROPOSE A COLLABORATION, YOU CAN REACH ME THROUGH ANY OF THESE CHANNELS",
+      contactDivider: "LIKE WHAT YOU SEE?<br>IF YOU'D LIKE TO PROPOSE A COLLABORATION, YOU CAN REACH ME THROUGH ANY OF THESE CHANNELS",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
@@ -2191,7 +2191,7 @@
     const nlSubmit = document.getElementById('nlSubmit');
     if (nlSubmit) nlSubmit.textContent = d.contactBtnLabel;
     const divider = document.getElementById('contactDividerText');
-    if (divider) divider.textContent = d.contactDivider;
+    if (divider) divider.innerHTML = d.contactDivider;
     const lname = document.getElementById('label-cf-name');
     if (lname) lname.textContent = d.contactFormName;
     const lem = document.getElementById('label-cf-email');
