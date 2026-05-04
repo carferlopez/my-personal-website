@@ -2169,7 +2169,8 @@
     if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
     document.getElementById('contactTitle').textContent = d.contactTitle;
     document.getElementById('contactMark').textContent = d.contactMark;
-    document.getElementById('contactSub').textContent = d.contactSub;
+    const contactSubEl = document.getElementById('contactSub');
+    if (contactSubEl) contactSubEl.textContent = d.contactSub;
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     setProjectsTitleStack(d.projectsTitle);
