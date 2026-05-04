@@ -1569,7 +1569,7 @@
 
           <div class="works-card">
             <div class="works-card__media">
-              <video class="works-card__video" src="assets/work_gh.mp4" muted loop playsinline preload="metadata"></video>
+              <video class="works-card__video" src="assets/work_gh.mp4" autoplay muted loop playsinline preload="auto"></video>
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
@@ -2478,13 +2478,12 @@
         entries.forEach(function (entry) {
           const video = entry.target;
           if (entry.isIntersecting) {
-            video.load();
             video.play().catch(function () {});
           } else {
             video.pause();
           }
         });
-      }, { threshold: 0.25 });
+      }, { threshold: 0 });
 
       document.querySelectorAll('.works-card__video').forEach(function (v) {
         obs.observe(v);
