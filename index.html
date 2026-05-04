@@ -1113,18 +1113,15 @@
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
   .works-card__media {
-    aspect-ratio: 16/9;
+    width: 100%;
     overflow: hidden;
     background: #000;
-    position: relative;
   }
   .works-card__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
     display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
   }
   .works-card__body {
     padding: 1.25rem 1.5rem 1.5rem;
@@ -1569,9 +1566,7 @@
 
           <div class="works-card">
             <div class="works-card__media">
-              <video class="works-card__video" autoplay muted loop playsinline preload="auto">
-                <source src="assets/work_gh.mp4" type="video/mp4">
-              </video>
+              <video class="works-card__video" src="assets/work_gh.mp4" autoplay muted loop playsinline preload="auto"></video>
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
