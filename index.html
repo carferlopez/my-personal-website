@@ -1263,16 +1263,16 @@
   @media (min-width: 640px) { .contact-btn { padding: 0.6rem 1.2rem; font-size: 1.05rem; } }
   @media (min-width: 768px) { .contact-btn { font-size: 1.15rem; } }
   @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
-  /* Botones: blanco por defecto; hover / contraste en amarillo fluorescente */
+  /* Botones: amarillo por defecto; hover / contraste en blanco */
   .contact-box .contact-btn {
     color: var(--black);
-    background: var(--white);
-    border-color: var(--white);
+    background: var(--page-lime);
+    border-color: var(--page-lime);
   }
   .contact-box .contact-btn:hover:not(:disabled) {
-    background: var(--page-lime);
+    background: var(--white);
     color: var(--black);
-    border-color: var(--page-lime);
+    border-color: var(--white);
   }
 
 
@@ -1289,8 +1289,8 @@
     opacity: 0.85;
   }
   .contact-alt-link {
-    border: 2px solid var(--white);
-    background: var(--white);
+    border: 2px solid var(--page-lime);
+    background: var(--page-lime);
     color: var(--black);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
@@ -1300,9 +1300,9 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .contact-alt-link:hover {
-    background: var(--page-lime);
+    background: var(--white);
     color: var(--black);
-    border-color: var(--page-lime);
+    border-color: var(--white);
   }
 
   .newsletter-form { margin-top: 2rem; }
@@ -1596,7 +1596,7 @@
       <div class="contact-box">
         <!-- Título eliminado -->
         <div class="contact-divider">
-          <p class="big-heading big-heading--mid"><span id="contactDividerText"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">¿TE GUSTA LO QUE VES?</span><br>SI TE GUSTARÍA QUE <span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerText"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;">¿TE GUSTA LO QUE VES?</span>SI TE GUSTARÍA QUE <span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
@@ -1669,7 +1669,7 @@
       contactEmailPh: "tu@email.com",
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
-      contactDivider: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">¿TE GUSTA LO QUE VES?</span><br>SI TE GUSTARÍA QUE <span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
+      contactDivider: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">¿TE GUSTA LO QUE VES?</span>SI TE GUSTARÍA QUE <span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
