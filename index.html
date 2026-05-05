@@ -512,13 +512,17 @@
     text-align: center;
   }
 
-  /* Todas las headlines en blanco; puntos / ;) en lima */
+  /* Todas las headlines en blanco; ;) en lima */
   .intro-panel--0 .intro-panel__headline,
   .intro-panel--1 .intro-panel__headline,
   .intro-panel--2 .intro-panel__headline {
     color: var(--white);
   }
-  /* Puntos y ;) fuera del color principal del bloque */
+  /* El punto final siempre en blanco */
+  .intro-line__suffix--period {
+    color: var(--white);
+  }
+  /* ;) fuera del color principal del bloque */
   .intro-panel--2 .intro-line__suffix--wink {
     color: var(--page-lime);
   }
