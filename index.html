@@ -2547,15 +2547,16 @@
         if (overlay) {
             const totalScroll = frameCount * pixelsPerFrame;
             const fadeInThreshold = 300;
-            const fadeOutThreshold = 300;
+            const animationEnd = (frameCount - 1) * pixelsPerFrame;
+            const fadeOutDuration = 500;
             
             let opacity = 0;
             if (relativeScroll < fadeInThreshold) {
                 // Fundido de entrada
                 opacity = 1 - Math.min(1, Math.max(0, relativeScroll / fadeInThreshold));
-            } else if (relativeScroll > totalScroll - fadeOutThreshold) {
-                // Fundido de salida
-                const fadeProgress = (relativeScroll - (totalScroll - fadeOutThreshold)) / fadeOutThreshold;
+            } else if (relativeScroll > animationEnd) {
+                // Fundido de salida: empieza JUSTO cuando el dino termina su animación
+                const fadeProgress = (relativeScroll - animationEnd) / fadeOutDuration;
                 opacity = Math.min(1, Math.max(0, fadeProgress));
             } else {
                 opacity = 0;
