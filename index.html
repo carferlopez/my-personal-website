@@ -43,14 +43,14 @@
     /* Variables de Calibración Ojitos */
     --left-eye-top: 45.0%;
     --left-eye-left: 21.0%;
-    --left-eye-width: 19%;
+    --left-eye-width: 20.2%;
     --left-eye-height: 13.5%;
     
     --right-eye-top: 45.0%;
     --right-eye-left: 79.0%;
-    --right-eye-width: 19%;
+    --right-eye-width: 20.2%;
     --right-eye-height: 13.5%;
-    --max-radius: 25px;
+    --max-radius: 2vw;
 
     --black: #000;
     --white: #fff;
@@ -2689,12 +2689,14 @@
     const irisRight = document.getElementById('iris-right');
     const orbitLeft = document.getElementById('orbit-left');
     const orbitRight = document.getElementById('orbit-right');
-    const MAX_RADIUS = 25;
+    
     function moveEyes(e) {
         if (!irisLeft || !irisRight) return;
         
         let x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
         let y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        const maxRadius = window.innerWidth * 0.02; // responsive max radius
+        
         [ {iris: irisLeft, orbit: orbitLeft}, {iris: irisRight, orbit: orbitRight} ].forEach(eye => {
             const rect = eye.orbit.getBoundingClientRect();
             const centerX = rect.left + rect.width / 2;
@@ -2704,12 +2706,12 @@
             const maxScreenDistX = window.innerWidth / 2;
             const maxScreenDistY = window.innerHeight / 2;
             
-            let moveX = (dx / maxScreenDistX) * MAX_RADIUS * 0.8;
-            let moveY = (dy / maxScreenDistY) * MAX_RADIUS * 0.8;
+            let moveX = (dx / maxScreenDistX) * maxRadius * 0.8;
+            let moveY = (dy / maxScreenDistY) * maxRadius * 0.8;
             const currentRadius = Math.hypot(moveX, moveY);
-            if (currentRadius > MAX_RADIUS) {
-                moveX = (moveX / currentRadius) * MAX_RADIUS;
-                moveY = (moveY / currentRadius) * MAX_RADIUS;
+            if (currentRadius > maxRadius) {
+                moveX = (moveX / currentRadius) * maxRadius;
+                moveY = (moveY / currentRadius) * maxRadius;
             }
             eye.iris.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
         });
