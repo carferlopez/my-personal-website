@@ -1470,12 +1470,12 @@
 
   .face-container {
       position: relative;
-      width: min(47.5vw, 47.5vh * (2400 / 1792));
+      width: 100vw;
       aspect-ratio: 2400 / 1792;
       margin: 0 auto; 
       overflow: hidden;
       background: #111;
-      border-radius: 20px;
+      border-radius: 0;
   }
   .face-image {
       position: absolute;
@@ -1651,17 +1651,15 @@
 
   <!-- ==================== CONTACT ==================== -->
   <!-- ==================== OJITOS ==================== -->
-  <section id="ojitos" class="section-pad">
-    <div class="container">
-      <div class="face-container">
-          <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
-          <div class="eye-orbit left" id="orbit-left">
-              <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
-          </div>
-          <div class="eye-orbit right" id="orbit-right">
-              <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
-          </div>
-      </div>
+  <section id="ojitos">
+    <div class="face-container">
+        <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
+        <div class="eye-orbit left" id="orbit-left">
+            <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
+        </div>
+        <div class="eye-orbit right" id="orbit-right">
+            <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
+        </div>
     </div>
   </section>
 
