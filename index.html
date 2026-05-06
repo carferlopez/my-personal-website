@@ -1373,6 +1373,28 @@
     gap: 1.5rem;
     margin-top: 1.5rem;
   }
+  .contact-ojitos-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .contact-ojitos-text > p.big-heading--mid {
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
+  }
+  .contact-arrow-down {
+    display: block;
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--page-lime);
+    -webkit-text-fill-color: var(--page-lime);
+    line-height: 1;
+    animation: contact-arrow-float 1.6s ease-in-out infinite;
+  }
+  @keyframes contact-arrow-float {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(10px); }
+  }
   @media (min-width: 768px) {
     .contact-ojitos-row {
       flex-direction: row;
@@ -1383,15 +1405,17 @@
       flex: 0 0 calc(50% - 1.5rem);
       margin: 0;
     }
-    .contact-ojitos-row > p.big-heading--mid {
+    .contact-ojitos-row > .contact-ojitos-text {
       flex: 1;
       margin: 0;
+    }
+    .contact-ojitos-row > .contact-ojitos-text > p.big-heading--mid {
       font-size: 5.5vw;
       text-wrap: pretty;
     }
   }
   @media (min-width: 1280px) {
-    .contact-ojitos-row > p.big-heading--mid {
+    .contact-ojitos-row > .contact-ojitos-text > p.big-heading--mid {
       font-size: 66px;
     }
   }
@@ -1705,7 +1729,10 @@
               </div>
             </div>
 
-            <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--white); -webkit-text-fill-color: var(--white);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+            <div class="contact-ojitos-text">
+              <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI QUIERES UNA COLABORACIÓN O TIENES CUALQUIER CONSULTA, NO DUDES EN ESCRIBIRME AQUÍ</span><span class="contact-divider-mark">.</span></p>
+              <span class="contact-arrow-down" aria-hidden="true">↓</span>
+            </div>
           </div>
         </div>
 
@@ -1780,7 +1807,7 @@
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">¿TE GUSTA LO QUE VES?</span>",
-      contactDividerBottom: "SI TE GUSTARÍA QUE <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
+      contactDividerBottom: "SI QUIERES UNA COLABORACIÓN O TIENES CUALQUIER CONSULTA, NO DUDES EN ESCRIBIRME AQUÍ",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
@@ -1817,7 +1844,7 @@
       contactBtnLabel: "Subscribe",
       langMenuAria: "Language menu",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">LIKE WHAT YOU SEE?</span>",
-      contactDividerBottom: "IF YOU'D LIKE TO PROPOSE A COLLABORATION, YOU CAN REACH ME THROUGH ANY OF THESE CHANNELS",
+      contactDividerBottom: "IF YOU WANT TO COLLABORATE OR HAVE ANY QUESTIONS, DON'T HESITATE TO WRITE TO ME HERE",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
