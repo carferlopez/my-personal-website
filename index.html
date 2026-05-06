@@ -1366,6 +1366,28 @@
   @media (min-width: 768px)  { .contact-divider .big-heading--mid { font-size: 6.5vw; } }
   @media (min-width: 1024px) { .contact-divider .big-heading--mid { font-size: 6vw; } }
   @media (min-width: 1280px) { .contact-divider .big-heading--mid { font-size: 64px; } }
+  
+  .contact-ojitos-row {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  @media (min-width: 768px) {
+    .contact-ojitos-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 3rem;
+    }
+    .contact-ojitos-row > #ojitos {
+      flex: 0 0 calc(50% - 1.5rem);
+      margin: 0;
+    }
+    .contact-ojitos-row > p {
+      flex: 1;
+      margin: 0;
+    }
+  }
 
   .contact-form-wrap { width: 100%; max-width: 100%; }
   .contact-form {
@@ -1662,20 +1684,22 @@
         <div class="contact-divider">
           <p class="big-heading big-heading--mid"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;">¿TE GUSTA LO QUE VES?</span></span></p>
 
-          <!-- ==================== OJITOS ==================== -->
-          <div id="ojitos" style="margin: 1.5em 0;">
-            <div class="face-container">
-                <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image" loading="lazy">
-                <div class="eye-orbit left" id="orbit-left">
-                    <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left" loading="lazy">
-                </div>
-                <div class="eye-orbit right" id="orbit-right">
-                    <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right" loading="lazy">
-                </div>
+          <div class="contact-ojitos-row">
+            <!-- ==================== OJITOS ==================== -->
+            <div id="ojitos">
+              <div class="face-container">
+                  <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image" loading="lazy">
+                  <div class="eye-orbit left" id="orbit-left">
+                      <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left" loading="lazy">
+                  </div>
+                  <div class="eye-orbit right" id="orbit-right">
+                      <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right" loading="lazy">
+                  </div>
+              </div>
             </div>
-          </div>
 
-          <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--white); -webkit-text-fill-color: var(--white);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+            <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--white); -webkit-text-fill-color: var(--white);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+          </div>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
