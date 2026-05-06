@@ -1802,7 +1802,7 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "WORKS"
+      projectsTitle: "MISTRABAJOS."
     },
     en: {
       typewriter: [
@@ -1840,7 +1840,7 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "WORKS"
+      projectsTitle: "MYWORKS."
     }
   };
 
@@ -2187,16 +2187,21 @@
     queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
-  function buildWorksTickerChunks(wordHtml) {
+  function buildWorksTickerChunks(wordEscaped) {
     const n = 18;
     const parts = [];
+    
+    let styledWord = wordEscaped;
+    if (wordEscaped === 'MISTRABAJOS.') {
+      styledWord = '<span class="projects-ticker__word--orange">MIS</span><span class="projects-ticker__word--black">TRABAJOS</span><span class="projects-ticker__word--orange">.</span>';
+    } else if (wordEscaped === 'MYWORKS.') {
+      styledWord = '<span class="projects-ticker__word--orange">MY</span><span class="projects-ticker__word--black">WORKS</span><span class="projects-ticker__word--orange">.</span>';
+    }
+
     for (let i = 0; i < n; i++) {
-      const orange = i % 2 === 0;
       parts.push(
-        '<span class="projects-ticker__word ' +
-        (orange ? 'projects-ticker__word--orange' : 'projects-ticker__word--black') +
-        '">' +
-        wordHtml +
+        '<span class="projects-ticker__word" style="padding-right: 0.5em;">' +
+        styledWord +
         '</span>'
       );
     }
