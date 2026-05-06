@@ -676,9 +676,6 @@
     line-height: 1;
   }
   @media (min-width: 640px) { .lang-select__flag { font-size: 0.875rem; } }
-  #contactDividerTextTop, #contactDividerTextBottom {
-    display: inline-block;
-  }
   .lang-select__chev {
     display: inline-block;
     font-size: 0.65em;
@@ -2125,17 +2122,19 @@
     const mob =
       typeof window.matchMedia !== 'undefined' &&
       window.matchMedia('(max-width: 639px)').matches;
+      
+    killHeroScrollAnimation();
+    fitHeroV2Lines();
+
     if (hero) {
       if (mob || reduceMotion) {
         hero.classList.add('hero-v2-section--static');
-        killHeroScrollAnimation();
       } else {
         hero.classList.remove('hero-v2-section--static');
         initHeroScrollAnimation();
       }
     }
     setupIntroLinesScrollAnimation();
-    fitHeroV2Lines();
     if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
       renderProjectsTickersBelt();
       queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
