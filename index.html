@@ -2731,9 +2731,8 @@
     }
     window.addEventListener('mousemove', moveEyes);
     window.addEventListener('touchmove', (e) => {
-        if (e.target.closest('.face-container')) e.preventDefault();
         moveEyes(e);
-    }, { passive: false });
+    }, { passive: true });
 </script>
 
 </body>
