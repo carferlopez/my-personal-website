@@ -40,6 +40,18 @@
   * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
 
   :root {
+    /* Variables de Calibración Ojitos */
+    --left-eye-top: 45.0%;
+    --left-eye-left: 23.5%;
+    --left-eye-width: 19%;
+    --left-eye-height: 13.5%;
+    
+    --right-eye-top: 45.0%;
+    --right-eye-left: 76.5%;
+    --right-eye-width: 19%;
+    --right-eye-height: 13.5%;
+    --max-radius: 25px;
+
     --black: #000;
     --white: #fff;
     /* Paleta sitio: negro #000000 de fondo, amarillo fluorescente como texto principal, blanco para acentos */
@@ -1456,6 +1468,53 @@
     overflow: hidden;
   }
 
+  .face-container {
+      position: relative;
+      width: min(95vw, 95vh * (2400 / 1792));
+      aspect-ratio: 2400 / 1792;
+      margin: 0 auto; 
+      overflow: hidden;
+      background: #111;
+      border-radius: 20px;
+  }
+  .face-image {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+  }
+  .eye-orbit {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      overflow: hidden;
+      border-radius: 50% 50% 50% 50% / 65% 65% 35% 35%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      pointer-events: none;
+  }
+  .eye-orbit.left {
+      top: var(--left-eye-top);
+      left: var(--left-eye-left);
+      width: var(--left-eye-width);
+      height: var(--left-eye-height);
+  }
+  .eye-orbit.right {
+      top: var(--right-eye-top);
+      left: var(--right-eye-left);
+      width: var(--right-eye-width);
+      height: var(--right-eye-height);
+  }
+  .iris {
+      position: absolute;
+      height: 170%;
+      width: auto;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      will-change: transform;
+      transition: transform 0.05s ease-out;
+  }
 </style>
 </head>
 <body>
@@ -1591,6 +1650,21 @@
   </section>
 
   <!-- ==================== CONTACT ==================== -->
+  <!-- ==================== OJITOS ==================== -->
+  <section id="ojitos" class="section-pad">
+    <div class="container">
+      <div class="face-container">
+          <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
+          <div class="eye-orbit left" id="orbit-left">
+              <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
+          </div>
+          <div class="eye-orbit right" id="orbit-right">
+              <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
+          </div>
+      </div>
+    </div>
+  </section>
+
   <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
@@ -2610,6 +2684,43 @@
       });
     }
   });
+</script>
+
+<script>
+    const irisLeft = document.getElementById('iris-left');
+    const irisRight = document.getElementById('iris-right');
+    const orbitLeft = document.getElementById('orbit-left');
+    const orbitRight = document.getElementById('orbit-right');
+    const MAX_RADIUS = 25;
+    function moveEyes(e) {
+        if (!irisLeft || !irisRight) return;
+        
+        let x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+        let y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+        [ {iris: irisLeft, orbit: orbitLeft}, {iris: irisRight, orbit: orbitRight} ].forEach(eye => {
+            const rect = eye.orbit.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            const dx = x - centerX;
+            const dy = y - centerY;
+            const maxScreenDistX = window.innerWidth / 2;
+            const maxScreenDistY = window.innerHeight / 2;
+            
+            let moveX = (dx / maxScreenDistX) * MAX_RADIUS * 0.8;
+            let moveY = (dy / maxScreenDistY) * MAX_RADIUS * 0.8;
+            const currentRadius = Math.hypot(moveX, moveY);
+            if (currentRadius > MAX_RADIUS) {
+                moveX = (moveX / currentRadius) * MAX_RADIUS;
+                moveY = (moveY / currentRadius) * MAX_RADIUS;
+            }
+            eye.iris.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+        });
+    }
+    window.addEventListener('mousemove', moveEyes);
+    window.addEventListener('touchmove', (e) => {
+        if (e.target.closest('.face-container')) e.preventDefault();
+        moveEyes(e);
+    }, { passive: false });
 </script>
 
 </body>
