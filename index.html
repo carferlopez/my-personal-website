@@ -1205,8 +1205,8 @@
     -webkit-text-fill-color: var(--white);
   }
   .contact-divider-mark {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    color: var(--white);
+    -webkit-text-fill-color: var(--white);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -1631,7 +1631,7 @@
 
           <div class="works-card">
             <div class="works-card__media">
-              <video class="works-card__video" src="assets/work_gh.mp4" autoplay muted playsinline preload="auto"></video>
+              <video class="works-card__video" src="assets/work_gh.mp4" muted playsinline preload="none"></video>
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
@@ -1663,17 +1663,17 @@
           <!-- ==================== OJITOS ==================== -->
           <div id="ojitos" style="margin: 1.5em 0;">
             <div class="face-container">
-                <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
+                <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image" loading="lazy">
                 <div class="eye-orbit left" id="orbit-left">
-                    <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
+                    <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left" loading="lazy">
                 </div>
                 <div class="eye-orbit right" id="orbit-right">
-                    <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
+                    <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right" loading="lazy">
                 </div>
             </div>
           </div>
 
-          <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--white); -webkit-text-fill-color: var(--white);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
@@ -1727,8 +1727,8 @@
 
 </main>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
 <script>
   // ============================================
   // Traducciones centralizadas
@@ -1747,7 +1747,7 @@
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">¿TE GUSTA LO QUE VES?</span>",
-      contactDividerBottom: "SI TE GUSTARÍA QUE <span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
+      contactDividerBottom: "SI TE GUSTARÍA QUE <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
