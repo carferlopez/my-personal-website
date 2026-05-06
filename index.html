@@ -1376,7 +1376,7 @@
   @media (min-width: 768px) {
     .contact-ojitos-row {
       flex-direction: row;
-      align-items: center;
+      align-items: flex-start;
       gap: 3rem;
     }
     .contact-ojitos-row > #ojitos {
@@ -1386,13 +1386,13 @@
     .contact-ojitos-row > p.big-heading--mid {
       flex: 1;
       margin: 0;
-      font-size: 3.25vw;
-      text-wrap: balance;
+      font-size: 5.5vw;
+      text-wrap: pretty;
     }
   }
   @media (min-width: 1280px) {
     .contact-ojitos-row > p.big-heading--mid {
-      font-size: 36px;
+      font-size: 66px;
     }
   }
 
@@ -1802,7 +1802,7 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "MISTRABAJOS."
+      projectsTitle: "TRABAJO."
     },
     en: {
       typewriter: [
@@ -2190,15 +2190,16 @@
   function buildWorksTickerChunks(wordEscaped) {
     const n = 18;
     const parts = [];
-    
-    let styledWord = wordEscaped;
-    if (wordEscaped === 'MISTRABAJOS.') {
-      styledWord = '<span class="projects-ticker__word--orange">MIS</span><span class="projects-ticker__word--black">TRABAJOS</span><span class="projects-ticker__word--orange">.</span>';
-    } else if (wordEscaped === 'MYWORKS.') {
-      styledWord = '<span class="projects-ticker__word--orange">MY</span><span class="projects-ticker__word--black">WORKS</span><span class="projects-ticker__word--orange">.</span>';
-    }
 
     for (let i = 0; i < n; i++) {
+      let styledWord = wordEscaped;
+      if (wordEscaped === 'TRABAJO.') {
+        styledWord = i % 2 === 0
+          ? '<span class="projects-ticker__word--orange">TRABAJO</span><span class="projects-ticker__word--black">.</span>'
+          : '<span class="projects-ticker__word--black">TRABAJO</span><span class="projects-ticker__word--orange">.</span>';
+      } else if (wordEscaped === 'MYWORKS.') {
+        styledWord = '<span class="projects-ticker__word--orange">MY</span><span class="projects-ticker__word--black">WORKS</span><span class="projects-ticker__word--orange">.</span>';
+      }
       parts.push(
         '<span class="projects-ticker__word" style="padding-right: 0.5em;">' +
         styledWord +
