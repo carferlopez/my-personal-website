@@ -676,6 +676,9 @@
     line-height: 1;
   }
   @media (min-width: 640px) { .lang-select__flag { font-size: 0.875rem; } }
+  #contactDividerTextTop, #contactDividerTextBottom {
+    display: inline-block;
+  }
   .lang-select__chev {
     display: inline-block;
     font-size: 0.65em;
@@ -1650,25 +1653,27 @@
   </section>
 
   <!-- ==================== CONTACT ==================== -->
-  <!-- ==================== OJITOS ==================== -->
-  <section id="ojitos">
-    <div class="face-container">
-        <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
-        <div class="eye-orbit left" id="orbit-left">
-            <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
-        </div>
-        <div class="eye-orbit right" id="orbit-right">
-            <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
-        </div>
-    </div>
-  </section>
-
   <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
         <!-- Título eliminado -->
         <div class="contact-divider">
-          <p class="big-heading big-heading--mid"><span id="contactDividerText"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;">¿TE GUSTA LO QUE VES?</span>SI TE GUSTARÍA QUE <span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;">¿TE GUSTA LO QUE VES?</span></span></p>
+
+          <!-- ==================== OJITOS ==================== -->
+          <div id="ojitos" style="margin: 1.5em 0;">
+            <div class="face-container">
+                <img src="assets/face_no_eyes.png" alt="Rostro base" class="face-image">
+                <div class="eye-orbit left" id="orbit-left">
+                    <img src="assets/left_eye.png" alt="Iris Izquierdo" class="iris" id="iris-left">
+                </div>
+                <div class="eye-orbit right" id="orbit-right">
+                    <img src="assets/right_eye.png" alt="Iris Derecho" class="iris" id="iris-right">
+                </div>
+            </div>
+          </div>
+
+          <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">SI TE GUSTARÍA QUE <span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES</span><span class="contact-divider-mark">.</span></p>
         </div>
 
         <div class="contact-form__done" id="contactFormSuccess" hidden>
@@ -1741,7 +1746,8 @@
       contactEmailPh: "tu@email.com",
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
-      contactDivider: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">¿TE GUSTA LO QUE VES?</span>SI TE GUSTARÍA QUE <span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
+      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">¿TE GUSTA LO QUE VES?</span>",
+      contactDividerBottom: "SI TE GUSTARÍA QUE <span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">COLABORÁSEMOS</span>, PUEDES CONTACTARME EN CUALQUIERA DE ESTOS CANALES",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
@@ -1777,7 +1783,8 @@
       contactEmailPh: "your@email.com",
       contactBtnLabel: "Subscribe",
       langMenuAria: "Language menu",
-      contactDivider: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);\">LIKE WHAT YOU SEE?</span><br>IF YOU'D LIKE TO PROPOSE A COLLABORATION, YOU CAN REACH ME THROUGH ANY OF THESE CHANNELS",
+      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">LIKE WHAT YOU SEE?</span>",
+      contactDividerBottom: "IF YOU'D LIKE TO PROPOSE A COLLABORATION, YOU CAN REACH ME THROUGH ANY OF THESE CHANNELS",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
@@ -2265,8 +2272,10 @@
     if (nlInput && d.contactEmailPh) nlInput.placeholder = d.contactEmailPh;
     const nlSubmit = document.getElementById('nlSubmit');
     if (nlSubmit) nlSubmit.textContent = d.contactBtnLabel;
-    const divider = document.getElementById('contactDividerText');
-    if (divider) divider.innerHTML = d.contactDivider;
+    const dividerTop = document.getElementById('contactDividerTextTop');
+    if (dividerTop) dividerTop.innerHTML = d.contactDividerTop;
+    const dividerBottom = document.getElementById('contactDividerTextBottom');
+    if (dividerBottom) dividerBottom.innerHTML = d.contactDividerBottom;
     const lname = document.getElementById('label-cf-name');
     if (lname) lname.textContent = d.contactFormName;
     const lem = document.getElementById('label-cf-email');
