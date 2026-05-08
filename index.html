@@ -70,17 +70,17 @@
     --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 0.5rem;
-    --logo-text-inset: calc(var(--container-pad-x) - 0.5rem + 0.375rem);
+    --logo-text-inset: var(--container-pad-x);
   }
   @media (min-width: 640px) {
     :root {
-      --logo-text-inset: calc(var(--container-pad-x) - 0.6rem + 0.5rem);
+      --logo-text-inset: var(--container-pad-x);
     }
   }
   @media (min-width: 768px) {
     :root {
       --container-pad-x: 1rem;
-      --logo-text-inset: calc(var(--container-pad-x) - 0.6rem + 0.5rem);
+      --logo-text-inset: var(--container-pad-x);
     }
   }
 
@@ -288,9 +288,6 @@
         max(var(--container-pad-x), env(safe-area-inset-right, 0px))
         max(1rem, env(safe-area-inset-bottom, 0px))
         max(var(--container-pad-x), env(safe-area-inset-left, 0px));
-    }
-    #heroV2Title {
-      margin-left: -3px;
     }
   }
 
@@ -2602,6 +2599,27 @@
     }
   }
 
+  function initLogoNavigation() {
+    const logo = document.getElementById('siteLogo');
+    if (!logo) return;
+    logo.addEventListener('click', (e) => {
+      // If we're already at the top, just refresh
+      if (window.scrollY < 10) {
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        return;
+      }
+      // Force hero reset immediately to avoid "broken" state during scroll
+      if (typeof gsap !== 'undefined') {
+        gsap.to('#heroV2Title', { scale: 1, rotationZ: 0, duration: 0.4, ease: 'power2.out' });
+        gsap.to('.hero-v2-end-fade', { opacity: 0, duration: 0.4 });
+      }
+      // If we're scrolling to #inicio, ensure ScrollTrigger refreshes after arrival
+      setTimeout(() => {
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      }, 800);
+    });
+  }
+
   // ============================================
   // Init
   // ============================================
@@ -2610,6 +2628,7 @@
   initContactForm();
   initNewsletterForm();
   initHamburger();
+  initLogoNavigation();
 
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -2630,11 +2649,11 @@
     const isMobilePortrait = window.innerWidth < 640 && window.innerHeight > window.innerWidth;
 
     if (isMobilePortrait) {
-      /* Móvil portrait: cada línea se escala de forma independiente al ancho completo.
-         El CSS distribuye las líneas para llenar el alto con justify-content: space-between. */
+      /* Móvil portrait: cada línea se escala de forma independiente al ancho completo. */
       lines.forEach((line) => {
         let lo = 4, hi = 600;
-        for (let iter = 0; iter < 42; iter++) {
+        // 12 iterations is enough for sub-pixel precision in most layouts
+        for (let iter = 0; iter < 12; iter++) {
           const mid = (lo + hi) * 0.5;
           line.style.fontSize = mid + 'px';
           if (line.scrollWidth <= W + 1) lo = mid;
@@ -2646,7 +2665,7 @@
       /* Desktop y landscape: escala uniforme que cabe en ancho × alto */
       const constrainHeight = window.innerWidth >= 768;
       let lo = 4, hi = 800;
-      for (let iter = 0; iter < 42; iter++) {
+      for (let iter = 0; iter < 12; iter++) {
         const mid = (lo + hi) * 0.5;
         lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
         const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
@@ -2667,11 +2686,15 @@
     hdr.classList.remove('site-header--on-light');
   }
 
-  window.addEventListener('scroll', () => requestAnimationFrame(updateHeaderTheme), { passive: true });
+  let resizeTimeout;
   window.addEventListener('resize', () => {
     updateHeaderTheme();
-    syncViewportAnimationMode();
+    clearTimeout(resizeTimeout);
+    resizeTimeout = setTimeout(() => {
+      syncViewportAnimationMode();
+    }, 150);
   });
+
   window.addEventListener('load', () => {
     syncViewportAnimationMode();
   });
@@ -2721,81 +2744,101 @@
     const overlay = document.getElementById("trex-overlay");
 
     const frameCount = 145;
-    const images = [];
+    const images = new Array(frameCount);
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     const pixelsPerFrame = isMobile ? 35 : 60;
     
-    // Ajustar altura de la sección dinámicamente
     section.style.height = `${(frameCount * pixelsPerFrame) + window.innerHeight}px`;
 
-    const currentFrame = index => {
+    const getFrameUrl = index => {
         const paddedNumber = (index + 1).toString().padStart(6, '0');
         return `assets/trex-frames/kling-video-o-3_Smooth_slow-motion_cinematic_camera._The_T-Rex_smoothly_turns_its_massive_head_f-0_${paddedNumber}.jpg`;
     };
 
-    let loadedImagesCount = 0;
-    for (let i = 0; i < frameCount; i++) {
-        const img = new Image();
-        img.onload = () => {
-            loadedImagesCount++;
-            if (loadedImagesCount === 1) render(0);
-        };
-        img.src = currentFrame(i);
-        images.push(img);
+    // Load first frame immediately
+    const firstImg = new Image();
+    firstImg.onload = () => {
+        images[0] = firstImg;
+        render(0);
+        // Once first frame is ready, start loading others progressively
+        loadRemainingFrames();
+    };
+    firstImg.src = getFrameUrl(0);
+
+    function loadRemainingFrames() {
+        // Load in batches to not choke the network
+        let i = 1;
+        const batchSize = 5;
+        function nextBatch() {
+            const end = Math.min(i + batchSize, frameCount);
+            for (; i < end; i++) {
+                const img = new Image();
+                const idx = i;
+                img.onload = () => { images[idx] = img; };
+                img.src = getFrameUrl(i);
+            }
+            if (i < frameCount) {
+                setTimeout(nextBatch, 100);
+            }
+        }
+        nextBatch();
     }
 
     function render(index) {
-        if (images[index] && images[index].complete) {
-            const img = images[index];
-            const canvasRatio = canvas.width / canvas.height;
-            const imgRatio = img.width / img.height;
-            let drawWidth, drawHeight, offsetX, offsetY;
+        const img = images[index];
+        if (!img || !img.complete) return;
+        
+        const canvasRatio = canvas.width / canvas.height;
+        const imgRatio = img.width / img.height;
+        let drawWidth, drawHeight, offsetX, offsetY;
 
-            if (canvasRatio > imgRatio) {
-                drawWidth = canvas.width;
-                drawHeight = canvas.width / imgRatio;
-                offsetX = 0;
-                offsetY = (canvas.height - drawHeight) / 2;
-            } else {
-                drawWidth = canvas.height * imgRatio;
-                drawHeight = canvas.height;
-                offsetX = (canvas.width - drawWidth) / 2;
-                offsetY = 0;
-            }
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+        if (canvasRatio > imgRatio) {
+            drawWidth = canvas.width;
+            drawHeight = canvas.width / imgRatio;
+            offsetX = 0;
+            offsetY = (canvas.height - drawHeight) / 2;
+        } else {
+            drawWidth = canvas.height * imgRatio;
+            drawHeight = canvas.height;
+            offsetX = (canvas.width - drawWidth) / 2;
+            offsetY = 0;
         }
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
     }
 
     let currentFrameIndex = 0;
     let targetFrameIndex = 0;
-    const lerpFactor = isMobile ? 0.4 : 0.6;
+    let isAnimating = false;
+    const lerpFactor = isMobile ? 0.3 : 0.45;
 
     function animate() {
-        currentFrameIndex += (targetFrameIndex - currentFrameIndex) * lerpFactor;
+        const diff = targetFrameIndex - currentFrameIndex;
+        if (Math.abs(diff) < 0.05) {
+            currentFrameIndex = targetFrameIndex;
+            render(Math.round(currentFrameIndex));
+            isAnimating = false;
+            return;
+        }
+        currentFrameIndex += diff * lerpFactor;
         render(Math.round(currentFrameIndex));
         requestAnimationFrame(animate);
     }
-    animate();
 
     window.addEventListener("scroll", () => {
         const sectionTop = section.offsetTop;
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
         const relativeScroll = scrollTop - sectionTop;
         
-        // Control del fade-in y fade-out (transiciones suaves)
         if (overlay) {
-            const totalScroll = frameCount * pixelsPerFrame;
             const fadeInThreshold = 300;
             const animationEnd = (frameCount - 1) * pixelsPerFrame;
             const fadeOutDuration = 500;
             
             let opacity = 0;
             if (relativeScroll < fadeInThreshold) {
-                // Fundido de entrada
                 opacity = 1 - Math.min(1, Math.max(0, relativeScroll / fadeInThreshold));
             } else if (relativeScroll > animationEnd) {
-                // Fundido de salida: empieza JUSTO cuando el dino termina su animación
                 const fadeProgress = (relativeScroll - animationEnd) / fadeOutDuration;
                 opacity = Math.min(1, Math.max(0, fadeProgress));
             } else {
@@ -2805,8 +2848,12 @@
         }
 
         if (relativeScroll >= 0) {
-            let frameIndex = relativeScroll / pixelsPerFrame;
-            targetFrameIndex = Math.min(frameCount - 1, Math.max(0, frameIndex));
+            const frameIndex = Math.min(frameCount - 1, Math.max(0, relativeScroll / pixelsPerFrame));
+            targetFrameIndex = frameIndex;
+            if (!isAnimating) {
+                isAnimating = true;
+                requestAnimationFrame(animate);
+            }
         }
     }, { passive: true });
 
@@ -2820,6 +2867,7 @@
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   })();
+
 
   // ============================================
   // Video Autoplay on Scroll
