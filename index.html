@@ -2609,20 +2609,33 @@
     const logo = document.getElementById('siteLogo');
     if (!logo) return;
     logo.addEventListener('click', (e) => {
-      // If we're already at the top, just refresh
-      if (window.scrollY < 10) {
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-        return;
+      // Clear GSAP/ScrollTrigger memory to prevent "jumpy" or frozen states
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.clearScrollMemory();
       }
+
       // Force hero reset immediately to avoid "broken" state during scroll
       if (typeof gsap !== 'undefined') {
-        gsap.to('#heroV2Title', { scale: 1, rotationZ: 0, duration: 0.4, ease: 'power2.out' });
-        gsap.to('.hero-v2-end-fade', { opacity: 0, duration: 0.4 });
+        gsap.to('#heroV2Title', { scale: 1, rotationZ: 0, duration: 0.3, ease: 'power2.out' });
+        gsap.to('.hero-v2-end-fade', { opacity: 0, duration: 0.3 });
       }
-      // If we're scrolling to #inicio, ensure ScrollTrigger refreshes after arrival
+
+      // Scroll to top manually if needed, or let anchor handle it, but always refresh
+      // We use a small delay to ensure the browser has started the scroll
+      requestAnimationFrame(() => {
+        setTimeout(() => {
+          if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.refresh(true);
+          }
+        }, 100);
+      });
+
+      // Secondary refresh after scroll usually finishes
       setTimeout(() => {
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-      }, 800);
+        if (typeof ScrollTrigger !== 'undefined') {
+          ScrollTrigger.refresh(true);
+        }
+      }, 1000);
     });
   }
 
@@ -2847,6 +2860,8 @@
             } else if (relativeScroll > animationEnd) {
                 const fadeProgress = (relativeScroll - animationEnd) / fadeOutDuration;
                 opacity = Math.min(1, Math.max(0, fadeProgress));
+                // Refresh ScrollTrigger occasionally during exit to ensure following sections are correctly positioned
+                if (Math.random() > 0.95 && typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
             } else {
                 opacity = 0;
             }
