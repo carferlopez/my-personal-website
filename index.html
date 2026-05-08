@@ -69,17 +69,18 @@
     --page-magenta: var(--page-bg);
     --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
-    --container-pad-x: 0.5rem;
-    --logo-text-inset: 0rem;
+    --container-pad-x: 1rem;
+    --logo-text-inset: calc(var(--container-pad-x) - 0.5rem);
   }
   @media (min-width: 640px) {
     :root {
+      --container-pad-x: 1.25rem;
       --logo-text-inset: calc(var(--container-pad-x) - 0.6rem);
     }
   }
   @media (min-width: 768px) {
     :root {
-      --container-pad-x: 1rem;
+      --container-pad-x: 2rem;
       --logo-text-inset: calc(var(--container-pad-x) - 0.6rem);
     }
   }
