@@ -1069,7 +1069,12 @@
     will-change: transform;
     animation: projects-ticker-marquee-ltr 90s linear infinite;
     background: transparent;
+    font-size: 7.5vw;
   }
+  @media (min-width: 640px)  { .projects-ticker__track { font-size: 7vw; } }
+  @media (min-width: 768px)  { .projects-ticker__track { font-size: 6.5vw; } }
+  @media (min-width: 1024px) { .projects-ticker__track { font-size: 6vw; } }
+  @media (min-width: 1280px) { .projects-ticker__track { font-size: 64px; } }
   .projects-ticker__track--rev {
     animation: projects-ticker-marquee-rtl 90s linear infinite;
   }
@@ -2293,7 +2298,6 @@
     setupIntroLinesScrollAnimation();
     if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
       renderProjectsTickersBelt();
-      queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
     }
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
@@ -2304,7 +2308,6 @@
     const sr = h2.querySelector('.projects-title-sr');
     if (sr) sr.textContent = text;
     renderProjectsTickersBelt();
-    queueMicrotask(() => { requestAnimationFrame(syncWorksFontToHero); });
   }
 
   function buildWorksTickerChunks(wordEscaped) {
@@ -2360,41 +2363,6 @@
     }
   }
 
-  function syncWorksFontToHero() {
-    const tracks = document.querySelectorAll('#projectsTickersBelt .projects-ticker__track');
-    if (!tracks.length) return;
-
-    if (window.matchMedia('(max-width: 639px)').matches) {
-      const container = document.querySelector('#proyectos .projects-works-inner');
-      const W = container ? container.offsetWidth : document.body.clientWidth;
-      if (W < 16) {
-        tracks.forEach((tr) => tr.style.removeProperty('font-size'));
-        return;
-      }
-      const ref = tracks[0];
-      let lo = 8, hi = 800;
-      for (let i = 0; i < 42; i++) {
-        const mid = (lo + hi) * 0.5;
-        ref.style.fontSize = mid + 'px';
-        if (ref.scrollWidth <= W + 1) lo = mid;
-        else hi = mid;
-      }
-      const fs = lo + 'px';
-      tracks.forEach((tr) => { tr.style.fontSize = fs; });
-      return;
-    }
-
-    tracks.forEach((tr) => tr.style.removeProperty('font-size'));
-
-    const line = document.querySelector('#heroV2Title .hero-v2-line');
-    if (!line) return;
-    let fs = line.style.fontSize;
-    if (!fs) fs = getComputedStyle(line).fontSize;
-    let fsPx = parseFloat(fs);
-    if (!Number.isFinite(fsPx) || fsPx <= 0) return;
-    const synced = (fsPx * 0.853) + 'px';
-    tracks.forEach((tr) => { tr.style.fontSize = synced; });
-  }
 
   // ============================================
   // Idioma
@@ -2697,7 +2665,6 @@
       const best = lo;
       lines.forEach((line) => { line.style.fontSize = best + 'px'; });
     }
-    syncWorksFontToHero();
   }
 
   function updateHeaderTheme() {
