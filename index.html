@@ -1127,8 +1127,7 @@
 
   #proyectos.section-pad {
     padding-top: clamp(0.65rem, 2.5vw, 2rem);
-    /* Menos aire antes del contacto: el carril WORKS puede “llegar” casi al titular */
-    padding-bottom: clamp(1rem, 4vw, 2.5rem);
+    padding-bottom: 0;
   }
 
   .projects-works-stack {
@@ -1145,12 +1144,12 @@
     flex-direction: column;
     min-height: 0;
     padding-top: clamp(0, 0.2vw, 0.12rem);
-    padding-bottom: clamp(1.5rem, 4vw, 3rem);
+    padding-bottom: 0;
   }
   /* ==================== WORKS SLIDER ==================== */
   .works-slider-wrap {
     padding-top: clamp(2rem, 5vw, 3.5rem);
-    padding-bottom: clamp(2rem, 5vw, 3.5rem);
+    padding-bottom: 0;
   }
   #proyectos > .container {
     max-width: none;
@@ -1292,6 +1291,9 @@
   @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
 
   /* ==================== CONTACT ==================== */
+  #contacto.section-pad {
+    padding-top: 0;
+  }
   #contacto {
     background: var(--page-bg);
     color: var(--page-lime);
@@ -1300,15 +1302,15 @@
   .contact-box {
     background: transparent;
     color: var(--page-lime);
-    padding: 1.25rem 0;
+    padding: 0 0 1.25rem 0;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
     overflow: hidden;
   }
-  @media (min-width: 640px) { .contact-box { padding: 2rem 0; gap: 2rem; min-height: 400px; } }
-  @media (min-width: 768px) { .contact-box { padding: 3rem 0; gap: 3rem; min-height: 500px; } }
-  @media (min-width: 1024px) { .contact-box { padding: 5rem 0; } }
+  @media (min-width: 640px) { .contact-box { padding: 0 0 2rem 0; gap: 2rem; min-height: 400px; } }
+  @media (min-width: 768px) { .contact-box { padding: 0 0 3rem 0; gap: 3rem; min-height: 500px; } }
+  @media (min-width: 1024px) { .contact-box { padding: 0 0 5rem 0; } }
 
   .contact-sub { color: var(--page-lime); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; opacity: 0.92; }
   @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
@@ -1402,7 +1404,7 @@
   }
 
   .contact-divider {
-    margin-top: 2.5rem;
+    margin-top: 0;
     padding: 0;
   }
   #contacto > .container {
