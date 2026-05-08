@@ -70,17 +70,17 @@
     --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 0.5rem;
-    --logo-text-inset: var(--container-pad-x);
+    --logo-text-inset: 0rem;
   }
   @media (min-width: 640px) {
     :root {
-      --logo-text-inset: var(--container-pad-x);
+      --logo-text-inset: calc(var(--container-pad-x) - 0.6rem);
     }
   }
   @media (min-width: 768px) {
     :root {
       --container-pad-x: 1rem;
-      --logo-text-inset: var(--container-pad-x);
+      --logo-text-inset: calc(var(--container-pad-x) - 0.6rem);
     }
   }
 
@@ -297,6 +297,7 @@
     box-sizing: border-box;
     flex-shrink: 0;
     margin: 0;
+    margin-left: -0.5rem;
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.03em;
@@ -311,6 +312,11 @@
     flex-direction: column;
     color: var(--white) !important;
     -webkit-text-fill-color: var(--white) !important;
+  }
+  @media (min-width: 640px) {
+    .hero-v2-title {
+      margin-left: -0.6rem;
+    }
   }
   /* Móvil: titular cerca del logo (sin centrar en toda la pantalla; proporción más parecida al desktop) */
   @media (max-width: 639px) {
