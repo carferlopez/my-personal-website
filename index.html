@@ -1069,12 +1069,9 @@
     will-change: transform;
     animation: projects-ticker-marquee-ltr 90s linear infinite;
     background: transparent;
-    font-size: 7.5vw;
+    font-size: clamp(3.5rem, 13vw, 150px);
+    letter-spacing: -0.05em;
   }
-  @media (min-width: 640px)  { .projects-ticker__track { font-size: 7vw; } }
-  @media (min-width: 768px)  { .projects-ticker__track { font-size: 6.5vw; } }
-  @media (min-width: 1024px) { .projects-ticker__track { font-size: 6vw; } }
-  @media (min-width: 1280px) { .projects-ticker__track { font-size: 64px; } }
   .projects-ticker__track--rev {
     animation: projects-ticker-marquee-rtl 90s linear infinite;
   }
