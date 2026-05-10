@@ -2629,7 +2629,9 @@
     const lines = title.querySelectorAll('.hero-v2-line');
     if (!lines.length) return;
     const cs = getComputedStyle(sticky);
-    const W = title.offsetWidth;
+    const W = sticky.clientWidth
+      - parseFloat(cs.paddingLeft)
+      - parseFloat(cs.paddingRight);
     const H = sticky.clientHeight
       - parseFloat(cs.paddingTop)
       - parseFloat(cs.paddingBottom);
