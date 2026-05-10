@@ -324,18 +324,18 @@
   /* Móvil: titular cerca del logo (sin centrar en toda la pantalla; proporción más parecida al desktop) */
   @media (max-width: 639px) {
     .hero-v2-sticky {
-      justify-content: flex-start;
+      justify-content: center;
       align-items: stretch;
-      /* Más aire bajo el logo / nombre para que el titular no quede pegado */
-      padding-top: max(5.15rem, calc(env(safe-area-inset-top, 0px) + 4.65rem));
-      padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+      /* Ajustamos padding para que respete el área segura pero permita máximo tamaño */
+      padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 4rem));
+      padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
     }
     .hero-v2-title {
       flex: 0 1 auto;
       min-height: 0;
-      justify-content: flex-start;
+      justify-content: center;
       gap: 0;
-      margin-top: clamp(0.35rem, 2vw, 1rem);
+      margin-top: 0;
     }
   }
 
@@ -2635,16 +2635,19 @@
       - parseFloat(cs.paddingBottom);
     if (W < 16 || H < 16) return;
 
-    /* Escala uniforme para todos: el tamaño de fuente es el mismo para todas las líneas. */
-    /* En móvil, priorizamos el ancho (que quepa la línea más larga). */
-    /* En desktop/tablet (>=768), también intentamos que no se salga por abajo. */
-    const constrainHeight = window.innerWidth >= 768;
+    /* Escala uniforme para todos: el tamaño de la letra es el mismo en las 4 líneas. */
+    /* Buscamos el tamaño máximo que permite que la línea más larga quepa en el ancho (W). */
     let lo = 4, hi = 800;
     for (let iter = 0; iter < 12; iter++) {
       const mid = (lo + hi) * 0.5;
       lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
       const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
+      
+      /* En móvil portrait, ignoramos la restricción de altura (H) para que sea gigante y ocupe lo que necesite. */
+      const isMobilePortrait = window.innerWidth < 640 && window.innerHeight > window.innerWidth;
+      const constrainHeight = window.innerWidth >= 768 && !isMobilePortrait;
       const totH = title.offsetHeight;
+
       if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
       else hi = mid;
     }
