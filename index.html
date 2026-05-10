@@ -2633,36 +2633,21 @@
       - parseFloat(cs.paddingBottom);
     if (W < 16 || H < 16) return;
 
-    const isMobilePortrait = window.innerWidth < 640 && window.innerHeight > window.innerWidth;
-
-    if (isMobilePortrait) {
-      /* Móvil portrait: cada línea se escala de forma independiente al ancho completo. */
-      lines.forEach((line) => {
-        let lo = 4, hi = 600;
-        // 12 iterations is enough for sub-pixel precision in most layouts
-        for (let iter = 0; iter < 12; iter++) {
-          const mid = (lo + hi) * 0.5;
-          line.style.fontSize = mid + 'px';
-          if (line.scrollWidth <= W + 1) lo = mid;
-          else hi = mid;
-        }
-        line.style.fontSize = lo + 'px';
-      });
-    } else {
-      /* Desktop y landscape: escala uniforme que cabe en ancho × alto */
-      const constrainHeight = window.innerWidth >= 768;
-      let lo = 4, hi = 800;
-      for (let iter = 0; iter < 12; iter++) {
-        const mid = (lo + hi) * 0.5;
-        lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
-        const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
-        const totH = title.offsetHeight;
-        if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
-        else hi = mid;
-      }
-      const best = lo;
-      lines.forEach((line) => { line.style.fontSize = best + 'px'; });
+    /* Escala uniforme para todos: el tamaño de fuente es el mismo para todas las líneas. */
+    /* En móvil, priorizamos el ancho (que quepa la línea más larga). */
+    /* En desktop/tablet (>=768), también intentamos que no se salga por abajo. */
+    const constrainHeight = window.innerWidth >= 768;
+    let lo = 4, hi = 800;
+    for (let iter = 0; iter < 12; iter++) {
+      const mid = (lo + hi) * 0.5;
+      lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
+      const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
+      const totH = title.offsetHeight;
+      if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
+      else hi = mid;
     }
+    const best = lo;
+    lines.forEach((line) => { line.style.fontSize = best + 'px'; });
   }
 
   function updateHeaderTheme() {
