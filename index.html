@@ -92,6 +92,8 @@
     background: var(--page-bg);
     color: var(--black);
     -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
     line-height: 1.5;
   }
 
@@ -2646,7 +2648,7 @@
       if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
       else hi = mid;
     }
-    const best = lo;
+    const best = Math.floor(lo) - 1;
     lines.forEach((line) => { line.style.fontSize = best + 'px'; });
   }
 
