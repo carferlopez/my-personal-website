@@ -326,9 +326,12 @@
     .hero-v2-sticky {
       justify-content: center;
       align-items: stretch;
-      /* Ajustamos padding para que respete el área segura pero permita máximo tamaño */
-      padding-top: max(4.5rem, calc(env(safe-area-inset-top, 0px) + 4rem));
-      padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+      /* Padding lateral mínimo para que las letras toquen casi el borde, maximizando el ancho */
+      padding:
+        max(4.5rem, calc(env(safe-area-inset-top, 0px) + 4rem))
+        0.5rem
+        max(1rem, env(safe-area-inset-bottom, 0px))
+        0.5rem;
     }
     .hero-v2-title {
       flex: 0 1 auto;
@@ -336,6 +339,7 @@
       justify-content: center;
       gap: 0;
       margin-top: 0;
+      margin-left: 0; /* Quitamos el margen negativo en móvil para aprovechar todo el espacio real */
     }
   }
 
