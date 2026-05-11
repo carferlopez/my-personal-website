@@ -1987,17 +1987,15 @@
   function killIntroLinesScrollAnimation() {
     const introRoot = document.getElementById('presentacion');
     if (introRoot) introRoot.classList.remove('intro-hero--active');
-    introPanelTimelines.forEach((tl) => tl.kill());
+    introPanelTimelines.forEach((tl) => {
+      if (tl.scrollTrigger) tl.scrollTrigger.kill();
+      tl.kill();
+    });
     introPanelTimelines = [];
     if (typeof gsap !== 'undefined' && introRoot) {
-      introRoot.querySelectorAll('.intro-panel__copy').forEach((el) => {
-        gsap.killTweensOf(el);
-        gsap.set(el, { clearProps: 'transform' });
-      });
-      introRoot.querySelectorAll('.intro-panel').forEach((el) => {
-        gsap.killTweensOf(el);
-        gsap.set(el, { clearProps: 'opacity,visibility' });
-      });
+      const allElements = introRoot.querySelectorAll('.intro-panel__copy, .intro-panel');
+      gsap.killTweensOf(allElements);
+      gsap.set(allElements, { clearProps: 'all' });
     }
     ['introLine0', 'introLine1', 'introLine2'].forEach((id) => {
       const el = document.getElementById(id);
@@ -2118,7 +2116,6 @@
 
     const wide = window.matchMedia('(min-width: 900px)').matches;
     const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    /* Tipo títulos Superman (1978): muy lejos + pequeño → tamaño legible → “atraviesa” la cámara y desvanece */
     const startS = wide ? 0.05 : narrowMobile ? 0.1 : 0.065;
     const readS = wide ? 1.04 : narrowMobile ? 1 : 1.03;
     const flyS = wide ? 12 : narrowMobile ? 4.2 : 9;
@@ -2127,8 +2124,7 @@
 
     const SEG = 1;
     const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
-    const totalPinScroll = () =>
-      Math.round(window.innerHeight * scrollPerSegmentVh * 3);
+    const totalPinScroll = () => Math.round(window.innerHeight * scrollPerSegmentVh * 3);
 
     const copyEls = [];
     panels.forEach((panel) => {
@@ -2139,6 +2135,7 @@
         transformOrigin: '50% 50%',
         transformPerspective: wide ? 2200 : 1400,
         force3D: true,
+        willChange: "transform, opacity",
         scale: startS,
         x: 0,
         y: 0,
@@ -2152,9 +2149,6 @@
       return;
     }
 
-    gsap.set(panels[0], { autoAlpha: 1 });
-    gsap.set([panels[1], panels[2]], { autoAlpha: 0 });
-
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: introRoot,
@@ -2164,11 +2158,18 @@
         scrub: true,
         invalidateOnRefresh: true,
         anticipatePin: 1,
+        onRefresh: self => {
+          if (self.progress > 0) self.animation.progress(self.progress);
+        }
       },
+      defaults: { ease: 'none' }
     });
 
+    // Estado inicial gestionado por el timeline para evitar desincronización al subir
+    tl.set(panels, { autoAlpha: 0 }, 0);
+    tl.set(panels[0], { autoAlpha: 1 }, 0);
+
     const panelFadeDur = 0.26;
-    /* Salida más larga y suave (antes ~0.048 era casi un parpadeo al hacer scrub) */
     const exitDur = 0.175;
     const mergeDur = SEG - exitDur;
     const nextRevealOffset = exitDur * 0.22;
@@ -2180,37 +2181,17 @@
     function addSegment(i, t0) {
       const copy = copyEls[i];
       if (!copy) return;
-
-      /* Sin “hold”: el scroll mueve siempre escala/Z/opacidad (ease none = 1:1 con el scrub). */
       const motionDur = SEG;
       const durApproach = motionDur * 0.48;
       const durExit = motionDur - durApproach;
 
-      tl.fromTo(
-        copy,
-        { scale: startS, x: 0, y: 0, z: startZ0, opacity: 0 },
-        {
-          scale: readS,
-          x: 0,
-          y: 0,
-          z: 0,
-          opacity: 1,
-          ease: 'none',
-          duration: durApproach,
-        },
+      tl.fromTo(copy,
+        { scale: startS, z: startZ0, opacity: 0 },
+        { scale: readS, z: 0, opacity: 1, duration: durApproach },
         t0
       );
-      tl.to(
-        copy,
-        {
-          scale: flyS,
-          x: 0,
-          y: 0,
-          z: flyZ,
-          opacity: 0,
-          ease: 'none',
-          duration: durExit,
-        },
+      tl.to(copy,
+        { scale: flyS, z: flyZ, opacity: 0, duration: durExit },
         t0 + durApproach
       );
     }
@@ -2219,23 +2200,12 @@
     const fade2At = nextPanelRevealAt(1);
 
     addSegment(0, 0);
-    tl.to(panels[0], { autoAlpha: 0, ease: 'none', duration: panelFadeDur }, fade1At);
-    tl.fromTo(
-      panels[1],
-      { autoAlpha: 0 },
-      { autoAlpha: 1, ease: 'none', duration: panelFadeDur },
-      fade1At
-    );
-    /* Solape con la frase anterior: al bajar/subir el scroll no hay tramo muerto entre textos. */
+    tl.to(panels[0], { autoAlpha: 0, duration: panelFadeDur }, fade1At);
+    tl.to(panels[1], { autoAlpha: 1, duration: panelFadeDur }, fade1At);
     addSegment(1, fade1At);
 
-    tl.to(panels[1], { autoAlpha: 0, ease: 'none', duration: panelFadeDur }, fade2At);
-    tl.fromTo(
-      panels[2],
-      { autoAlpha: 0 },
-      { autoAlpha: 1, ease: 'none', duration: panelFadeDur },
-      fade2At
-    );
+    tl.to(panels[1], { autoAlpha: 0, duration: panelFadeDur }, fade2At);
+    tl.to(panels[2], { autoAlpha: 1, duration: panelFadeDur }, fade2At);
     addSegment(2, fade2At);
 
     introPanelTimelines.push(tl);
@@ -2246,9 +2216,12 @@
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf('#heroV2Title');
       gsap.killTweensOf('.hero-v2-end-fade');
-      gsap.set('#heroV2Title', { clearProps: 'transform' });
+      gsap.set(['#heroV2Title', '.hero-v2-end-fade'], { clearProps: 'all' });
     }
     if (typeof ScrollTrigger !== 'undefined' && hero) {
+      const st = ScrollTrigger.getById('heroV2Trigger');
+      if (st) st.kill();
+      // Alternativa: matar todos los ST asociados al elemento
       ScrollTrigger.getAll().forEach((st) => {
         if (st.trigger === hero) st.kill();
       });
@@ -2261,13 +2234,22 @@
     if (window.matchMedia('(max-width: 639px)').matches) return;
     gsap.registerPlugin(ScrollTrigger);
     killHeroScrollAnimation();
-    const heroScroll = {
-      trigger: '.hero-v2-section',
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 0.8,
-    };
-    const heroTl = gsap.timeline({ scrollTrigger: heroScroll });
+    
+    gsap.set('#heroV2Title', { willChange: "transform" });
+
+    const heroTl = gsap.timeline({ 
+      scrollTrigger: {
+        id: 'heroV2Trigger',
+        trigger: '.hero-v2-section',
+        start: 'top top',
+        end: 'bottom top',
+        scrub: 0.8,
+        invalidateOnRefresh: true,
+        onRefresh: self => {
+          if (self.progress > 0) self.animation.progress(self.progress);
+        }
+      } 
+    });
     heroTl.fromTo(
       '#heroV2Title',
       { scale: 1, rotationZ: 0 },
