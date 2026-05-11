@@ -1762,7 +1762,7 @@
   <!-- ==================== WORKS ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <h2 class="u-sr-only" id="projectsTitle">
-      <span class="projects-title-sr">WORKS</span>
+      <span class="projects-title-sr">SERVICIOS</span>
     </h2>
     <div class="projects-tickers-belt" id="projectsTickersBelt" role="presentation" aria-hidden="true"></div>
 
@@ -1931,7 +1931,7 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "TRABAJOS."
+      projectsTitle: "SERVICIOS."
     },
     en: {
       typewriter: [
@@ -1969,7 +1969,7 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "MYWORKS."
+      projectsTitle: "SERVICES."
     }
   };
 
@@ -2320,12 +2320,14 @@
 
     for (let i = 0; i < n; i++) {
       let styledWord = wordEscaped;
-      if (wordEscaped === 'TRABAJOS.') {
+      if (wordEscaped === 'SERVICIOS.') {
         styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">TRABAJOS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">TRABAJOS</span><span class="projects-ticker__word--orange">.</span>';
-      } else if (wordEscaped === 'MYWORKS.') {
-        styledWord = '<span class="projects-ticker__word--orange">MY</span><span class="projects-ticker__word--black">WORKS</span><span class="projects-ticker__word--orange">.</span>';
+          ? '<span class="projects-ticker__word--orange">SERVICIOS</span><span class="projects-ticker__word--black">.</span>'
+          : '<span class="projects-ticker__word--black">SERVICIOS</span><span class="projects-ticker__word--orange">.</span>';
+      } else if (wordEscaped === 'SERVICES.') {
+        styledWord = i % 2 === 0
+          ? '<span class="projects-ticker__word--orange">SERVICES</span><span class="projects-ticker__word--black">.</span>'
+          : '<span class="projects-ticker__word--black">SERVICES</span><span class="projects-ticker__word--orange">.</span>';
       }
       parts.push(
         '<span class="projects-ticker__word">' +
@@ -2342,7 +2344,7 @@
   function renderProjectsTickersBelt() {
     const belt = document.getElementById('projectsTickersBelt');
     if (!belt) return;
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'WORKS';
+    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'SERVICES';
     const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const chunk = '<span class="projects-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
     const reduce =
