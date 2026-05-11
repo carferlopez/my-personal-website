@@ -304,8 +304,9 @@
     font-weight: 900;
     text-transform: uppercase;
     letter-spacing: -0.03em;
-    /* Interlineado un poco más abierto; sigue cabiendo bajo el logo */
-    line-height: 0.84;
+    /* Interlineado ajustado y padding para evitar clipping */
+    line-height: 0.95;
+    padding-block: 0.05em;
     gap: 0;
     will-change: transform;
     transform-origin: 50% 50%;
@@ -348,9 +349,9 @@
     white-space: nowrap;
     color: var(--white) !important;
     -webkit-text-fill-color: var(--white) !important;
-    line-height: 0.84;
+    line-height: 0.95;
     margin: 0;
-    padding: 0;
+    padding-block: 0.02em;
   }
 
   /* Hero: todo negro, ART y SOFTWARE en blanco */
@@ -2662,7 +2663,13 @@
   });
 
   window.addEventListener('load', () => {
-    syncViewportAnimationMode();
+    if (document.fonts) {
+      document.fonts.ready.then(() => {
+        syncViewportAnimationMode();
+      });
+    } else {
+      syncViewportAnimationMode();
+    }
   });
 
   // ============================================
@@ -2697,7 +2704,13 @@
 
   updateHeaderTheme();
 
-  syncViewportAnimationMode();
+  if (document.fonts) {
+    document.fonts.ready.then(() => {
+      syncViewportAnimationMode();
+    });
+  } else {
+    syncViewportAnimationMode();
+  }
 
   // ============================================
   // T-Rex Scroll Animation
