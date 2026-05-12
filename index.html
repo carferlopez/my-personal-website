@@ -391,6 +391,9 @@
     flex-direction: column;
     gap: clamp(5rem, 14vh, 11rem);
     position: relative;
+    /* Patch 4: Hardware Acceleration */
+    will-change: transform;
+    transform: translateZ(0);
   }
 
   .intro-panel {
@@ -1721,7 +1724,7 @@
   </section>
 
   <!-- T-Rex Scroll Animation Section -->
-  <section id="trex-scroll-track" style="position: relative; height: 400vh; background: #FF6600; z-index: 2;">
+  <section id="trex-scroll-track" style="position: relative; height: 400vh; background: #FF6600; z-index: 2; will-change: transform; transform: translateZ(0);">
     <!-- Overlay para transición suave desde el Hero -->
     <div style="position: sticky; top: 0; width: 100%; height: 100vh; overflow: hidden;">
       <!-- Overlay para transición suave (entrada y salida) -->
@@ -1763,7 +1766,7 @@
   <!-- ==================== WORKS ==================== -->
   <section id="proyectos" class="section-pad projects-section" aria-labelledby="projectsTitle">
     <h2 class="u-sr-only" id="projectsTitle">
-      <span class="projects-title-sr">SERVICIOS</span>
+      <span class="projects-title-sr">PRODUCTOS</span>
     </h2>
     <div class="projects-tickers-belt" id="projectsTickersBelt" role="presentation" aria-hidden="true"></div>
 
@@ -1777,7 +1780,7 @@
             </div>
             <div class="works-card__body">
               <span class="works-card__tag">Video</span>
-              <h3 class="works-card__title">Título del proyecto</h3>
+              <h3 class="works-card__title">AI VAULT</h3>
             </div>
           </div>
 
@@ -1785,7 +1788,7 @@
             <div class="works-card__media"></div>
             <div class="works-card__body">
               <span class="works-card__tag">Próximamente</span>
-              <h3 class="works-card__title">Proyecto en construcción</h3>
+              <h3 class="works-card__title">MIND RADAR</h3>
             </div>
           </div>
 
@@ -1793,7 +1796,7 @@
             <div class="works-card__media"></div>
             <div class="works-card__body">
               <span class="works-card__tag">Próximamente</span>
-              <h3 class="works-card__title">Proyecto en construcción</h3>
+              <h3 class="works-card__title">HEALTH FILTER</h3>
             </div>
           </div>
 
@@ -1932,7 +1935,7 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "SERVICIOS."
+      projectsTitle: "PRODUCTOS."
     },
     en: {
       typewriter: [
@@ -1970,7 +1973,7 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "SERVICES."
+      projectsTitle: "PRODUCTS."
     }
   };
 
@@ -2160,8 +2163,11 @@
         invalidateOnRefresh: true,
         anticipatePin: 1,
         onRefresh: self => {
+          // Asegurar sincronización al refrescar o subir
           if (self.progress > 0) self.animation.progress(self.progress);
-        }
+        },
+        // Forzar refresco al entrar para evitar congelamiento desde abajo
+        onEnter: () => ScrollTrigger.refresh()
       },
       defaults: { ease: 'none' }
     });
@@ -2303,14 +2309,17 @@
 
     for (let i = 0; i < n; i++) {
       let styledWord = wordEscaped;
-      if (wordEscaped === 'SERVICIOS.') {
+      // Normalizamos para asegurar que matchee con o sin punto, y quitamos posibles espacios
+      const normalized = wordEscaped.trim().toUpperCase();
+      
+      if (normalized === 'PRODUCTOS.' || normalized === 'PRODUCTOS') {
         styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">SERVICIOS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">SERVICIOS</span><span class="projects-ticker__word--orange">.</span>';
-      } else if (wordEscaped === 'SERVICES.') {
+          ? '<span class="projects-ticker__word--orange">PRODUCTOS</span><span class="projects-ticker__word--black">.</span>'
+          : '<span class="projects-ticker__word--black">PRODUCTOS</span><span class="projects-ticker__word--orange">.</span>';
+      } else if (normalized === 'PRODUCTS.' || normalized === 'PRODUCTS') {
         styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">SERVICES</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">SERVICES</span><span class="projects-ticker__word--orange">.</span>';
+          ? '<span class="projects-ticker__word--orange">PRODUCTS</span><span class="projects-ticker__word--black">.</span>'
+          : '<span class="projects-ticker__word--black">PRODUCTS</span><span class="projects-ticker__word--orange">.</span>';
       }
       parts.push(
         '<span class="projects-ticker__word">' +
@@ -2601,6 +2610,10 @@
   // ============================================
   // Init
   // ============================================
+  if (typeof ScrollTrigger !== 'undefined') {
+    ScrollTrigger.config({ limitCallbacks: true });
+  }
+
   initLangSelect();
   applyLang();
   initContactForm();
@@ -2665,10 +2678,16 @@
   window.addEventListener('load', () => {
     if (document.fonts) {
       document.fonts.ready.then(() => {
-        syncViewportAnimationMode();
+        setTimeout(() => {
+          syncViewportAnimationMode();
+          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+        }, 100);
       });
     } else {
-      syncViewportAnimationMode();
+      setTimeout(() => {
+        syncViewportAnimationMode();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      }, 100);
     }
   });
 
@@ -2706,10 +2725,16 @@
 
   if (document.fonts) {
     document.fonts.ready.then(() => {
-      syncViewportAnimationMode();
+      setTimeout(() => {
+        syncViewportAnimationMode();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      }, 100);
     });
   } else {
-    syncViewportAnimationMode();
+    setTimeout(() => {
+      syncViewportAnimationMode();
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    }, 100);
   }
 
   // ============================================
@@ -2824,6 +2849,8 @@
                 if (Math.random() > 0.95 && typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
             } else {
                 opacity = 0;
+                // Force a refresh when entering the "active" zone from below
+                if (typeof ScrollTrigger !== 'undefined' && Math.random() > 0.98) ScrollTrigger.refresh();
             }
             overlay.style.opacity = opacity;
         }
@@ -2884,30 +2911,36 @@
     const orbitLeft = document.getElementById('orbit-left');
     const orbitRight = document.getElementById('orbit-right');
     
+    let rAF_Eyes = null;
+
     function moveEyes(e) {
         if (!irisLeft || !irisRight) return;
-        
-        let x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
-        let y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
-        const maxRadius = window.innerWidth * 0.02; // responsive max radius
-        
-        [ {iris: irisLeft, orbit: orbitLeft}, {iris: irisRight, orbit: orbitRight} ].forEach(eye => {
-            const rect = eye.orbit.getBoundingClientRect();
-            const centerX = rect.left + rect.width / 2;
-            const centerY = rect.top + rect.height / 2;
-            const dx = x - centerX;
-            const dy = y - centerY;
-            const maxScreenDistX = window.innerWidth / 2;
-            const maxScreenDistY = window.innerHeight / 2;
+        if (rAF_Eyes) return;
+
+        rAF_Eyes = requestAnimationFrame(() => {
+            let x = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            let y = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+            const maxRadius = window.innerWidth * 0.02; // responsive max radius
             
-            let moveX = (dx / maxScreenDistX) * maxRadius * 0.8;
-            let moveY = (dy / maxScreenDistY) * maxRadius * 0.8;
-            const currentRadius = Math.hypot(moveX, moveY);
-            if (currentRadius > maxRadius) {
-                moveX = (moveX / currentRadius) * maxRadius;
-                moveY = (moveY / currentRadius) * maxRadius;
-            }
-            eye.iris.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+            [ {iris: irisLeft, orbit: orbitLeft}, {iris: irisRight, orbit: orbitRight} ].forEach(eye => {
+                const rect = eye.orbit.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const dx = x - centerX;
+                const dy = y - centerY;
+                const maxScreenDistX = window.innerWidth / 2;
+                const maxScreenDistY = window.innerHeight / 2;
+                
+                let moveX = (dx / maxScreenDistX) * maxRadius * 0.8;
+                let moveY = (dy / maxScreenDistY) * maxRadius * 0.8;
+                const currentRadius = Math.hypot(moveX, moveY);
+                if (currentRadius > maxRadius) {
+                    moveX = (moveX / currentRadius) * maxRadius;
+                    moveY = (moveY / currentRadius) * maxRadius;
+                }
+                eye.iris.style.transform = `translate(calc(-50% + ${moveX}px), calc(-50% + ${moveY}px))`;
+            });
+            rAF_Eyes = null;
         });
     }
     window.addEventListener('mousemove', moveEyes);
