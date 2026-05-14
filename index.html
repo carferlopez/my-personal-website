@@ -1203,6 +1203,13 @@
     aspect-ratio: 16/9;
     object-fit: cover;
   }
+  .works-card__preview {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    object-position: top;
+  }
   .works-card__body {
     padding: 1.25rem 1.5rem 1.5rem;
   }
@@ -1775,7 +1782,9 @@
         <div class="works-slider__track" id="worksSliderTrack">
 
           <a class="works-card" href="https://noise-phi.vercel.app/" target="_blank" rel="noopener noreferrer">
-            <div class="works-card__media"></div>
+            <div class="works-card__media">
+              <img class="works-card__preview" src="assets/noise-preview.jpg" alt="Noise — No More Bullshit in Health">
+            </div>
             <div class="works-card__body">
               <h3 class="works-card__title">NOISE</h3>
             </div>
