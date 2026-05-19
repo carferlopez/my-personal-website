@@ -128,8 +128,18 @@
     display: block;
     width: 100%;
   }
+  .full-width-image-section picture {
+    transform-origin: center center;
+  }
   .full-width-image-section img {
     height: auto;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .full-width-image-section picture {
+      opacity: 1 !important;
+      transform: none !important;
+      clip-path: none !important;
+    }
   }
 
   /* ==================== SITE HEADER (fixed) ==================== */
@@ -2256,6 +2266,52 @@
     }
   }
 
+  function killFeaturedImageReveal() {
+    const media = document.querySelector('.full-width-image-section picture');
+    if (typeof gsap !== 'undefined' && media) {
+      gsap.killTweensOf(media);
+      gsap.set(media, { clearProps: 'opacity,transform,clipPath,willChange' });
+    }
+    if (typeof ScrollTrigger !== 'undefined') {
+      const st = ScrollTrigger.getById('featuredImageReveal');
+      if (st) st.kill();
+    }
+  }
+
+  function initFeaturedImageReveal() {
+    const media = document.querySelector('.full-width-image-section picture');
+    if (!media) return;
+    killFeaturedImageReveal();
+    if (reduceMotion || typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    gsap.fromTo(
+      media,
+      {
+        autoAlpha: 0,
+        y: 36,
+        scale: 0.985,
+        clipPath: 'inset(12% 0% 12% 0%)',
+        willChange: 'opacity, transform, clip-path'
+      },
+      {
+        autoAlpha: 1,
+        y: 0,
+        scale: 1,
+        clipPath: 'inset(0% 0% 0% 0%)',
+        ease: 'none',
+        scrollTrigger: {
+          id: 'featuredImageReveal',
+          trigger: media,
+          start: 'top bottom',
+          end: 'center center',
+          scrub: 0.7,
+          invalidateOnRefresh: true
+        }
+      }
+    );
+  }
+
   function initHeroScrollAnimation() {
     if (reduceMotion) return;
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
@@ -2310,6 +2366,7 @@
       }
     }
     setupIntroLinesScrollAnimation();
+    initFeaturedImageReveal();
     if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
       renderProjectsTickersBelt();
     }
