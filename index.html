@@ -123,9 +123,12 @@
     width: 100%;
     background: var(--page-bg);
   }
+  .full-width-image-section picture,
   .full-width-image-section img {
     display: block;
     width: 100%;
+  }
+  .full-width-image-section img {
     height: auto;
   }
 
@@ -1744,7 +1747,10 @@
 
   <!-- Imagen full width -->
   <section class="full-width-image-section" aria-label="Imagen destacada">
-    <img src="assets/11.png" alt="" loading="eager">
+    <picture>
+      <source srcset="assets/11-horizontal.png" media="(min-width: 768px)">
+      <img src="assets/11.png" alt="" loading="eager">
+    </picture>
   </section>
 
   <!-- Presentación: 3 frases animadas al scroll (solo texto) -->
