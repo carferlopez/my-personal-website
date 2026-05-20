@@ -1774,7 +1774,8 @@
   <section class="scroll-video-section" aria-label="Video destacado">
     <div class="scroll-video-section__sticky">
       <video id="featuredScrollVideo" muted playsinline preload="auto" aria-label="Video destacado de Carlos">
-        <source src="assets/video_carlos.mp4" type="video/mp4">
+        <source src="assets/video_carlos_movil.mp4" type="video/mp4" media="(max-width: 767px)">
+        <source src="assets/video_carlos.mp4" type="video/mp4" media="(min-width: 768px)">
       </video>
     </div>
   </section>
@@ -2295,6 +2296,14 @@
     const video = document.getElementById('featuredScrollVideo');
     if (!section || !video) return;
     killFeaturedVideoScrub();
+    const desiredSrc = window.matchMedia('(max-width: 767px)').matches
+      ? 'assets/video_carlos_movil.mp4'
+      : 'assets/video_carlos.mp4';
+    const currentSrc = video.currentSrc || video.getAttribute('src') || '';
+    if (!currentSrc.endsWith(desiredSrc)) {
+      video.src = desiredSrc;
+      video.load();
+    }
     video.pause();
 
     function setVideoProgress(progress) {
