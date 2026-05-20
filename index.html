@@ -1773,7 +1773,7 @@
   <!-- Video full width controlado por scroll -->
   <section class="scroll-video-section" aria-label="Video destacado">
     <div class="scroll-video-section__sticky">
-      <video id="featuredScrollVideo" muted playsinline webkit-playsinline preload="auto" poster="assets/video_carlos_movil-poster.png" aria-label="Video destacado de Carlos">
+      <video id="featuredScrollVideo" muted playsinline webkit-playsinline preload="metadata" poster="assets/video_carlos-poster.jpg" aria-label="Video destacado de Carlos">
         <source src="assets/video_carlos_movil.m4v" type="video/mp4" media="(max-width: 767px)">
         <source src="assets/video_carlos.mp4" type="video/mp4" media="(min-width: 768px)">
       </video>
@@ -2143,6 +2143,18 @@
       return;
     }
 
+    if (window.matchMedia('(max-width: 767px)').matches) {
+      introRoot.classList.remove('intro-hero--active');
+      panels.forEach((panel) => {
+        const copy = panel.querySelector('.intro-panel__copy');
+        if (copy) {
+          copy.style.opacity = '1';
+          copy.style.transform = 'none';
+        }
+      });
+      return;
+    }
+
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
       panels.forEach((panel) => {
         const copy = panel.querySelector('.intro-panel__copy');
@@ -2296,9 +2308,9 @@
     const video = document.getElementById('featuredScrollVideo');
     if (!section || !video) return;
     killFeaturedVideoScrub();
-    const desiredSrc = window.matchMedia('(max-width: 767px)').matches
-      ? 'assets/video_carlos_movil.m4v'
-      : 'assets/video_carlos.mp4';
+    const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
+    const desiredSrc = isMobileVideo ? 'assets/video_carlos_movil.m4v' : 'assets/video_carlos.mp4';
+    video.poster = isMobileVideo ? 'assets/video_carlos_movil-poster.jpg' : 'assets/video_carlos-poster.jpg';
     const currentSrc = video.currentSrc || video.getAttribute('src') || '';
     if (!currentSrc.endsWith(desiredSrc)) {
       video.src = desiredSrc;
@@ -2743,20 +2755,6 @@
     });
   }
 
-  // ============================================
-  // Init
-  // ============================================
-  if (typeof ScrollTrigger !== 'undefined') {
-    ScrollTrigger.config({ limitCallbacks: true });
-  }
-
-  initLangSelect();
-  applyLang();
-  initContactForm();
-  initNewsletterForm();
-  initHamburger();
-  initLogoNavigation();
-
   // Hero V2: tipografía fluida + zoom al scroll (carlos-site-V2)
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -2803,28 +2801,17 @@
   }
 
   let resizeTimeout;
+  let lastViewportWidth = window.innerWidth;
   window.addEventListener('resize', () => {
     updateHeaderTheme();
+    const nextWidth = window.innerWidth;
+    const widthChanged = Math.abs(nextWidth - lastViewportWidth) > 16;
+    if (nextWidth < 768 && !widthChanged) return;
+    lastViewportWidth = nextWidth;
     clearTimeout(resizeTimeout);
     resizeTimeout = setTimeout(() => {
       syncViewportAnimationMode();
     }, 150);
-  });
-
-  window.addEventListener('load', () => {
-    if (document.fonts) {
-      document.fonts.ready.then(() => {
-        setTimeout(() => {
-          syncViewportAnimationMode();
-          if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-        }, 100);
-      });
-    } else {
-      setTimeout(() => {
-        syncViewportAnimationMode();
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-      }, 100);
-    }
   });
 
   // ============================================
@@ -2857,20 +2844,40 @@
     syncButtons();
   }());
 
-  updateHeaderTheme();
+  let pageInitialized = false;
 
-  if (document.fonts) {
-    document.fonts.ready.then(() => {
-      setTimeout(() => {
-        syncViewportAnimationMode();
-        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-      }, 100);
-    });
-  } else {
-    setTimeout(() => {
+  function runViewportSyncWhenReady() {
+    const run = () => {
       syncViewportAnimationMode();
       if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
-    }, 100);
+    };
+    if (document.fonts) {
+      document.fonts.ready.then(() => setTimeout(run, 100));
+    } else {
+      setTimeout(run, 100);
+    }
+  }
+
+  function initPage() {
+    if (pageInitialized) return;
+    pageInitialized = true;
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.config({ limitCallbacks: true });
+    }
+    initLangSelect();
+    applyLang();
+    initContactForm();
+    initNewsletterForm();
+    initHamburger();
+    initLogoNavigation();
+    updateHeaderTheme();
+    runViewportSyncWhenReady();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initPage, { once: true });
+  } else {
+    initPage();
   }
 
   // ============================================
