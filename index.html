@@ -34,7 +34,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
@@ -54,6 +54,8 @@
 
     --black: #000;
     --white: #fff;
+    /* Tipografía monoespaciada para metadatos/etiquetas (contraste grotesk + mono) */
+    --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
     /* Paleta sitio: naranja de fondo, blanco como texto principal, negro para acentos */
     --page-bg: #FF6600;
     --page-lime: #000000;
@@ -1711,37 +1713,132 @@
       transition: transform 0.05s ease-out;
   }
 
+  /* ==================== SECTION HEAD (sistema reutilizable) ==================== */
+  .section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    border-top: 3px solid var(--black);
+    padding-top: 0.9rem;
+    margin: 0 0 2.5rem;
+  }
+  .section-head__index {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.8rem;
+    letter-spacing: 0.02em;
+  }
+  .section-head__name {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-size: 0.95rem;
+  }
+  .section-head__meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-left: auto;
+  }
+
   /* ==================== SERVICIOS + PRECIOS ==================== */
   #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
-  .services-eyebrow { font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; margin: 0 0 1rem; }
-  .services-headline { margin: 0 0 1rem; }
+  .services-subsection + .services-subsection { margin-top: clamp(4rem, 9vw, 7rem); }
+  .services-eyebrow {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.78rem;
+    margin: 0 0 1.1rem;
+  }
+  .services-headline { margin: 0 0 1.25rem; }
   .services-headline .accent { color: var(--white); -webkit-text-fill-color: var(--white); }
-  .services-lead { max-width: 46rem; font-size: 1.05rem; font-weight: 500; margin: 0 0 2.5rem; line-height: 1.4; }
-  @media (min-width: 768px) { .services-lead { font-size: 1.25rem; } }
-  .services-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 4rem; }
-  @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
-  .svc-card { border: 3px solid var(--black); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background-color 0.15s, color 0.15s; }
+  .services-headline--sub { font-size: clamp(1.9rem, 5.5vw, 3.25rem); line-height: 0.95; letter-spacing: -0.045em; }
+  .services-lead {
+    max-width: 50ch;
+    font-size: 1.05rem;
+    font-weight: 500;
+    margin: 0 0 3rem;
+    line-height: 1.5;
+  }
+  @media (min-width: 768px) { .services-lead { font-size: 1.2rem; } }
+
+  /* Rejilla brutalista conectada: las "líneas" son el negro del fondo a través de los gaps */
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3px;
+    background: var(--black);
+    border: 3px solid var(--black);
+    margin: 0;
+  }
+  @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
+  .svc-card {
+    background: var(--page-bg);
+    padding: 1.75rem 1.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    transition: background-color 0.18s ease, color 0.18s ease;
+  }
   .svc-card:hover { background: var(--black); color: var(--white); }
-  .svc-card__num { font-weight: 900; font-size: 0.85rem; opacity: 0.55; }
-  .svc-card__title { font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: 1.3rem; line-height: 1; margin: 0; }
-  .svc-card__text { font-size: 0.98rem; line-height: 1.45; margin: 0; }
-  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 2rem; align-items: stretch; }
+  .svc-card__num {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.02em;
+  }
+  .svc-card__title {
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.02em;
+    font-size: 1.45rem;
+    line-height: 1.02;
+    margin: 0.35rem 0 0;
+  }
+  .svc-card__text { font-size: 0.98rem; line-height: 1.5; margin: 0; }
+
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
-  .price-card { border: 3px solid var(--black); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; }
+  .price-card { border: 3px solid var(--black); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; }
   .price-card--featured { background: var(--black); color: var(--white); border-color: var(--black); position: relative; }
-  .price-card__badge { position: absolute; top: -0.9rem; left: 1.5rem; background: var(--white); color: var(--black); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.25rem 0.6rem; border: 2px solid var(--black); }
-  .price-card__name { font-weight: 900; text-transform: uppercase; font-size: 1.15rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
-  .price-card__price { font-weight: 900; font-size: 2.4rem; line-height: 1; letter-spacing: -0.04em; margin: 0 0 0.2rem; }
-  .price-card__price span { font-size: 0.95rem; font-weight: 700; opacity: 0.7; }
-  .price-card__list { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
-  .price-card__list li { font-size: 0.95rem; line-height: 1.35; padding-left: 1.1rem; position: relative; }
+  .price-card__badge {
+    position: absolute; top: -0.95rem; left: 1.6rem;
+    background: var(--white); color: var(--black);
+    font-family: var(--font-mono); font-weight: 700;
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
+    padding: 0.28rem 0.6rem; border: 2px solid var(--black);
+  }
+  .price-card__name {
+    font-family: var(--font-mono);
+    font-weight: 700; text-transform: uppercase;
+    font-size: 0.85rem; margin: 0 0 1rem; letter-spacing: 0.04em;
+  }
+  .price-card__price { font-weight: 900; font-size: 2.75rem; line-height: 1; letter-spacing: -0.04em; margin: 0 0 0.2rem; }
+  .price-card__price span { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 400; letter-spacing: 0; opacity: 0.7; }
+  .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; border-top: 1px solid currentColor; padding-top: 1.25rem; }
+  .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
-  .price-card__cta { align-self: flex-start; text-align: center; }
+  .price-card__cta { align-self: stretch; text-align: center; }
   .price-card .price-card__cta { color: var(--white); background: var(--black); border: 3px solid var(--black); }
   .price-card .price-card__cta:hover { background: transparent; color: var(--black); }
   .price-card--featured .price-card__cta { color: var(--black); background: var(--white); border-color: var(--white); }
   .price-card--featured .price-card__cta:hover { background: transparent; color: var(--white); }
-  .services-kit { margin: 1.5rem 0 0; font-size: 0.9rem; font-weight: 700; border-top: 2px solid var(--black); padding-top: 1.25rem; max-width: 46rem; line-height: 1.4; }
+  .services-kit {
+    margin: 2.5rem 0 0;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    font-weight: 400;
+    line-height: 1.6;
+    border-top: 2px solid var(--black);
+    padding-top: 1.25rem;
+    max-width: 60ch;
+  }
 </style>
 </head>
 <body>
@@ -1806,7 +1903,13 @@
   <section id="servicios" class="section-pad" aria-labelledby="servicesTitleSr">
     <div class="container">
       <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
-      <p class="services-eyebrow" id="servicesEyebrow">QUÉ HAGO POR TI</p>
+
+      <div class="services-subsection">
+      <div class="section-head">
+        <span class="section-head__index">(01)</span>
+        <span class="section-head__name" id="secHeadServices">SERVICIOS</span>
+        <span class="section-head__meta" id="servicesEyebrow">QUÉ HAGO POR TI</span>
+      </div>
       <p class="big-heading services-headline"><span id="servicesHeadline">PONGO LA <span class="accent">IA</span> A TRABAJAR EN TU NEGOCIO<span class="accent">.</span></span></p>
       <p class="services-lead" id="servicesLead">Automatizo tareas que te roban horas, construyo agentes que atienden a tus clientes y lanzo productos digitales que venden. En días, no en meses — a precio cerrado.</p>
 
@@ -1827,8 +1930,15 @@
           <p class="svc-card__text" id="svc3Text">De la idea a una web o producto que vende, con pagos Stripe integrados. Igual que construí ReelTwin.ai.</p>
         </article>
       </div>
+      </div>
 
-      <p class="big-heading services-headline"><span id="pricingHeadline">EMPIEZA PEQUEÑO<span class="accent">.</span> ESCALA CUANDO FUNCIONE<span class="accent">.</span></span></p>
+      <div class="services-subsection">
+      <div class="section-head">
+        <span class="section-head__index">(02)</span>
+        <span class="section-head__name" id="secHeadPricing">PRECIOS</span>
+        <span class="section-head__meta" id="pricingEyebrow">PLANES TRANSPARENTES</span>
+      </div>
+      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">EMPIEZA PEQUEÑO<span class="accent">.</span> ESCALA CUANDO FUNCIONE<span class="accent">.</span></span></p>
       <p class="services-lead" id="pricingIntro">Precio cerrado y transparente. Los proyectos arrancan con un 50% por adelantado. El diagnóstico se descuenta si seguimos adelante.</p>
 
       <div class="pricing-grid">
@@ -1869,6 +1979,7 @@
       </div>
 
       <p class="services-kit" id="servicesKit">¿Pyme o autónomo en España? El Kit Digital puede cubrir buena parte del coste (hasta 12.000 €). Te oriento sin compromiso.</p>
+      </div>
     </div>
   </section>
 
@@ -1876,7 +1987,11 @@
   <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
-        <!-- Título eliminado -->
+        <div class="section-head">
+          <span class="section-head__index">(03)</span>
+          <span class="section-head__name" id="secHeadContact">CONTACTO</span>
+          <span class="section-head__meta" id="contactMeta">RESPUESTA EN 24H</span>
+        </div>
         <div class="contact-divider">
           <p class="big-heading big-heading--mid"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0;"><span style="color: var(--white); -webkit-text-fill-color: var(--white);">¿</span>TE GUSTA LO QUE VES<span style="color: var(--white); -webkit-text-fill-color: var(--white);">?</span></span></span></p>
 
@@ -2019,7 +2134,12 @@
       price3Price: "690 €<span> / mes</span>",
       price3List: ["Mejoras y automatizaciones nuevas", "Mantenimiento y soporte", "Prioridad y respuesta rápida", "Sin permanencia"],
       price3Cta: "Hablemos",
-      servicesKit: "¿Pyme o autónomo en España? El Kit Digital puede cubrir buena parte del coste (hasta 12.000 €). Te oriento sin compromiso."
+      servicesKit: "¿Pyme o autónomo en España? El Kit Digital puede cubrir buena parte del coste (hasta 12.000 €). Te oriento sin compromiso.",
+      secHeadServices: "SERVICIOS",
+      secHeadPricing: "PRECIOS",
+      pricingEyebrow: "PLANES TRANSPARENTES",
+      secHeadContact: "CONTACTO",
+      contactMeta: "RESPUESTA EN 24H"
     },
     en: {
       typewriter: [
@@ -2082,7 +2202,12 @@
       price3Price: "€690<span> / mo</span>",
       price3List: ["New improvements & automations", "Maintenance & support", "Priority, fast response", "No lock-in"],
       price3Cta: "Let's talk",
-      servicesKit: "Spanish SME or freelancer? The Kit Digital grant can cover much of the cost (up to €12,000). I'll guide you, no strings attached."
+      servicesKit: "Spanish SME or freelancer? The Kit Digital grant can cover much of the cost (up to €12,000). I'll guide you, no strings attached.",
+      secHeadServices: "SERVICES",
+      secHeadPricing: "PRICING",
+      pricingEyebrow: "TRANSPARENT PLANS",
+      secHeadContact: "CONTACT",
+      contactMeta: "REPLY WITHIN 24H"
     }
   };
 
@@ -2606,6 +2731,9 @@
     setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta);
     setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta);
     setText('servicesKit', d.servicesKit);
+    setText('secHeadServices', d.secHeadServices);
+    setText('secHeadPricing', d.secHeadPricing);
+    setText('pricingEyebrow', d.pricingEyebrow);
     if (typeof DIAGNOSTICO_PAY_URL === 'string' && DIAGNOSTICO_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', DIAGNOSTICO_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
@@ -2628,6 +2756,10 @@
     if (contactSubEl) contactSubEl.textContent = d.contactSub;
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
+    const secHeadContactEl = document.getElementById('secHeadContact');
+    if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
+    const contactMetaEl = document.getElementById('contactMeta');
+    if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
     setProjectsTitleStack(d.projectsTitle);
 
     const langSelCur = document.getElementById('langSelectCurrent');
