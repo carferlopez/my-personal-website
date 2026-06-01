@@ -1710,6 +1710,38 @@
       will-change: transform;
       transition: transform 0.05s ease-out;
   }
+
+  /* ==================== SERVICIOS + PRECIOS ==================== */
+  #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
+  .services-eyebrow { font-weight: 900; text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; margin: 0 0 1rem; }
+  .services-headline { margin: 0 0 1rem; }
+  .services-headline .accent { color: var(--white); -webkit-text-fill-color: var(--white); }
+  .services-lead { max-width: 46rem; font-size: 1.05rem; font-weight: 500; margin: 0 0 2.5rem; line-height: 1.4; }
+  @media (min-width: 768px) { .services-lead { font-size: 1.25rem; } }
+  .services-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 4rem; }
+  @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+  .svc-card { border: 3px solid var(--black); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; transition: background-color 0.15s, color 0.15s; }
+  .svc-card:hover { background: var(--black); color: var(--white); }
+  .svc-card__num { font-weight: 900; font-size: 0.85rem; opacity: 0.55; }
+  .svc-card__title { font-weight: 900; text-transform: uppercase; letter-spacing: -0.02em; font-size: 1.3rem; line-height: 1; margin: 0; }
+  .svc-card__text { font-size: 0.98rem; line-height: 1.45; margin: 0; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 2rem; align-items: stretch; }
+  @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+  .price-card { border: 3px solid var(--black); padding: 1.75rem 1.5rem; display: flex; flex-direction: column; }
+  .price-card--featured { background: var(--black); color: var(--white); border-color: var(--black); position: relative; }
+  .price-card__badge { position: absolute; top: -0.9rem; left: 1.5rem; background: var(--white); color: var(--black); font-weight: 900; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.25rem 0.6rem; border: 2px solid var(--black); }
+  .price-card__name { font-weight: 900; text-transform: uppercase; font-size: 1.15rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+  .price-card__price { font-weight: 900; font-size: 2.4rem; line-height: 1; letter-spacing: -0.04em; margin: 0 0 0.2rem; }
+  .price-card__price span { font-size: 0.95rem; font-weight: 700; opacity: 0.7; }
+  .price-card__list { list-style: none; padding: 0; margin: 1rem 0 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
+  .price-card__list li { font-size: 0.95rem; line-height: 1.35; padding-left: 1.1rem; position: relative; }
+  .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
+  .price-card__cta { align-self: flex-start; text-align: center; }
+  .price-card .price-card__cta { color: var(--white); background: var(--black); border: 3px solid var(--black); }
+  .price-card .price-card__cta:hover { background: transparent; color: var(--black); }
+  .price-card--featured .price-card__cta { color: var(--black); background: var(--white); border-color: var(--white); }
+  .price-card--featured .price-card__cta:hover { background: transparent; color: var(--white); }
+  .services-kit { margin: 1.5rem 0 0; font-size: 0.9rem; font-weight: 700; border-top: 2px solid var(--black); padding-top: 1.25rem; max-width: 46rem; line-height: 1.4; }
 </style>
 </head>
 <body>
@@ -1852,6 +1884,76 @@
     </div>
   </section>
 
+  <!-- ==================== SERVICIOS + PRECIOS ==================== -->
+  <section id="servicios" class="section-pad" aria-labelledby="servicesTitleSr">
+    <div class="container">
+      <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
+      <p class="services-eyebrow" id="servicesEyebrow">QUÉ HAGO POR TI</p>
+      <p class="big-heading services-headline"><span id="servicesHeadline">PONGO LA <span class="accent">IA</span> A TRABAJAR EN TU NEGOCIO<span class="accent">.</span></span></p>
+      <p class="services-lead" id="servicesLead">Automatizo tareas que te roban horas, construyo agentes que atienden a tus clientes y lanzo productos digitales que venden. En días, no en meses — a precio cerrado.</p>
+
+      <div class="services-grid">
+        <article class="svc-card">
+          <span class="svc-card__num">01</span>
+          <h3 class="svc-card__title" id="svc1Title">Automatización</h3>
+          <p class="svc-card__text" id="svc1Text">Detecto la tarea que te roba más horas — leads, emails, reporting, facturas — y la dejo funcionando sola con IA. En 5–7 días.</p>
+        </article>
+        <article class="svc-card">
+          <span class="svc-card__num">02</span>
+          <h3 class="svc-card__title" id="svc2Title">Agentes y chatbots</h3>
+          <p class="svc-card__text" id="svc2Text">Atención y captación 24/7 en WhatsApp o tu web. Responde, cualifica y agenda por ti, conectado a tus herramientas.</p>
+        </article>
+        <article class="svc-card">
+          <span class="svc-card__num">03</span>
+          <h3 class="svc-card__title" id="svc3Title">Webs y productos</h3>
+          <p class="svc-card__text" id="svc3Text">De la idea a una web o producto que vende, con pagos Stripe integrados. Igual que construí ReelTwin.ai.</p>
+        </article>
+      </div>
+
+      <p class="big-heading services-headline"><span id="pricingHeadline">EMPIEZA PEQUEÑO<span class="accent">.</span> ESCALA CUANDO FUNCIONE<span class="accent">.</span></span></p>
+      <p class="services-lead" id="pricingIntro">Precio cerrado y transparente. Los proyectos arrancan con un 50% por adelantado. El diagnóstico se descuenta si seguimos adelante.</p>
+
+      <div class="pricing-grid">
+        <article class="price-card">
+          <h3 class="price-card__name" id="price1Name">Diagnóstico IA</h3>
+          <p class="price-card__price" id="price1Price">290 €<span> / único</span></p>
+          <ul class="price-card__list" id="price1List">
+            <li>Llamada de 60–90 min</li>
+            <li>Plan de automatización con ROI</li>
+            <li>Entregable en 48h</li>
+            <li>Se descuenta del proyecto</li>
+          </ul>
+          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Reservar</a>
+        </article>
+        <article class="price-card price-card--featured">
+          <span class="price-card__badge" id="price2Badge">Más demandado</span>
+          <h3 class="price-card__name" id="price2Name">Sprint IA</h3>
+          <p class="price-card__price" id="price2Price">desde 1.200 €</p>
+          <ul class="price-card__list" id="price2List">
+            <li>1 automatización, agente o web/MVP</li>
+            <li>Entrega en 5–7 días</li>
+            <li>Precio cerrado, 50% al inicio</li>
+            <li>Soporte tras la entrega</li>
+          </ul>
+          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu caso</a>
+        </article>
+        <article class="price-card">
+          <h3 class="price-card__name" id="price3Name">Socio IA</h3>
+          <p class="price-card__price" id="price3Price">690 €<span> / mes</span></p>
+          <ul class="price-card__list" id="price3List">
+            <li>Mejoras y automatizaciones nuevas</li>
+            <li>Mantenimiento y soporte</li>
+            <li>Prioridad y respuesta rápida</li>
+            <li>Sin permanencia</li>
+          </ul>
+          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Hablemos</a>
+        </article>
+      </div>
+
+      <p class="services-kit" id="servicesKit">¿Pyme o autónomo en España? El Kit Digital puede cubrir buena parte del coste (hasta 12.000 €). Te oriento sin compromiso.</p>
+    </div>
+  </section>
+
   <!-- ==================== CONTACT ==================== -->
   <section id="contacto" class="section-pad">
     <div class="container">
@@ -1974,7 +2076,32 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "PRODUCTOS."
+      projectsTitle: "PRODUCTOS.",
+      servicesEyebrow: "QUÉ HAGO POR TI",
+      servicesHeadline: "PONGO LA <span class=\"accent\">IA</span> A TRABAJAR EN TU NEGOCIO<span class=\"accent\">.</span>",
+      servicesLead: "Automatizo tareas que te roban horas, construyo agentes que atienden a tus clientes y lanzo productos digitales que venden. En días, no en meses — a precio cerrado.",
+      svc1Title: "Automatización",
+      svc1Text: "Detecto la tarea que te roba más horas — leads, emails, reporting, facturas — y la dejo funcionando sola con IA. En 5–7 días.",
+      svc2Title: "Agentes y chatbots",
+      svc2Text: "Atención y captación 24/7 en WhatsApp o tu web. Responde, cualifica y agenda por ti, conectado a tus herramientas.",
+      svc3Title: "Webs y productos",
+      svc3Text: "De la idea a una web o producto que vende, con pagos Stripe integrados. Igual que construí ReelTwin.ai.",
+      pricingHeadline: "EMPIEZA PEQUEÑO<span class=\"accent\">.</span> ESCALA CUANDO FUNCIONE<span class=\"accent\">.</span>",
+      pricingIntro: "Precio cerrado y transparente. Los proyectos arrancan con un 50% por adelantado. El diagnóstico se descuenta si seguimos adelante.",
+      price1Name: "Diagnóstico IA",
+      price1Price: "290 €<span> / único</span>",
+      price1List: ["Llamada de 60–90 min", "Plan de automatización con ROI", "Entregable en 48h", "Se descuenta del proyecto"],
+      price1Cta: "Reservar",
+      price2Badge: "Más demandado",
+      price2Name: "Sprint IA",
+      price2Price: "desde 1.200 €",
+      price2List: ["1 automatización, agente o web/MVP", "Entrega en 5–7 días", "Precio cerrado, 50% al inicio", "Soporte tras la entrega"],
+      price2Cta: "Cuéntame tu caso",
+      price3Name: "Socio IA",
+      price3Price: "690 €<span> / mes</span>",
+      price3List: ["Mejoras y automatizaciones nuevas", "Mantenimiento y soporte", "Prioridad y respuesta rápida", "Sin permanencia"],
+      price3Cta: "Hablemos",
+      servicesKit: "¿Pyme o autónomo en España? El Kit Digital puede cubrir buena parte del coste (hasta 12.000 €). Te oriento sin compromiso."
     },
     en: {
       typewriter: [
@@ -2012,9 +2139,38 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "PRODUCTS."
+      projectsTitle: "PRODUCTS.",
+      servicesEyebrow: "WHAT I DO FOR YOU",
+      servicesHeadline: "I PUT <span class=\"accent\">AI</span> TO WORK IN YOUR BUSINESS<span class=\"accent\">.</span>",
+      servicesLead: "I automate the tasks that eat your hours, build agents that handle your customers, and ship digital products that sell. In days, not months — at a fixed price.",
+      svc1Title: "Automation",
+      svc1Text: "I find the task that drains your time — leads, emails, reporting, invoices — and leave it running on its own with AI. In 5–7 days.",
+      svc2Title: "Agents & chatbots",
+      svc2Text: "24/7 support and lead capture on WhatsApp or your website. It answers, qualifies and books for you, connected to your tools.",
+      svc3Title: "Webs & products",
+      svc3Text: "From an idea to a website or product that sells, with Stripe payments built in. The same way I built ReelTwin.ai.",
+      pricingHeadline: "START SMALL<span class=\"accent\">.</span> SCALE WHEN IT WORKS<span class=\"accent\">.</span>",
+      pricingIntro: "Fixed, transparent pricing. Projects start with 50% upfront. The diagnostic is deducted if we move forward.",
+      price1Name: "AI Diagnostic",
+      price1Price: "€290<span> / one-off</span>",
+      price1List: ["60–90 min call", "Automation plan with ROI", "Delivered in 48h", "Deducted from the project"],
+      price1Cta: "Book now",
+      price2Badge: "Most wanted",
+      price2Name: "AI Sprint",
+      price2Price: "from €1,200",
+      price2List: ["1 automation, agent or web/MVP", "Delivered in 5–7 days", "Fixed price, 50% upfront", "Post-delivery support"],
+      price2Cta: "Tell me your case",
+      price3Name: "AI Partner",
+      price3Price: "€690<span> / mo</span>",
+      price3List: ["New improvements & automations", "Maintenance & support", "Priority, fast response", "No lock-in"],
+      price3Cta: "Let's talk",
+      servicesKit: "Spanish SME or freelancer? The Kit Digital grant can cover much of the cost (up to €12,000). I'll guide you, no strings attached."
     }
   };
+
+  // Pega aquí tu Stripe Payment Link del Diagnóstico (290 €) para cobrar al instante.
+  // Si lo dejas vacío, el botón "Reservar" lleva al formulario de contacto.
+  const DIAGNOSTICO_PAY_URL = '';
 
   let lang = 'es';
   try {
@@ -2513,6 +2669,31 @@
   // ============================================
   // Idioma
   // ============================================
+  function applyServicesI18n(d) {
+    const setText = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.textContent = val; };
+    const setHTML = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.innerHTML = val; };
+    const setList = (id, arr) => {
+      const el = document.getElementById(id);
+      if (el && Array.isArray(arr)) el.innerHTML = arr.map((x) => '<li>' + x + '</li>').join('');
+    };
+    setText('servicesEyebrow', d.servicesEyebrow);
+    setHTML('servicesHeadline', d.servicesHeadline);
+    setText('servicesLead', d.servicesLead);
+    setText('svc1Title', d.svc1Title); setText('svc1Text', d.svc1Text);
+    setText('svc2Title', d.svc2Title); setText('svc2Text', d.svc2Text);
+    setText('svc3Title', d.svc3Title); setText('svc3Text', d.svc3Text);
+    setHTML('pricingHeadline', d.pricingHeadline);
+    setText('pricingIntro', d.pricingIntro);
+    setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta);
+    setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta);
+    setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta);
+    setText('servicesKit', d.servicesKit);
+    if (typeof DIAGNOSTICO_PAY_URL === 'string' && DIAGNOSTICO_PAY_URL) {
+      const c = document.getElementById('price1Cta');
+      if (c) { c.setAttribute('href', DIAGNOSTICO_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
+    }
+  }
+
   function applyLang() {
     const d = t[lang];
     document.documentElement.lang = lang;
@@ -2571,6 +2752,7 @@
     if (o4) o4.textContent = d.contactTopicOtro;
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
+    applyServicesI18n(d);
     fillIntroLinesFromLang();
   }
 
