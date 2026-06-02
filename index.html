@@ -1897,7 +1897,7 @@
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card:not(.price-card--featured):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
   .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
-  .price-card--featured:hover { background: var(--page-bg); color: var(--black); border-color: var(--hairline); }
+  .price-card--featured:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
     background: var(--paper); color: var(--black);
@@ -1921,7 +1921,9 @@
   .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
   .price-card .price-card__cta:hover { background: transparent; color: var(--black); }
   .price-card--featured .price-card__cta { color: var(--paper); background: var(--accent); border-color: var(--accent); }
-  .price-card--featured .price-card__cta:hover { background: transparent; color: var(--paper); }
+  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--accent); border-color: #FFFFFF; }
+  .price-card--featured:hover .price-card__cta { background: #FFFFFF; color: var(--accent); border-color: #FFFFFF; }
+  .price-card--featured:hover .price-card__cta:hover { background: transparent; color: #FFFFFF; border-color: #FFFFFF; }
   .services-kit {
     margin: 2.5rem 0 0;
     font-family: var(--font-mono);
