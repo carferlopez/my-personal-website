@@ -1337,10 +1337,7 @@
     }
   }
 
-  #contacto .contact-box > h2.big-heading {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-  }
+
   #contacto #contactMark {
     color: var(--accent);
     -webkit-text-fill-color: var(--accent);
@@ -1371,19 +1368,7 @@
   @media (min-width: 1024px) { .big-heading--mid { font-size: 3.75vw; } }
   @media (min-width: 1280px) { .big-heading--mid { font-size: 40px; } }
 
-  .subheading {
-    font-size: 1rem;
-    color: var(--page-lime);
-    margin-top: 2.5rem;
-    line-height: 1.6;
-    text-wrap: pretty;
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
-  }
-  @media (min-width: 640px) { .subheading { font-size: 1.125rem; } }
-  @media (min-width: 768px) { .subheading { font-size: 1.25rem; } }
-  @media (min-width: 1024px) { .subheading { font-size: 1.5rem; } }
+
 
   /* ==================== CONTACT ==================== */
   #contacto.section-pad {
@@ -1468,35 +1453,7 @@
     border-color: var(--page-lime);
   }
 
-  .newsletter-form { margin-top: 2rem; }
-  .newsletter-form__row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    max-width: 42rem;
-  }
-  .newsletter-form__input {
-    flex: 1 1 16rem;
-    min-width: 0;
-    font: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.55rem 0.7rem;
-    border: 3px solid var(--hairline);
-    background: var(--paper);
-    color: var(--black);
-    transition: border-color 0.15s, box-shadow 0.15s;
-  }
-  @media (min-width: 640px) { .newsletter-form__input { font-size: 1.05rem; } }
-  .newsletter-form__input::placeholder { color: rgba(0, 0, 0, 0.45); }
-  .newsletter-form__input:hover {
-    border-color: var(--accent);
-  }
-  .newsletter-form__input:focus {
-    border-color: var(--accent);
-    outline: none;
-    box-shadow: 0 0 0 1px var(--accent);
-  }
+
 
   .contact-divider {
     margin-top: 0;
@@ -2180,11 +2137,7 @@
         ['NO SOY {PROGRAMADOR},', 'PERO {PROGRAMO} COSAS.'],
         ['NO SOY {CREATIVO},', 'PERO {CREO} COSAS.'],
       ],
-      contactTitle: "NO TE PIERDAS LAS CHORRADAS QUE SE ME VAN OCURRIENDO",
-      contactMark: ".",
-      contactSub: "Suscríbete a mi newsletter y entérate cada vez que publique algo.",
-      contactEmailPh: "tu@email.com",
-      contactBtnLabel: "Suscribirme",
+
       langMenuAria: "Menú de idioma",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TE GUSTA LO QUE VES<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
       contactDividerBottom: "ESCRÍBEME Y DEMOS A TU NEGOCIO EL AIRE PREMIUM QUE MERECE",
@@ -2250,11 +2203,7 @@
         ['I WAS INFLUENCED BY MASTERS', 'LIKE {SPIELBERG}, {TORIYAMA},', '{SCOTT}, {MIYAMOTO}', 'OR {KOJIMA}.'],
         ['NOW I STRIVE', 'TO CAPTURE IT IN', 'MY {CREATIONS}.'],
       ],
-      contactTitle: "DON'T MISS ALL THE NONSENSE I KEEP COMING UP WITH",
-      contactMark: ".",
-      contactSub: "When I publish something, you’ll hear it first. No spam.",
-      contactEmailPh: "your@email.com",
-      contactBtnLabel: "Subscribe",
+
       langMenuAria: "Language menu",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\">LIKE WHAT YOU SEE?</span>",
       contactDividerBottom: "WRITE TO ME AND LET'S GIVE YOUR BUSINESS THE PREMIUM EDGE IT DESERVES",
@@ -2854,12 +2803,7 @@
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
     const introH = document.getElementById('introHeading');
     if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
-    const contactTitleEl = document.getElementById('contactTitle');
-    if (contactTitleEl) contactTitleEl.textContent = d.contactTitle;
-    const contactMarkEl = document.getElementById('contactMark');
-    if (contactMarkEl) contactMarkEl.textContent = d.contactMark;
-    const contactSubEl = document.getElementById('contactSub');
-    if (contactSubEl) contactSubEl.textContent = d.contactSub;
+
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     const secHeadContactEl = document.getElementById('secHeadContact');
@@ -2880,10 +2824,7 @@
       el.classList.toggle('is-active', el.dataset.lang === lang);
     });
 
-    const nlInput = document.getElementById('nl-email');
-    if (nlInput && d.contactEmailPh) nlInput.placeholder = d.contactEmailPh;
-    const nlSubmit = document.getElementById('nlSubmit');
-    if (nlSubmit) nlSubmit.textContent = d.contactBtnLabel;
+
     const dividerTop = document.getElementById('contactDividerTextTop');
     if (dividerTop) dividerTop.innerHTML = d.contactDividerTop;
     const dividerBottom = document.getElementById('contactDividerTextBottom');
@@ -2979,15 +2920,7 @@
     });
   }
 
-  function initNewsletterForm() {
-    const form = document.getElementById('newsletterForm');
-    if (!form) return;
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const email = encodeURIComponent(document.getElementById('nl-email').value.trim());
-      window.open('https://carlosmakes.substack.com/?email=' + email, '_blank', 'noopener,noreferrer');
-    });
-  }
+
 
   function setLangMenuOpen(open) {
     const root = document.getElementById('langSelect');
@@ -3209,7 +3142,7 @@
     initLangSelect();
     applyLang();
     initContactForm();
-    initNewsletterForm();
+
     initHamburger();
     initLogoNavigation();
     updateHeaderTheme();
