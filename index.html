@@ -1894,6 +1894,40 @@
     padding-top: 1.25rem;
     max-width: 60ch;
   }
+  .services-kit__title {
+    display: block;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+    color: var(--ink-1);
+  }
+  .services-kit__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .services-kit__list li {
+    font-size: 0.82rem;
+    line-height: 1.4;
+    padding-left: 1.3rem;
+    position: relative;
+  }
+  .services-kit__list li::before {
+    content: "\2192";
+    position: absolute;
+    left: 0;
+    font-weight: 900;
+    color: var(--accent);
+  }
+  .pricing-vat {
+    margin-top: 1.5rem;
+    font-size: 0.72rem;
+    opacity: 0.6;
+    font-family: var(--font-mono);
+  }
 </style>
 </head>
 <body>
@@ -2036,8 +2070,17 @@
           <p class="price-card__note" id="price3Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
         </article>
       </div>
+      <p class="pricing-vat" id="pricingVat">* Precios sin IVA.</p>
 
-      <p class="services-kit" id="servicesKit">Súmale identidad de marca (+1.200 €), copy (+400 €) o motion avanzado (+600 €). ¿Quieres contenido nuevo cada mes? Pack mensual de imágenes y vídeo con IA, desde 450 €/mes, sin permanencia.</p>
+      <div class="services-kit" id="servicesKitContainer">
+        <span class="services-kit__title" id="servicesKitTitle">Extras disponibles</span>
+        <ul class="services-kit__list" id="servicesKitList">
+          <li>Identidad visual mínima: +1.200 €</li>
+          <li>Copy completo de conversión: +600 €</li>
+          <li>Motion avanzado: +600 €</li>
+          <li>Contenido mensual IA: desde 450 €/mes</li>
+        </ul>
+      </div>
       </div>
     </div>
   </section>
@@ -2179,18 +2222,35 @@
       priceNote: "*Los proyectos arrancan con un 50% de pago adelantado.",
       price1Name: "Web",
       price1Price: "1.500 €",
-      price1List: ["Web de marca a medida", "Diseño, motion y copy guiado", "Responsive + SEO técnico base", "Entrega en 7 días"],
+      price1List: [
+        "Landing premium / web de marca de hasta 5 secciones.",
+        "Diseño visual a medida, copy guiado, responsive, SEO técnico base, animaciones ligeras y entrega en 7 días."
+      ],
       price1Cta: "Empezar",
       price2Badge: "Más demandado",
       price2Name: "Web + Imágenes",
       price2Price: "2.200 €",
-      price2List: ["Todo lo de Web", "Pack de 10–15 imágenes con IA", "Listas para web y redes", "Estilo curado a tu marca"],
+      price2List: [
+        "Web premium + universo visual de marca.",
+        "Incluye todo lo anterior + 10–15 imágenes generadas con IA, coherentes con la estética de la marca, listas para web, redes o presentación comercial."
+      ],
       price2Cta: "Cuéntame tu caso",
       price3Name: "Web + Imágenes + Vídeo",
       price3Price: "3.500 €",
-      price3List: ["Todo lo anterior", "Película de marca de 60 s con IA", "Dirección, guion, música y edición", "El lanzamiento completo"],
+      price3List: [
+        "Lanzamiento completo con vídeo cinematic de marca.",
+        "Incluye web premium, pack visual IA y vídeo de marca de hasta 60 segundos, generado y editado con IA a partir de dirección creativa, guion y estilo visual definido.",
+        "<span style=\"font-size: 0.85em; opacity: 0.8;\">Incluye 1 versión principal y 2 rondas de revisión.</span>"
+      ],
       price3Cta: "Hablemos",
-      servicesKit: "Súmale identidad de marca (+1.200 €), copy (+400 €) o motion avanzado (+600 €). ¿Quieres contenido nuevo cada mes? Pack mensual de imágenes y vídeo con IA, desde 450 €/mes, sin permanencia.",
+      pricingVat: "* Precios sin IVA.",
+      servicesKitTitle: "Extras disponibles",
+      servicesKitList: [
+        "Identidad visual mínima: +1.200 €",
+        "Copy completo de conversión: +600 €",
+        "Motion avanzado: +600 €",
+        "Contenido mensual IA: desde 450 €/mes"
+      ],
       secHeadServices: "SERVICIOS",
       secHeadPricing: "PRECIOS",
       pricingEyebrow: "PLANES TRANSPARENTES",
@@ -2246,18 +2306,35 @@
       priceNote: "*Projects begin with a 50% upfront payment.",
       price1Name: "Web",
       price1Price: "€1,500",
-      price1List: ["Custom brand website", "Design, motion and guided copy", "Responsive + base technical SEO", "Delivered in 7 days"],
+      price1List: [
+        "Premium landing / brand website up to 5 sections.",
+        "Custom visual design, guided copy, responsive, base technical SEO, light animations, and 7-day delivery."
+      ],
       price1Cta: "Get started",
       price2Badge: "Most wanted",
       price2Name: "Web + Images",
       price2Price: "€2,200",
-      price2List: ["Everything in Web", "Pack of 10–15 AI images", "Ready for web and social", "Style curated to your brand"],
+      price2List: [
+        "Premium web + brand visual universe.",
+        "Includes everything above + 10–15 AI-generated images, consistent with the brand's aesthetics, ready for web, social media, or commercial presentation."
+      ],
       price2Cta: "Tell me your case",
       price3Name: "Web + Images + Video",
       price3Price: "€3,500",
-      price3List: ["Everything above", "60s AI brand film", "Direction, script, music and editing", "The full launch"],
+      price3List: [
+        "Complete launch with cinematic brand video.",
+        "Includes premium web, AI visual pack, and up to 60-second brand video, AI-generated and edited from creative direction, script, and defined visual style.",
+        "<span style=\"font-size: 0.85em; opacity: 0.8;\">Includes 1 main version and 2 review rounds.</span>"
+      ],
       price3Cta: "Let's talk",
-      servicesKit: "Add brand identity (+€1,200), copy (+€400) or advanced motion (+€600). Want fresh content every month? Monthly pack of AI images and video, from €450/mo, no lock-in.",
+      pricingVat: "* Prices exclude VAT.",
+      servicesKitTitle: "Available Extras",
+      servicesKitList: [
+        "Minimal brand identity: +€1,200",
+        "Full conversion copy: +€600",
+        "Advanced motion: +€600",
+        "Monthly AI content: from €450/mo"
+      ],
       secHeadServices: "SERVICES",
       secHeadPricing: "PRICING",
       pricingEyebrow: "TRANSPARENT PLANS",
@@ -2785,7 +2862,9 @@
     setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
     setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.priceNote);
     setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.priceNote);
-    setText('servicesKit', d.servicesKit);
+    setText('pricingVat', d.pricingVat);
+    setText('servicesKitTitle', d.servicesKitTitle);
+    setList('servicesKitList', d.servicesKitList);
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
     setText('pricingEyebrow', d.pricingEyebrow);
