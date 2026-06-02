@@ -7,7 +7,7 @@
 <title>Carlos Fernández — Designed like art. Built like software.</title>
 <meta name="description" content="Productos digitales construidos en solitario con la estética del diseño y el rigor del software. Carlos Fernández, creative technologist.">
 <meta name="author" content="Carlos Fernández">
-<meta name="theme-color" content="#FF6600">
+<meta name="theme-color" content="#FFFFFF">
 
 <!-- Open Graph / Facebook / LinkedIn -->
 <meta property="og:type" content="website">
@@ -29,7 +29,7 @@
 <meta name="twitter:image:alt" content="Carlos Fernández — carlosmakes.com">
 
 <!-- Favicon (SVG inline, sin archivo extra) -->
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%23FF6600%22/><text x=%2250%22 y=%2256%22 font-family=%22Inter,Arial Black,sans-serif%22 font-weight=%22900%22 font-size=%2256%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23ffffff%22 letter-spacing=%22-2.5%22 stroke=%22%23333333%22 stroke-width=%223%22 paint-order=%22stroke%22>CF</text><circle cx=%2283%22 cy=%2277%22 r=%2210%22 fill=%22%23000000%22/></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 fill=%22%230A0A0A%22/><text x=%2250%22 y=%2256%22 font-family=%22Inter,Arial Black,sans-serif%22 font-weight=%22900%22 font-size=%2256%22 text-anchor=%22middle%22 dominant-baseline=%22middle%22 fill=%22%23F2F2F2%22 letter-spacing=%22-2.5%22 stroke=%22%230A0A0A%22 stroke-width=%223%22 paint-order=%22stroke%22>CF</text><circle cx=%2283%22 cy=%2277%22 r=%2210%22 fill=%22%23FF2D55%22/></svg>">
 
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -52,21 +52,27 @@
     --right-eye-height: 13.5%;
     --max-radius: 2vw;
 
-    --black: #000;
-    --white: #fff;
+    --black: #0A0A0A;
+    --white: #0A0A0A;
     /* Tipografía monoespaciada para metadatos/etiquetas (contraste grotesk + mono) */
     --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-    /* Paleta sitio: naranja de fondo, blanco como texto principal, negro para acentos */
-    --page-bg: #FF6600;
-    --page-lime: #000000;
+    /* Paleta sitio: blanco de fondo, carbón texto principal, rojo como único acento */
+    --page-bg: #FFFFFF;
+    --page-lime: #0A0A0A;
+    /* Tokens paleta clara premium */
+    --paper: #F2F2F2;
+    --accent: #FF2D55;
+    --ink-2: #3A3A3C;
+    --ink-3: #8E8E93;
+    --hairline: #E5E3DF;
     --text-primary: var(--page-lime);
-    --gray: #a0a070;
-    --gray-light: #e5e7eb;
-    --gray-mid: #9ca3af;
+    --gray: #8E8E93;
+    --gray-light: #E5E3DF;
+    --gray-mid: #8E8E93;
     --hero-v2-orange: var(--page-lime);
     --hero-v2-violet-bg: var(--page-bg);
-    --hero-v2-violet: var(--white);
-    --hero-v2-violet-rgb: 255, 255, 255;
+    --hero-v2-violet: var(--accent);
+    --hero-v2-violet-rgb: 255, 45, 85;
     --page-orange: var(--white);
     --page-magenta: var(--page-bg);
     --page-yellow: var(--page-lime);
@@ -99,7 +105,7 @@
     line-height: 1.5;
   }
 
-  ::selection { background: rgba(255, 255, 255, 0.4); color: var(--black); }
+  ::selection { background: rgba(255, 45, 85, 0.20); color: var(--black); }
 
   a { color: inherit; text-decoration: none; }
 
@@ -179,7 +185,7 @@
   .site-header.scrolled {
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    background: rgba(255, 102, 0, 0.92);
+    background: rgba(255, 255, 255, 0.88);
   }
 
   .site-header__inner {
@@ -197,7 +203,7 @@
   }
   .site-header .header-top nav a:hover {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--accent);
   }
   /* ES/EN: reposo blanco; hover/foco/abierto = bloque entero relleno amarillo fluor, texto negro (legible) */
   .site-header .lang-select__btn {
@@ -214,8 +220,8 @@
   .site-header .lang-select__btn:focus-visible,
   .site-header .lang-select.is-open .lang-select__btn {
     background: var(--page-lime);
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--paper);
+    -webkit-text-fill-color: var(--paper);
   }
   .site-header .lang-select__btn:hover .lang-select__chev,
   .site-header .lang-select__btn:focus-visible .lang-select__chev,
@@ -230,7 +236,7 @@
     color: var(--page-lime);
   }
   .site-header .hamburger-btn:hover {
-    color: var(--white);
+    color: var(--accent);
   }
   .site-header .lang-select__menu {
     background: var(--page-bg);
@@ -244,13 +250,13 @@
   }
   .site-header .lang-select__option.is-active {
     background: transparent;
-    color: var(--white);
+    color: var(--accent);
   }
   .site-header .lang-select__option:hover,
   .site-header .lang-select__option:focus-visible {
     background: var(--page-lime);
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--paper);
+    -webkit-text-fill-color: var(--paper);
   }
 
   .site-header .logo {
@@ -264,7 +270,7 @@
     color: var(--white);
   }
   .site-header .logo .logo-dot {
-    color: var(--page-lime);
+    color: var(--accent);
     transition: color 0.15s ease;
   }
   .site-header .logo:hover {
@@ -276,7 +282,7 @@
     color: var(--page-lime);
   }
   .site-header .logo:hover .logo-dot {
-    color: var(--white);
+    color: var(--page-lime);
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
@@ -404,12 +410,12 @@
     -webkit-text-fill-color: var(--page-lime) !important;
   }
   #heroV2Title .hero-v2-dot {
-    color: var(--page-lime) !important;
-    -webkit-text-fill-color: var(--page-lime) !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
   #heroV2Title .hero-v2-violet {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
 
   /* Presentación: mismo fondo que la página; titulares en blanco */
@@ -601,36 +607,36 @@
   }
   /* Panel 0: punto final en negro (contrasta con CONCRETAS blanco) */
   .intro-panel--0 .intro-line__suffix--period {
-    color: var(--page-lime) !important;
-    -webkit-text-fill-color: var(--page-lime) !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
   /* Panel 1 (MAESTROS): negro con acentos blancos */
   .intro-panel--1 .intro-panel__headline {
     color: var(--page-lime);
   }
   .intro-panel--1 .intro-accent {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
   .intro-panel--1 .intro-line__suffix--period {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
   /* Panel 2 (CREACIONES): negro con acentos blancos */
   .intro-panel--2 .intro-panel__headline {
     color: var(--page-lime);
   }
   .intro-panel--2 .intro-accent {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
   .intro-panel--2 .intro-line__suffix--period {
-    color: var(--white) !important;
-    -webkit-text-fill-color: var(--white) !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
   /* El punto final siempre en amarillo */
   .intro-line__suffix--period {
-    color: var(--page-lime) !important;
+    color: var(--accent) !important;
   }
   /* ;) fuera del color principal del bloque */
   .intro-panel--2 .intro-line__suffix--wink {
@@ -638,12 +644,12 @@
   }
 
   .intro-accent {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
 
   .intro-line__suffix {
-    color: rgba(204, 255, 0, 0.55);
+    color: rgba(142, 142, 147, 0.55);
   }
 
   .header-top {
@@ -687,7 +693,7 @@
   @media (min-width: 640px) { .logo { font-size: 1.45rem; } }
   @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
   .logo .logo-dot {
-    color: var(--page-lime);
+    color: var(--accent);
   }
 
   .header-top nav {
@@ -763,7 +769,7 @@
     color: inherit;
   }
   @media (min-width: 640px) { .lang-select__btn { font-size: 0.75rem; padding: 0.5rem 0.55rem; gap: 0.35rem; } }
-  .lang-select__btn:hover { background: transparent; color: var(--page-lime); }
+  .lang-select__btn:hover { background: transparent; color: var(--accent); }
   .lang-select__current {
     display: inline-flex;
     align-items: center;
@@ -824,7 +830,7 @@
   }
   .lang-select__option.is-active {
     background: transparent;
-    color: var(--white);
+    color: var(--accent);
   }
   .lang-select__option .flag {
     font-size: 0.875rem;
@@ -872,7 +878,7 @@
       top: calc(100% + 0.75rem);
       right: 0;
       z-index: 200;
-      background: rgba(255, 102, 0, 0.97);
+      background: rgba(255, 255, 255, 0.97);
       backdrop-filter: blur(18px);
       -webkit-backdrop-filter: blur(18px);
       padding: 1rem 1.25rem 0.85rem;
@@ -904,9 +910,9 @@
     padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
     font-weight: 700;
     letter-spacing: 0.5em;
-    color: var(--black);
-    background: var(--white);
-    border: 3px solid var(--white);
+    color: var(--paper);
+    background: var(--page-lime);
+    border: 3px solid var(--page-lime);
     pointer-events: auto;
     animation: float 3s ease-in-out infinite;
     font-size: 0.875rem;
@@ -916,9 +922,9 @@
   @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
   @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
   .scroll-hint a:hover {
-    background: var(--page-lime);
-    color: var(--white);
-    border-color: var(--page-lime);
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
   }
   @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
 
@@ -1063,7 +1069,7 @@
   @media (min-width: 768px) { .big-heading { font-size: 6.5vw; } }
   @media (min-width: 1024px) { .big-heading { font-size: 6vw; } }
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
-  .big-heading .red { color: var(--white); }
+  .big-heading .red { color: var(--accent); }
 
   /* WORKS: franja de marquees horizontales (7 filas, sentidos alternos) */
   #proyectos.projects-section {
@@ -1149,8 +1155,8 @@
     -webkit-text-stroke: 0.02em var(--page-lime);
   }
   .projects-ticker__word--black {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--ink-3);
+    -webkit-text-fill-color: var(--ink-3);
     -webkit-text-stroke: 0;
     text-shadow: none;
   }
@@ -1225,11 +1231,11 @@
     max-width: min(82vw, 700px);
     margin: 0;
     scroll-snap-align: start;
-    background: #000000;
+    background: #0A0A0A;
     border-radius: 18px;
     overflow: hidden;
     display: block;
-    color: var(--white);
+    color: var(--paper);
     text-decoration: none;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
@@ -1261,7 +1267,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--white);
+    color: var(--ink-3);
     margin-bottom: 0.5rem;
   }
   .works-card__title {
@@ -1269,7 +1275,7 @@
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.2;
-    color: var(--white);
+    color: var(--paper);
   }
   .works-slider__arrows {
     display: flex;
@@ -1281,8 +1287,8 @@
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    color: var(--white);
+    background: rgba(10,10,10,0.06);
+    color: var(--page-lime);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1291,7 +1297,7 @@
     flex-shrink: 0;
   }
   .works-slider__arrow:hover:not(:disabled) {
-    background: rgba(255,255,255,0.2);
+    background: rgba(10,10,10,0.12);
   }
   .works-slider__arrow:disabled {
     opacity: 0.25;
@@ -1309,16 +1315,16 @@
     -webkit-text-fill-color: var(--page-lime);
   }
   #contacto #contactMark {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
   #contactDividerText {
     color: var(--white);
     -webkit-text-fill-color: var(--white);
   }
   .contact-divider-mark {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
 
   /* Misma familia/estilo que .big-heading, escala intermedia (p. ej. pregunta del formulario) */
@@ -1395,14 +1401,14 @@
   @media (min-width: 1024px) { .contact-btn { font-size: 1.25rem; } }
   /* Botones: amarillo por defecto; hover / contraste en blanco */
   .contact-box .contact-btn {
-    color: var(--white);
-    background: var(--page-lime);
-    border-color: var(--page-lime);
+    color: var(--paper);
+    background: var(--accent);
+    border-color: var(--accent);
   }
   .contact-box .contact-btn:hover:not(:disabled) {
-    background: var(--white);
-    color: var(--black);
-    border-color: var(--white);
+    background: var(--page-lime);
+    color: var(--paper);
+    border-color: var(--page-lime);
   }
 
 
@@ -1421,7 +1427,7 @@
   .contact-alt-link {
     border: 2px solid var(--page-lime);
     background: var(--page-lime);
-    color: var(--white);
+    color: var(--paper);
     padding: 0.25rem 0.55rem;
     font-size: 0.78rem;
     font-weight: 800;
@@ -1430,9 +1436,9 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .contact-alt-link:hover {
-    background: var(--white);
+    background: var(--paper);
     color: var(--black);
-    border-color: var(--white);
+    border-color: var(--hairline);
   }
 
   .newsletter-form { margin-top: 2rem; }
@@ -1449,20 +1455,20 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid var(--white);
-    background: var(--white);
+    border: 3px solid var(--hairline);
+    background: var(--paper);
     color: var(--black);
     transition: border-color 0.15s, box-shadow 0.15s;
   }
   @media (min-width: 640px) { .newsletter-form__input { font-size: 1.05rem; } }
   .newsletter-form__input::placeholder { color: rgba(0, 0, 0, 0.45); }
   .newsletter-form__input:hover {
-    border-color: var(--page-lime);
+    border-color: var(--accent);
   }
   .newsletter-form__input:focus {
-    border-color: var(--page-lime);
+    border-color: var(--accent);
     outline: none;
-    box-shadow: 0 0 0 1px var(--page-lime);
+    box-shadow: 0 0 0 1px var(--accent);
   }
 
   .contact-divider {
@@ -1508,8 +1514,8 @@
     -webkit-text-fill-color: var(--page-lime);
   }
   .contact-ojitos-text .contact-divider-mark {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
   .contact-ojitos-text {
     display: flex;
@@ -1616,8 +1622,8 @@
     font-size: 1rem;
     font-weight: 500;
     padding: 0.55rem 0.7rem;
-    border: 3px solid var(--page-lime);
-    background: var(--white);
+    border: 3px solid var(--hairline);
+    background: var(--paper);
     color: var(--black);
     min-width: 0;
   }
@@ -1628,12 +1634,12 @@
   .contact-form__select:focus,
   .contact-form__textarea:focus {
     outline: none;
-    box-shadow: 0 0 0 1px var(--page-lime);
+    box-shadow: 0 0 0 1px var(--accent);
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
   .contact-form__select option {
     color: var(--black);
-    background: var(--white);
+    background: var(--paper);
   }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
@@ -1725,6 +1731,7 @@
     margin: 0 0 2.5rem;
   }
   .section-head__index {
+    color: var(--ink-3);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.8rem;
@@ -1749,6 +1756,7 @@
   #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
   .services-subsection + .services-subsection { margin-top: clamp(4rem, 9vw, 7rem); }
   .services-eyebrow {
+    color: var(--ink-3);
     font-family: var(--font-mono);
     font-weight: 700;
     text-transform: uppercase;
@@ -1757,7 +1765,7 @@
     margin: 0 0 1.1rem;
   }
   .services-headline { margin: 0 0 1.25rem; }
-  .services-headline .accent { color: var(--white); -webkit-text-fill-color: var(--white); }
+  .services-headline .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
   .services-headline--sub { font-size: clamp(1.9rem, 5.5vw, 3.25rem); line-height: 0.95; letter-spacing: -0.045em; }
   .services-lead {
     max-width: 50ch;
@@ -1773,8 +1781,8 @@
     display: grid;
     grid-template-columns: 1fr;
     gap: 3px;
-    background: var(--black);
-    border: 3px solid var(--black);
+    background: var(--hairline);
+    border: 3px solid var(--hairline);
     margin: 0;
   }
   @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
@@ -1786,8 +1794,9 @@
     gap: 0.75rem;
     transition: background-color 0.18s ease, color 0.18s ease;
   }
-  .svc-card:hover { background: var(--black); color: var(--white); }
+  .svc-card:hover { background: var(--black); color: var(--paper); }
   .svc-card__num {
+    color: var(--ink-3);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.82rem;
@@ -1805,16 +1814,17 @@
 
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
-  .price-card { border: 3px solid var(--black); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; }
-  .price-card--featured { background: var(--black); color: var(--white); border-color: var(--black); position: relative; }
+  .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; }
+  .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; }
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
-    background: var(--white); color: var(--black);
+    background: var(--paper); color: var(--black);
     font-family: var(--font-mono); font-weight: 700;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
     padding: 0.28rem 0.6rem; border: 2px solid var(--black);
   }
   .price-card__name {
+    color: var(--ink-3);
     font-family: var(--font-mono);
     font-weight: 700; text-transform: uppercase;
     font-size: 0.85rem; margin: 0 0 1rem; letter-spacing: 0.04em;
@@ -1825,10 +1835,10 @@
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
   .price-card__cta { align-self: stretch; text-align: center; }
-  .price-card .price-card__cta { color: var(--white); background: var(--black); border: 3px solid var(--black); }
+  .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
   .price-card .price-card__cta:hover { background: transparent; color: var(--black); }
-  .price-card--featured .price-card__cta { color: var(--black); background: var(--white); border-color: var(--white); }
-  .price-card--featured .price-card__cta:hover { background: transparent; color: var(--white); }
+  .price-card--featured .price-card__cta { color: var(--paper); background: var(--accent); border-color: var(--accent); }
+  .price-card--featured .price-card__cta:hover { background: transparent; color: var(--paper); }
   .services-kit {
     margin: 2.5rem 0 0;
     font-family: var(--font-mono);
@@ -1993,7 +2003,7 @@
           <span class="section-head__meta" id="contactMeta">RESPUESTA EN 24H</span>
         </div>
         <div class="contact-divider">
-          <p class="big-heading big-heading--mid"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0;"><span style="color: var(--white); -webkit-text-fill-color: var(--white);">¿</span>TE GUSTA LO QUE VES<span style="color: var(--white); -webkit-text-fill-color: var(--white);">?</span></span></span></p>
+          <p class="big-heading big-heading--mid"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0;"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TE GUSTA LO QUE VES<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
 
           <div class="contact-ojitos-row">
             <!-- ==================== OJITOS ==================== -->
@@ -2010,7 +2020,7 @@
             </div>
 
             <div class="contact-ojitos-text">
-              <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">¿TIENES UNA <span style="color: var(--white); -webkit-text-fill-color: var(--white);">MARCA</span>,<br>UNA <span style="color: var(--white); -webkit-text-fill-color: var(--white);">IDEA</span> O ALGO QUE<br>AÚN NO TIENE <span style="color: var(--white); -webkit-text-fill-color: var(--white);">FORMA</span>? ESCRÍBEME</span><span class="contact-divider-mark">.</span></p>
+              <p class="big-heading big-heading--mid"><span id="contactDividerTextBottom">¿TIENES UNA <span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">MARCA</span>,<br>UNA <span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">IDEA</span> O ALGO QUE<br>AÚN NO TIENE <span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">FORMA</span>? ESCRÍBEME</span><span class="contact-divider-mark">.</span></p>
               <span class="contact-arrow-down" aria-hidden="true">↓</span>
             </div>
           </div>
@@ -2086,8 +2096,8 @@
       contactEmailPh: "tu@email.com",
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
-      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\"><span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">¿</span>TE GUSTA LO QUE VES<span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">?</span></span>",
-      contactDividerBottom: "¿TIENES UNA <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">MARCA</span>,<br>UNA <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">IDEA</span> O ALGO QUE<br>AÚN NO TIENE <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">FORMA</span>? ESCRÍBEME",
+      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TE GUSTA LO QUE VES<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
+      contactDividerBottom: "¿TIENES UNA <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">MARCA</span>,<br>UNA <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">IDEA</span> O ALGO QUE<br>AÚN NO TIENE <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">FORMA</span>? ESCRÍBEME",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
@@ -2154,7 +2164,7 @@
       contactBtnLabel: "Subscribe",
       langMenuAria: "Language menu",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">LIKE WHAT YOU SEE?</span>",
-      contactDividerBottom: "GOT A <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">BRAND</span>, AN <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">IDEA</span>, OR SOMETHING THAT DOESN'T HAVE A <span style=\"color: var(--white); -webkit-text-fill-color: var(--white);\">SHAPE</span> YET? WRITE TO ME",
+      contactDividerBottom: "GOT A <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">BRAND</span>, AN <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">IDEA</span>, OR SOMETHING THAT DOESN'T HAVE A <span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">SHAPE</span> YET? WRITE TO ME",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
