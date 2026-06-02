@@ -286,15 +286,22 @@
     transition: color 0.15s ease;
   }
   .site-header .logo:hover {
-    color: var(--page-lime);
     opacity: 1;
   }
   .site-header .logo:hover .logo-carlos,
   .site-header .logo:hover .logo-fernandez {
-    color: var(--page-lime);
+    color: var(--accent) !important;
   }
   .site-header .logo:hover .logo-dot {
-    color: var(--page-lime);
+    color: #FFFFFF !important;
+  }
+  /* Scrolled: hover en carbón (fondo blanco) */
+  .site-header.scrolled .logo:hover .logo-carlos,
+  .site-header.scrolled .logo:hover .logo-fernandez {
+    color: var(--accent) !important;
+  }
+  .site-header.scrolled .logo:hover .logo-dot {
+    color: var(--page-lime) !important;
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
