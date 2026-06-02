@@ -3054,6 +3054,8 @@
     hdr.classList.remove('site-header--on-light');
   }
 
+  window.addEventListener('scroll', updateHeaderTheme, { passive: true });
+
   let resizeTimeout;
   let lastViewportWidth = window.innerWidth;
   window.addEventListener('resize', () => {
