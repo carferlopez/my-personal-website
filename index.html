@@ -1505,16 +1505,34 @@
   #contacto .contact-form-wrap {
     max-width: 72rem;
   }
-  .contact-divider p:has(#contactDividerTextTop) {
+  .contact-divider p:has(#contactDividerTextTop),
+  .contact-divider p:has(#contactDividerTextBottom),
+  .contact-divider p:has(#contactDividerTextEscribeme) {
     font-size: 7.5vw !important;
     line-height: 0.9;
     letter-spacing: -0.05em;
     text-align: left;
   }
-  @media (min-width: 640px)  { .contact-divider p:has(#contactDividerTextTop) { font-size: 7vw !important; } }
-  @media (min-width: 768px)  { .contact-divider p:has(#contactDividerTextTop) { font-size: 6.5vw !important; } }
-  @media (min-width: 1024px) { .contact-divider p:has(#contactDividerTextTop) { font-size: 6vw !important; } }
-  @media (min-width: 1280px) { .contact-divider p:has(#contactDividerTextTop) { font-size: 64px !important; } }
+  @media (min-width: 640px) {
+    .contact-divider p:has(#contactDividerTextTop),
+    .contact-divider p:has(#contactDividerTextBottom),
+    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 7vw !important; }
+  }
+  @media (min-width: 768px) {
+    .contact-divider p:has(#contactDividerTextTop),
+    .contact-divider p:has(#contactDividerTextBottom),
+    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 6.5vw !important; }
+  }
+  @media (min-width: 1024px) {
+    .contact-divider p:has(#contactDividerTextTop),
+    .contact-divider p:has(#contactDividerTextBottom),
+    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 6vw !important; }
+  }
+  @media (min-width: 1280px) {
+    .contact-divider p:has(#contactDividerTextTop),
+    .contact-divider p:has(#contactDividerTextBottom),
+    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 64px !important; }
+  }
   .contact-divider .big-heading--mid {
     display: block;
     width: 100%;
@@ -2039,7 +2057,8 @@
 
             <div class="contact-ojitos-text">
               <p class="big-heading"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0;"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TE GUSTA LO QUE VES<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
-              <p class="big-heading"><span id="contactDividerTextBottom">¿TIENES UNA MARCA,<br>UNA IDEA O ALGO QUE<br>AÚN NO TIENE FORMA?<br>ESCRÍBEME</span><span class="contact-divider-mark">.</span></p>
+              <p class="big-heading"><span id="contactDividerTextBottom">¿TIENES UNA MARCA,<br>UNA IDEA O ALGO QUE<br>AÚN NO TIENE FORMA?</span></p>
+              <p class="big-heading"><span id="contactDividerTextEscribeme">ESCRÍBEME</span><span class="contact-divider-mark">.</span></p>
               <span class="contact-arrow-down" aria-hidden="true">↓</span>
             </div>
           </div>
@@ -2116,7 +2135,8 @@
       contactBtnLabel: "Suscribirme",
       langMenuAria: "Menú de idioma",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TE GUSTA LO QUE VES<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
-      contactDividerBottom: "¿TIENES UNA MARCA,<br>UNA IDEA O ALGO QUE<br>AÚN NO TIENE FORMA?<br>ESCRÍBEME",
+      contactDividerBottom: "¿TIENES UNA MARCA,<br>UNA IDEA O ALGO QUE<br>AÚN NO TIENE FORMA?",
+      contactDividerEscribeme: "ESCRÍBEME",
       contactFormName: "Nombre",
       contactFormEmail: "Email",
       contactFormTopic: "Asunto",
@@ -2183,7 +2203,8 @@
       contactBtnLabel: "Subscribe",
       langMenuAria: "Language menu",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); display: block; margin-bottom: 0.6em;\">LIKE WHAT YOU SEE?</span>",
-      contactDividerBottom: "GOT A BRAND,<br>AN IDEA OR SOMETHING<br>THAT DOESN'T HAVE A SHAPE YET?<br>WRITE TO ME",
+      contactDividerBottom: "GOT A BRAND,<br>AN IDEA OR SOMETHING<br>THAT DOESN'T HAVE A SHAPE YET?",
+      contactDividerEscribeme: "WRITE TO ME",
       contactFormName: "Name",
       contactFormEmail: "Email",
       contactFormTopic: "Topic",
@@ -2811,6 +2832,8 @@
     if (dividerTop) dividerTop.innerHTML = d.contactDividerTop;
     const dividerBottom = document.getElementById('contactDividerTextBottom');
     if (dividerBottom) dividerBottom.innerHTML = d.contactDividerBottom;
+    const dividerEscribeme = document.getElementById('contactDividerTextEscribeme');
+    if (dividerEscribeme) dividerEscribeme.innerHTML = d.contactDividerEscribeme;
     const lname = document.getElementById('label-cf-name');
     if (lname) lname.textContent = d.contactFormName;
     const lem = document.getElementById('label-cf-email');
