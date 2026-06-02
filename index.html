@@ -1501,11 +1501,15 @@
     max-width: 72rem;
   }
   .contact-divider p:has(#contactDividerTextTop) {
-    font-size: clamp(3.5rem, 13vw, 150px) !important;
-    line-height: 1.05;
+    font-size: 7.5vw !important;
+    line-height: 0.9;
     letter-spacing: -0.05em;
     text-align: left;
   }
+  @media (min-width: 640px)  { .contact-divider p:has(#contactDividerTextTop) { font-size: 7vw !important; } }
+  @media (min-width: 768px)  { .contact-divider p:has(#contactDividerTextTop) { font-size: 6.5vw !important; } }
+  @media (min-width: 1024px) { .contact-divider p:has(#contactDividerTextTop) { font-size: 6vw !important; } }
+  @media (min-width: 1280px) { .contact-divider p:has(#contactDividerTextTop) { font-size: 64px !important; } }
   .contact-divider .big-heading--mid {
     display: block;
     width: 100%;
