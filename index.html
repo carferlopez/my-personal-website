@@ -176,7 +176,7 @@
     padding-bottom: 0.75rem;
     padding-left: max(var(--container-pad-x), env(safe-area-inset-left, 0px));
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-    color: var(--page-lime);
+    color: #FFFFFF;
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
@@ -186,6 +186,7 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     background: rgba(255, 255, 255, 0.88);
+    color: var(--page-lime);
   }
 
   .site-header__inner {
@@ -197,17 +198,17 @@
   }
   @media (min-width: 768px) { .site-header__inner { gap: 0.625rem; } }
 
-  /* Cabecera: amarillo fluorescente por defecto, blanco en hover / activo (fondo del sitio en naranja) */
+  /* Cabecera: blanco por defecto, rojo en hover */
   .site-header .header-top nav a {
-    color: var(--white);
+    color: #FFFFFF;
   }
   .site-header .header-top nav a:hover {
     background: transparent;
     color: var(--accent);
   }
-  /* ES/EN: reposo blanco; hover/foco/abierto = bloque entero relleno amarillo fluor, texto negro (legible) */
+  /* ES/EN: reposo blanco; hover/foco/abierto = bloque entero relleno carbón, texto papel */
   .site-header .lang-select__btn {
-    color: var(--white);
+    color: #FFFFFF;
     background: transparent;
     transition: background-color 0.15s ease, color 0.15s ease;
   }
@@ -260,14 +261,14 @@
   }
 
   .site-header .logo {
-    color: var(--white);
+    color: #FFFFFF;
     transition: color 0.15s ease, opacity 0.15s ease;
   }
   .site-header .logo .logo-carlos {
-    color: var(--white);
+    color: #FFFFFF;
   }
   .site-header .logo .logo-fernandez {
-    color: var(--white);
+    color: #FFFFFF;
   }
   .site-header .logo .logo-dot {
     color: var(--accent);
