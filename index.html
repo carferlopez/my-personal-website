@@ -1894,8 +1894,10 @@
 
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
-  .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; }
-  .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; }
+  .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
+  .price-card:not(.price-card--featured):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
+  .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
+  .price-card--featured:hover { background: var(--page-bg); color: var(--black); border-color: var(--hairline); }
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
     background: var(--paper); color: var(--black);
