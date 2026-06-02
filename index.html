@@ -1916,6 +1916,7 @@
   .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; border-top: 1px solid currentColor; padding-top: 1.25rem; }
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
+  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.6rem 0 0; line-height: 1.4; }
   .price-card__cta { align-self: stretch; text-align: center; }
   .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
   .price-card .price-card__cta:hover { background: transparent; color: var(--black); }
@@ -2034,7 +2035,7 @@
         <span class="section-head__meta" id="pricingEyebrow">PLANES TRANSPARENTES</span>
       </div>
       <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline"><span style="white-space:nowrap">PRECIO CERRADO<span class="accent">.</span> CERO SORPRESAS<span class="accent">.</span></span><br>TERMINADO EN DÍAS, NO EN MESES<span class="accent">.</span></span></p>
-      <p class="services-lead" id="pricingIntro">Sabes lo que cuesta y cuándo lo tienes antes de empezar. Los proyectos arrancan con un 50%.</p>
+      <p class="services-lead" id="pricingIntro">Sabes lo que cuesta y cuándo lo tienes antes de empezar.*</p>
 
       <div class="pricing-grid">
         <article class="price-card">
@@ -2047,6 +2048,7 @@
             <li>Entrega en 7 días</li>
           </ul>
           <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Empezar</a>
+          <p class="price-card__note" id="price1Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
         </article>
         <article class="price-card price-card--featured">
           <span class="price-card__badge" id="price2Badge">Más demandado</span>
@@ -2059,6 +2061,7 @@
             <li>Estilo curado a tu marca</li>
           </ul>
           <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu caso</a>
+          <p class="price-card__note" id="price2Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
         </article>
         <article class="price-card">
           <h3 class="price-card__name" id="price3Name">Web + Imágenes + Vídeo</h3>
@@ -2070,6 +2073,7 @@
             <li>El lanzamiento completo</li>
           </ul>
           <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Hablemos</a>
+          <p class="price-card__note" id="price3Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
         </article>
       </div>
 
@@ -2217,7 +2221,8 @@
       svc3Text: "De un negocio corriente a una película de 60 s con la que la gente conecta. Dirección, guion, música y edición.",
       svc1More: "Ver ejemplos", svc2More: "Ver ejemplos", svc3More: "Ver ejemplos",
       pricingHeadline: "<span style=\"white-space:nowrap\">PRECIO CERRADO<span class=\"accent\">.</span> CERO SORPRESAS<span class=\"accent\">.</span></span><br>TERMINADO EN DÍAS, NO EN MESES<span class=\"accent\">.</span>",
-      pricingIntro: "Sabes lo que cuesta y cuándo lo tienes antes de empezar. Los proyectos arrancan con un 50%.",
+      pricingIntro: "Sabes lo que cuesta y cuándo lo tienes antes de empezar.*",
+      priceNote: "*Los proyectos arrancan con un 50% de pago adelantado.",
       price1Name: "Web",
       price1Price: "desde 1.500 €",
       price1List: ["Web de marca a medida", "Diseño, motion y copy guiado", "Responsive + SEO técnico base", "Entrega en 7 días"],
@@ -2287,7 +2292,8 @@
       svc3Text: "From an ordinary business to a 60s film people connect with. Direction, script, music and editing.",
       svc1More: "See examples", svc2More: "See examples", svc3More: "See examples",
       pricingHeadline: "<span style=\"white-space:nowrap\">FIXED PRICE<span class=\"accent\">.</span> ZERO SURPRISES<span class=\"accent\">.</span></span><br>DONE IN DAYS, NOT MONTHS<span class=\"accent\">.</span>",
-      pricingIntro: "You know what it costs and when you'll have it before we start. Projects begin with 50% upfront.",
+      pricingIntro: "You know what it costs and when you'll have it before we start.*",
+      priceNote: "*Projects begin with a 50% upfront payment.",
       price1Name: "Web",
       price1Price: "from €1,500",
       price1List: ["Custom brand website", "Design, motion and guided copy", "Responsive + base technical SEO", "Delivered in 7 days"],
@@ -2826,9 +2832,9 @@
     setText('svc3Title', d.svc3Title); setText('svc3Text', d.svc3Text); setText('svc3More', d.svc3More);
     setHTML('pricingHeadline', d.pricingHeadline);
     setText('pricingIntro', d.pricingIntro);
-    setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta);
-    setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta);
-    setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta);
+    setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
+    setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.priceNote);
+    setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.priceNote);
     setText('servicesKit', d.servicesKit);
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
