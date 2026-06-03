@@ -713,7 +713,8 @@
   }
   @media (min-width: 640px) { .logo { padding: 0.5rem 0.6rem; margin: -0.5rem -0.6rem; } }
   @media (min-width: 640px) { .logo { font-size: 1.45rem; } }
-  @media (min-width: 768px) { .logo { font-size: 1.75rem; } }
+  @media (min-width: 768px) { .logo { font-size: 1.9rem; } }
+  @media (min-width: 1200px) { .logo { font-size: 2rem; } }
   .logo .logo-dot {
     color: var(--accent);
   }
@@ -762,8 +763,8 @@
     flex-shrink: 0;
     color: inherit;
   }
-  @media (min-width: 640px) { .header-top nav svg { width: 1.25rem; height: 1.25rem; } }
-  @media (min-width: 768px) { .header-top nav svg { width: 1.5rem; height: 1.5rem; } }
+  @media (min-width: 640px) { .header-top nav svg { width: 1.1rem; height: 1.1rem; } }
+  @media (min-width: 768px) { .header-top nav svg { width: 1.25rem; height: 1.25rem; } }
   /* Asegurar inversión: currentColor pasa a blanco; trazos y rellenables siguen al icono */
   .header-top nav a:hover svg * {
     stroke: currentColor;
@@ -1081,7 +1082,7 @@
   .big-heading {
     font-size: 7.5vw;
     font-weight: 900;
-    letter-spacing: -0.05em;
+    letter-spacing: 0;
     line-height: 0.9;
     text-transform: uppercase;
     text-wrap: pretty;
@@ -1464,7 +1465,7 @@
   .contact-divider p:has(#contactDividerTextEscribeme) {
     font-size: 7.5vw !important;
     line-height: 0.9;
-    letter-spacing: -0.05em;
+    letter-spacing: 0;
     text-align: left;
   }
   @media (min-width: 768px) {
@@ -1754,7 +1755,7 @@
 
   /* ==================== SERVICIOS + PRECIOS ==================== */
   #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
-  .services-subsection + .services-subsection { margin-top: clamp(4rem, 9vw, 7rem); }
+  .services-subsection + .services-subsection { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
   .services-eyebrow {
     color: var(--ink-3);
     font-family: var(--font-mono);
@@ -1764,38 +1765,61 @@
     font-size: 0.78rem;
     margin: 0 0 1.1rem;
   }
-  .services-headline { margin: 0 0 1.25rem; }
+  .services-headline { margin: 0 0 1.1rem; }
   .services-headline .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
-  .services-headline--sub { line-height: 0.95; letter-spacing: -0.045em; }
+  .services-headline--sub {
+    line-height: 0.9;
+    letter-spacing: 0;
+    max-width: 17ch;
+  }
   .services-lead {
-    max-width: 50ch;
-    font-size: 1.05rem;
+    max-width: 48ch;
+    font-size: 1rem;
     font-weight: 500;
-    margin: 0 0 3rem;
+    margin: 0 0 2.35rem;
     line-height: 1.5;
     color: var(--ink-2);
   }
-  @media (min-width: 768px) { .services-lead { font-size: 1.2rem; } }
+  @media (min-width: 768px) {
+    .services-lead {
+      max-width: 54ch;
+      font-size: 1.08rem;
+      margin-bottom: 3rem;
+    }
+  }
+  @media (min-width: 1200px) { .services-lead { font-size: 1.1rem; } }
 
   /* Rejilla brutalista conectada: las "líneas" son el negro del fondo a través de los gaps */
   .services-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3px;
+    gap: 2px;
     background: var(--hairline);
-    border: 3px solid var(--hairline);
+    border: 2px solid var(--hairline);
     margin: 0;
   }
   @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
   .svc-card {
     background: var(--black);
     color: var(--paper);
-    padding: 3rem 1.5rem 3.5rem;
-    min-height: 320px;
+    padding: 2.25rem 1.35rem 2.1rem;
+    min-height: 280px;
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
+    gap: 0.7rem;
     transition: background-color 0.18s ease, color 0.18s ease;
+  }
+  @media (min-width: 768px) {
+    .svc-card {
+      min-height: 285px;
+      padding: 2.35rem 1.4rem 2.1rem;
+    }
+  }
+  @media (min-width: 1200px) {
+    .svc-card {
+      min-height: 300px;
+      padding: 2.6rem 1.65rem 2.25rem;
+    }
   }
   .svc-card:hover { background: var(--accent); color: #FFFFFF; }
   .svc-card__num {
@@ -1809,20 +1833,22 @@
   .svc-card__title {
     font-weight: 900;
     text-transform: uppercase;
-    letter-spacing: -0.02em;
-    font-size: 1.9rem;
-    line-height: 1.02;
-    margin: 0.35rem 0 0;
+    letter-spacing: 0;
+    font-size: 1.65rem;
+    line-height: 1.06;
+    margin: 0.4rem 0 0.05rem;
   }
-  .svc-card__text { font-size: 0.98rem; line-height: 1.5; margin: 0; }
+  @media (min-width: 768px) { .svc-card__title { font-size: 1.75rem; } }
+  @media (min-width: 1200px) { .svc-card__title { font-size: 2rem; } }
+  .svc-card__text { font-size: 0.95rem; line-height: 1.48; margin: 0; max-width: 34ch; }
   .svc-card__more {
     margin-top: auto;
-    padding-top: 1.5rem;
+    padding-top: 1.25rem;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 0.35rem;
-    font-size: 0.82rem;
+    font-size: 0.76rem;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
