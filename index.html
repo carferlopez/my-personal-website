@@ -215,6 +215,12 @@
   .site-header.scrolled .lang-select__btn {
     color: var(--page-lime) !important;
   }
+  .site-header.scrolled .lang-select__btn:hover,
+  .site-header.scrolled .lang-select__btn:focus-visible,
+  .site-header.scrolled .lang-select.is-open .lang-select__btn {
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
+  }
 
   .site-header__inner {
     display: flex;
