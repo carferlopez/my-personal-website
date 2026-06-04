@@ -2095,7 +2095,6 @@
             <li>Estructura frontend con animaciones fluidas y narrativa visual de alta conversión.</li>
             <li>Infraestructura de validación: Integración de captación de leads y analítica web.</li>
             <li>Pasarela de pagos (Stripe Checkout) lista para validar la intención de compra real.</li>
-            <li>Metodología directa: Comunicación 100% por escrito para avanzar el triple de rápido y sin reuniones.</li>
             <li>Entrega garantizada en 7 días.</li>
           </ul>
           <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Lanzar mi MVP</a>
@@ -2272,7 +2271,6 @@
         "Estructura frontend con animaciones fluidas y narrativa visual de alta conversión.",
         "Infraestructura de validación: Integración de captación de leads y analítica web.",
         "Pasarela de pagos (Stripe Checkout) lista para validar la intención de compra real.",
-        "Metodología directa: Comunicación 100% por escrito para avanzar el triple de rápido y sin reuniones.",
         "Entrega garantizada en 7 días."
       ],
       price1Cta: "Lanzar mi MVP",
@@ -2354,7 +2352,6 @@
         "Frontend structure with fluid animations and high-conversion visual narrative.",
         "Validation infrastructure: lead capture integration and web analytics.",
         "Payment gateway (Stripe Checkout) ready to validate real purchase intent.",
-        "Direct methodology: 100% written communication to move three times faster, with no meetings.",
         "Guaranteed delivery in 7 days."
       ],
       price1Cta: "Launch my MVP",
@@ -2799,24 +2796,20 @@
     if (!cards.length) return;
     // Revelado ligado al scroll (estilo Apple): cada caja aparece a medida
     // que scrolleas y se oculta si subes. scrub = animación pegada al scroll.
-    // El rango empieza en cuanto la sección asoma por abajo (top bottom) para
-    // que nunca te quedes mirando un grid sin que haya empezado a revelarse.
+    // Usamos fromTo con estados explícitos (0 -> 1) para que ningún
+    // ScrollTrigger.refresh() pueda capturar el estado oculto como final.
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.services-grid',
         start: 'top bottom',
         end: 'bottom 60%',
-        scrub: 0.6,
-        invalidateOnRefresh: true
+        scrub: 0.6
       }
     });
-    tl.from(cards, {
-      opacity: 0,
-      y: 50,
-      ease: 'none',
-      duration: 0.6,
-      stagger: 0.6
-    });
+    tl.fromTo(cards,
+      { opacity: 0, y: 50 },
+      { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
+    );
   }
 
   function syncViewportAnimationMode() {
