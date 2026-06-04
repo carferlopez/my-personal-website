@@ -2788,28 +2788,56 @@
 
   // Servicios: las 3 cajas aparecen una tras otra al hacer scroll.
   // Por defecto son visibles (CSS); solo GSAP las oculta si llega a ejecutarse.
+  // fromTo con estados explícitos (0 -> 1) para que ningún refresh capture
+  // el estado oculto como final.
   function initServicesReveal() {
     if (reduceMotion) return;
     if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray('.services-grid .svc-card');
     if (!cards.length) return;
-    // Revelado ligado al scroll (estilo Apple): cada caja aparece a medida
-    // que scrolleas y se oculta si subes. scrub = animación pegada al scroll.
-    // Usamos fromTo con estados explícitos (0 -> 1) para que ningún
-    // ScrollTrigger.refresh() pueda capturar el estado oculto como final.
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.services-grid',
-        start: 'top bottom',
-        end: 'bottom 60%',
-        scrub: 0.6
-      }
+
+    const mm = gsap.matchMedia();
+
+    // Desktop: la sección se "congela" (pin) centrada y las 3 cajas aparecen
+    // una a una. Cuando las 3 están visibles, al seguir scrolleando se
+    // despinea y la página continúa. pinType:'fixed' preserva el skew del grid.
+    mm.add('(min-width: 768px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.services-grid',
+          start: 'center center',
+          end: () => '+=' + Math.round(window.innerHeight * 1.2),
+          pin: true,
+          pinType: 'fixed',
+          anticipatePin: 1,
+          scrub: 0.6
+        }
+      });
+      tl.fromTo(cards,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
+      );
+      // Margen final: las 3 quedan visibles un instante antes de despinear.
+      tl.to({}, { duration: 0.6 });
     });
-    tl.fromTo(cards,
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
-    );
+
+    // Móvil: cajas apiladas (no caben "centradas"); revelado ligado al scroll,
+    // sin pin.
+    mm.add('(max-width: 767px)', () => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: '.services-grid',
+          start: 'top bottom',
+          end: 'bottom 60%',
+          scrub: 0.6
+        }
+      });
+      tl.fromTo(cards,
+        { opacity: 0, y: 50 },
+        { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
+      );
+    });
   }
 
   function syncViewportAnimationMode() {
