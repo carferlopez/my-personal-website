@@ -2796,11 +2796,13 @@
     if (!cards.length) return;
     // Revelado ligado al scroll (estilo Apple): cada caja aparece a medida
     // que scrolleas y se oculta si subes. scrub = animación pegada al scroll.
+    // El rango empieza en cuanto la sección asoma por abajo (top bottom) para
+    // que nunca te quedes mirando un grid sin que haya empezado a revelarse.
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.services-grid',
-        start: 'top 85%',
-        end: 'center 55%',
+        start: 'top bottom',
+        end: 'bottom 60%',
         scrub: 0.6,
         invalidateOnRefresh: true
       }
