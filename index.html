@@ -2794,17 +2794,23 @@
     gsap.registerPlugin(ScrollTrigger);
     const cards = gsap.utils.toArray('.services-grid .svc-card');
     if (!cards.length) return;
-    gsap.from(cards, {
+    // Revelado ligado al scroll (estilo Apple): cada caja aparece a medida
+    // que scrolleas y se oculta si subes. scrub = animación pegada al scroll.
+    const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.services-grid',
-        start: 'top 78%',
-        once: true
-      },
+        start: 'top 85%',
+        end: 'center 55%',
+        scrub: 0.6,
+        invalidateOnRefresh: true
+      }
+    });
+    tl.from(cards, {
       opacity: 0,
-      y: 44,
-      duration: 0.7,
-      ease: 'power2.out',
-      stagger: 0.5
+      y: 50,
+      ease: 'none',
+      duration: 0.6,
+      stagger: 0.6
     });
   }
 
