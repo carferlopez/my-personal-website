@@ -1892,6 +1892,18 @@
   .svc-card:hover .svc-card__arrow {
     transform: translate(3px, -3px);
   }
+  /* Servicios: en desktop las 3 cajas se inclinan y, juntas, forman un gran
+     paralelogramo. El contenedor se inclina (skew) y el contenido se
+     contra-inclina para que el texto se lea recto. */
+  @media (min-width: 768px) {
+    .services-grid {
+      transform: skewX(-8deg);
+      margin-inline: 3rem;
+    }
+    .svc-card > * {
+      transform: skewX(8deg);
+    }
+  }
 
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
@@ -2774,6 +2786,28 @@
     );
   }
 
+  // Servicios: las 3 cajas aparecen una tras otra al hacer scroll.
+  // Por defecto son visibles (CSS); solo GSAP las oculta si llega a ejecutarse.
+  function initServicesReveal() {
+    if (reduceMotion) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    gsap.registerPlugin(ScrollTrigger);
+    const cards = gsap.utils.toArray('.services-grid .svc-card');
+    if (!cards.length) return;
+    gsap.from(cards, {
+      scrollTrigger: {
+        trigger: '.services-grid',
+        start: 'top 78%',
+        once: true
+      },
+      opacity: 0,
+      y: 44,
+      duration: 0.7,
+      ease: 'power2.out',
+      stagger: 0.5
+    });
+  }
+
   function syncViewportAnimationMode() {
     const hero = document.querySelector('.hero-v2-section');
     const mob =
@@ -3251,6 +3285,7 @@
 
     initHamburger();
     initLogoNavigation();
+    initServicesReveal();
     updateHeaderTheme();
     runViewportSyncWhenReady();
   }
