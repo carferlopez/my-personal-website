@@ -2056,6 +2056,7 @@
       <p class="big-heading services-headline"><span id="servicesHeadline">LA CAPACIDAD TÉCNICA<br>YA NO MARCA LA DIFERENCIA<span class="accent">.</span><br>EL CRITERIO LO HACE<span class="accent">.</span></span></p>
       <p class="services-lead" id="servicesLead">En un mundo en el que cualquiera puede hacer cualquier cosa con inteligencia artificial, la técnica ya no es el límite. El criterio lo es.</p>
 
+      <div class="services-pin">
       <div class="services-grid">
         <article class="svc-card">
           <span class="svc-card__num">01</span>
@@ -2075,6 +2076,7 @@
           <p class="svc-card__text" id="svc3Text">No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.</p>
           <span class="svc-card__more"><span id="svc3More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
         </article>
+      </div>
       </div>
       </div>
 
@@ -2805,10 +2807,10 @@
     mm.add('(min-width: 768px)', () => {
       const tl = gsap.timeline({
         scrollTrigger: {
-          trigger: '.services-grid',
+          trigger: '.services-pin',
           start: 'center center',
           end: () => '+=' + Math.round(window.innerHeight * 1.2),
-          pin: true,
+          pin: '.services-pin',
           pinType: 'fixed',
           anticipatePin: 1,
           scrub: 0.6
