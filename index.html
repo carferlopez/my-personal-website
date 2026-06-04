@@ -1894,7 +1894,7 @@
   }
 
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
-  @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(3, 1fr); gap: 1.25rem; } }
+  @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card:not(.price-card--featured):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
   .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
@@ -2071,43 +2071,32 @@
         <span class="section-head__index">(02)</span>
         <span class="section-head__name" id="secHeadPricing">PRECIOS</span>
       </div>
-      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">PRECIO CERRADO<span class="accent">.</span><br>ASÍNCRONO<span class="accent">.</span><br>SIN REUNIONES ETERNAS<span class="accent">.</span></span></p>
-      <p class="services-lead" id="pricingIntro">Tú tienes la idea, yo la ejecuto. Todo el feedback es estructurado y asíncrono para proteger el foco y la velocidad. Sin sorpresas.</p>
+      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">SIN AGENCIAS<span class="accent">.</span><br>SIN REUNIONES ETERNAS<span class="accent">.</span><br>SOLO RESULTADOS<span class="accent">.</span></span></p>
+      <p class="services-lead" id="pricingIntro">Tú pones la visión y yo me encargo de la ejecución integral. Eliminamos las videollamadas innecesarias que bloquean tu agenda: nos comunicamos de forma ágil y por escrito para avanzar el triple de rápido. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas.</p>
 
       <div class="pricing-grid">
         <article class="price-card">
           <h3 class="price-card__name" id="price1Name">MVP SPRINT</h3>
           <p class="price-card__price" id="price1Price">1.500 €</p>
           <ul class="price-card__list" id="price1List">
-            <li>Landing page premium o web de producto de hasta 5 secciones.</li>
-            <li>Diseño visual a medida, animaciones ligeras y copy enfocado a conversión.</li>
-            <li>Estructura frontend optimizada y lista para lanzar.</li>
-            <li>Entrega garantizada en 5-7 días.</li>
+            <li>Diseño de interfaz premium y UX optimizada (hasta 5 secciones interconectadas).</li>
+            <li>Estructura frontend con animaciones fluidas y copy de alta conversión.</li>
+            <li>Arquitectura base integrada: Gestión de usuarios y base de datos lista.</li>
+            <li>Pasarela de pagos (Stripe) configurada para cobrar desde el primer día.</li>
+            <li>Comunicación 100% por escrito y entrega garantizada en 7 días.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Empezar Sprint</a>
+          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Lanzar mi MVP</a>
           <p class="price-card__note" id="price1Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
         </article>
         <article class="price-card price-card--featured">
-          <span class="price-card__badge" id="price2Badge">Más demandado</span>
-          <h3 class="price-card__name" id="price2Name">FULL PRODUCT</h3>
-          <p class="price-card__price" id="price2Price">2.500 €</p>
-          <ul class="price-card__list" id="price2List">
-            <li>Todo lo anterior + Arquitectura de sistema completa.</li>
-            <li>Conexión a Base de Datos (Supabase) y Autenticación de usuarios.</li>
-            <li>Integración de Pasarela de Pagos (Stripe) para monetizar desde el día uno.</li>
-            <li>El motor técnico completo para tu idea de negocio.</li>
-          </ul>
-          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Lanzar Producto</a>
-          <p class="price-card__note" id="price2Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
-        </article>
-        <article class="price-card">
           <h3 class="price-card__name" id="price3Name">EL LABORATORIO</h3>
-          <p class="price-card__price" id="price3Price">∞<span>microproductos</span></p>
+          <p class="price-card__price" id="price3Price">MICRO-APPS</p>
           <ul class="price-card__list" id="price3List">
-            <li>¿Quieres ver de lo que soy capaz? En mi laboratorio diseño y lanzo mis propios microproductos independientes.</li>
-            <li>Explora utilidades como 'Newspooper' o 'Noise.health', creadas bajo la filosofía: excelentes en lo mínimo indispensable.</li>
+            <li>Mi espacio de experimentación técnica y creativa independiente.</li>
+            <li>Diseño y lanzo herramientas digitales propias bajo una sola filosofía: excelentes en lo mínimo indispensable.</li>
+            <li>Explora utilidades de software como 'Newspooper' o 'Noise.health' para ver mi capacidad de ejecución real.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Ver Micro-Apps</a>
+          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Explorar Micro-Apps</a>
           <p class="price-card__note" id="price3Note">*Proyectos propios, en evolución constante.</p>
         </article>
       </div>
@@ -2260,36 +2249,28 @@
       svc3Title: "Product<br>MANAGEMENT",
       svc3Text: "No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.",
       svc1More: "Ver ejemplos", svc2More: "Ver ejemplos", svc3More: "Ver ejemplos",
-      pricingHeadline: "PRECIO CERRADO<span class=\"accent\">.</span><br>ASÍNCRONO<span class=\"accent\">.</span><br>SIN REUNIONES ETERNAS<span class=\"accent\">.</span>",
-      pricingIntro: "Tú tienes la idea, yo la ejecuto. Todo el feedback es estructurado y asíncrono para proteger el foco y la velocidad. Sin sorpresas.",
+      pricingHeadline: "SIN AGENCIAS<span class=\"accent\">.</span><br>SIN REUNIONES ETERNAS<span class=\"accent\">.</span><br>SOLO RESULTADOS<span class=\"accent\">.</span>",
+      pricingIntro: "Tú pones la visión y yo me encargo de la ejecución integral. Eliminamos las videollamadas innecesarias que bloquean tu agenda: nos comunicamos de forma ágil y por escrito para avanzar el triple de rápido. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas.",
       priceNote: "*Los proyectos arrancan con un 50% de pago adelantado.",
       price1Name: "MVP SPRINT",
       price1Price: "1.500 €",
       price1List: [
-        "Landing page premium o web de producto de hasta 5 secciones.",
-        "Diseño visual a medida, animaciones ligeras y copy enfocado a conversión.",
-        "Estructura frontend optimizada y lista para lanzar.",
-        "Entrega garantizada en 5-7 días."
+        "Diseño de interfaz premium y UX optimizada (hasta 5 secciones interconectadas).",
+        "Estructura frontend con animaciones fluidas y copy de alta conversión.",
+        "Arquitectura base integrada: Gestión de usuarios y base de datos lista.",
+        "Pasarela de pagos (Stripe) configurada para cobrar desde el primer día.",
+        "Comunicación 100% por escrito y entrega garantizada en 7 días."
       ],
-      price1Cta: "Empezar Sprint",
-      price2Badge: "Más demandado",
-      price2Name: "FULL PRODUCT",
-      price2Price: "2.500 €",
-      price2List: [
-        "Todo lo anterior + Arquitectura de sistema completa.",
-        "Conexión a Base de Datos (Supabase) y Autenticación de usuarios.",
-        "Integración de Pasarela de Pagos (Stripe) para monetizar desde el día uno.",
-        "El motor técnico completo para tu idea de negocio."
-      ],
-      price2Cta: "Lanzar Producto",
+      price1Cta: "Lanzar mi MVP",
       price3Name: "EL LABORATORIO",
-      price3Price: "∞<span>microproductos</span>",
+      price3Price: "MICRO-APPS",
       price3List: [
-        "¿Quieres ver de lo que soy capaz? En mi laboratorio diseño y lanzo mis propios microproductos independientes.",
-        "Explora utilidades como 'Newspooper' o 'Noise.health', creadas bajo la filosofía: excelentes en lo mínimo indispensable."
+        "Mi espacio de experimentación técnica y creativa independiente.",
+        "Diseño y lanzo herramientas digitales propias bajo una sola filosofía: excelentes en lo mínimo indispensable.",
+        "Explora utilidades de software como 'Newspooper' o 'Noise.health' para ver mi capacidad de ejecución real."
       ],
       price3Note: "*Proyectos propios, en evolución constante.",
-      price3Cta: "Ver Micro-Apps",
+      price3Cta: "Explorar Micro-Apps",
       pricingVat: "* Precios sin IVA.",
       servicesKitTitle: "Extras disponibles",
       servicesKitList: [
@@ -2349,36 +2330,28 @@
       svc3Title: "Product<br>MANAGEMENT",
       svc3Text: "I don't just build the product; I design the strategy so users grasp its value instantly.",
       svc1More: "See examples", svc2More: "See examples", svc3More: "See examples",
-      pricingHeadline: "FIXED PRICE<span class=\"accent\">.</span><br>ASYNC<span class=\"accent\">.</span><br>NO ENDLESS MEETINGS<span class=\"accent\">.</span>",
-      pricingIntro: "You have the idea, I execute it. All feedback is structured and async to protect focus and speed. No surprises.",
+      pricingHeadline: "NO AGENCIES<span class=\"accent\">.</span><br>NO ENDLESS MEETINGS<span class=\"accent\">.</span><br>JUST RESULTS<span class=\"accent\">.</span>",
+      pricingIntro: "You bring the vision and I handle the full execution. We cut the unnecessary video calls that block your calendar: we communicate fast and in writing to move three times faster. You know exactly what you get, what it costs and when it ships. No surprises.",
       priceNote: "*Projects begin with a 50% upfront payment.",
       price1Name: "MVP SPRINT",
       price1Price: "€1,500",
       price1List: [
-        "Premium landing page or product website up to 5 sections.",
-        "Custom visual design, light animations and conversion-focused copy.",
-        "Optimized frontend structure, ready to launch.",
-        "Guaranteed delivery in 5-7 days."
+        "Premium interface design and optimized UX (up to 5 interconnected sections).",
+        "Frontend structure with fluid animations and high-conversion copy.",
+        "Base architecture integrated: user management and database ready.",
+        "Payment gateway (Stripe) configured to charge from day one.",
+        "100% written communication and guaranteed delivery in 7 days."
       ],
-      price1Cta: "Start the Sprint",
-      price2Badge: "Most wanted",
-      price2Name: "FULL PRODUCT",
-      price2Price: "€2,500",
-      price2List: [
-        "Everything above + complete system architecture.",
-        "Database connection (Supabase) and user authentication.",
-        "Payment gateway integration (Stripe) to monetize from day one.",
-        "The complete technical engine for your business idea."
-      ],
-      price2Cta: "Launch the Product",
+      price1Cta: "Launch my MVP",
       price3Name: "THE LAB",
-      price3Price: "∞<span>micro-products</span>",
+      price3Price: "MICRO-APPS",
       price3List: [
-        "Want to see what I'm capable of? In my lab I design and ship my own independent micro-products.",
-        "Explore utilities like 'Newspooper' or 'Noise.health', built under the philosophy: excellent at the bare essentials."
+        "My space for independent technical and creative experimentation.",
+        "I design and ship my own digital tools under a single philosophy: excellent at the bare essentials.",
+        "Explore software utilities like 'Newspooper' or 'Noise.health' to see my real execution capability."
       ],
       price3Note: "*My own projects, constantly evolving.",
-      price3Cta: "See Micro-Apps",
+      price3Cta: "Explore Micro-Apps",
       pricingVat: "* Prices exclude VAT.",
       servicesKitTitle: "Available Extras",
       servicesKitList: [
