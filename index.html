@@ -5,7 +5,7 @@
 <script>document.documentElement.classList.add('js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Carlos Fernández — Indie Maker &amp; Product Manager</title>
-<meta name="description" content="Freelance Indie Maker &amp; Product Manager. Convierto ideas complejas en productos digitales estéticos, rápidos y rentables. Servicios productizados y asíncronos. Sin reuniones eternas.">
+<meta name="description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
 <meta name="author" content="Carlos Fernández — Indie Maker & Product Manager">
 <meta name="theme-color" content="#FFFFFF">
 
@@ -15,7 +15,7 @@
 <meta property="og:locale" content="es_ES">
 <meta property="og:locale:alternate" content="en_US">
 <meta property="og:title" content="Carlos Fernández — Indie Maker &amp; Product Manager">
-<meta property="og:description" content="Freelance Indie Maker &amp; Product Manager. Convierto ideas complejas en productos digitales estéticos, rápidos y rentables. Servicios productizados y asíncronos. Sin reuniones eternas.">
+<meta property="og:description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
 <meta property="og:image" content="https://carlosmakes.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -24,7 +24,7 @@
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Carlos Fernández — Indie Maker &amp; Product Manager">
-<meta name="twitter:description" content="Freelance Indie Maker &amp; Product Manager. Convierto ideas complejas en productos digitales estéticos, rápidos y rentables. Servicios productizados y asíncronos. Sin reuniones eternas.">
+<meta name="twitter:description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
 <meta name="twitter:image" content="https://carlosmakes.com/og.png">
 <meta name="twitter:image:alt" content="Carlos Fernández — Indie Maker &amp; Product Manager">
 
@@ -38,7 +38,7 @@
   "@type": "Person",
   "name": "Carlos Fernández",
   "jobTitle": "Indie Maker & Product Manager",
-  "description": "Indie Maker & Product Manager freelance. Convierto ideas complejas en productos digitales rápidos y rentables con IA.",
+  "description": "Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — propios y para marcas.",
   "url": "https://carlosmakes.com/",
   "sameAs": [
     "https://x.com/carlos_makes",
@@ -68,30 +68,16 @@
     --right-eye-height: 13.5%;
     --max-radius: 2vw;
 
-    --black: #0A0A0A;
-    --white: #0A0A0A;
     /* Tipografía monoespaciada para metadatos/etiquetas (contraste grotesk + mono) */
     --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-    /* Paleta sitio: blanco de fondo, carbón texto principal, rojo como único acento */
-    --page-bg: #FFFFFF;
-    --page-lime: #0A0A0A;
-    /* Tokens paleta clara premium */
-    --paper: #F2F2F2;
-    --accent: #FF0000;
-    --ink-2: #6B6B6F;
-    --ink-3: #8E8E93;
+    /* Paleta: fondo blanco/negro, texto carbón, rojo como único acento */
+    --ink:      #0A0A0A;
+    --paper:    #F2F2F2;
+    --page-bg:  #FFFFFF;
+    --accent:   #FF0000;
+    --ink-2:    #6B6B6F;
+    --ink-3:    #8E8E93;
     --hairline: #E5E3DF;
-    --text-primary: var(--page-lime);
-    --gray: #8E8E93;
-    --gray-light: #E5E3DF;
-    --gray-mid: #8E8E93;
-    --hero-v2-orange: var(--page-lime);
-    --hero-v2-violet-bg: #000000;
-    --hero-v2-violet: var(--accent);
-    --hero-v2-violet-rgb: 255, 0, 0;
-    --page-orange: var(--white);
-    --page-magenta: var(--page-bg);
-    --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 1rem;
     --logo-text-inset: calc(var(--container-pad-x) - 0.5rem);
@@ -114,20 +100,20 @@
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background: var(--page-bg);
-    color: var(--black);
+    color: var(--ink);
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     line-height: 1.5;
   }
 
-  ::selection { background: rgba(255, 45, 85, 0.20); color: var(--black); }
+  ::selection { background: rgba(255, 45, 85, 0.20); color: var(--ink); }
 
   a { color: inherit; text-decoration: none; }
 
   button { font-family: inherit; background: none; border: none; cursor: pointer; }
   a:focus-visible, button:focus-visible {
-    outline: 3px solid var(--page-lime);
+    outline: 3px solid var(--ink);
     outline-offset: 3px;
   }
 
@@ -136,46 +122,6 @@
     width: 100%;
     padding-left: max(var(--container-pad-x), env(safe-area-inset-left, 0px));
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-  }
-
-  .scroll-video-section {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 220svh;
-    background: var(--page-bg);
-  }
-  .scroll-video-section__sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100svh;
-    max-height: 100dvh;
-    overflow: hidden;
-    background: var(--page-bg);
-  }
-  .scroll-video-section video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform-origin: center center;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-video-section {
-      height: auto;
-    }
-    .scroll-video-section__sticky {
-      position: relative;
-      height: auto;
-      max-height: none;
-    }
-    .scroll-video-section video {
-      height: auto;
-      opacity: 1 !important;
-      transform: none !important;
-      clip-path: none !important;
-    }
   }
 
   /* ==================== SITE HEADER (fixed) ==================== */
@@ -199,21 +145,21 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     background: rgba(255, 255, 255, 0.88);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header.scrolled .logo,
   .site-header.scrolled .logo .logo-carlos,
   .site-header.scrolled .logo .logo-fernandez {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .header-top nav a {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .header-top nav a:hover {
     color: var(--accent) !important;
   }
   .site-header.scrolled .lang-select__btn {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .lang-select__btn:hover,
   .site-header.scrolled .lang-select__btn:focus-visible,
@@ -263,14 +209,14 @@
     opacity: 1;
   }
   .site-header .lang-select__btn:focus-visible {
-    outline: 2px solid var(--black);
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
   }
   .site-header .hamburger-btn {
     color: #FFFFFF;
   }
   .site-header.scrolled .hamburger-btn {
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header .hamburger-btn:hover {
     color: var(--accent);
@@ -278,11 +224,11 @@
   .site-header .lang-select__menu {
     background: var(--page-bg);
     border: 2px solid rgba(0, 0, 0, 0.45);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header .lang-select__option {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
     transition: background-color 0.15s ease, color 0.15s ease;
   }
   .site-header .lang-select__option.is-active {
@@ -291,7 +237,7 @@
   }
   .site-header .lang-select__option:hover,
   .site-header .lang-select__option:focus-visible {
-    background: var(--page-lime);
+    background: var(--ink);
     color: var(--paper);
     -webkit-text-fill-color: var(--paper);
   }
@@ -326,15 +272,15 @@
     color: var(--accent) !important;
   }
   .site-header.scrolled .logo:hover .logo-dot {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--hero-v2-violet-bg);
-    color: var(--white);
+    background: #000000;
+    color: var(--ink);
   }
   .hero-v2-section.hero-v2-section--static {
     height: auto;
@@ -368,7 +314,7 @@
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    color: var(--white);
+    color: var(--ink);
     /* Reserva bajo el header fijo para que el titular no invada el logo */
     padding:
       max(5rem, calc(env(safe-area-inset-top, 0px) + 4.75rem))
@@ -444,6 +390,9 @@
     line-height: 0.95;
     margin: 0;
     padding-block: 0.02em;
+    /* Fallback: fitHeroV2Lines() recalcula el tamaño en JS; este clamp evita
+       que el titular se quede diminuto si el JS tarda o falla. */
+    font-size: clamp(2.5rem, 12vw, 8rem);
   }
 
   /* Hero: todo blanco, puntos rojo */
@@ -460,240 +409,6 @@
   #heroV2Title .hero-v2-violet {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
-  }
-
-  /* Presentación: mismo fondo que la página; titulares en blanco */
-  .intro-hero {
-    position: relative;
-    background: var(--page-bg);
-    color: var(--white);
-    padding-top: 5rem;
-    padding-bottom: clamp(10rem, 32vh, 22rem);
-    overflow-x: hidden;
-  }
-  @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
-
-  .intro-panels {
-    display: block;
-  }
-
-  /* Sin JS / reduced-motion: tres bloques en columna. Con .intro-hero--active: un solo viewport, rotación por scroll */
-  .intro-stage {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(5rem, 14vh, 11rem);
-    position: relative;
-    /* Patch 4: Hardware Acceleration */
-    will-change: transform;
-    transform: translateZ(0);
-  }
-
-  .intro-panel {
-    min-height: 100vh;
-    min-height: 100dvh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: clamp(3.5rem, 10vw, 8rem);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    overflow: visible;
-  }
-  .intro-panel:last-child {
-    border-bottom: none;
-  }
-
-  .intro-hero--active .intro-stage {
-    display: block;
-    min-height: 100vh;
-    min-height: 100dvh;
-    gap: 0;
-    perspective: min(1400px, 180vw);
-    perspective-origin: 50% 50%;
-    transform-style: preserve-3d;
-  }
-
-  .intro-hero.intro-hero--active {
-    overflow: hidden;
-  }
-
-  .intro-hero--active .intro-panel {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: 100%;
-    box-sizing: border-box;
-    border-bottom: none;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
-      max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-    padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
-  }
-
-  .intro-hero--active .intro-panel__grid {
-    flex: 0 1 auto;
-    display: flex;
-    min-height: 0;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .intro-hero--active .intro-panel--0 {
-    z-index: 1;
-  }
-  .intro-hero--active .intro-panel--1 {
-    z-index: 2;
-  }
-  .intro-hero--active .intro-panel--2 {
-    z-index: 3;
-  }
-
-  .intro-panel__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(2rem, 6vw, 4.5rem);
-    align-items: center;
-    width: 100%;
-    overflow: visible;
-  }
-
-  .intro-panel__copy {
-    position: relative;
-    z-index: 2;
-    margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
-    width: min(94vw, 78rem);
-    max-width: min(94vw, 78rem);
-    box-sizing: border-box;
-    will-change: transform;
-  }
-  .intro-hero--active .intro-panel__copy {
-    margin-inline: auto;
-    margin-inline-start: auto;
-    margin-inline-end: auto;
-    width: auto;
-    max-width: min(94vw, 88rem);
-  }
-
-  .intro-panel__headline {
-    margin: 0;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    text-transform: uppercase;
-    text-wrap: pretty;
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
-    font-size: clamp(2rem, 3.8vw + 0.85rem, 4.75rem);
-  }
-  /* Bloque multi-línea como el hero (SYSTEMS / ARCHITECT / …): una fila por span */
-  .intro-panel__headline.intro-panel__headline--stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(0.02em, 0.28vw, 0.08em);
-    width: max-content;
-    max-width: min(96vw, 58rem);
-    margin-inline: auto;
-    text-align: center;
-  }
-  .intro-headline__line {
-    display: block;
-    white-space: nowrap;
-    line-height: 0.9;
-    letter-spacing: inherit;
-  }
-  @media (min-width: 768px) {
-    .intro-panel__headline {
-      font-size: clamp(2.15rem, 4.1vw + 0.9rem, 5.1rem);
-      line-height: 1.04;
-    }
-  }
-  @media (min-width: 640px) and (max-width: 899px) {
-    .intro-panel__copy {
-      width: min(94vw, 64rem);
-      max-width: min(94vw, 64rem);
-    }
-    .intro-panel__headline {
-      font-size: clamp(2.1rem, 4.2vw + 0.85rem, 4.85rem);
-    }
-  }
-  @media (min-width: 900px) {
-    .intro-panel__copy {
-      width: min(94vw, 88rem);
-      max-width: min(94vw, 88rem);
-    }
-    .intro-panel__headline {
-      font-size: clamp(2.25rem, 3.6vw + 1.35rem, 5.75rem);
-      line-height: 1.03;
-      letter-spacing: -0.042em;
-    }
-  }
-
-  .intro-hero.intro-hero--active .intro-panel__headline {
-    text-align: center;
-  }
-
-  /* Todas las headlines en blanco; ;) en lima */
-  .intro-panel--0 .intro-panel__headline,
-  .intro-panel--1 .intro-panel__headline,
-  .intro-panel--2 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  /* Panel 0: punto final en negro (contrasta con CONCRETAS blanco) */
-  .intro-panel--0 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* Panel 1 (MAESTROS): negro con acentos blancos */
-  .intro-panel--1 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  .intro-panel--1 .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-  .intro-panel--1 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* Panel 2 (CREACIONES): negro con acentos blancos */
-  .intro-panel--2 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  .intro-panel--2 .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-  .intro-panel--2 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* El punto final siempre en amarillo */
-  .intro-line__suffix--period {
-    color: var(--accent) !important;
-  }
-  /* ;) fuera del color principal del bloque */
-  .intro-panel--2 .intro-line__suffix--wink {
-    color: var(--white);
-  }
-
-  .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-
-  .intro-line__suffix {
-    color: rgba(142, 142, 147, 0.55);
   }
 
   .header-top {
@@ -776,7 +491,7 @@
   @media (min-width: 640px) { .header-top nav a { padding: 0.5rem; } }
   .header-top nav a:hover {
     background: transparent;
-    color: var(--white);
+    color: var(--ink);
   }
   .header-top nav svg {
     width: 1rem;
@@ -846,7 +561,7 @@
     flex-direction: column;
     gap: 0.15rem;
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--ink);
     border: 2px solid rgba(0, 0, 0, 0.45);
     z-index: 120;
   }
@@ -866,12 +581,12 @@
     padding: 0.45rem 0.55rem;
     transition: color 0.15s ease;
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
   }
   @media (min-width: 640px) { .lang-select__option { font-size: 0.75rem; } }
   .lang-select__option:hover {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .lang-select__option.is-active {
     background: transparent;
@@ -943,36 +658,6 @@
     }
   }
 
-  .scroll-hint {
-    text-align: center;
-    pointer-events: none;
-  }
-  .scroll-hint--intro {
-    margin-top: 2.5rem;
-  }
-  .scroll-hint a {
-    display: inline-block;
-    padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
-    font-weight: 700;
-    letter-spacing: 0.5em;
-    color: var(--paper);
-    background: var(--page-lime);
-    border: 3px solid var(--page-lime);
-    pointer-events: auto;
-    animation: float 3s ease-in-out infinite;
-    font-size: 0.875rem;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-  }
-  @media (min-width: 640px) { .scroll-hint a { font-size: 1rem; } }
-  @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
-  @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
-  .scroll-hint a:hover {
-    background: var(--accent);
-    color: var(--paper);
-    border-color: var(--accent);
-  }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
   .u-sr-only {
     position: absolute;
     width: 1px;
@@ -989,12 +674,6 @@
   .section-pad { padding: 2rem 0; }
   @media (min-width: 640px) { .section-pad { padding: 3rem 0; } }
   @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
-
-  /* Pin presentación: quitar .section-pad + .intro-hero (empujaban el copy hacia abajo en Y). */
-  .intro-hero.intro-hero--active.section-pad {
-    padding-top: max(0.65rem, env(safe-area-inset-top, 0px));
-    padding-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
-  }
 
   /* Móvil: sin animaciones de scroll — menos aire entre bloques */
   @media (max-width: 639px) {
@@ -1017,28 +696,6 @@
     #heroV2Title {
       will-change: auto;
     }
-    .intro-hero {
-      padding-top: 2rem;
-      padding-bottom: clamp(2rem, 6vw, 3.5rem);
-    }
-    .intro-stage {
-      gap: clamp(1.25rem, 4vh, 2.25rem);
-    }
-    .intro-panel {
-      min-height: auto !important;
-      padding-block: clamp(1.25rem, 4vw, 2rem);
-    }
-    #proyectos.section-pad {
-      padding-top: clamp(0.25rem, 1vw, 0.65rem);
-      padding-bottom: clamp(0.45rem, 2vw, 1rem);
-    }
-    .projects-works-inner {
-      padding-top: 0;
-      padding-bottom: clamp(0.65rem, 2.5vw, 1.35rem);
-    }
-    .projects-works-stack {
-      min-height: 0;
-    }
     .contact-box {
       padding: 1rem 0;
       gap: 1rem;
@@ -1046,58 +703,6 @@
     /* Presentación: titulares a ancho útil */
     html {
       overflow-x: hidden;
-    }
-    /* Pin móvil: centrado en el marco como escritorio */
-    .intro-hero.intro-hero--active .intro-panel {
-      min-height: 100vh !important;
-      min-height: 100dvh !important;
-      justify-content: center !important;
-      align-items: center;
-      padding-top: max(0.75rem, env(safe-area-inset-top, 0px)) !important;
-      padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
-      padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
-        max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-      box-sizing: border-box;
-    }
-    .intro-panel__grid {
-      min-width: 0;
-      gap: clamp(1.25rem, 4vw, 2rem);
-    }
-    .intro-hero.intro-hero--active .intro-panel__grid {
-      justify-items: center;
-      width: 100%;
-      align-content: center;
-    }
-    .intro-panel__copy {
-      max-width: none;
-      width: 100%;
-      min-width: 0;
-      margin-inline-start: 0;
-      box-sizing: border-box;
-    }
-    .intro-hero.intro-hero--active .intro-panel__copy {
-      margin-inline: auto;
-      width: auto;
-      max-width: min(92vw, 40rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(0.35rem, 2vmin, 0.85rem);
-      text-align: center;
-    }
-    .intro-panel__headline {
-      font-size: clamp(1.45rem, 6.2vw, 2.5rem);
-      line-height: 1.06;
-      overflow-wrap: normal;
-      word-break: normal;
-      hyphens: none;
-      max-width: 100%;
-    }
-    .intro-hero.intro-hero--active .intro-panel__headline {
-      text-align: center;
-      text-wrap: pretty;
-      font-size: clamp(1.2rem, 6.8vmin, 2.15rem);
-      line-height: 1.05;
     }
   }
 
@@ -1118,253 +723,13 @@
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--accent); }
 
-  /* WORKS: franja de marquees horizontales (7 filas, sentidos alternos) */
-  #proyectos.projects-section {
-    background: var(--page-bg);
-    color: var(--page-lime);
-    overflow-x: clip;
-    position: relative;
-  }
-
-  #proyectos > .projects-tickers-belt {
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
-    padding-top: clamp(0.35rem, 1vw, 0.55rem);
-    padding-bottom: clamp(0.35rem, 1vw, 0.55rem);
-    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
-    box-sizing: border-box;
-    z-index: 3;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.06rem, 0.45vw, 0.14rem);
-  }
-
-  .projects-ticker {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: hidden;
-    padding: clamp(0.12rem, 0.55vw, 0.28rem) 0;
-  }
-  .projects-ticker__viewport {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    width: 100%;
-    background: transparent;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-  .projects-ticker__track {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: max-content;
-    font-weight: 900;
-    line-height: 1.05;
-    will-change: transform;
-    animation: projects-ticker-marquee-ltr 90s linear infinite;
-    background: transparent;
-    font-size: clamp(3.5rem, 13vw, 150px);
-    letter-spacing: -0.05em;
-  }
-  .projects-ticker__track--rev {
-    animation: projects-ticker-marquee-rtl 90s linear infinite;
-  }
-  .projects-ticker__chunk {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding-inline-end: 0;
-  }
-  .projects-ticker__word {
-    flex-shrink: 0;
-    font-weight: 900;
-    letter-spacing: -0.06em;
-    text-transform: uppercase;
-    margin-inline-end: 0;
-    line-height: 1;
-  }
-  .projects-ticker__word--orange {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-    -webkit-text-stroke: 0.02em var(--page-lime);
-  }
-  .projects-ticker__word--black {
-    color: var(--ink-3);
-    -webkit-text-fill-color: var(--ink-3);
-    -webkit-text-stroke: 0;
-    text-shadow: none;
-  }
-  @keyframes projects-ticker-marquee-ltr {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes projects-ticker-marquee-rtl {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .projects-ticker__track {
-      animation: none;
-      transform: none;
-      padding-inline: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 100%;
-      row-gap: 0.35rem;
-    }
-    .projects-ticker__chunk {
-      padding-inline-end: 0;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-  }
-
-  #proyectos.section-pad {
-    padding-top: clamp(0.25rem, 1vw, 0.75rem);
-    padding-bottom: 0;
-  }
-
-  .projects-works-stack {
-    position: relative;
-    min-height: clamp(8rem, 28vh, 18rem);
-    display: flex;
-    flex-direction: column;
-  }
-  .projects-works-inner {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding-top: clamp(0, 0.2vw, 0.12rem);
-    padding-bottom: 0;
-  }
-  /* ==================== WORKS SLIDER ==================== */
-  .works-slider-wrap {
-    padding-top: clamp(0.75rem, 2.5vw, 1.5rem);
-    padding-bottom: 0;
-  }
-  #proyectos > .container {
-    max-width: none;
-  }
-  .works-slider {
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .works-slider::-webkit-scrollbar { display: none; }
-  .works-slider__track {
-    display: flex;
-    gap: 1.5rem;
-  }
-  .works-card {
-    flex: 0 0 min(82vw, 700px);
-    max-width: min(82vw, 700px);
-    margin: 0;
-    scroll-snap-align: start;
-    background: #0A0A0A;
-    border-radius: 18px;
-    overflow: hidden;
-    display: block;
-    color: var(--paper);
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .works-card__media {
-    width: 100%;
-    overflow: hidden;
-    background: transparent;
-    border-radius: 18px;
-  }
-  .works-card__video {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-  }
-  .works-card__preview {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    object-position: top;
-  }
-  .works-card__body {
-    padding: 1.25rem 1.5rem 1.5rem;
-  }
-  .works-card__tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    margin-bottom: 0.5rem;
-  }
-  .works-card__title {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--paper);
-  }
-  .works-slider__arrows {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-  .works-slider__arrow {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(10,10,10,0.06);
-    color: var(--page-lime);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    flex-shrink: 0;
-  }
-  .works-slider__arrow:hover:not(:disabled) {
-    background: rgba(10,10,10,0.12);
-  }
-  .works-slider__arrow:disabled {
-    opacity: 0.25;
-    cursor: default;
-  }
-  @media (min-width: 768px) {
-    .works-card {
-      flex: 0 0 min(55vw, 820px);
-      max-width: min(55vw, 820px);
-    }
-  }
-
-
   #contacto #contactMark {
     color: var(--accent);
     -webkit-text-fill-color: var(--accent);
   }
   #contactDividerText {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-divider-mark {
     color: var(--accent);
@@ -1396,12 +761,12 @@
   }
   #contacto {
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
     padding: 0 0 1.25rem 0;
     display: flex;
     flex-direction: column;
@@ -1438,9 +803,9 @@
     border-color: var(--accent);
   }
   .contact-box .contact-btn:hover:not(:disabled) {
-    background: var(--page-lime);
+    background: var(--ink);
     color: var(--paper);
-    border-color: var(--page-lime);
+    border-color: var(--ink);
   }
 
 
@@ -1468,9 +833,9 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .contact-alt-link:hover {
-    background: var(--page-lime);
+    background: var(--ink);
     color: #FFFFFF;
-    border-color: var(--page-lime);
+    border-color: var(--ink);
   }
 
 
@@ -1541,8 +906,8 @@
     margin-top: -1.5rem;
   }
   .contact-ojitos-text .big-heading--mid {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-ojitos-text .contact-divider-mark {
     color: var(--accent);
@@ -1554,15 +919,15 @@
     gap: 0.5rem;
   }
   .contact-ojitos-text > p.big-heading {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-arrow-down {
     display: block;
     font-size: 3rem;
     font-weight: 900;
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
     line-height: 1;
     animation: contact-arrow-float 1.6s ease-in-out infinite;
   }
@@ -1647,7 +1012,7 @@
     padding: 0.55rem 0.7rem;
     border: 3px solid var(--hairline);
     background: var(--paper);
-    color: var(--black);
+    color: var(--ink);
     min-width: 0;
   }
   .contact-form__input:hover,
@@ -1661,12 +1026,12 @@
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
   .contact-form__select option {
-    color: var(--black);
+    color: var(--ink);
     background: var(--paper);
   }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
-    color: var(--white);
+    color: var(--ink);
     font-size: 0.95rem;
     font-weight: 600;
     max-width: 42rem;
@@ -1676,7 +1041,7 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--page-lime);
+    color: var(--ink);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
@@ -1749,7 +1114,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem 1rem;
-    border-top: 3px solid var(--black);
+    border-top: 3px solid var(--ink);
     padding-top: 0.9rem;
     margin: 0 0 2.5rem;
   }
@@ -1776,7 +1141,7 @@
   }
 
   /* ==================== SERVICIOS + PRECIOS ==================== */
-  #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
+  #servicios { background: var(--page-bg); color: var(--ink); overflow-x: clip; }
   .services-subsection + .services-subsection { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
   .services-eyebrow {
     color: var(--ink-3);
@@ -1822,7 +1187,7 @@
   }
   @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
   .svc-card {
-    background: var(--black);
+    background: var(--ink);
     color: var(--paper);
     padding: 2.25rem 1.35rem 2.1rem;
     min-height: 280px;
@@ -1908,16 +1273,16 @@
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
-  .price-card:not(.price-card--featured):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
-  .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
+  .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .price-card--featured { background: var(--ink); color: var(--paper); border-color: var(--ink); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card--featured:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
   .price-card--featured:hover .price-card__name { color: #FFFFFF; }
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
-    background: var(--paper); color: var(--black);
+    background: var(--paper); color: var(--ink);
     font-family: var(--font-mono); font-weight: 700;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 0.28rem 0.6rem; border: 2px solid var(--black);
+    padding: 0.28rem 0.6rem; border: 2px solid var(--ink);
   }
   .price-card__name {
     color: var(--ink-3);
@@ -1933,11 +1298,11 @@
   .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.6rem 0 0; line-height: 1.4; }
   .price-card__cta { align-self: stretch; text-align: center; }
   .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
-  .price-card .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
+  .price-card .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
   .price-card--featured .price-card__cta { color: var(--paper); background: var(--accent); border-color: var(--accent); }
-  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
-  .price-card--featured:hover .price-card__cta { background: var(--black); color: #FFFFFF; border-color: var(--black); }
-  .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
+  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
+  .price-card--featured:hover .price-card__cta { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+  .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
   .services-kit {
     margin: 2.5rem 0 0;
     font-family: var(--font-mono);
@@ -1945,7 +1310,7 @@
     font-weight: 400;
     line-height: 1.6;
     color: var(--ink-2);
-    border-top: 2px solid var(--black);
+    border-top: 2px solid var(--ink);
     padding-top: 1.25rem;
     max-width: 60ch;
   }
@@ -1954,7 +1319,7 @@
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
-    color: var(--ink-1);
+    color: var(--ink);
   }
   .services-kit__list {
     list-style: none;
@@ -2051,23 +1416,23 @@
       <div class="services-subsection">
       <div class="section-head">
         <span class="section-head__index">(01)</span>
-        <span class="section-head__name" id="secHeadServices">SERVICIOS</span>
+        <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
       </div>
-      <p class="big-heading services-headline"><span id="servicesHeadline">LA CAPACIDAD TÉCNICA<br>YA NO MARCA LA DIFERENCIA<span class="accent">.</span><br>EL CRITERIO LO HACE<span class="accent">.</span></span></p>
-      <p class="services-lead" id="servicesLead">En un mundo en el que cualquiera puede hacer cualquier cosa con inteligencia artificial, la técnica ya no es el límite. El criterio lo es.</p>
+      <p class="big-heading services-headline"><span id="servicesHeadline">SOY UN PRODUCT MANAGER QUE INTENTA APORTAR CLARIDAD EN UN OCÉANO DE RUIDO<span class="accent">.</span></span></p>
+      <p class="services-lead" id="servicesLead">Vengo de la estrategia digital para grandes marcas; ahora construyo producto. Traduzco sistemas complejos en objetos simples, rápidos y bonitos que se entienden a la primera —lo mismo en lo que lanzo por mi cuenta que en lo que construyo para una marca. Diseño con criterio, ejecuto con código y priorizo como product manager.</p>
 
       <div class="services-pin">
       <div class="services-grid">
         <article class="svc-card">
           <span class="svc-card__num">01</span>
           <h3 class="svc-card__title" id="svc1Title">FILOSOFÍA DE DISEÑO<span class="accent">:</span><br>ESTÉTICA Y SIMPLICIDAD</h3>
-          <p class="svc-card__text" id="svc1Text">O "User Friendly", como dicen los modernos. El caso es que trato de no hacer webs ni apps como todas las demás.</p>
+          <p class="svc-card__text" id="svc1Text">O "User Friendly", como dicen los modernos. El caso es que trato de no construir productos como todos los demás.</p>
           <span class="svc-card__more"><span id="svc1More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
         </article>
         <article class="svc-card">
           <span class="svc-card__num">02</span>
           <h3 class="svc-card__title" id="svc2Title">RESULTADOS<span class="accent">:</span><br>CÓDIGO + CREATIVIDAD</h3>
-          <p class="svc-card__text" id="svc2Text">Si la IA ya ha resuelto el CÓMO construir, solo ganarán los productos que acierten con el QUÉ.</p>
+          <p class="svc-card__text" id="svc2Text">Hoy en día cualquiera puede construir cualquier cosa con Inteligencia Artificial. El verdadero reto está en el QUÉ construir, y con eso, la IA no es tan brillante.</p>
           <span class="svc-card__more"><span id="svc2More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
         </article>
         <article class="svc-card">
@@ -2085,33 +1450,33 @@
         <span class="section-head__index">(02)</span>
         <span class="section-head__name" id="secHeadPricing">PRECIOS</span>
       </div>
-      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">SIN AGENCIAS<span class="accent">.</span><br>SIN REUNIONES ETERNAS<span class="accent">.</span><br>SOLO RESULTADOS<span class="accent">.</span></span></p>
-      <p class="services-lead" id="pricingIntro">Tú pones la visión y yo me encargo de la ejecución integral. Eliminamos las videollamadas innecesarias que bloquean tu agenda: nos comunicamos de forma ágil y por escrito para avanzar el triple de rápido. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas.</p>
+      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">PRECIO FIJO<span class="accent">.</span><br>CERO REUNIONES<span class="accent">.</span><br>PLAZAS CONTADAS<span class="accent">.</span></span></p>
+      <p class="services-lead" id="pricingIntro">Entre un producto propio y el siguiente, tomo un número limitado de webs al año. Un servicio productizado: precio fijo, scope fijo y proceso 100% asíncrono. Tú pones la visión y yo ejecuto de principio a fin. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas y sin videollamadas que bloqueen tu agenda.</p>
 
       <div class="pricing-grid">
-        <article class="price-card">
-          <h3 class="price-card__name" id="price1Name">MVP SPRINT</h3>
+        <article class="price-card price-card--featured">
+          <h3 class="price-card__name" id="price1Name">WEB DE AUTOR</h3>
           <p class="price-card__price" id="price1Price">1.500 €</p>
           <ul class="price-card__list" id="price1List">
-            <li>Diseño de interfaz premium y UX de alta fidelidad (hasta 5 secciones interconectadas).</li>
-            <li>Estructura frontend con animaciones fluidas y narrativa visual de alta conversión.</li>
-            <li>Infraestructura de validación: Integración de captación de leads y analítica web.</li>
-            <li>Pasarela de pagos (Stripe Checkout) lista para validar la intención de compra real.</li>
-            <li>Entrega garantizada en 7 días.</li>
+            <li>Una página con criterio: diseñada a medida sobre mi sistema, con la estética que distingue a tu marca —cinematográfica, retro o la que pida tu proyecto.</li>
+            <li>Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.</li>
+            <li>Formulario de contacto y analítica web listos desde el primer día.</li>
+            <li>Una ronda de revisiones y proceso 100% asíncrono. Sin reuniones eternas.</li>
+            <li>Entrega en 7-10 días desde que tengo tus materiales.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Lanzar mi MVP</a>
-          <p class="price-card__note" id="price1Note">*Los proyectos arrancan con un 50% de pago adelantado.</p>
+          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
+          <p class="price-card__note" id="price1Note">*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.</p>
         </article>
-        <article class="price-card price-card--featured">
-          <h3 class="price-card__name" id="price3Name">EL LABORATORIO</h3>
-          <p class="price-card__price" id="price3Price">MICRO-APPS</p>
+        <article class="price-card">
+          <h3 class="price-card__name" id="price3Name">CUIDADO &amp; EVOLUCIÓN</h3>
+          <p class="price-card__price" id="price3Price">49 €<span>/mes</span></p>
           <ul class="price-card__list" id="price3List">
-            <li>Mi espacio de experimentación técnica y creativa independiente.</li>
-            <li>Diseño y lanzo herramientas digitales propias bajo una sola filosofía: excelentes en lo mínimo indispensable.</li>
-            <li>Explora utilidades de software como 'Newspooper' o 'Noise.health' para ver mi capacidad de ejecución real.</li>
+            <li>Hosting gestionado y tu web siempre online, rápida y actualizada.</li>
+            <li>Pequeños retoques y cambios de contenido cuando los necesites.</li>
+            <li>Sin permanencia. Lo activas al lanzar y lo pausas cuando quieras.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Explorar Micro-Apps</a>
-          <p class="price-card__note" id="price3Note">*Proyectos propios, en evolución constante.</p>
+          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Mantener mi web</a>
+          <p class="price-card__note" id="price3Note">*Opcional. Se contrata al entregar la web.</p>
         </article>
       </div>
       <p class="pricing-vat" id="pricingVat">* Precios sin IVA.</p>
@@ -2119,10 +1484,9 @@
       <div class="services-kit" id="servicesKitContainer">
         <span class="services-kit__title" id="servicesKitTitle">Extras disponibles</span>
         <ul class="services-kit__list" id="servicesKitList">
-          <li>Identidad visual &amp; UI kit: +1.200 €</li>
           <li>Copy completo de conversión: +600 €</li>
-          <li>Animaciones e interacciones avanzadas: +600 €</li>
-          <li>Mantenimiento &amp; evolución: desde 450 €/mes</li>
+          <li>Identidad visual &amp; UI kit: +1.200 €</li>
+          <li>Animaciones, interacciones y 3D avanzado: +600 €</li>
         </ul>
       </div>
       </div>
@@ -2153,7 +1517,7 @@
             </div>
 
             <div class="contact-ojitos-text">
-              <p class="big-heading"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TIENES UNA IDEA<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
+              <p class="big-heading"><span id="contactDividerTextTop"><span style="color: var(--ink); -webkit-text-fill-color: var(--ink);"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TIENES UNA IDEA<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
               <p class="big-heading"><span id="contactDividerTextBottom">DÉJAME CONSTRUIR EL SISTEMA</span><span class="contact-divider-mark">.</span></p>
               <p class="contact-sub" id="contactSub">Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que se merece, de forma ágil y sin fricciones.</p>
               <span class="contact-arrow-down" aria-hidden="true">↓</span>
@@ -2180,9 +1544,9 @@
               <label class="contact-form__label" for="cf-topic" id="label-cf-topic">Asunto</label>
               <select class="contact-form__select" name="topic" id="cf-topic" required>
                 <option value="" id="cf-topic-placeholder">—</option>
-                <option value="colaboracion" id="opt-cf-colaboracion">MVP Sprint</option>
-                <option value="proyecto" id="opt-cf-proyecto">Full Product</option>
-                <option value="consulta" id="opt-cf-consulta">El Laboratorio</option>
+                <option value="colaboracion" id="opt-cf-colaboracion">Quiero una web</option>
+                <option value="proyecto" id="opt-cf-proyecto">Cuidado &amp; evolución</option>
+                <option value="consulta" id="opt-cf-consulta">Tengo una duda</option>
                 <option value="otro" id="opt-cf-otro">Otro</option>
               </select>
             </div>
@@ -2220,14 +1584,8 @@
   // ============================================
   const t = {
     es: {
-      typewriter: [
-        ['NO SOY {DISEÑADOR},', 'PERO {DISEÑO} COSAS.'],
-        ['NO SOY {PROGRAMADOR},', 'PERO {PROGRAMO} COSAS.'],
-        ['NO SOY {CREATIVO},', 'PERO {CREO} COSAS.'],
-      ],
-
       langMenuAria: "Menú de idioma",
-      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TIENES UNA IDEA<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
+      contactDividerTop: "<span style=\"color: var(--ink); -webkit-text-fill-color: var(--ink); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TIENES UNA IDEA<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
       contactDividerBottom: "DÉJAME CONSTRUIR EL SISTEMA",
       contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que se merece, de forma ágil y sin fricciones.",
       contactDividerEscribeme: "ESCRÍBEME",
@@ -2236,9 +1594,9 @@
       contactFormTopic: "Asunto",
       contactFormMessage: "Mensaje",
       contactFormTopicPh: "Elige un asunto",
-      contactTopicColab: "MVP Sprint",
-      contactTopicProyecto: "Full Product",
-      contactTopicConsulta: "El Laboratorio",
+      contactTopicColab: "Quiero una web",
+      contactTopicProyecto: "Cuidado & evolución",
+      contactTopicConsulta: "Tengo una duda",
       contactTopicOtro: "Otro",
       contactFormSend: "Enviar",
       contactFormSending: "Enviando…",
@@ -2252,62 +1610,54 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "PRODUCTOS.",
       servicesEyebrow: "QUÉ HAGO POR TI",
-      servicesHeadline: "LA CAPACIDAD TÉCNICA<br>YA NO MARCA LA DIFERENCIA<span class=\"accent\">.</span><br>EL CRITERIO LO HACE<span class=\"accent\">.</span>",
-      servicesLead: "En un mundo en el que cualquiera puede hacer cualquier cosa con inteligencia artificial, la técnica ya no es el límite. El criterio lo es.",
+      servicesHeadline: "SOY UN PRODUCT MANAGER QUE INTENTA APORTAR CLARIDAD EN UN OCÉANO DE RUIDO<span class=\"accent\">.</span>",
+      servicesLead: "Vengo de la estrategia digital para grandes marcas; ahora construyo producto. Traduzco sistemas complejos en objetos simples, rápidos y bonitos que se entienden a la primera —lo mismo en lo que lanzo por mi cuenta que en lo que construyo para una marca. Diseño con criterio, ejecuto con código y priorizo como product manager.",
       svc1Title: "FILOSOFÍA DE DISEÑO<span class=\"accent\">:</span><br>ESTÉTICA Y SIMPLICIDAD",
-      svc1Text: "O \"User Friendly\", como dicen los modernos. El caso es que trato de no hacer webs ni apps como todas las demás.",
+      svc1Text: "O \"User Friendly\", como dicen los modernos. El caso es que trato de no construir productos como todos los demás.",
       svc2Title: "RESULTADOS<span class=\"accent\">:</span><br>CÓDIGO + CREATIVIDAD",
-      svc2Text: "Si la IA ya ha resuelto el CÓMO construir, solo ganarán los productos que acierten con el QUÉ.",
+      svc2Text: "Hoy en día cualquiera puede construir cualquier cosa con Inteligencia Artificial. El verdadero reto está en el QUÉ construir, y con eso, la IA no es tan brillante.",
       svc3Title: "Product<br>MANAGEMENT",
       svc3Text: "No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.",
       svc1More: "Ver ejemplos", svc2More: "Ver ejemplos", svc3More: "Ver ejemplos",
-      pricingHeadline: "SIN AGENCIAS<span class=\"accent\">.</span><br>SIN REUNIONES ETERNAS<span class=\"accent\">.</span><br>SOLO RESULTADOS<span class=\"accent\">.</span>",
-      pricingIntro: "Tú pones la visión y yo me encargo de la ejecución integral. Eliminamos las videollamadas innecesarias que bloquean tu agenda: nos comunicamos de forma ágil y por escrito para avanzar el triple de rápido. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas.",
-      priceNote: "*Los proyectos arrancan con un 50% de pago adelantado.",
-      price1Name: "MVP SPRINT",
+      pricingHeadline: "PRECIO FIJO<span class=\"accent\">.</span><br>CERO REUNIONES<span class=\"accent\">.</span><br>PLAZAS CONTADAS<span class=\"accent\">.</span>",
+      pricingIntro: "Entre un producto propio y el siguiente, tomo un número limitado de webs al año. Un servicio productizado: precio fijo, scope fijo y proceso 100% asíncrono. Tú pones la visión y yo ejecuto de principio a fin. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas y sin videollamadas que bloqueen tu agenda.",
+      priceNote: "*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.",
+      price1Name: "WEB DE AUTOR",
       price1Price: "1.500 €",
       price1List: [
-        "Diseño de interfaz premium y UX de alta fidelidad (hasta 5 secciones interconectadas).",
-        "Estructura frontend con animaciones fluidas y narrativa visual de alta conversión.",
-        "Infraestructura de validación: Integración de captación de leads y analítica web.",
-        "Pasarela de pagos (Stripe Checkout) lista para validar la intención de compra real.",
-        "Entrega garantizada en 7 días."
+        "Una página con criterio: diseñada a medida sobre mi sistema, con la estética que distingue a tu marca —cinematográfica, retro o la que pida tu proyecto.",
+        "Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.",
+        "Formulario de contacto y analítica web listos desde el primer día.",
+        "Una ronda de revisiones y proceso 100% asíncrono. Sin reuniones eternas.",
+        "Entrega en 7-10 días desde que tengo tus materiales."
       ],
-      price1Cta: "Lanzar mi MVP",
-      price3Name: "EL LABORATORIO",
-      price3Price: "MICRO-APPS",
+      price1Cta: "Quiero mi web",
+      price3Name: "CUIDADO & EVOLUCIÓN",
+      price3Price: "49 €<span>/mes</span>",
       price3List: [
-        "Mi espacio de experimentación técnica y creativa independiente.",
-        "Diseño y lanzo herramientas digitales propias bajo una sola filosofía: excelentes en lo mínimo indispensable.",
-        "Explora utilidades de software como 'Newspooper' o 'Noise.health' para ver mi capacidad de ejecución real."
+        "Hosting gestionado y tu web siempre online, rápida y actualizada.",
+        "Pequeños retoques y cambios de contenido cuando los necesites.",
+        "Sin permanencia. Lo activas al lanzar y lo pausas cuando quieras."
       ],
-      price3Note: "*Proyectos propios, en evolución constante.",
-      price3Cta: "Explorar Micro-Apps",
+      price3Note: "*Opcional. Se contrata al entregar la web.",
+      price3Cta: "Mantener mi web",
       pricingVat: "* Precios sin IVA.",
       servicesKitTitle: "Extras disponibles",
       servicesKitList: [
-        "Identidad visual &amp; UI kit: +1.200 €",
         "Copy completo de conversión: +600 €",
-        "Animaciones e interacciones avanzadas: +600 €",
-        "Mantenimiento &amp; evolución: desde 450 €/mes"
+        "Identidad visual &amp; UI kit: +1.200 €",
+        "Animaciones, interacciones y 3D avanzado: +600 €"
       ],
-      secHeadServices: "SERVICIOS",
+      secHeadServices: "QUIÉN SOY",
       secHeadPricing: "PRECIOS",
       pricingEyebrow: "PLANES TRANSPARENTES",
       secHeadContact: "CONTACTO",
       contactMeta: "RESPUESTA EN 24H"
     },
     en: {
-      typewriter: [
-        ['I BUILD {APPS}', 'WITH THE SOUL OF A {GAME}', 'AND THE LOOK OF {CINEMA}.'],
-        ['I WAS INFLUENCED BY MASTERS', 'LIKE {SPIELBERG}, {TORIYAMA},', '{SCOTT}, {MIYAMOTO}', 'OR {KOJIMA}.'],
-        ['NOW I STRIVE', 'TO CAPTURE IT IN', 'MY {CREATIONS}.'],
-      ],
-
       langMenuAria: "Language menu",
-      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\">GOT AN IDEA?</span>",
+      contactDividerTop: "<span style=\"color: var(--ink); -webkit-text-fill-color: var(--ink); margin-bottom: 0;\">GOT AN IDEA?</span>",
       contactDividerBottom: "LET ME BUILD THE SYSTEM",
       contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
       contactDividerEscribeme: "WRITE TO ME",
@@ -2316,9 +1666,9 @@
       contactFormTopic: "Topic",
       contactFormMessage: "Message",
       contactFormTopicPh: "Choose a topic",
-      contactTopicColab: "MVP Sprint",
-      contactTopicProyecto: "Full Product",
-      contactTopicConsulta: "The Lab",
+      contactTopicColab: "I want a website",
+      contactTopicProyecto: "Care & evolution",
+      contactTopicConsulta: "I have a question",
       contactTopicOtro: "Other",
       contactFormSend: "Send",
       contactFormSending: "Sending…",
@@ -2333,48 +1683,46 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "PRODUCTS.",
       servicesEyebrow: "WHAT I DO FOR YOU",
-      servicesHeadline: "TECHNICAL SKILL<br>NO LONGER MAKES THE DIFFERENCE<span class=\"accent\">.</span><br>JUDGMENT DOES<span class=\"accent\">.</span>",
-      servicesLead: "In a world where anyone can build anything with artificial intelligence, technique is no longer the limit. Judgment is.",
+      servicesHeadline: "I'M A PRODUCT MANAGER TRYING TO BRING CLARITY TO AN OCEAN OF NOISE<span class=\"accent\">.</span>",
+      servicesLead: "I come from digital strategy for global brands; now I build product. I translate complex systems into simple, fast, beautiful objects that make sense at first glance —whether it's what I ship on my own or what I build for a brand. I design with taste, ship with code, and prioritize like a product manager.",
       svc1Title: "DESIGN PHILOSOPHY<span class=\"accent\">:</span><br>AESTHETICS & SIMPLICITY",
-      svc1Text: "Or \"User Friendly\", as the cool kids say. The thing is, I try not to build websites or apps like everyone else.",
+      svc1Text: "Or \"User Friendly\", as the cool kids say. The thing is, I try not to build products like everyone else.",
       svc2Title: "RESULTS<span class=\"accent\">:</span><br>CODE + CREATIVITY",
-      svc2Text: "If AI has already solved the HOW to build, only products that get the WHAT right will win.",
+      svc2Text: "These days anyone can build anything with Artificial Intelligence. The real challenge is the WHAT to build — and at that, AI isn't so brilliant.",
       svc3Title: "Product<br>MANAGEMENT",
       svc3Text: "I don't just build the product; I design the strategy so users grasp its value instantly.",
       svc1More: "See examples", svc2More: "See examples", svc3More: "See examples",
-      pricingHeadline: "NO AGENCIES<span class=\"accent\">.</span><br>NO ENDLESS MEETINGS<span class=\"accent\">.</span><br>JUST RESULTS<span class=\"accent\">.</span>",
-      pricingIntro: "You bring the vision and I handle the full execution. We cut the unnecessary video calls that block your calendar: we communicate fast and in writing to move three times faster. You know exactly what you get, what it costs and when it ships. No surprises.",
-      priceNote: "*Projects begin with a 50% upfront payment.",
-      price1Name: "MVP SPRINT",
+      pricingHeadline: "FIXED PRICE<span class=\"accent\">.</span><br>ZERO MEETINGS<span class=\"accent\">.</span><br>LIMITED SLOTS<span class=\"accent\">.</span>",
+      pricingIntro: "Between one product of my own and the next, I take on a limited number of sites a year. A productized service: fixed price, fixed scope, 100% async. You bring the vision and I execute end to end. You know exactly what you get, what it costs and when it ships. No surprises, no video calls clogging your calendar.",
+      priceNote: "*We start with 50% upfront. You provide the copy, or add it as an extra.",
+      price1Name: "SIGNATURE SITE",
       price1Price: "€1,500",
       price1List: [
-        "Premium interface design and high-fidelity UX (up to 5 interconnected sections).",
-        "Frontend structure with fluid animations and high-conversion visual narrative.",
-        "Validation infrastructure: lead capture integration and web analytics.",
-        "Payment gateway (Stripe Checkout) ready to validate real purchase intent.",
-        "Guaranteed delivery in 7 days."
+        "One page with judgment: custom-built on my system, with the aesthetic that sets your brand apart —cinematic, retro, or whatever your project calls for.",
+        "Up to 6 sections, genuinely responsive, with animations and interactions dialed in.",
+        "Contact form and web analytics ready from day one.",
+        "One round of revisions, 100% async process. No endless meetings.",
+        "Delivered in 7-10 days once I have your materials."
       ],
-      price1Cta: "Launch my MVP",
-      price3Name: "THE LAB",
-      price3Price: "MICRO-APPS",
+      price1Cta: "I want my site",
+      price3Name: "CARE & EVOLUTION",
+      price3Price: "€49<span>/mo</span>",
       price3List: [
-        "My space for independent technical and creative experimentation.",
-        "I design and ship my own digital tools under a single philosophy: excellent at the bare essentials.",
-        "Explore software utilities like 'Newspooper' or 'Noise.health' to see my real execution capability."
+        "Managed hosting and your site always online, fast and up to date.",
+        "Small tweaks and content changes whenever you need them.",
+        "No lock-in. Start it at launch, pause it whenever."
       ],
-      price3Note: "*My own projects, constantly evolving.",
-      price3Cta: "Explore Micro-Apps",
+      price3Note: "*Optional. Added when your site ships.",
+      price3Cta: "Keep my site cared for",
       pricingVat: "* Prices exclude VAT.",
       servicesKitTitle: "Available Extras",
       servicesKitList: [
-        "Visual identity &amp; UI kit: +€1,200",
         "Full conversion copy: +€600",
-        "Advanced animations &amp; interactions: +€600",
-        "Maintenance &amp; evolution: from €450/mo"
+        "Visual identity &amp; UI kit: +€1,200",
+        "Advanced animations, interactions & 3D: +€600"
       ],
-      secHeadServices: "SERVICES",
+      secHeadServices: "WHO I AM",
       secHeadPricing: "PRICING",
       pricingEyebrow: "TRANSPARENT PLANS",
       secHeadContact: "CONTACT",
@@ -2382,263 +1730,15 @@
     }
   };
 
-  // Pega aquí tu Stripe Payment Link del Diagnóstico (290 €) para cobrar al instante.
-  // Si lo dejas vacío, el botón "Reservar" lleva al formulario de contacto.
-  const DIAGNOSTICO_PAY_URL = '';
+  // Pega aquí tu Stripe Checkout de la Web de Autor para cobrar al instante.
+  // Si lo dejas vacío, el CTA "Quiero mi web" lleva al formulario de contacto.
+  const WEB_AUTOR_PAY_URL = '';
 
   let lang = 'es';
   try {
     const _ls = localStorage.getItem('carlosmakes_lang');
     if (_ls === 'en' || _ls === 'es') lang = _ls;
   } catch (e) {}
-
-  // ============================================
-  // Intro: tres líneas al scroll (GSAP ScrollTrigger)
-  // ============================================
-  let introPanelTimelines = [];
-  let featuredVideoNativeCleanup = null;
-
-  function killIntroLinesScrollAnimation() {
-    const introRoot = document.getElementById('presentacion');
-    if (introRoot) introRoot.classList.remove('intro-hero--active');
-    introPanelTimelines.forEach((tl) => {
-      if (tl.scrollTrigger) tl.scrollTrigger.kill();
-      tl.kill();
-    });
-    introPanelTimelines = [];
-    if (typeof gsap !== 'undefined' && introRoot) {
-      const allElements = introRoot.querySelectorAll('.intro-panel__copy, .intro-panel');
-      gsap.killTweensOf(allElements);
-      gsap.set(allElements, { clearProps: 'all' });
-    }
-    ['introLine0', 'introLine1', 'introLine2'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.style.removeProperty('color');
-        el.querySelectorAll('.intro-line__suffix').forEach((s) => {
-          s.style.removeProperty('color');
-        });
-      }
-    });
-  }
-
-  function normalizeTypewriterBlock(entry) {
-    if (Array.isArray(entry)) return entry.map((s) => String(s));
-    return [String(entry)];
-  }
-
-  function appendAccentedText(parent, text) {
-    text.split(/\{([^}]+)\}/).forEach((part, i) => {
-      if (!part) return;
-      if (i % 2 === 0) {
-        parent.append(document.createTextNode(part));
-      } else {
-        const span = document.createElement('span');
-        span.className = 'intro-accent';
-        span.textContent = part;
-        parent.append(span);
-      }
-    });
-  }
-
-  /** Varias líneas por bloque (como hero-v2-line); la última puede llevar sufijos . o ;). */
-  function fillIntroHeadlineStack(el, lines) {
-    if (!el) return;
-    el.replaceChildren();
-    const arr = normalizeTypewriterBlock(lines);
-    if (!arr.length) return;
-    arr.forEach((raw, idx) => {
-      const isLast = idx === arr.length - 1;
-      const row = document.createElement('span');
-      row.className = 'intro-headline__line';
-      const s = String(raw);
-      if (isLast && s.endsWith(' ;')) {
-        appendAccentedText(row, s.slice(0, s.length - 2));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--semi';
-        suffix.textContent = ' ;';
-        row.append(suffix);
-      } else if (isLast && s.endsWith(';)')) {
-        appendAccentedText(row, s.slice(0, s.length - 2));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--wink';
-        suffix.textContent = ';)';
-        row.append(suffix);
-      } else if (isLast && s.endsWith('.')) {
-        appendAccentedText(row, s.slice(0, s.length - 1));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--period';
-        suffix.textContent = '.';
-        row.append(suffix);
-      } else {
-        appendAccentedText(row, s);
-      }
-      el.appendChild(row);
-    });
-  }
-
-  function fillIntroLinesFromLang() {
-    const words = t[lang].typewriter;
-    if (!words || words.length < 3) return;
-    fillIntroHeadlineStack(document.getElementById('introLine0'), words[0]);
-    fillIntroHeadlineStack(document.getElementById('introLine1'), words[1]);
-    fillIntroHeadlineStack(document.getElementById('introLine2'), words[2]);
-  }
-
-  function refreshIntroLinesAfterLangChange() {
-    fillIntroLinesFromLang();
-    killIntroLinesScrollAnimation();
-    syncViewportAnimationMode();
-  }
-
-  function setupIntroLinesScrollAnimation() {
-    const introRoot = document.getElementById('presentacion');
-    if (!introRoot) return;
-
-    killIntroLinesScrollAnimation();
-    fillIntroLinesFromLang();
-
-    const panels = introRoot.querySelectorAll('.intro-panel[data-intro-panel]');
-    if (panels.length < 3) return;
-
-    const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceIntro) {
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    if (window.matchMedia('(max-width: 767px)').matches) {
-      introRoot.classList.remove('intro-hero--active');
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    introRoot.classList.add('intro-hero--active');
-
-    const wide = window.matchMedia('(min-width: 900px)').matches;
-    const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    const startS = wide ? 0.05 : narrowMobile ? 0.1 : 0.065;
-    const readS = wide ? 1.04 : narrowMobile ? 1 : 1.03;
-    const flyS = wide ? 12 : narrowMobile ? 4.2 : 9;
-    const flyZ = wide ? 2400 : narrowMobile ? 680 : 1700;
-    const startZ0 = wide ? -3400 : narrowMobile ? -1200 : -2600;
-
-    const SEG = 1;
-    const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
-    const totalPinScroll = () => Math.round(window.innerHeight * scrollPerSegmentVh * 3);
-
-    const copyEls = [];
-    panels.forEach((panel) => {
-      const copy = panel.querySelector('.intro-panel__copy');
-      if (!copy) return;
-      copyEls.push(copy);
-      gsap.set(copy, {
-        transformOrigin: '50% 50%',
-        transformPerspective: wide ? 2200 : 1400,
-        force3D: true,
-        willChange: "transform, opacity",
-        scale: startS,
-        x: 0,
-        y: 0,
-        z: startZ0,
-        opacity: 0,
-      });
-    });
-
-    if (copyEls.length !== 3) {
-      introRoot.classList.remove('intro-hero--active');
-      return;
-    }
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: introRoot,
-        start: 'top top',
-        end: () => '+=' + totalPinScroll(),
-        pin: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-        onRefresh: self => {
-          // Asegurar sincronización al refrescar o subir
-          if (self.progress > 0) self.animation.progress(self.progress);
-        },
-        // Forzar refresco al entrar para evitar congelamiento desde abajo
-        onEnter: () => ScrollTrigger.refresh()
-      },
-      defaults: { ease: 'none' }
-    });
-
-    // Estado inicial gestionado por el timeline para evitar desincronización al subir
-    tl.set(panels, { autoAlpha: 0 }, 0);
-    tl.set(panels[0], { autoAlpha: 1 }, 0);
-
-    const panelFadeDur = 0.26;
-    const exitDur = 0.175;
-    const mergeDur = SEG - exitDur;
-    const nextRevealOffset = exitDur * 0.22;
-
-    function nextPanelRevealAt(segIndex) {
-      return segIndex * SEG + mergeDur + nextRevealOffset;
-    }
-
-    function addSegment(i, t0) {
-      const copy = copyEls[i];
-      if (!copy) return;
-      const motionDur = SEG;
-      const durApproach = motionDur * 0.48;
-      const durExit = motionDur - durApproach;
-
-      tl.fromTo(copy,
-        { scale: startS, z: startZ0, opacity: 0 },
-        { scale: readS, z: 0, opacity: 1, duration: durApproach },
-        t0
-      );
-      tl.to(copy,
-        { scale: flyS, z: flyZ, opacity: 0, duration: durExit },
-        t0 + durApproach
-      );
-    }
-
-    const fade1At = nextPanelRevealAt(0);
-    const fade2At = nextPanelRevealAt(1);
-
-    addSegment(0, 0);
-    tl.to(panels[0], { autoAlpha: 0, duration: panelFadeDur }, fade1At);
-    tl.to(panels[1], { autoAlpha: 1, duration: panelFadeDur }, fade1At);
-    addSegment(1, fade1At);
-
-    tl.to(panels[1], { autoAlpha: 0, duration: panelFadeDur }, fade2At);
-    tl.to(panels[2], { autoAlpha: 1, duration: panelFadeDur }, fade2At);
-    addSegment(2, fade2At);
-
-    introPanelTimelines.push(tl);
-  }
 
   function killHeroScrollAnimation() {
     const hero = document.querySelector('.hero-v2-section');
@@ -2654,101 +1754,6 @@
       ScrollTrigger.getAll().forEach((st) => {
         if (st.trigger === hero) st.kill();
       });
-    }
-  }
-
-  function killFeaturedVideoScrub() {
-    const video = document.getElementById('featuredScrollVideo');
-    if (featuredVideoNativeCleanup) {
-      featuredVideoNativeCleanup();
-      featuredVideoNativeCleanup = null;
-    }
-    if (typeof gsap !== 'undefined' && video) {
-      gsap.killTweensOf(video);
-      gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
-    }
-    if (typeof ScrollTrigger !== 'undefined') {
-      const st = ScrollTrigger.getById('featuredVideoScrub');
-      if (st) st.kill();
-    }
-  }
-
-  function initFeaturedVideoScrub() {
-    const section = document.querySelector('.scroll-video-section');
-    const video = document.getElementById('featuredScrollVideo');
-    if (!section || !video) return;
-    killFeaturedVideoScrub();
-    const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
-    const desiredSrc = isMobileVideo ? 'assets/video_carlos_movil.m4v' : 'assets/video_carlos.mp4';
-    video.poster = isMobileVideo ? 'assets/video_carlos_movil-poster.jpg' : 'assets/video_carlos-poster.jpg';
-    const currentSrc = video.currentSrc || video.getAttribute('src') || '';
-    if (!currentSrc.endsWith(desiredSrc)) {
-      video.src = desiredSrc;
-      video.load();
-    }
-    video.pause();
-
-    function setVideoProgress(progress) {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-      const maxTime = Math.max(0, video.duration - 0.04);
-      const nextTime = Math.max(0, Math.min(maxTime, maxTime * progress));
-      if (Math.abs(video.currentTime - nextTime) > 0.035) {
-        video.currentTime = nextTime;
-      }
-    }
-
-    if (video.readyState >= 1) {
-      setVideoProgress(0);
-    } else {
-      video.addEventListener('loadedmetadata', () => setVideoProgress(0), { once: true });
-    }
-
-    if (reduceMotion) return;
-
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      let ticking = false;
-      const updateFromScroll = () => {
-        ticking = false;
-        const travel = Math.max(1, section.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / travel));
-        setVideoProgress(progress);
-      };
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(updateFromScroll);
-      };
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      featuredVideoNativeCleanup = () => {
-        window.removeEventListener('scroll', requestUpdate);
-        window.removeEventListener('resize', requestUpdate);
-      };
-      requestUpdate();
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.set(video, { willChange: 'transform' });
-    ScrollTrigger.create({
-      id: 'featuredVideoScrub',
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => setVideoProgress(self.progress),
-      onRefresh: (self) => setVideoProgress(self.progress)
-    });
-
-    if (video.readyState < 1) {
-      video.addEventListener('loadedmetadata', () => {
-        const st = ScrollTrigger.getById('featuredVideoScrub');
-        if (st) {
-          setVideoProgress(st.progress);
-          ScrollTrigger.refresh();
-        }
-      }, { once: true });
     }
   }
 
@@ -2859,80 +1864,8 @@
         initHeroScrollAnimation();
       }
     }
-    setupIntroLinesScrollAnimation();
-    initFeaturedVideoScrub();
-    if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
-      renderProjectsTickersBelt();
-    }
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
-
-  function setProjectsTitleStack(text) {
-    const h2 = document.getElementById('projectsTitle');
-    if (!h2 || !text) return;
-    const sr = h2.querySelector('.projects-title-sr');
-    if (sr) sr.textContent = text;
-    renderProjectsTickersBelt();
-  }
-
-  function buildWorksTickerChunks(wordEscaped) {
-    const n = 18;
-    const parts = [];
-
-    for (let i = 0; i < n; i++) {
-      let styledWord = wordEscaped;
-      // Normalizamos para asegurar que matchee con o sin punto, y quitamos posibles espacios
-      const normalized = wordEscaped.trim().toUpperCase();
-      
-      if (normalized === 'PRODUCTOS.' || normalized === 'PRODUCTOS') {
-        styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">PRODUCTOS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">PRODUCTOS</span><span class="projects-ticker__word--orange">.</span>';
-      } else if (normalized === 'PRODUCTS.' || normalized === 'PRODUCTS') {
-        styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">PRODUCTS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">PRODUCTS</span><span class="projects-ticker__word--orange">.</span>';
-      }
-      parts.push(
-        '<span class="projects-ticker__word">' +
-        styledWord +
-        '</span>'
-      );
-    }
-    return parts.join('');
-  }
-
-  const PROJECTS_TICKER_ROWS = 1;
-
-  /** Siete carriles horizontales; filas impares RTL (misma duración 90s que LTR vía keyframes). */
-  function renderProjectsTickersBelt() {
-    const belt = document.getElementById('projectsTickersBelt');
-    if (!belt) return;
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'SERVICES';
-    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const chunk = '<span class="projects-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
-    const reduce =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const inner = reduce ? chunk : chunk + chunk;
-    belt.replaceChildren();
-    for (let i = 0; i < PROJECTS_TICKER_ROWS; i++) {
-      const row = document.createElement('div');
-      row.className = 'projects-ticker projects-ticker--belt-row';
-      const vp = document.createElement('div');
-      vp.className = 'projects-ticker__viewport';
-      const track = document.createElement('div');
-      track.className =
-        'projects-ticker__track' +
-        (i % 2 === 1 ? ' projects-ticker__track--rev' : '');
-      track.id = 'projectsTickerTrack' + i;
-      track.innerHTML = inner;
-      vp.appendChild(track);
-      row.appendChild(vp);
-      belt.appendChild(row);
-    }
-  }
-
 
   // ============================================
   // Idioma
@@ -2953,7 +1886,6 @@
     setHTML('pricingHeadline', d.pricingHeadline);
     setText('pricingIntro', d.pricingIntro);
     setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
-    setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.priceNote);
     setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.price3Note != null ? d.price3Note : d.priceNote);
     setText('pricingVat', d.pricingVat);
     setText('servicesKitTitle', d.servicesKitTitle);
@@ -2961,9 +1893,9 @@
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
     setText('pricingEyebrow', d.pricingEyebrow);
-    if (typeof DIAGNOSTICO_PAY_URL === 'string' && DIAGNOSTICO_PAY_URL) {
+    if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
-      if (c) { c.setAttribute('href', DIAGNOSTICO_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
+      if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
     }
   }
 
@@ -2982,7 +1914,6 @@
     if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
     const contactMetaEl = document.getElementById('contactMeta');
     if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
-    setProjectsTitleStack(d.projectsTitle);
 
     const langSelCur = document.getElementById('langSelectCurrent');
     const langSelBtn = document.getElementById('langSelectBtn');
@@ -3026,7 +1957,6 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     applyServicesI18n(d);
-    fillIntroLinesFromLang();
   }
 
   function getContactFormEndpoint() {
@@ -3124,7 +2054,7 @@
           if (next !== lang) {
             lang = next;
             applyLang();
-            refreshIntroLinesAfterLangChange();
+            syncViewportAnimationMode();
           }
         }
         setLangMenuOpen(false);
@@ -3263,36 +2193,6 @@
     }, 150);
   });
 
-  // ============================================
-  // Works slider
-  // ============================================
-  (function () {
-    const slider = document.getElementById('worksSlider');
-    const track = document.getElementById('worksSliderTrack');
-    const btnPrev = document.getElementById('worksArrowPrev');
-    const btnNext = document.getElementById('worksArrowNext');
-    if (!slider || !track || !btnPrev || !btnNext) return;
-
-    function getStep() {
-      const card = track.firstElementChild;
-      if (!card) return slider.offsetWidth;
-      const gap = parseFloat(getComputedStyle(track).gap) || 0;
-      return card.offsetWidth + gap;
-    }
-
-    function syncButtons() {
-      btnPrev.disabled = slider.scrollLeft <= 1;
-      btnNext.disabled = slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 1;
-    }
-
-    btnPrev.addEventListener('click', () => slider.scrollBy({ left: -getStep(), behavior: 'smooth' }));
-    btnNext.addEventListener('click', () => slider.scrollBy({ left: getStep(), behavior: 'smooth' }));
-
-    slider.addEventListener('scroll', syncButtons, { passive: true });
-    window.addEventListener('resize', syncButtons);
-    syncButtons();
-  }());
-
   let pageInitialized = false;
 
   function runViewportSyncWhenReady() {
@@ -3329,33 +2229,6 @@
   } else {
     initPage();
   }
-
-  // ============================================
-  // Video Autoplay on Scroll
-  // ============================================
-  document.addEventListener("DOMContentLoaded", function() {
-    const videos = document.querySelectorAll('.works-card__video');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Reproduce solo si no ha llegado ya al final
-            if (!entry.target.ended) {
-              entry.target.play().catch(err => console.warn('Autoplay prevented', err));
-            }
-          } else {
-            entry.target.pause();
-          }
-        });
-      }, { threshold: 0.1 });
-      
-      videos.forEach(v => {
-        observer.observe(v);
-        // Start paused until scrolled into view
-        v.pause();
-      });
-    }
-  });
 </script>
 
 <script>
