@@ -68,30 +68,16 @@
     --right-eye-height: 13.5%;
     --max-radius: 2vw;
 
-    --black: #0A0A0A;
-    --white: #0A0A0A;
     /* Tipografía monoespaciada para metadatos/etiquetas (contraste grotesk + mono) */
     --font-mono: 'Space Mono', ui-monospace, 'SFMono-Regular', Menlo, monospace;
-    /* Paleta sitio: blanco de fondo, carbón texto principal, rojo como único acento */
-    --page-bg: #FFFFFF;
-    --page-lime: #0A0A0A;
-    /* Tokens paleta clara premium */
-    --paper: #F2F2F2;
-    --accent: #FF0000;
-    --ink-2: #6B6B6F;
-    --ink-3: #8E8E93;
+    /* Paleta: fondo blanco/negro, texto carbón, rojo como único acento */
+    --ink:      #0A0A0A;
+    --paper:    #F2F2F2;
+    --page-bg:  #FFFFFF;
+    --accent:   #FF0000;
+    --ink-2:    #6B6B6F;
+    --ink-3:    #8E8E93;
     --hairline: #E5E3DF;
-    --text-primary: var(--page-lime);
-    --gray: #8E8E93;
-    --gray-light: #E5E3DF;
-    --gray-mid: #8E8E93;
-    --hero-v2-orange: var(--page-lime);
-    --hero-v2-violet-bg: #000000;
-    --hero-v2-violet: var(--accent);
-    --hero-v2-violet-rgb: 255, 0, 0;
-    --page-orange: var(--white);
-    --page-magenta: var(--page-bg);
-    --page-yellow: var(--page-lime);
     /* Mismo margen lateral que .hero-v2-sticky (titular grande); header + .container comparten cifra + safe-area */
     --container-pad-x: 1rem;
     --logo-text-inset: calc(var(--container-pad-x) - 0.5rem);
@@ -114,20 +100,20 @@
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
     background: var(--page-bg);
-    color: var(--black);
+    color: var(--ink);
     -webkit-font-smoothing: antialiased;
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;
     line-height: 1.5;
   }
 
-  ::selection { background: rgba(255, 45, 85, 0.20); color: var(--black); }
+  ::selection { background: rgba(255, 45, 85, 0.20); color: var(--ink); }
 
   a { color: inherit; text-decoration: none; }
 
   button { font-family: inherit; background: none; border: none; cursor: pointer; }
   a:focus-visible, button:focus-visible {
-    outline: 3px solid var(--page-lime);
+    outline: 3px solid var(--ink);
     outline-offset: 3px;
   }
 
@@ -159,21 +145,21 @@
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
     background: rgba(255, 255, 255, 0.88);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header.scrolled .logo,
   .site-header.scrolled .logo .logo-carlos,
   .site-header.scrolled .logo .logo-fernandez {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .header-top nav a {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .header-top nav a:hover {
     color: var(--accent) !important;
   }
   .site-header.scrolled .lang-select__btn {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
   .site-header.scrolled .lang-select__btn:hover,
   .site-header.scrolled .lang-select__btn:focus-visible,
@@ -223,14 +209,14 @@
     opacity: 1;
   }
   .site-header .lang-select__btn:focus-visible {
-    outline: 2px solid var(--black);
+    outline: 2px solid var(--ink);
     outline-offset: 2px;
   }
   .site-header .hamburger-btn {
     color: #FFFFFF;
   }
   .site-header.scrolled .hamburger-btn {
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header .hamburger-btn:hover {
     color: var(--accent);
@@ -238,11 +224,11 @@
   .site-header .lang-select__menu {
     background: var(--page-bg);
     border: 2px solid rgba(0, 0, 0, 0.45);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .site-header .lang-select__option {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
     transition: background-color 0.15s ease, color 0.15s ease;
   }
   .site-header .lang-select__option.is-active {
@@ -251,7 +237,7 @@
   }
   .site-header .lang-select__option:hover,
   .site-header .lang-select__option:focus-visible {
-    background: var(--page-lime);
+    background: var(--ink);
     color: var(--paper);
     -webkit-text-fill-color: var(--paper);
   }
@@ -286,15 +272,15 @@
     color: var(--accent) !important;
   }
   .site-header.scrolled .logo:hover .logo-dot {
-    color: var(--page-lime) !important;
+    color: var(--ink) !important;
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
   .hero-v2-section {
     height: 300vh;
     position: relative;
-    background: var(--hero-v2-violet-bg);
-    color: var(--white);
+    background: #000000;
+    color: var(--ink);
   }
   .hero-v2-section.hero-v2-section--static {
     height: auto;
@@ -328,7 +314,7 @@
     justify-content: center;
     align-items: stretch;
     overflow: hidden;
-    color: var(--white);
+    color: var(--ink);
     /* Reserva bajo el header fijo para que el titular no invada el logo */
     padding:
       max(5rem, calc(env(safe-area-inset-top, 0px) + 4.75rem))
@@ -505,7 +491,7 @@
   @media (min-width: 640px) { .header-top nav a { padding: 0.5rem; } }
   .header-top nav a:hover {
     background: transparent;
-    color: var(--white);
+    color: var(--ink);
   }
   .header-top nav svg {
     width: 1rem;
@@ -575,7 +561,7 @@
     flex-direction: column;
     gap: 0.15rem;
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--ink);
     border: 2px solid rgba(0, 0, 0, 0.45);
     z-index: 120;
   }
@@ -595,12 +581,12 @@
     padding: 0.45rem 0.55rem;
     transition: color 0.15s ease;
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
   }
   @media (min-width: 640px) { .lang-select__option { font-size: 0.75rem; } }
   .lang-select__option:hover {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
   }
   .lang-select__option.is-active {
     background: transparent;
@@ -742,8 +728,8 @@
     -webkit-text-fill-color: var(--accent);
   }
   #contactDividerText {
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-divider-mark {
     color: var(--accent);
@@ -775,12 +761,12 @@
   }
   #contacto {
     background: var(--page-bg);
-    color: var(--page-lime);
+    color: var(--ink);
   }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
     background: transparent;
-    color: var(--page-lime);
+    color: var(--ink);
     padding: 0 0 1.25rem 0;
     display: flex;
     flex-direction: column;
@@ -817,9 +803,9 @@
     border-color: var(--accent);
   }
   .contact-box .contact-btn:hover:not(:disabled) {
-    background: var(--page-lime);
+    background: var(--ink);
     color: var(--paper);
-    border-color: var(--page-lime);
+    border-color: var(--ink);
   }
 
 
@@ -847,9 +833,9 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .contact-alt-link:hover {
-    background: var(--page-lime);
+    background: var(--ink);
     color: #FFFFFF;
-    border-color: var(--page-lime);
+    border-color: var(--ink);
   }
 
 
@@ -920,8 +906,8 @@
     margin-top: -1.5rem;
   }
   .contact-ojitos-text .big-heading--mid {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-ojitos-text .contact-divider-mark {
     color: var(--accent);
@@ -933,15 +919,15 @@
     gap: 0.5rem;
   }
   .contact-ojitos-text > p.big-heading {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-arrow-down {
     display: block;
     font-size: 3rem;
     font-weight: 900;
-    color: var(--white);
-    -webkit-text-fill-color: var(--white);
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
     line-height: 1;
     animation: contact-arrow-float 1.6s ease-in-out infinite;
   }
@@ -1026,7 +1012,7 @@
     padding: 0.55rem 0.7rem;
     border: 3px solid var(--hairline);
     background: var(--paper);
-    color: var(--black);
+    color: var(--ink);
     min-width: 0;
   }
   .contact-form__input:hover,
@@ -1040,12 +1026,12 @@
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
   .contact-form__select option {
-    color: var(--black);
+    color: var(--ink);
     background: var(--paper);
   }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
-    color: var(--white);
+    color: var(--ink);
     font-size: 0.95rem;
     font-weight: 600;
     max-width: 42rem;
@@ -1055,7 +1041,7 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: var(--page-lime);
+    color: var(--ink);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
@@ -1128,7 +1114,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.5rem 1rem;
-    border-top: 3px solid var(--black);
+    border-top: 3px solid var(--ink);
     padding-top: 0.9rem;
     margin: 0 0 2.5rem;
   }
@@ -1155,7 +1141,7 @@
   }
 
   /* ==================== SERVICIOS + PRECIOS ==================== */
-  #servicios { background: var(--page-bg); color: var(--black); overflow-x: clip; }
+  #servicios { background: var(--page-bg); color: var(--ink); overflow-x: clip; }
   .services-subsection + .services-subsection { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
   .services-eyebrow {
     color: var(--ink-3);
@@ -1201,7 +1187,7 @@
   }
   @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
   .svc-card {
-    background: var(--black);
+    background: var(--ink);
     color: var(--paper);
     padding: 2.25rem 1.35rem 2.1rem;
     min-height: 280px;
@@ -1287,16 +1273,16 @@
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
-  .price-card:not(.price-card--featured):hover { background: var(--black); color: var(--paper); border-color: var(--black); }
-  .price-card--featured { background: var(--black); color: var(--paper); border-color: var(--black); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
+  .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .price-card--featured { background: var(--ink); color: var(--paper); border-color: var(--ink); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card--featured:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
   .price-card--featured:hover .price-card__name { color: #FFFFFF; }
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
-    background: var(--paper); color: var(--black);
+    background: var(--paper); color: var(--ink);
     font-family: var(--font-mono); font-weight: 700;
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 0.28rem 0.6rem; border: 2px solid var(--black);
+    padding: 0.28rem 0.6rem; border: 2px solid var(--ink);
   }
   .price-card__name {
     color: var(--ink-3);
@@ -1312,11 +1298,11 @@
   .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.6rem 0 0; line-height: 1.4; }
   .price-card__cta { align-self: stretch; text-align: center; }
   .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
-  .price-card .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
+  .price-card .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
   .price-card--featured .price-card__cta { color: var(--paper); background: var(--accent); border-color: var(--accent); }
-  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
-  .price-card--featured:hover .price-card__cta { background: var(--black); color: #FFFFFF; border-color: var(--black); }
-  .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--black); border-color: #FFFFFF; }
+  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
+  .price-card--featured:hover .price-card__cta { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
+  .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
   .services-kit {
     margin: 2.5rem 0 0;
     font-family: var(--font-mono);
@@ -1324,7 +1310,7 @@
     font-weight: 400;
     line-height: 1.6;
     color: var(--ink-2);
-    border-top: 2px solid var(--black);
+    border-top: 2px solid var(--ink);
     padding-top: 1.25rem;
     max-width: 60ch;
   }
@@ -1333,7 +1319,7 @@
     font-weight: 700;
     text-transform: uppercase;
     margin-bottom: 0.75rem;
-    color: var(--ink-1);
+    color: var(--ink);
   }
   .services-kit__list {
     list-style: none;
@@ -1531,7 +1517,7 @@
             </div>
 
             <div class="contact-ojitos-text">
-              <p class="big-heading"><span id="contactDividerTextTop"><span style="color: var(--page-lime); -webkit-text-fill-color: var(--page-lime);"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TIENES UNA IDEA<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
+              <p class="big-heading"><span id="contactDividerTextTop"><span style="color: var(--ink); -webkit-text-fill-color: var(--ink);"><span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">¿</span>TIENES UNA IDEA<span style="color: var(--accent); -webkit-text-fill-color: var(--accent);">?</span></span></span></p>
               <p class="big-heading"><span id="contactDividerTextBottom">DÉJAME CONSTRUIR EL SISTEMA</span><span class="contact-divider-mark">.</span></p>
               <p class="contact-sub" id="contactSub">Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que se merece, de forma ágil y sin fricciones.</p>
               <span class="contact-arrow-down" aria-hidden="true">↓</span>
@@ -1599,7 +1585,7 @@
   const t = {
     es: {
       langMenuAria: "Menú de idioma",
-      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TIENES UNA IDEA<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
+      contactDividerTop: "<span style=\"color: var(--ink); -webkit-text-fill-color: var(--ink); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TIENES UNA IDEA<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
       contactDividerBottom: "DÉJAME CONSTRUIR EL SISTEMA",
       contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que se merece, de forma ágil y sin fricciones.",
       contactDividerEscribeme: "ESCRÍBEME",
@@ -1671,7 +1657,7 @@
     },
     en: {
       langMenuAria: "Language menu",
-      contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\">GOT AN IDEA?</span>",
+      contactDividerTop: "<span style=\"color: var(--ink); -webkit-text-fill-color: var(--ink); margin-bottom: 0;\">GOT AN IDEA?</span>",
       contactDividerBottom: "LET ME BUILD THE SYSTEM",
       contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
       contactDividerEscribeme: "WRITE TO ME",
