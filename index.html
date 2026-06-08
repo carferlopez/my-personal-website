@@ -1176,6 +1176,16 @@
   }
   @media (min-width: 1200px) { .services-lead { font-size: 1.1rem; } }
 
+  .services-subline {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--ink);
+    margin: 0 0 1.5rem;
+    line-height: 1.4;
+    max-width: 44ch;
+  }
+  @media (min-width: 768px) { .services-subline { font-size: 1.15rem; margin-bottom: 2rem; } }
+
   /* Rejilla brutalista conectada: las "líneas" son el negro del fondo a través de los gaps */
   .services-grid {
     display: grid;
@@ -1418,7 +1428,8 @@
         <span class="section-head__index">(01)</span>
         <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
       </div>
-      <p class="big-heading services-headline"><span id="servicesHeadline">SOY UN PRODUCT MANAGER QUE INTENTA APORTAR CLARIDAD EN UN OCÉANO DE RUIDO<span class="accent">.</span></span></p>
+      <p class="big-heading services-headline"><span id="servicesHeadline">DISEÑO SISTEMAS Y LOS CONVIERTO EN PRODUCTOS SIMPLES Y BELLOS<span class="accent">.</span></span></p>
+      <p class="services-subline" id="servicesSubline">Creo experiencias digitales memorables, sencillas y elegantes.</p>
       <p class="services-lead" id="servicesLead">Vengo de la estrategia digital para grandes marcas; ahora construyo producto. Traduzco sistemas complejos en objetos simples, rápidos y bonitos que se entienden a la primera —lo mismo en lo que lanzo por mi cuenta que en lo que construyo para una marca. Diseño con criterio, ejecuto con código y priorizo como product manager.</p>
 
       <div class="services-pin">
@@ -1611,7 +1622,8 @@
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
       servicesEyebrow: "QUÉ HAGO POR TI",
-      servicesHeadline: "SOY UN PRODUCT MANAGER QUE INTENTA APORTAR CLARIDAD EN UN OCÉANO DE RUIDO<span class=\"accent\">.</span>",
+      servicesHeadline: "DISEÑO SISTEMAS Y LOS CONVIERTO EN PRODUCTOS SIMPLES Y BELLOS<span class=\"accent\">.</span>",
+      servicesSubline: "Creo experiencias digitales memorables, sencillas y elegantes.",
       servicesLead: "Vengo de la estrategia digital para grandes marcas; ahora construyo producto. Traduzco sistemas complejos en objetos simples, rápidos y bonitos que se entienden a la primera —lo mismo en lo que lanzo por mi cuenta que en lo que construyo para una marca. Diseño con criterio, ejecuto con código y priorizo como product manager.",
       svc1Title: "FILOSOFÍA DE DISEÑO<span class=\"accent\">:</span><br>ESTÉTICA Y SIMPLICIDAD",
       svc1Text: "O \"User Friendly\", como dicen los modernos. El caso es que trato de no construir productos como todos los demás.",
@@ -1684,7 +1696,8 @@
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
       servicesEyebrow: "WHAT I DO FOR YOU",
-      servicesHeadline: "I'M A PRODUCT MANAGER TRYING TO BRING CLARITY TO AN OCEAN OF NOISE<span class=\"accent\">.</span>",
+      servicesHeadline: "I DESIGN SYSTEMS AND TURN THEM INTO SIMPLE, BEAUTIFUL PRODUCTS<span class=\"accent\">.</span>",
+      servicesSubline: "I create memorable, simple and elegant digital experiences.",
       servicesLead: "I come from digital strategy for global brands; now I build product. I translate complex systems into simple, fast, beautiful objects that make sense at first glance —whether it's what I ship on my own or what I build for a brand. I design with taste, ship with code, and prioritize like a product manager.",
       svc1Title: "DESIGN PHILOSOPHY<span class=\"accent\">:</span><br>AESTHETICS & SIMPLICITY",
       svc1Text: "Or \"User Friendly\", as the cool kids say. The thing is, I try not to build products like everyone else.",
@@ -1879,6 +1892,7 @@
     };
     setText('servicesEyebrow', d.servicesEyebrow);
     setHTML('servicesHeadline', d.servicesHeadline);
+    setText('servicesSubline', d.servicesSubline);
     setHTML('servicesLead', d.servicesLead);
     setHTML('svc1Title', d.svc1Title); setText('svc1Text', d.svc1Text); setText('svc1More', d.svc1More);
     setHTML('svc2Title', d.svc2Title); setText('svc2Text', d.svc2Text); setText('svc2More', d.svc2More);
