@@ -138,46 +138,6 @@
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
   }
 
-  .scroll-video-section {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    height: 220svh;
-    background: var(--page-bg);
-  }
-  .scroll-video-section__sticky {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100svh;
-    max-height: 100dvh;
-    overflow: hidden;
-    background: var(--page-bg);
-  }
-  .scroll-video-section video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform-origin: center center;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .scroll-video-section {
-      height: auto;
-    }
-    .scroll-video-section__sticky {
-      position: relative;
-      height: auto;
-      max-height: none;
-    }
-    .scroll-video-section video {
-      height: auto;
-      opacity: 1 !important;
-      transform: none !important;
-      clip-path: none !important;
-    }
-  }
-
   /* ==================== SITE HEADER (fixed) ==================== */
   .site-header {
     position: fixed;
@@ -444,6 +404,9 @@
     line-height: 0.95;
     margin: 0;
     padding-block: 0.02em;
+    /* Fallback: fitHeroV2Lines() recalcula el tamaño en JS; este clamp evita
+       que el titular se quede diminuto si el JS tarda o falla. */
+    font-size: clamp(2.5rem, 12vw, 8rem);
   }
 
   /* Hero: todo blanco, puntos rojo */
@@ -460,240 +423,6 @@
   #heroV2Title .hero-v2-violet {
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
-  }
-
-  /* Presentación: mismo fondo que la página; titulares en blanco */
-  .intro-hero {
-    position: relative;
-    background: var(--page-bg);
-    color: var(--white);
-    padding-top: 5rem;
-    padding-bottom: clamp(10rem, 32vh, 22rem);
-    overflow-x: hidden;
-  }
-  @media (min-width: 768px) { .intro-hero { padding-top: 6rem; } }
-
-  .intro-panels {
-    display: block;
-  }
-
-  /* Sin JS / reduced-motion: tres bloques en columna. Con .intro-hero--active: un solo viewport, rotación por scroll */
-  .intro-stage {
-    display: flex;
-    flex-direction: column;
-    gap: clamp(5rem, 14vh, 11rem);
-    position: relative;
-    /* Patch 4: Hardware Acceleration */
-    will-change: transform;
-    transform: translateZ(0);
-  }
-
-  .intro-panel {
-    min-height: 100vh;
-    min-height: 100dvh;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding-block: clamp(3.5rem, 10vw, 8rem);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-    overflow: visible;
-  }
-  .intro-panel:last-child {
-    border-bottom: none;
-  }
-
-  .intro-hero--active .intro-stage {
-    display: block;
-    min-height: 100vh;
-    min-height: 100dvh;
-    gap: 0;
-    perspective: min(1400px, 180vw);
-    perspective-origin: 50% 50%;
-    transform-style: preserve-3d;
-  }
-
-  .intro-hero.intro-hero--active {
-    overflow: hidden;
-  }
-
-  .intro-hero--active .intro-panel {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    width: 100%;
-    box-sizing: border-box;
-    border-bottom: none;
-    min-height: 100vh;
-    min-height: 100dvh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
-      max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-    padding-top: max(0.75rem, env(safe-area-inset-top, 0px));
-    padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
-  }
-
-  .intro-hero--active .intro-panel__grid {
-    flex: 0 1 auto;
-    display: flex;
-    min-height: 0;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .intro-hero--active .intro-panel--0 {
-    z-index: 1;
-  }
-  .intro-hero--active .intro-panel--1 {
-    z-index: 2;
-  }
-  .intro-hero--active .intro-panel--2 {
-    z-index: 3;
-  }
-
-  .intro-panel__grid {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: clamp(2rem, 6vw, 4.5rem);
-    align-items: center;
-    width: 100%;
-    overflow: visible;
-  }
-
-  .intro-panel__copy {
-    position: relative;
-    z-index: 2;
-    margin-inline-start: calc(var(--logo-text-inset) - var(--container-pad-x));
-    width: min(94vw, 78rem);
-    max-width: min(94vw, 78rem);
-    box-sizing: border-box;
-    will-change: transform;
-  }
-  .intro-hero--active .intro-panel__copy {
-    margin-inline: auto;
-    margin-inline-start: auto;
-    margin-inline-end: auto;
-    width: auto;
-    max-width: min(94vw, 88rem);
-  }
-
-  .intro-panel__headline {
-    margin: 0;
-    font-weight: 900;
-    letter-spacing: -0.04em;
-    line-height: 1.05;
-    text-transform: uppercase;
-    text-wrap: pretty;
-    word-break: normal;
-    overflow-wrap: normal;
-    hyphens: none;
-    font-size: clamp(2rem, 3.8vw + 0.85rem, 4.75rem);
-  }
-  /* Bloque multi-línea como el hero (SYSTEMS / ARCHITECT / …): una fila por span */
-  .intro-panel__headline.intro-panel__headline--stack {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: clamp(0.02em, 0.28vw, 0.08em);
-    width: max-content;
-    max-width: min(96vw, 58rem);
-    margin-inline: auto;
-    text-align: center;
-  }
-  .intro-headline__line {
-    display: block;
-    white-space: nowrap;
-    line-height: 0.9;
-    letter-spacing: inherit;
-  }
-  @media (min-width: 768px) {
-    .intro-panel__headline {
-      font-size: clamp(2.15rem, 4.1vw + 0.9rem, 5.1rem);
-      line-height: 1.04;
-    }
-  }
-  @media (min-width: 640px) and (max-width: 899px) {
-    .intro-panel__copy {
-      width: min(94vw, 64rem);
-      max-width: min(94vw, 64rem);
-    }
-    .intro-panel__headline {
-      font-size: clamp(2.1rem, 4.2vw + 0.85rem, 4.85rem);
-    }
-  }
-  @media (min-width: 900px) {
-    .intro-panel__copy {
-      width: min(94vw, 88rem);
-      max-width: min(94vw, 88rem);
-    }
-    .intro-panel__headline {
-      font-size: clamp(2.25rem, 3.6vw + 1.35rem, 5.75rem);
-      line-height: 1.03;
-      letter-spacing: -0.042em;
-    }
-  }
-
-  .intro-hero.intro-hero--active .intro-panel__headline {
-    text-align: center;
-  }
-
-  /* Todas las headlines en blanco; ;) en lima */
-  .intro-panel--0 .intro-panel__headline,
-  .intro-panel--1 .intro-panel__headline,
-  .intro-panel--2 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  /* Panel 0: punto final en negro (contrasta con CONCRETAS blanco) */
-  .intro-panel--0 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* Panel 1 (MAESTROS): negro con acentos blancos */
-  .intro-panel--1 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  .intro-panel--1 .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-  .intro-panel--1 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* Panel 2 (CREACIONES): negro con acentos blancos */
-  .intro-panel--2 .intro-panel__headline {
-    color: var(--page-lime);
-  }
-  .intro-panel--2 .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-  .intro-panel--2 .intro-line__suffix--period {
-    color: var(--accent) !important;
-    -webkit-text-fill-color: var(--accent) !important;
-  }
-  /* El punto final siempre en amarillo */
-  .intro-line__suffix--period {
-    color: var(--accent) !important;
-  }
-  /* ;) fuera del color principal del bloque */
-  .intro-panel--2 .intro-line__suffix--wink {
-    color: var(--white);
-  }
-
-  .intro-accent {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-
-  .intro-line__suffix {
-    color: rgba(142, 142, 147, 0.55);
   }
 
   .header-top {
@@ -943,36 +672,6 @@
     }
   }
 
-  .scroll-hint {
-    text-align: center;
-    pointer-events: none;
-  }
-  .scroll-hint--intro {
-    margin-top: 2.5rem;
-  }
-  .scroll-hint a {
-    display: inline-block;
-    padding: 0.5rem 1.5rem 0.5rem calc(1.5rem + 0.5em);
-    font-weight: 700;
-    letter-spacing: 0.5em;
-    color: var(--paper);
-    background: var(--page-lime);
-    border: 3px solid var(--page-lime);
-    pointer-events: auto;
-    animation: float 3s ease-in-out infinite;
-    font-size: 0.875rem;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-  }
-  @media (min-width: 640px) { .scroll-hint a { font-size: 1rem; } }
-  @media (min-width: 768px) { .scroll-hint a { font-size: 1.125rem; } }
-  @media (min-width: 1024px) { .scroll-hint a { font-size: 1.25rem; } }
-  .scroll-hint a:hover {
-    background: var(--accent);
-    color: var(--paper);
-    border-color: var(--accent);
-  }
-  @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(10px); } }
-
   .u-sr-only {
     position: absolute;
     width: 1px;
@@ -989,12 +688,6 @@
   .section-pad { padding: 2rem 0; }
   @media (min-width: 640px) { .section-pad { padding: 3rem 0; } }
   @media (min-width: 768px) { .section-pad { padding: 6rem 0; } }
-
-  /* Pin presentación: quitar .section-pad + .intro-hero (empujaban el copy hacia abajo en Y). */
-  .intro-hero.intro-hero--active.section-pad {
-    padding-top: max(0.65rem, env(safe-area-inset-top, 0px));
-    padding-bottom: max(0.65rem, env(safe-area-inset-bottom, 0px));
-  }
 
   /* Móvil: sin animaciones de scroll — menos aire entre bloques */
   @media (max-width: 639px) {
@@ -1017,28 +710,6 @@
     #heroV2Title {
       will-change: auto;
     }
-    .intro-hero {
-      padding-top: 2rem;
-      padding-bottom: clamp(2rem, 6vw, 3.5rem);
-    }
-    .intro-stage {
-      gap: clamp(1.25rem, 4vh, 2.25rem);
-    }
-    .intro-panel {
-      min-height: auto !important;
-      padding-block: clamp(1.25rem, 4vw, 2rem);
-    }
-    #proyectos.section-pad {
-      padding-top: clamp(0.25rem, 1vw, 0.65rem);
-      padding-bottom: clamp(0.45rem, 2vw, 1rem);
-    }
-    .projects-works-inner {
-      padding-top: 0;
-      padding-bottom: clamp(0.65rem, 2.5vw, 1.35rem);
-    }
-    .projects-works-stack {
-      min-height: 0;
-    }
     .contact-box {
       padding: 1rem 0;
       gap: 1rem;
@@ -1046,58 +717,6 @@
     /* Presentación: titulares a ancho útil */
     html {
       overflow-x: hidden;
-    }
-    /* Pin móvil: centrado en el marco como escritorio */
-    .intro-hero.intro-hero--active .intro-panel {
-      min-height: 100vh !important;
-      min-height: 100dvh !important;
-      justify-content: center !important;
-      align-items: center;
-      padding-top: max(0.75rem, env(safe-area-inset-top, 0px)) !important;
-      padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px)) !important;
-      padding-inline: max(var(--container-pad-x), env(safe-area-inset-left, 0px))
-        max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-      box-sizing: border-box;
-    }
-    .intro-panel__grid {
-      min-width: 0;
-      gap: clamp(1.25rem, 4vw, 2rem);
-    }
-    .intro-hero.intro-hero--active .intro-panel__grid {
-      justify-items: center;
-      width: 100%;
-      align-content: center;
-    }
-    .intro-panel__copy {
-      max-width: none;
-      width: 100%;
-      min-width: 0;
-      margin-inline-start: 0;
-      box-sizing: border-box;
-    }
-    .intro-hero.intro-hero--active .intro-panel__copy {
-      margin-inline: auto;
-      width: auto;
-      max-width: min(92vw, 40rem);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: clamp(0.35rem, 2vmin, 0.85rem);
-      text-align: center;
-    }
-    .intro-panel__headline {
-      font-size: clamp(1.45rem, 6.2vw, 2.5rem);
-      line-height: 1.06;
-      overflow-wrap: normal;
-      word-break: normal;
-      hyphens: none;
-      max-width: 100%;
-    }
-    .intro-hero.intro-hero--active .intro-panel__headline {
-      text-align: center;
-      text-wrap: pretty;
-      font-size: clamp(1.2rem, 6.8vmin, 2.15rem);
-      line-height: 1.05;
     }
   }
 
@@ -1117,246 +736,6 @@
   @media (min-width: 1024px) { .big-heading { font-size: 6vw; } }
   @media (min-width: 1280px) { .big-heading { font-size: 64px; } }
   .big-heading .red { color: var(--accent); }
-
-  /* WORKS: franja de marquees horizontales (7 filas, sentidos alternos) */
-  #proyectos.projects-section {
-    background: var(--page-bg);
-    color: var(--page-lime);
-    overflow-x: clip;
-    position: relative;
-  }
-
-  #proyectos > .projects-tickers-belt {
-    width: 100vw;
-    max-width: none;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    margin-bottom: clamp(0.06rem, 0.35vw, 0.2rem);
-    padding-top: clamp(0.35rem, 1vw, 0.55rem);
-    padding-bottom: clamp(0.35rem, 1vw, 0.55rem);
-    padding-inline: max(0px, env(safe-area-inset-left, 0px)) max(0px, env(safe-area-inset-right, 0px));
-    box-sizing: border-box;
-    z-index: 3;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: clamp(0.06rem, 0.45vw, 0.14rem);
-  }
-
-  .projects-ticker {
-    position: relative;
-    z-index: 3;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    background: transparent;
-    border: none;
-    border-radius: 0;
-    box-shadow: none;
-    overflow: hidden;
-    padding: clamp(0.12rem, 0.55vw, 0.28rem) 0;
-  }
-  .projects-ticker__viewport {
-    position: relative;
-    z-index: 1;
-    overflow: hidden;
-    width: 100%;
-    background: transparent;
-    mask-image: none;
-    -webkit-mask-image: none;
-  }
-  .projects-ticker__track {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    width: max-content;
-    font-weight: 900;
-    line-height: 1.05;
-    will-change: transform;
-    animation: projects-ticker-marquee-ltr 90s linear infinite;
-    background: transparent;
-    font-size: clamp(3.5rem, 13vw, 150px);
-    letter-spacing: -0.05em;
-  }
-  .projects-ticker__track--rev {
-    animation: projects-ticker-marquee-rtl 90s linear infinite;
-  }
-  .projects-ticker__chunk {
-    display: inline-flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    padding-inline-end: 0;
-  }
-  .projects-ticker__word {
-    flex-shrink: 0;
-    font-weight: 900;
-    letter-spacing: -0.06em;
-    text-transform: uppercase;
-    margin-inline-end: 0;
-    line-height: 1;
-  }
-  .projects-ticker__word--orange {
-    color: var(--page-lime);
-    -webkit-text-fill-color: var(--page-lime);
-    -webkit-text-stroke: 0.02em var(--page-lime);
-  }
-  .projects-ticker__word--black {
-    color: var(--ink-3);
-    -webkit-text-fill-color: var(--ink-3);
-    -webkit-text-stroke: 0;
-    text-shadow: none;
-  }
-  @keyframes projects-ticker-marquee-ltr {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
-  @keyframes projects-ticker-marquee-rtl {
-    from { transform: translateX(-50%); }
-    to { transform: translateX(0); }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .projects-ticker__track {
-      animation: none;
-      transform: none;
-      padding-inline: 0.5rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      width: 100%;
-      max-width: 100%;
-      row-gap: 0.35rem;
-    }
-    .projects-ticker__chunk {
-      padding-inline-end: 0;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-  }
-
-  #proyectos.section-pad {
-    padding-top: clamp(0.25rem, 1vw, 0.75rem);
-    padding-bottom: 0;
-  }
-
-  .projects-works-stack {
-    position: relative;
-    min-height: clamp(8rem, 28vh, 18rem);
-    display: flex;
-    flex-direction: column;
-  }
-  .projects-works-inner {
-    position: relative;
-    z-index: 1;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    padding-top: clamp(0, 0.2vw, 0.12rem);
-    padding-bottom: 0;
-  }
-  /* ==================== WORKS SLIDER ==================== */
-  .works-slider-wrap {
-    padding-top: clamp(0.75rem, 2.5vw, 1.5rem);
-    padding-bottom: 0;
-  }
-  #proyectos > .container {
-    max-width: none;
-  }
-  .works-slider {
-    overflow-x: auto;
-    overflow-y: visible;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .works-slider::-webkit-scrollbar { display: none; }
-  .works-slider__track {
-    display: flex;
-    gap: 1.5rem;
-  }
-  .works-card {
-    flex: 0 0 min(82vw, 700px);
-    max-width: min(82vw, 700px);
-    margin: 0;
-    scroll-snap-align: start;
-    background: #0A0A0A;
-    border-radius: 18px;
-    overflow: hidden;
-    display: block;
-    color: var(--paper);
-    text-decoration: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .works-card__media {
-    width: 100%;
-    overflow: hidden;
-    background: transparent;
-    border-radius: 18px;
-  }
-  .works-card__video {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-  }
-  .works-card__preview {
-    display: block;
-    width: 100%;
-    aspect-ratio: 16/9;
-    object-fit: cover;
-    object-position: top;
-  }
-  .works-card__body {
-    padding: 1.25rem 1.5rem 1.5rem;
-  }
-  .works-card__tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    margin-bottom: 0.5rem;
-  }
-  .works-card__title {
-    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.2;
-    color: var(--paper);
-  }
-  .works-slider__arrows {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-  }
-  .works-slider__arrow {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: rgba(10,10,10,0.06);
-    color: var(--page-lime);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.2s ease;
-    flex-shrink: 0;
-  }
-  .works-slider__arrow:hover:not(:disabled) {
-    background: rgba(10,10,10,0.12);
-  }
-  .works-slider__arrow:disabled {
-    opacity: 0.25;
-    cursor: default;
-  }
-  @media (min-width: 768px) {
-    .works-card {
-      flex: 0 0 min(55vw, 820px);
-      max-width: min(55vw, 820px);
-    }
-  }
-
 
   #contacto #contactMark {
     color: var(--accent);
@@ -2219,12 +1598,6 @@
   // ============================================
   const t = {
     es: {
-      typewriter: [
-        ['NO SOY {DISEÑADOR},', 'PERO {DISEÑO} COSAS.'],
-        ['NO SOY {PROGRAMADOR},', 'PERO {PROGRAMO} COSAS.'],
-        ['NO SOY {CREATIVO},', 'PERO {CREO} COSAS.'],
-      ],
-
       langMenuAria: "Menú de idioma",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\"><span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">¿</span>TIENES UNA IDEA<span style=\"color: var(--accent); -webkit-text-fill-color: var(--accent);\">?</span></span>",
       contactDividerBottom: "DÉJAME CONSTRUIR EL SISTEMA",
@@ -2251,7 +1624,6 @@
       contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
       contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
       contactAltLabel: "O si prefieres:",
-      projectsTitle: "PRODUCTOS.",
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "LA CAPACIDAD TÉCNICA<br>YA NO MARCA LA DIFERENCIA<span class=\"accent\">.</span><br>EL CRITERIO LO HACE<span class=\"accent\">.</span>",
       servicesLead: "En un mundo en el que cualquiera puede hacer cualquier cosa con inteligencia artificial, la técnica ya no es el límite. El criterio lo es.",
@@ -2298,12 +1670,6 @@
       contactMeta: "RESPUESTA EN 24H"
     },
     en: {
-      typewriter: [
-        ['I BUILD {APPS}', 'WITH THE SOUL OF A {GAME}', 'AND THE LOOK OF {CINEMA}.'],
-        ['I WAS INFLUENCED BY MASTERS', 'LIKE {SPIELBERG}, {TORIYAMA},', '{SCOTT}, {MIYAMOTO}', 'OR {KOJIMA}.'],
-        ['NOW I STRIVE', 'TO CAPTURE IT IN', 'MY {CREATIONS}.'],
-      ],
-
       langMenuAria: "Language menu",
       contactDividerTop: "<span style=\"color: var(--page-lime); -webkit-text-fill-color: var(--page-lime); margin-bottom: 0;\">GOT AN IDEA?</span>",
       contactDividerBottom: "LET ME BUILD THE SYSTEM",
@@ -2331,7 +1697,6 @@
       contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
       contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
       contactAltLabel: "Or if you prefer:",
-      projectsTitle: "PRODUCTS.",
       servicesEyebrow: "WHAT I DO FOR YOU",
       servicesHeadline: "TECHNICAL SKILL<br>NO LONGER MAKES THE DIFFERENCE<span class=\"accent\">.</span><br>JUDGMENT DOES<span class=\"accent\">.</span>",
       servicesLead: "In a world where anyone can build anything with artificial intelligence, technique is no longer the limit. Judgment is.",
@@ -2379,263 +1744,15 @@
     }
   };
 
-  // Pega aquí tu Stripe Payment Link del Diagnóstico (290 €) para cobrar al instante.
-  // Si lo dejas vacío, el botón "Reservar" lleva al formulario de contacto.
-  const DIAGNOSTICO_PAY_URL = '';
+  // Pega aquí tu Stripe Checkout de la Web de Autor para cobrar al instante.
+  // Si lo dejas vacío, el CTA "Quiero mi web" lleva al formulario de contacto.
+  const WEB_AUTOR_PAY_URL = '';
 
   let lang = 'es';
   try {
     const _ls = localStorage.getItem('carlosmakes_lang');
     if (_ls === 'en' || _ls === 'es') lang = _ls;
   } catch (e) {}
-
-  // ============================================
-  // Intro: tres líneas al scroll (GSAP ScrollTrigger)
-  // ============================================
-  let introPanelTimelines = [];
-  let featuredVideoNativeCleanup = null;
-
-  function killIntroLinesScrollAnimation() {
-    const introRoot = document.getElementById('presentacion');
-    if (introRoot) introRoot.classList.remove('intro-hero--active');
-    introPanelTimelines.forEach((tl) => {
-      if (tl.scrollTrigger) tl.scrollTrigger.kill();
-      tl.kill();
-    });
-    introPanelTimelines = [];
-    if (typeof gsap !== 'undefined' && introRoot) {
-      const allElements = introRoot.querySelectorAll('.intro-panel__copy, .intro-panel');
-      gsap.killTweensOf(allElements);
-      gsap.set(allElements, { clearProps: 'all' });
-    }
-    ['introLine0', 'introLine1', 'introLine2'].forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.style.removeProperty('color');
-        el.querySelectorAll('.intro-line__suffix').forEach((s) => {
-          s.style.removeProperty('color');
-        });
-      }
-    });
-  }
-
-  function normalizeTypewriterBlock(entry) {
-    if (Array.isArray(entry)) return entry.map((s) => String(s));
-    return [String(entry)];
-  }
-
-  function appendAccentedText(parent, text) {
-    text.split(/\{([^}]+)\}/).forEach((part, i) => {
-      if (!part) return;
-      if (i % 2 === 0) {
-        parent.append(document.createTextNode(part));
-      } else {
-        const span = document.createElement('span');
-        span.className = 'intro-accent';
-        span.textContent = part;
-        parent.append(span);
-      }
-    });
-  }
-
-  /** Varias líneas por bloque (como hero-v2-line); la última puede llevar sufijos . o ;). */
-  function fillIntroHeadlineStack(el, lines) {
-    if (!el) return;
-    el.replaceChildren();
-    const arr = normalizeTypewriterBlock(lines);
-    if (!arr.length) return;
-    arr.forEach((raw, idx) => {
-      const isLast = idx === arr.length - 1;
-      const row = document.createElement('span');
-      row.className = 'intro-headline__line';
-      const s = String(raw);
-      if (isLast && s.endsWith(' ;')) {
-        appendAccentedText(row, s.slice(0, s.length - 2));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--semi';
-        suffix.textContent = ' ;';
-        row.append(suffix);
-      } else if (isLast && s.endsWith(';)')) {
-        appendAccentedText(row, s.slice(0, s.length - 2));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--wink';
-        suffix.textContent = ';)';
-        row.append(suffix);
-      } else if (isLast && s.endsWith('.')) {
-        appendAccentedText(row, s.slice(0, s.length - 1));
-        const suffix = document.createElement('span');
-        suffix.className = 'intro-line__suffix intro-line__suffix--period';
-        suffix.textContent = '.';
-        row.append(suffix);
-      } else {
-        appendAccentedText(row, s);
-      }
-      el.appendChild(row);
-    });
-  }
-
-  function fillIntroLinesFromLang() {
-    const words = t[lang].typewriter;
-    if (!words || words.length < 3) return;
-    fillIntroHeadlineStack(document.getElementById('introLine0'), words[0]);
-    fillIntroHeadlineStack(document.getElementById('introLine1'), words[1]);
-    fillIntroHeadlineStack(document.getElementById('introLine2'), words[2]);
-  }
-
-  function refreshIntroLinesAfterLangChange() {
-    fillIntroLinesFromLang();
-    killIntroLinesScrollAnimation();
-    syncViewportAnimationMode();
-  }
-
-  function setupIntroLinesScrollAnimation() {
-    const introRoot = document.getElementById('presentacion');
-    if (!introRoot) return;
-
-    killIntroLinesScrollAnimation();
-    fillIntroLinesFromLang();
-
-    const panels = introRoot.querySelectorAll('.intro-panel[data-intro-panel]');
-    if (panels.length < 3) return;
-
-    const reduceIntro = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceIntro) {
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    if (window.matchMedia('(max-width: 767px)').matches) {
-      introRoot.classList.remove('intro-hero--active');
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      panels.forEach((panel) => {
-        const copy = panel.querySelector('.intro-panel__copy');
-        if (copy) {
-          copy.style.opacity = '1';
-          copy.style.transform = 'none';
-        }
-      });
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-
-    introRoot.classList.add('intro-hero--active');
-
-    const wide = window.matchMedia('(min-width: 900px)').matches;
-    const narrowMobile = window.matchMedia('(max-width: 639px)').matches;
-    const startS = wide ? 0.05 : narrowMobile ? 0.1 : 0.065;
-    const readS = wide ? 1.04 : narrowMobile ? 1 : 1.03;
-    const flyS = wide ? 12 : narrowMobile ? 4.2 : 9;
-    const flyZ = wide ? 2400 : narrowMobile ? 680 : 1700;
-    const startZ0 = wide ? -3400 : narrowMobile ? -1200 : -2600;
-
-    const SEG = 1;
-    const scrollPerSegmentVh = narrowMobile ? 2.85 : wide ? 3.35 : 2.72;
-    const totalPinScroll = () => Math.round(window.innerHeight * scrollPerSegmentVh * 3);
-
-    const copyEls = [];
-    panels.forEach((panel) => {
-      const copy = panel.querySelector('.intro-panel__copy');
-      if (!copy) return;
-      copyEls.push(copy);
-      gsap.set(copy, {
-        transformOrigin: '50% 50%',
-        transformPerspective: wide ? 2200 : 1400,
-        force3D: true,
-        willChange: "transform, opacity",
-        scale: startS,
-        x: 0,
-        y: 0,
-        z: startZ0,
-        opacity: 0,
-      });
-    });
-
-    if (copyEls.length !== 3) {
-      introRoot.classList.remove('intro-hero--active');
-      return;
-    }
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: introRoot,
-        start: 'top top',
-        end: () => '+=' + totalPinScroll(),
-        pin: true,
-        scrub: true,
-        invalidateOnRefresh: true,
-        anticipatePin: 1,
-        onRefresh: self => {
-          // Asegurar sincronización al refrescar o subir
-          if (self.progress > 0) self.animation.progress(self.progress);
-        },
-        // Forzar refresco al entrar para evitar congelamiento desde abajo
-        onEnter: () => ScrollTrigger.refresh()
-      },
-      defaults: { ease: 'none' }
-    });
-
-    // Estado inicial gestionado por el timeline para evitar desincronización al subir
-    tl.set(panels, { autoAlpha: 0 }, 0);
-    tl.set(panels[0], { autoAlpha: 1 }, 0);
-
-    const panelFadeDur = 0.26;
-    const exitDur = 0.175;
-    const mergeDur = SEG - exitDur;
-    const nextRevealOffset = exitDur * 0.22;
-
-    function nextPanelRevealAt(segIndex) {
-      return segIndex * SEG + mergeDur + nextRevealOffset;
-    }
-
-    function addSegment(i, t0) {
-      const copy = copyEls[i];
-      if (!copy) return;
-      const motionDur = SEG;
-      const durApproach = motionDur * 0.48;
-      const durExit = motionDur - durApproach;
-
-      tl.fromTo(copy,
-        { scale: startS, z: startZ0, opacity: 0 },
-        { scale: readS, z: 0, opacity: 1, duration: durApproach },
-        t0
-      );
-      tl.to(copy,
-        { scale: flyS, z: flyZ, opacity: 0, duration: durExit },
-        t0 + durApproach
-      );
-    }
-
-    const fade1At = nextPanelRevealAt(0);
-    const fade2At = nextPanelRevealAt(1);
-
-    addSegment(0, 0);
-    tl.to(panels[0], { autoAlpha: 0, duration: panelFadeDur }, fade1At);
-    tl.to(panels[1], { autoAlpha: 1, duration: panelFadeDur }, fade1At);
-    addSegment(1, fade1At);
-
-    tl.to(panels[1], { autoAlpha: 0, duration: panelFadeDur }, fade2At);
-    tl.to(panels[2], { autoAlpha: 1, duration: panelFadeDur }, fade2At);
-    addSegment(2, fade2At);
-
-    introPanelTimelines.push(tl);
-  }
 
   function killHeroScrollAnimation() {
     const hero = document.querySelector('.hero-v2-section');
@@ -2651,101 +1768,6 @@
       ScrollTrigger.getAll().forEach((st) => {
         if (st.trigger === hero) st.kill();
       });
-    }
-  }
-
-  function killFeaturedVideoScrub() {
-    const video = document.getElementById('featuredScrollVideo');
-    if (featuredVideoNativeCleanup) {
-      featuredVideoNativeCleanup();
-      featuredVideoNativeCleanup = null;
-    }
-    if (typeof gsap !== 'undefined' && video) {
-      gsap.killTweensOf(video);
-      gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
-    }
-    if (typeof ScrollTrigger !== 'undefined') {
-      const st = ScrollTrigger.getById('featuredVideoScrub');
-      if (st) st.kill();
-    }
-  }
-
-  function initFeaturedVideoScrub() {
-    const section = document.querySelector('.scroll-video-section');
-    const video = document.getElementById('featuredScrollVideo');
-    if (!section || !video) return;
-    killFeaturedVideoScrub();
-    const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
-    const desiredSrc = isMobileVideo ? 'assets/video_carlos_movil.m4v' : 'assets/video_carlos.mp4';
-    video.poster = isMobileVideo ? 'assets/video_carlos_movil-poster.jpg' : 'assets/video_carlos-poster.jpg';
-    const currentSrc = video.currentSrc || video.getAttribute('src') || '';
-    if (!currentSrc.endsWith(desiredSrc)) {
-      video.src = desiredSrc;
-      video.load();
-    }
-    video.pause();
-
-    function setVideoProgress(progress) {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-      const maxTime = Math.max(0, video.duration - 0.04);
-      const nextTime = Math.max(0, Math.min(maxTime, maxTime * progress));
-      if (Math.abs(video.currentTime - nextTime) > 0.035) {
-        video.currentTime = nextTime;
-      }
-    }
-
-    if (video.readyState >= 1) {
-      setVideoProgress(0);
-    } else {
-      video.addEventListener('loadedmetadata', () => setVideoProgress(0), { once: true });
-    }
-
-    if (reduceMotion) return;
-
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      let ticking = false;
-      const updateFromScroll = () => {
-        ticking = false;
-        const travel = Math.max(1, section.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / travel));
-        setVideoProgress(progress);
-      };
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(updateFromScroll);
-      };
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      featuredVideoNativeCleanup = () => {
-        window.removeEventListener('scroll', requestUpdate);
-        window.removeEventListener('resize', requestUpdate);
-      };
-      requestUpdate();
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.set(video, { willChange: 'transform' });
-    ScrollTrigger.create({
-      id: 'featuredVideoScrub',
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => setVideoProgress(self.progress),
-      onRefresh: (self) => setVideoProgress(self.progress)
-    });
-
-    if (video.readyState < 1) {
-      video.addEventListener('loadedmetadata', () => {
-        const st = ScrollTrigger.getById('featuredVideoScrub');
-        if (st) {
-          setVideoProgress(st.progress);
-          ScrollTrigger.refresh();
-        }
-      }, { once: true });
     }
   }
 
@@ -2856,80 +1878,8 @@
         initHeroScrollAnimation();
       }
     }
-    setupIntroLinesScrollAnimation();
-    initFeaturedVideoScrub();
-    if (typeof lang !== 'undefined' && typeof t !== 'undefined' && t[lang] && t[lang].projectsTitle) {
-      renderProjectsTickersBelt();
-    }
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
-
-  function setProjectsTitleStack(text) {
-    const h2 = document.getElementById('projectsTitle');
-    if (!h2 || !text) return;
-    const sr = h2.querySelector('.projects-title-sr');
-    if (sr) sr.textContent = text;
-    renderProjectsTickersBelt();
-  }
-
-  function buildWorksTickerChunks(wordEscaped) {
-    const n = 18;
-    const parts = [];
-
-    for (let i = 0; i < n; i++) {
-      let styledWord = wordEscaped;
-      // Normalizamos para asegurar que matchee con o sin punto, y quitamos posibles espacios
-      const normalized = wordEscaped.trim().toUpperCase();
-      
-      if (normalized === 'PRODUCTOS.' || normalized === 'PRODUCTOS') {
-        styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">PRODUCTOS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">PRODUCTOS</span><span class="projects-ticker__word--orange">.</span>';
-      } else if (normalized === 'PRODUCTS.' || normalized === 'PRODUCTS') {
-        styledWord = i % 2 === 0
-          ? '<span class="projects-ticker__word--orange">PRODUCTS</span><span class="projects-ticker__word--black">.</span>'
-          : '<span class="projects-ticker__word--black">PRODUCTS</span><span class="projects-ticker__word--orange">.</span>';
-      }
-      parts.push(
-        '<span class="projects-ticker__word">' +
-        styledWord +
-        '</span>'
-      );
-    }
-    return parts.join('');
-  }
-
-  const PROJECTS_TICKER_ROWS = 1;
-
-  /** Siete carriles horizontales; filas impares RTL (misma duración 90s que LTR vía keyframes). */
-  function renderProjectsTickersBelt() {
-    const belt = document.getElementById('projectsTickersBelt');
-    if (!belt) return;
-    const raw = (t[lang] && t[lang].projectsTitle) ? String(t[lang].projectsTitle) : 'SERVICES';
-    const word = raw.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const chunk = '<span class="projects-ticker__chunk">' + buildWorksTickerChunks(word) + '</span>';
-    const reduce =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const inner = reduce ? chunk : chunk + chunk;
-    belt.replaceChildren();
-    for (let i = 0; i < PROJECTS_TICKER_ROWS; i++) {
-      const row = document.createElement('div');
-      row.className = 'projects-ticker projects-ticker--belt-row';
-      const vp = document.createElement('div');
-      vp.className = 'projects-ticker__viewport';
-      const track = document.createElement('div');
-      track.className =
-        'projects-ticker__track' +
-        (i % 2 === 1 ? ' projects-ticker__track--rev' : '');
-      track.id = 'projectsTickerTrack' + i;
-      track.innerHTML = inner;
-      vp.appendChild(track);
-      row.appendChild(vp);
-      belt.appendChild(row);
-    }
-  }
-
 
   // ============================================
   // Idioma
@@ -2950,7 +1900,6 @@
     setHTML('pricingHeadline', d.pricingHeadline);
     setText('pricingIntro', d.pricingIntro);
     setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
-    setText('price2Badge', d.price2Badge); setText('price2Name', d.price2Name); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.priceNote);
     setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.price3Note != null ? d.price3Note : d.priceNote);
     setText('pricingVat', d.pricingVat);
     setText('servicesKitTitle', d.servicesKitTitle);
@@ -2958,9 +1907,9 @@
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
     setText('pricingEyebrow', d.pricingEyebrow);
-    if (typeof DIAGNOSTICO_PAY_URL === 'string' && DIAGNOSTICO_PAY_URL) {
+    if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
-      if (c) { c.setAttribute('href', DIAGNOSTICO_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
+      if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
     }
   }
 
@@ -2979,7 +1928,6 @@
     if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
     const contactMetaEl = document.getElementById('contactMeta');
     if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
-    setProjectsTitleStack(d.projectsTitle);
 
     const langSelCur = document.getElementById('langSelectCurrent');
     const langSelBtn = document.getElementById('langSelectBtn');
@@ -3023,7 +1971,6 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     applyServicesI18n(d);
-    fillIntroLinesFromLang();
   }
 
   function getContactFormEndpoint() {
@@ -3121,7 +2068,7 @@
           if (next !== lang) {
             lang = next;
             applyLang();
-            refreshIntroLinesAfterLangChange();
+            syncViewportAnimationMode();
           }
         }
         setLangMenuOpen(false);
@@ -3260,36 +2207,6 @@
     }, 150);
   });
 
-  // ============================================
-  // Works slider
-  // ============================================
-  (function () {
-    const slider = document.getElementById('worksSlider');
-    const track = document.getElementById('worksSliderTrack');
-    const btnPrev = document.getElementById('worksArrowPrev');
-    const btnNext = document.getElementById('worksArrowNext');
-    if (!slider || !track || !btnPrev || !btnNext) return;
-
-    function getStep() {
-      const card = track.firstElementChild;
-      if (!card) return slider.offsetWidth;
-      const gap = parseFloat(getComputedStyle(track).gap) || 0;
-      return card.offsetWidth + gap;
-    }
-
-    function syncButtons() {
-      btnPrev.disabled = slider.scrollLeft <= 1;
-      btnNext.disabled = slider.scrollLeft >= slider.scrollWidth - slider.offsetWidth - 1;
-    }
-
-    btnPrev.addEventListener('click', () => slider.scrollBy({ left: -getStep(), behavior: 'smooth' }));
-    btnNext.addEventListener('click', () => slider.scrollBy({ left: getStep(), behavior: 'smooth' }));
-
-    slider.addEventListener('scroll', syncButtons, { passive: true });
-    window.addEventListener('resize', syncButtons);
-    syncButtons();
-  }());
-
   let pageInitialized = false;
 
   function runViewportSyncWhenReady() {
@@ -3326,33 +2243,6 @@
   } else {
     initPage();
   }
-
-  // ============================================
-  // Video Autoplay on Scroll
-  // ============================================
-  document.addEventListener("DOMContentLoaded", function() {
-    const videos = document.querySelectorAll('.works-card__video');
-    if ('IntersectionObserver' in window) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            // Reproduce solo si no ha llegado ya al final
-            if (!entry.target.ended) {
-              entry.target.play().catch(err => console.warn('Autoplay prevented', err));
-            }
-          } else {
-            entry.target.pause();
-          }
-        });
-      }, { threshold: 0.1 });
-      
-      videos.forEach(v => {
-        observer.observe(v);
-        // Start paused until scrolled into view
-        v.pause();
-      });
-    }
-  });
 </script>
 
 <script>
