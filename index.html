@@ -1472,7 +1472,7 @@
         webkit-playsinline
         preload="auto"
         aria-hidden="true">
-        <source src="assets/hero-video.mp4" type="video/mp4">
+        <source src="assets/video_carlos.mp4" type="video/mp4">
       </video>
     </div>
   </section>
@@ -1849,7 +1849,7 @@
 
     // Fuente según viewport (móvil usa un archivo más ligero).
     const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
-    const desiredSrc = isMobileVideo ? 'assets/hero_mobile.mp4' : 'assets/hero-video.mp4';
+    const desiredSrc = isMobileVideo ? 'assets/video_carlos_movil.m4v' : 'assets/video_carlos.mp4';
     const currentSrc = video.currentSrc || video.getAttribute('src') || '';
     if (!currentSrc.endsWith(desiredSrc)) {
       video.src = desiredSrc;
