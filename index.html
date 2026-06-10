@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <script>document.documentElement.classList.add('js');</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Carlos Fernández — Indie Maker &amp; Product Manager</title>
-<meta name="description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
-<meta name="author" content="Carlos Fernández — Indie Maker & Product Manager">
+<title>Carlos Fernández — Webs de autor &amp; experiencias inmersivas</title>
+<meta name="description" content="Diseño y construyo webs con criterio: desde la Web de Autor de precio fijo hasta WebXperience, experiencias inmersivas ambientadas en universos propios. Diseño, cine y código.">
+<meta name="author" content="Carlos Fernández">
 <meta name="theme-color" content="#FFFFFF">
 
 <!-- Open Graph / Facebook / LinkedIn -->
@@ -14,8 +14,8 @@
 <meta property="og:url" content="https://carlosmakes.com/">
 <meta property="og:locale" content="es_ES">
 <meta property="og:locale:alternate" content="en_US">
-<meta property="og:title" content="Carlos Fernández — Indie Maker &amp; Product Manager">
-<meta property="og:description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
+<meta property="og:title" content="Carlos Fernández — Webs de autor &amp; experiencias inmersivas">
+<meta property="og:description" content="Diseño y construyo webs con criterio: desde la Web de Autor de precio fijo hasta WebXperience, experiencias inmersivas ambientadas en universos propios. Diseño, cine y código.">
 <meta property="og:image" content="https://carlosmakes.com/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -23,8 +23,8 @@
 
 <!-- Twitter / X -->
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Carlos Fernández — Indie Maker &amp; Product Manager">
-<meta name="twitter:description" content="Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — los que lanzo por mi cuenta y los que construyo para marcas.">
+<meta name="twitter:title" content="Carlos Fernández — Webs de autor &amp; experiencias inmersivas">
+<meta name="twitter:description" content="Diseño y construyo webs con criterio: desde la Web de Autor de precio fijo hasta WebXperience, experiencias inmersivas ambientadas en universos propios. Diseño, cine y código.">
 <meta name="twitter:image" content="https://carlosmakes.com/og.png">
 <meta name="twitter:image:alt" content="Carlos Fernández — Indie Maker &amp; Product Manager">
 
@@ -37,8 +37,8 @@
   "@context": "https://schema.org",
   "@type": "Person",
   "name": "Carlos Fernández",
-  "jobTitle": "Indie Maker & Product Manager",
-  "description": "Product Manager e indie maker. Convierto sistemas complejos en productos digitales simples, rápidos y rentables — propios y para marcas.",
+  "jobTitle": "Diseñador y Desarrollador Web · Experiencias Inmersivas",
+  "description": "Diseño y construyo webs con criterio: desde la Web de Autor de precio fijo hasta WebXperience, experiencias inmersivas ambientadas en universos propios. Diseño, cine y código.",
   "url": "https://carlosmakes.com/",
   "sameAs": [
     "https://x.com/carlos_makes",
@@ -1280,8 +1280,12 @@
     }
   }
 
-  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 2.5rem; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
+  .pricing-care-evolution { margin-top: 2.5rem; }
+  .pricing-care-evolution .price-card { border-color: var(--hairline); background: transparent; color: var(--ink); max-width: 400px; }
+  .pricing-care-evolution .price-card:hover { background: var(--hairline); }
+  @media (min-width: 900px) { .pricing-care-evolution { margin-left: auto; max-width: 380px; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .price-card--featured { background: var(--ink); color: var(--paper); border-color: var(--ink); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
@@ -1302,6 +1306,7 @@
   }
   .price-card__price { font-weight: 900; font-size: 1.45rem; line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 0.2rem; }
   .price-card__price span { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 400; letter-spacing: 0; opacity: 0.7; }
+  .price-card__tagline { font-size: 0.9rem; opacity: 0.6; margin: 0.35rem 0 0; line-height: 1.4; font-style: italic; }
   .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; border-top: 1px solid currentColor; padding-top: 1.25rem; }
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
@@ -1465,8 +1470,9 @@
 
       <div class="pricing-grid">
         <article class="price-card price-card--featured">
-          <h3 class="price-card__name" id="price1Name">EXPERIENCIA WEB PREMIUM</h3>
+          <h3 class="price-card__name" id="price1Name">WEB DE AUTOR</h3>
           <p class="price-card__price" id="price1Price">1.500 €</p>
+          <p class="price-card__tagline" id="price1Tagline">Tu web, resuelta. Precio fijo, scope fijo, sin reuniones.</p>
           <ul class="price-card__list" id="price1List">
             <li>Una página web completa diseñada a medida, con una estética distintiva para tu negocio también a medida: ¿quieres una estética cinematográfica? ¿retro? Hablemos sobre lo que tienes en mente y le damos forma.</li>
             <li>Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.</li>
@@ -1477,6 +1483,23 @@
           <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
           <p class="price-card__note" id="price1Note">*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.</p>
         </article>
+        <article class="price-card">
+          <h3 class="price-card__name" id="price2Name">WEBXPERIENCE</h3>
+          <p class="price-card__price" id="price2Price">desde 6.000 € <span>· a medida</span></p>
+          <p class="price-card__tagline" id="price2Tagline">No una web. Un universo en el que entrar.</p>
+          <ul class="price-card__list" id="price2List">
+            <li>Una experiencia inmersiva ambientada en un universo propio, diseñada de cero como una pieza de cine interactivo.</li>
+            <li>Producción creativa completa: dirección de arte, vídeo, imagen, 3D, animación y sonido.</li>
+            <li>Navegación intuitiva y cinematográfica — el efecto wow sin que el usuario tenga que aprender nada.</li>
+            <li>Pensada para marcas y lanzamientos donde la atmósfera es el producto.</li>
+            <li>Cada proyecto es único. Presupuesto y plazo a medida.</li>
+          </ul>
+          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
+          <p class="price-card__note" id="price2Note">*Plazas muy limitadas. Selecciono pocos proyectos al año.</p>
+        </article>
+      </div>
+
+      <div class="pricing-care-evolution" id="pricingCareEvolution">
         <article class="price-card">
           <h3 class="price-card__name" id="price3Name">CUIDADO &amp; EVOLUCIÓN</h3>
           <p class="price-card__price" id="price3Price">49 €<span>/mes</span></p>
@@ -1622,7 +1645,7 @@
       contactAltLabel: "O si prefieres:",
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "DISEÑO LA PÁGINA WEB QUE HUBIERAS QUERIDO TENER<span class=\"accent\">.</span>",
-      servicesLead: "De pequeño me apasionaban el cine y los videojuegos. De mayor trabajé en marketing diseñando estrategias digitales. Ahora, he decidido combinar ambas cosas :)",
+      servicesLead: "De pequeño me apasionaban el cine y los videojuegos. De mayor diseñé estrategias digitales en marketing. Ahora junto las dos cosas: desde una web resuelta con criterio hasta una experiencia entera en la que entrar.",
       svc1Title: "DISEÑO CON CRITERIO",
       svc1Text: "En un mundo plagado de webs iguales hechas con IA, el criterio es el verdadero diferenciador.",
       svc2Title: "EJECUCIÓN CON CÓDIGO",
@@ -1630,10 +1653,11 @@
       svc3Title: "USABILIDAD Y FUNCIONALIDAD COMO CIMIENTOS",
       svc3Text: "No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.",
       svc1More: "Ver ejemplos", svc2More: "Ver ejemplos", svc3More: "Ver ejemplos",
-      pricingHeadline: "PRECIO FIJO<span class=\"accent\">.</span><br>CERO REUNIONES<span class=\"accent\">.</span><br>PLAZAS CONTADAS<span class=\"accent\">.</span>",
-      pricingIntro: "Un servicio productizado: precio fijo, scope fijo y proceso 100% asíncrono. Tú pones la visión y yo ejecuto de principio a fin. Sabes exactamente qué recibes, cuánto cuesta y cuándo se entrega. Sin sorpresas y sin videollamadas que bloqueen tu agenda.",
+      pricingHeadline: "DOS NIVELES<span class=\"accent\">.</span><br>EL MISMO OJO<span class=\"accent\">.</span>",
+      pricingIntro: "Desde una web con criterio, resuelta en días, hasta una experiencia inmersiva ambientada en tu propio universo. Eliges según lo que tu proyecto necesita — y en los dos casos, el mismo ojo detrás.",
       priceNote: "*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.",
-      price1Name: "EXPERIENCIA WEB PREMIUM",
+      price1Name: "WEB DE AUTOR",
+      price1Tagline: "Tu web, resuelta. Precio fijo, scope fijo, sin reuniones.",
       price1Price: "1.500 €",
       price1List: [
         "Una página web completa diseñada a medida, con una estética distintiva para tu negocio también a medida: ¿quieres una estética cinematográfica? ¿retro? Hablemos sobre lo que tienes en mente y le damos forma.",
@@ -1643,6 +1667,18 @@
         "Entrega en 7-10 días desde que demos luz verde al proyecto."
       ],
       price1Cta: "Quiero mi web",
+      price2Name: "WEBXPERIENCE",
+      price2Tagline: "No una web. Un universo en el que entrar.",
+      price2Price: "desde 6.000 € <span>· a medida</span>",
+      price2List: [
+        "Una experiencia inmersiva ambientada en un universo propio, diseñada de cero como una pieza de cine interactivo.",
+        "Producción creativa completa: dirección de arte, vídeo, imagen, 3D, animación y sonido.",
+        "Navegación intuitiva y cinematográfica — el efecto wow sin que el usuario tenga que aprender nada.",
+        "Pensada para marcas y lanzamientos donde la atmósfera es el producto.",
+        "Cada proyecto es único. Presupuesto y plazo a medida."
+      ],
+      price2Cta: "Cuéntame tu universo",
+      price2Note: "*Plazas muy limitadas. Selecciono pocos proyectos al año.",
       price3Name: "CUIDADO & EVOLUCIÓN",
       price3Price: "49 €<span>/mes</span>",
       price3List: [
@@ -1695,7 +1731,7 @@
       contactAltLabel: "Or if you prefer:",
       servicesEyebrow: "WHAT I DO FOR YOU",
       servicesHeadline: "I DESIGN THE WEBSITE YOU ALWAYS WISHED YOU HAD<span class=\"accent\">.</span>",
-      servicesLead: "Growing up, I was passionate about cinema and video games. As an adult, I worked in marketing designing digital strategies. Now, I've decided to combine both :)",
+      servicesLead: "Growing up I was obsessed with cinema and video games. Later I designed digital strategies in marketing. Now I bring both together: from a website resolved with judgment to a whole experience you step into.",
       svc1Title: "DESIGN WITH PURPOSE",
       svc1Text: "In a world flooded with identical AI-made websites, judgment is the real differentiator.",
       svc2Title: "EXECUTION WITH CODE",
@@ -1703,10 +1739,11 @@
       svc3Title: "USABILITY AND FUNCTIONALITY AS FOUNDATIONS",
       svc3Text: "I don't just build the product; I design the strategy so users grasp its value instantly.",
       svc1More: "See examples", svc2More: "See examples", svc3More: "See examples",
-      pricingHeadline: "FIXED PRICE<span class=\"accent\">.</span><br>ZERO MEETINGS<span class=\"accent\">.</span><br>LIMITED SLOTS<span class=\"accent\">.</span>",
-      pricingIntro: "A productized service: fixed price, fixed scope, 100% async. You bring the vision and I execute end to end. You know exactly what you get, what it costs and when it ships. No surprises, no video calls clogging your calendar.",
+      pricingHeadline: "TWO LEVELS<span class=\"accent\">.</span><br>THE SAME EYE<span class=\"accent\">.</span>",
+      pricingIntro: "From a website with judgment, shipped in days, to an immersive experience set in your own universe. You choose what your project needs — and either way, the same eye behind it.",
       priceNote: "*We start with 50% upfront. You provide the copy, or add it as an extra.",
-      price1Name: "PREMIUM WEB EXPERIENCE",
+      price1Name: "WEB DE AUTOR",
+      price1Tagline: "Your website, sorted. Fixed price, fixed scope, no meetings.",
       price1Price: "€1,500",
       price1List: [
         "A complete custom-designed web page with a distinctive aesthetic tailored to your business: want a cinematic look? retro? Let's talk about what you have in mind and we'll shape it.",
@@ -1716,6 +1753,18 @@
         "Delivered in 7-10 days from the moment we give the green light."
       ],
       price1Cta: "I want my site",
+      price2Name: "WEBXPERIENCE",
+      price2Tagline: "Not a website. A universe you step into.",
+      price2Price: "from €6,000 <span>· custom</span>",
+      price2List: [
+        "An immersive experience set in its own universe, designed from scratch like a piece of interactive cinema.",
+        "Full creative production: art direction, video, imagery, 3D, animation and sound.",
+        "Intuitive, cinematic navigation — the wow without the user having to learn anything.",
+        "Built for brands and launches where atmosphere is the product.",
+        "Every project is unique. Custom budget and timeline."
+      ],
+      price2Cta: "Tell me your universe",
+      price2Note: "*Very limited slots. I take on few projects a year.",
       price3Name: "CARE & EVOLUTION",
       price3Price: "€49<span>/mo</span>",
       price3List: [
@@ -1895,7 +1944,8 @@
     setHTML('svc3Title', d.svc3Title); setText('svc3Text', d.svc3Text); setText('svc3More', d.svc3More);
     setHTML('pricingHeadline', d.pricingHeadline);
     setText('pricingIntro', d.pricingIntro);
-    setText('price1Name', d.price1Name); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
+    setText('price1Name', d.price1Name); setText('price1Tagline', d.price1Tagline); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
+    setText('price2Name', d.price2Name); setText('price2Tagline', d.price2Tagline); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.price2Note);
     setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.price3Note != null ? d.price3Note : d.priceNote);
     setText('pricingVat', d.pricingVat);
     setText('servicesKitTitle', d.servicesKitTitle);
