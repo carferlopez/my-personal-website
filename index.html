@@ -1280,12 +1280,8 @@
     }
   }
 
-  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0 0 2.5rem; align-items: stretch; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
-  .pricing-care-evolution { margin-top: 2.5rem; }
-  .pricing-care-evolution .price-card { border-color: var(--hairline); background: transparent; color: var(--ink); max-width: 400px; }
-  .pricing-care-evolution .price-card:hover { background: var(--hairline); }
-  @media (min-width: 900px) { .pricing-care-evolution { margin-left: auto; max-width: 380px; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .price-card--featured { background: var(--ink); color: var(--paper); border-color: var(--ink); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
@@ -1498,20 +1494,6 @@
           <p class="price-card__note" id="price2Note">*Plazas muy limitadas. Selecciono pocos proyectos al año.</p>
         </article>
       </div>
-
-      <div class="pricing-care-evolution" id="pricingCareEvolution">
-        <article class="price-card">
-          <h3 class="price-card__name" id="price3Name">CUIDADO &amp; EVOLUCIÓN</h3>
-          <p class="price-card__price" id="price3Price">49 €<span>/mes</span></p>
-          <ul class="price-card__list" id="price3List">
-            <li>Hosting gestionado y tu web siempre online, rápida y actualizada.</li>
-            <li>Pequeños retoques y cambios de contenido cuando los necesites.</li>
-            <li>Sin permanencia. Lo activas al lanzar y lo pausas cuando quieras.</li>
-          </ul>
-          <a class="contact-btn price-card__cta" id="price3Cta" href="#contacto">Mantener mi web</a>
-          <p class="price-card__note" id="price3Note">*Opcional. Se contrata al entregar la web.</p>
-        </article>
-      </div>
       <p class="pricing-vat" id="pricingVat">* Precios sin IVA.</p>
 
       <div class="services-kit" id="servicesKitContainer">
@@ -1679,15 +1661,6 @@
       ],
       price2Cta: "Cuéntame tu universo",
       price2Note: "*Plazas muy limitadas. Selecciono pocos proyectos al año.",
-      price3Name: "CUIDADO & EVOLUCIÓN",
-      price3Price: "49 €<span>/mes</span>",
-      price3List: [
-        "Hosting gestionado y tu web siempre online, rápida y actualizada.",
-        "Pequeños retoques y cambios de contenido cuando los necesites.",
-        "Sin permanencia. Lo activas al lanzar y lo pausas cuando quieras."
-      ],
-      price3Note: "*Opcional. Se contrata al entregar la web.",
-      price3Cta: "Mantener mi web",
       pricingVat: "* Precios sin IVA.",
       servicesKitTitle: "Extras disponibles",
       servicesKitList: [
@@ -1697,7 +1670,6 @@
       ],
       secHeadServices: "QUIÉN SOY",
       secHeadPricing: "PRECIOS",
-      pricingEyebrow: "PLANES TRANSPARENTES",
       secHeadContact: "CONTACTO",
       contactMeta: "RESPUESTA EN 24H"
     },
@@ -1765,15 +1737,6 @@
       ],
       price2Cta: "Tell me your universe",
       price2Note: "*Very limited slots. I take on few projects a year.",
-      price3Name: "CARE & EVOLUTION",
-      price3Price: "€49<span>/mo</span>",
-      price3List: [
-        "Managed hosting and your site always online, fast and up to date.",
-        "Small tweaks and content changes whenever you need them.",
-        "No lock-in. Start it at launch, pause it whenever."
-      ],
-      price3Note: "*Optional. Added when your site ships.",
-      price3Cta: "Keep my site cared for",
       pricingVat: "* Prices exclude VAT.",
       servicesKitTitle: "Available Extras",
       servicesKitList: [
@@ -1783,7 +1746,6 @@
       ],
       secHeadServices: "WHO I AM",
       secHeadPricing: "PRICING",
-      pricingEyebrow: "TRANSPARENT PLANS",
       secHeadContact: "CONTACT",
       contactMeta: "REPLY WITHIN 24H"
     }
@@ -1946,13 +1908,11 @@
     setText('pricingIntro', d.pricingIntro);
     setText('price1Name', d.price1Name); setText('price1Tagline', d.price1Tagline); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
     setText('price2Name', d.price2Name); setText('price2Tagline', d.price2Tagline); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.price2Note);
-    setText('price3Name', d.price3Name); setHTML('price3Price', d.price3Price); setList('price3List', d.price3List); setText('price3Cta', d.price3Cta); setText('price3Note', d.price3Note != null ? d.price3Note : d.priceNote);
     setText('pricingVat', d.pricingVat);
     setText('servicesKitTitle', d.servicesKitTitle);
     setList('servicesKitList', d.servicesKitList);
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
-    setText('pricingEyebrow', d.pricingEyebrow);
     if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
