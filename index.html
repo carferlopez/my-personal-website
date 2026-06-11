@@ -1512,6 +1512,55 @@
       line-height: 1.32;
     }
   }
+  @media (max-width: 899px) {
+    .pricing-layout {
+      gap: clamp(1.5rem, 8svh, 3.5rem);
+    }
+    .pricing-grid {
+      gap: clamp(2.5rem, 18svh, 7rem);
+      align-items: stretch;
+    }
+    .pricing-grid .price-card {
+      min-height: calc(100svh - 5.5rem);
+      min-height: calc(100dvh - 5.5rem);
+      border-radius: 18px;
+      padding: clamp(1.1rem, 5vw, 1.55rem);
+      justify-content: flex-start;
+      scroll-margin-top: 5.25rem;
+      opacity: 1;
+      transform: none;
+    }
+    .js .pricing-grid .price-card {
+      opacity: 0;
+      transform: translateY(2rem);
+      transition: opacity 0.45s ease, transform 0.45s ease;
+    }
+    .js .pricing-grid .price-card.is-mobile-visible {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .pricing-grid .price-card__name {
+      margin-bottom: 0.7rem;
+    }
+    .pricing-grid .price-card__price {
+      font-size: clamp(1.35rem, 7vw, 2rem);
+    }
+    .pricing-grid .price-card__tagline {
+      font-size: 0.9rem;
+    }
+    .pricing-grid .price-card__list {
+      margin: 1rem 0 1.15rem;
+      gap: 0.5rem;
+      padding-top: 1rem;
+    }
+    .pricing-grid .price-card__list li {
+      font-size: clamp(0.78rem, 3.45vw, 0.92rem);
+      line-height: 1.32;
+    }
+    .pricing-grid .price-card__note {
+      margin-top: 0.75rem;
+    }
+  }
   .services-kit {
     margin: 2.5rem 0 0;
     font-family: var(--font-mono);
@@ -2183,6 +2232,18 @@
   // ============================================
   // PRECIOS: pin + una tarjeta visible por tramo
   // ============================================
+  let pricingMobileObserver = null;
+
+  function killPricingMobileCards() {
+    if (pricingMobileObserver) {
+      pricingMobileObserver.disconnect();
+      pricingMobileObserver = null;
+    }
+    document.querySelectorAll('.pricing-grid .price-card').forEach((card) => {
+      card.classList.remove('is-mobile-visible');
+    });
+  }
+
   function killPricingPinCards() {
     if (typeof ScrollTrigger !== 'undefined') {
       const st = ScrollTrigger.getById('pricingPinCards');
@@ -2195,6 +2256,34 @@
       gsap.killTweensOf(cards);
       gsap.set(cards, { clearProps: 'all' });
     }
+  }
+
+  function initPricingMobileCards() {
+    killPricingMobileCards();
+    const cards = document.querySelectorAll('.pricing-grid .price-card');
+    if (!cards.length) return;
+    if (!window.matchMedia('(max-width: 899px)').matches || reduceMotion) {
+      cards.forEach((card) => card.classList.add('is-mobile-visible'));
+      return;
+    }
+    if (typeof IntersectionObserver === 'undefined') {
+      cards.forEach((card) => card.classList.add('is-mobile-visible'));
+      return;
+    }
+
+    pricingMobileObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-mobile-visible');
+        }
+      });
+    }, {
+      root: null,
+      threshold: 0.28,
+      rootMargin: '0px 0px -12% 0px'
+    });
+
+    cards.forEach((card) => pricingMobileObserver.observe(card));
   }
 
   function initPricingPinCards() {
@@ -2264,6 +2353,7 @@
     initFeaturedVideoScrub();
     initQsPinCards();
     initPricingPinCards();
+    initPricingMobileCards();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -2356,6 +2446,7 @@
     if (pageInitialized) {
       setTimeout(() => {
         initPricingPinCards();
+        initPricingMobileCards();
         if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       }, 80);
     }
