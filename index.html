@@ -1306,100 +1306,6 @@
   }
   @media (min-width: 768px) { .services-subline { font-size: 1.15rem; margin-bottom: 2rem; } }
 
-  /* Rejilla brutalista conectada: las "líneas" son el negro del fondo a través de los gaps */
-  .services-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2px;
-    background: var(--hairline);
-    border: 2px solid var(--hairline);
-    margin: 0;
-  }
-  @media (min-width: 768px) { .services-grid { grid-template-columns: repeat(3, 1fr); } }
-  .svc-card {
-    background: var(--ink);
-    color: var(--paper);
-    padding: 2.25rem 1.35rem 2.1rem;
-    min-height: 280px;
-    display: flex;
-    flex-direction: column;
-    gap: 0.7rem;
-    transition: background-color 0.18s ease, color 0.18s ease;
-  }
-  @media (min-width: 768px) {
-    .svc-card {
-      min-height: 285px;
-      padding: 2.35rem 1.4rem 2.1rem;
-    }
-  }
-  @media (min-width: 1200px) {
-    .svc-card {
-      min-height: 300px;
-      padding: 2.6rem 1.65rem 2.25rem;
-    }
-  }
-  .svc-card:hover { background: var(--accent); color: #FFFFFF; }
-  .svc-card:hover .svc-card__num { color: #FFFFFF; }
-  .svc-card__num {
-    color: var(--accent);
-    opacity: 1;
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.82rem;
-    letter-spacing: 0.02em;
-  }
-  .svc-card__title {
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0;
-    font-size: 1.65rem;
-    line-height: 1.06;
-    margin: 0.4rem 0 0.05rem;
-  }
-  @media (min-width: 768px) { .svc-card__title { font-size: 1.75rem; } }
-  @media (min-width: 1200px) { .svc-card__title { font-size: 2rem; } }
-  .svc-card__text { font-size: 0.95rem; line-height: 1.48; margin: 0; max-width: 34ch; }
-  .svc-card__more {
-    margin-top: auto;
-    padding-top: 1.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 0.35rem;
-    font-size: 0.76rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: inherit;
-    opacity: 0.55;
-    text-decoration: none;
-    transition: opacity 0.15s ease, gap 0.2s ease;
-    pointer-events: none;
-  }
-  .svc-card__more .svc-card__arrow {
-    display: inline-block;
-    transition: transform 0.2s ease;
-    font-style: normal;
-  }
-  .svc-card:hover .svc-card__more {
-    opacity: 1;
-  }
-  .svc-card:hover .svc-card__arrow {
-    transform: translate(3px, -3px);
-  }
-  /* Servicios: en desktop las 3 cajas se inclinan y, juntas, forman un gran
-     paralelogramo. El contenedor se inclina (skew) y el contenido se
-     contra-inclina para que el texto se lea recto. */
-  @media (min-width: 768px) {
-    .services-grid {
-      transform: skewX(-8deg);
-      margin-inline: 3rem;
-    }
-    .svc-card > * {
-      transform: skewX(8deg);
-    }
-  }
-
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   @media (min-width: 900px) { .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; max-width: 880px; margin-inline: auto; } }
   .price-card { border: 3px solid var(--hairline); padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
@@ -1569,28 +1475,6 @@
       <p class="big-heading services-headline"><span id="servicesHeadline">DISEÑO LA PÁGINA WEB QUE HUBIERAS QUERIDO TENER<span class="accent">.</span></span></p>
       <p class="services-lead" id="servicesLead">De pequeño me apasionaban el cine y los videojuegos. Crecí y diseñé estrategias digitales en marketing. Ahora vuelvo a ser un niño y junto las dos cosas para crear experiencias online inolvidables.</p>
 
-      <div class="services-pin">
-      <div class="services-grid">
-        <article class="svc-card">
-          <span class="svc-card__num">01</span>
-          <h3 class="svc-card__title" id="svc1Title">DISEÑO CON CRITERIO</h3>
-          <p class="svc-card__text" id="svc1Text">En un mundo plagado de webs iguales hechas con IA, el criterio es el verdadero diferenciador.</p>
-          <span class="svc-card__more"><span id="svc1More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
-        </article>
-        <article class="svc-card">
-          <span class="svc-card__num">02</span>
-          <h3 class="svc-card__title" id="svc2Title">EJECUCIÓN CON CÓDIGO</h3>
-          <p class="svc-card__text" id="svc2Text">Webs modulables hasta la última línea de código, lo que asegura máxima flexibilidad a la hora de implementar cambios o mejoras.</p>
-          <span class="svc-card__more"><span id="svc2More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
-        </article>
-        <article class="svc-card">
-          <span class="svc-card__num">03</span>
-          <h3 class="svc-card__title" id="svc3Title">USABILIDAD Y FUNCIONALIDAD COMO CIMIENTOS</h3>
-          <p class="svc-card__text" id="svc3Text">No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.</p>
-          <span class="svc-card__more"><span id="svc3More">Ver ejemplos</span> <i class="svc-card__arrow">↗</i></span>
-        </article>
-      </div>
-      </div>
       </div>
 
       <div class="services-subsection">
@@ -1765,13 +1649,6 @@
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "DISEÑO LA PÁGINA WEB QUE HUBIERAS QUERIDO TENER<span class=\"accent\">.</span>",
       servicesLead: "De pequeño me apasionaban el cine y los videojuegos. Crecí y diseñé estrategias digitales en marketing. Ahora vuelvo a ser un niño y junto las dos cosas para crear experiencias online inolvidables.",
-      svc1Title: "DISEÑO CON CRITERIO",
-      svc1Text: "En un mundo plagado de webs iguales hechas con IA, el criterio es el verdadero diferenciador.",
-      svc2Title: "EJECUCIÓN CON CÓDIGO",
-      svc2Text: "Webs modulables hasta la última línea de código, lo que asegura máxima flexibilidad a la hora de implementar cambios o mejoras.",
-      svc3Title: "USABILIDAD Y FUNCIONALIDAD COMO CIMIENTOS",
-      svc3Text: "No solo construyo el producto; diseño la estrategia para que el usuario entienda su valor al instante.",
-      svc1More: "Ver ejemplos", svc2More: "Ver ejemplos", svc3More: "Ver ejemplos",
       pricingHeadline: "DOS NIVELES<span class=\"accent\">.</span><br>EL MISMO OJO<span class=\"accent\">.</span>",
       pricingIntro: "Desde una web con criterio, resuelta en días, hasta una experiencia inmersiva ambientada en tu propio universo. Eliges según lo que tu proyecto necesita — y en los dos casos, el mismo ojo detrás.",
       priceNote: "*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.",
@@ -1841,13 +1718,6 @@
       servicesEyebrow: "WHAT I DO FOR YOU",
       servicesHeadline: "I DESIGN THE WEBSITE YOU ALWAYS WISHED YOU HAD<span class=\"accent\">.</span>",
       servicesLead: "Growing up I was obsessed with cinema and video games. Later I designed digital strategies in marketing. Now I bring both together: from a website resolved with judgment to a whole experience you step into.",
-      svc1Title: "DESIGN WITH PURPOSE",
-      svc1Text: "In a world flooded with identical AI-made websites, judgment is the real differentiator.",
-      svc2Title: "EXECUTION WITH CODE",
-      svc2Text: "Fully modular websites down to the last line of code, ensuring maximum flexibility when implementing changes or improvements.",
-      svc3Title: "USABILITY AND FUNCTIONALITY AS FOUNDATIONS",
-      svc3Text: "I don't just build the product; I design the strategy so users grasp its value instantly.",
-      svc1More: "See examples", svc2More: "See examples", svc3More: "See examples",
       pricingHeadline: "TWO LEVELS<span class=\"accent\">.</span><br>THE SAME EYE<span class=\"accent\">.</span>",
       pricingIntro: "From a website with judgment, shipped in days, to an immersive experience set in your own universe. You choose what your project needs — and either way, the same eye behind it.",
       priceNote: "*We start with 50% upfront. You provide the copy, or add it as an extra.",
@@ -2135,60 +2005,6 @@
     );
   }
 
-  // Servicios: las 3 cajas aparecen una tras otra al hacer scroll.
-  // Por defecto son visibles (CSS); solo GSAP las oculta si llega a ejecutarse.
-  // fromTo con estados explícitos (0 -> 1) para que ningún refresh capture
-  // el estado oculto como final.
-  function initServicesReveal() {
-    if (reduceMotion) return;
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    gsap.registerPlugin(ScrollTrigger);
-    const cards = gsap.utils.toArray('.services-grid .svc-card');
-    if (!cards.length) return;
-
-    const mm = gsap.matchMedia();
-
-    // Desktop: la sección se "congela" (pin) centrada y las 3 cajas aparecen
-    // una a una. Cuando las 3 están visibles, al seguir scrolleando se
-    // despinea y la página continúa. pinType:'fixed' preserva el skew del grid.
-    mm.add('(min-width: 768px)', () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.services-pin',
-          start: 'center center',
-          end: () => '+=' + Math.round(window.innerHeight * 1.2),
-          pin: '.services-pin',
-          pinType: 'fixed',
-          anticipatePin: 1,
-          scrub: 0.6
-        }
-      });
-      tl.fromTo(cards,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
-      );
-      // Margen final: las 3 quedan visibles un instante antes de despinear.
-      tl.to({}, { duration: 0.6 });
-    });
-
-    // Móvil: cajas apiladas (no caben "centradas"); revelado ligado al scroll,
-    // sin pin.
-    mm.add('(max-width: 767px)', () => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: '.services-grid',
-          start: 'top bottom',
-          end: 'bottom 60%',
-          scrub: 0.6
-        }
-      });
-      tl.fromTo(cards,
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, ease: 'none', duration: 0.6, stagger: 0.6 }
-      );
-    });
-  }
-
   function syncViewportAnimationMode() {
     const hero = document.querySelector('.hero-v2-section');
     const mob =
@@ -2223,9 +2039,6 @@
     setText('servicesEyebrow', d.servicesEyebrow);
     setHTML('servicesHeadline', d.servicesHeadline);
     setHTML('servicesLead', d.servicesLead);
-    setHTML('svc1Title', d.svc1Title); setText('svc1Text', d.svc1Text); setText('svc1More', d.svc1More);
-    setHTML('svc2Title', d.svc2Title); setText('svc2Text', d.svc2Text); setText('svc2More', d.svc2More);
-    setHTML('svc3Title', d.svc3Title); setText('svc3Text', d.svc3Text); setText('svc3More', d.svc3More);
     setHTML('pricingHeadline', d.pricingHeadline);
     setText('pricingIntro', d.pricingIntro);
     setText('price1Name', d.price1Name); setText('price1Tagline', d.price1Tagline); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
@@ -2590,7 +2403,6 @@
 
     initHamburger();
     initLogoNavigation();
-    initServicesReveal();
     updateHeaderTheme();
     runViewportSyncWhenReady();
   }
