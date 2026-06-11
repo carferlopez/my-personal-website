@@ -170,21 +170,27 @@
     }
     .scroll-video-section__fade {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: clamp(3rem, 8svh, 6rem);
       z-index: 2;
       display: block;
       pointer-events: none;
-      background: #000000;
+      background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0) 100%);
       opacity: 1;
     }
     .scroll-video-section__outro-fade {
       position: absolute;
-      inset: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: clamp(3rem, 8svh, 6rem);
       z-index: 3;
       display: block;
       pointer-events: none;
-      background: var(--page-bg);
-      opacity: 0;
+      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--page-bg) 100%);
+      opacity: 1;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1778,38 +1784,21 @@
   // Vídeo controlado por scroll (post-hero)
   // El scroll arrastra el currentTime del vídeo, como una bobina de cine.
   // ============================================
-  const FEATURED_VIDEO_INTRO_MEDIA = '(min-width: 640px)';
-  const FEATURED_VIDEO_INTRO_HOLD_PROGRESS = 0.06;
-  const FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS = 0.24;
-  const FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS = 0.80;
-  const FEATURED_VIDEO_OUTRO_FADE_END_PROGRESS = 0.96;
+  const VIDEO_EDGE_FADE_MEDIA = '(min-width: 640px)';
+  const VIDEO_HEADER_DARK_PROGRESS = 0.08;
   const HERO_TEXT_FADE_START_PROGRESS = 0.42;
   const HERO_TEXT_FADE_END_PROGRESS = 0.90;
   let featuredVideoNativeCleanup = null;
 
   function killFeaturedVideoScrub() {
     const video = document.getElementById('featuredScrollVideo');
-    const fade = document.querySelector('.scroll-video-section__fade');
-    const outroFade = document.querySelector('.scroll-video-section__outro-fade');
     if (featuredVideoNativeCleanup) {
       featuredVideoNativeCleanup();
       featuredVideoNativeCleanup = null;
     }
-    [fade, outroFade].forEach((el) => {
-      if (!el) return;
-      el.style.opacity = '';
-      el.style.willChange = '';
-    });
-    if (typeof gsap !== 'undefined') {
-      if (video) {
-        gsap.killTweensOf(video);
-        gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
-      }
-      [fade, outroFade].forEach((el) => {
-        if (!el) return;
-        gsap.killTweensOf(el);
-        gsap.set(el, { clearProps: 'opacity,willChange' });
-      });
+    if (typeof gsap !== 'undefined' && video) {
+      gsap.killTweensOf(video);
+      gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
     }
     if (typeof ScrollTrigger !== 'undefined') {
       const st = ScrollTrigger.getById('featuredVideoScrub');
@@ -1820,14 +1809,11 @@
   function initFeaturedVideoScrub() {
     const section = document.querySelector('.scroll-video-section');
     const video = document.getElementById('featuredScrollVideo');
-    const fade = section?.querySelector('.scroll-video-section__fade');
-    const outroFade = section?.querySelector('.scroll-video-section__outro-fade');
     if (!section || !video) return;
     killFeaturedVideoScrub();
 
     // Fuente según viewport (móvil usa un archivo más ligero).
     const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
-    const useVideoFades = Boolean(fade && outroFade && !reduceMotion && window.matchMedia(FEATURED_VIDEO_INTRO_MEDIA).matches);
     const desiredSrc = isMobileVideo ? 'assets/hero_mobile.mp4' : 'assets/hero-video.mp4';
     const currentSrc = video.currentSrc || video.getAttribute('src') || '';
     if (!currentSrc.endsWith(desiredSrc)) {
@@ -1849,59 +1835,10 @@
       }
     }
 
-    function getVideoScrubProgress(sectionProgress) {
-      const progress = clampProgress(sectionProgress);
-      if (!useVideoFades) return progress;
-      if (progress <= FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS) return 0;
-      return clampProgress(
-        (progress - FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS) /
-        (1 - FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS)
-      );
-    }
-
-    function setVideoIntroFade(sectionProgress) {
-      if (!fade) return;
-      if (!useVideoFades) {
-        fade.style.opacity = '0';
-        fade.style.willChange = '';
-        return;
-      }
-      const progress = clampProgress(sectionProgress);
-      const revealProgress = clampProgress(
-        (progress - FEATURED_VIDEO_INTRO_HOLD_PROGRESS) /
-        (FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS - FEATURED_VIDEO_INTRO_HOLD_PROGRESS)
-      );
-      fade.style.opacity = String(1 - revealProgress);
-      fade.style.willChange = 'opacity';
-    }
-
-    function setVideoOutroFade(sectionProgress) {
-      if (!outroFade) return;
-      if (!useVideoFades) {
-        outroFade.style.opacity = '0';
-        outroFade.style.willChange = '';
-        return;
-      }
-      const progress = clampProgress(sectionProgress);
-      const fadeProgress = clampProgress(
-        (progress - FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS) /
-        (FEATURED_VIDEO_OUTRO_FADE_END_PROGRESS - FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS)
-      );
-      outroFade.style.opacity = String(fadeProgress);
-      outroFade.style.willChange = 'opacity';
-    }
-
-    function updateVideoFromScroll(sectionProgress) {
-      const progress = clampProgress(sectionProgress);
-      setVideoIntroFade(progress);
-      setVideoOutroFade(progress);
-      setVideoProgress(getVideoScrubProgress(progress));
-    }
-
     if (video.readyState >= 1) {
-      updateVideoFromScroll(0);
+      setVideoProgress(0);
     } else {
-      video.addEventListener('loadedmetadata', () => updateVideoFromScroll(0), { once: true });
+      video.addEventListener('loadedmetadata', () => setVideoProgress(0), { once: true });
     }
 
     if (reduceMotion) return;
@@ -1913,7 +1850,7 @@
         ticking = false;
         const travel = Math.max(1, section.offsetHeight - window.innerHeight);
         const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / travel));
-        updateVideoFromScroll(progress);
+        setVideoProgress(progress);
       };
       const requestUpdate = () => {
         if (ticking) return;
@@ -1939,15 +1876,15 @@
       end: 'bottom bottom',
       scrub: true,
       invalidateOnRefresh: true,
-      onUpdate: (self) => updateVideoFromScroll(self.progress),
-      onRefresh: (self) => updateVideoFromScroll(self.progress)
+      onUpdate: (self) => setVideoProgress(self.progress),
+      onRefresh: (self) => setVideoProgress(self.progress)
     });
 
     if (video.readyState < 1) {
       video.addEventListener('loadedmetadata', () => {
         const st = ScrollTrigger.getById('featuredVideoScrub');
         if (st) {
-          updateVideoFromScroll(st.progress);
+          setVideoProgress(st.progress);
           ScrollTrigger.refresh();
         }
       }, { once: true });
@@ -2332,7 +2269,7 @@
   }
 
   function shouldHeaderUseDarkTransition() {
-    if (reduceMotion || !window.matchMedia(FEATURED_VIDEO_INTRO_MEDIA).matches) return false;
+    if (reduceMotion || !window.matchMedia(VIDEO_EDGE_FADE_MEDIA).matches) return false;
 
     const clampProgress = (value) => Math.max(0, Math.min(1, value));
     const hero = document.querySelector('.hero-v2-section');
@@ -2350,7 +2287,7 @@
       if (
         videoRect.top <= 0 &&
         videoRect.bottom > 0 &&
-        videoProgress <= FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS
+        videoProgress <= VIDEO_HEADER_DARK_PROGRESS
       ) {
         return true;
       }
