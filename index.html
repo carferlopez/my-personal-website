@@ -1304,6 +1304,57 @@
   }
   @media (min-width: 1200px) { .services-lead { font-size: 1.1rem; } }
 
+  /* ==================== QUIÉN SOY: pin + tarjetas viniendo desde el fondo ==================== */
+  /* Wrapper que se hace pin durante el scroll (initQsPinCards). */
+  .qs-pin-wrapper { position: relative; }
+  .qs-pin {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+  /* En móvil: solo texto, sin escenario. */
+  .qs-pin__stage { display: none; }
+  @media (min-width: 900px) {
+    .qs-pin {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 2.5rem;
+      min-height: 92svh;
+    }
+    .qs-pin__text { max-width: 100%; }
+    .qs-pin__stage {
+      display: block;
+      position: relative;
+      height: 80svh;
+      perspective: 1200px;
+      perspective-origin: 50% 45%;
+    }
+    .qs-card {
+      position: absolute;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 8px;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12);
+      background: var(--ink);
+      opacity: 0;
+      transform: translateZ(-800px) scale(0.05);
+      transform-origin: center center;
+      will-change: transform, opacity;
+      display: block;
+    }
+    /* Posiciones por tarjeta — solo zona derecha del stage (la columna izquierda
+       ya está reservada para el texto). Cada una con su rotación final. */
+    .qs-pin__stage .qs-card:nth-child(1) { left: 8%;  top: 6%;  width: 46%; --rot: -3deg; }
+    .qs-pin__stage .qs-card:nth-child(2) { left: 46%; top: 14%; width: 40%; --rot:  4deg; }
+    .qs-pin__stage .qs-card:nth-child(3) { left: 18%; top: 38%; width: 50%; --rot: -2deg; }
+    .qs-pin__stage .qs-card:nth-child(4) { left: 56%; top: 46%; width: 38%; --rot:  5deg; }
+    .qs-pin__stage .qs-card:nth-child(5) { left: 6%;  top: 66%; width: 42%; --rot: -4deg; }
+    .qs-pin__stage .qs-card:nth-child(6) { left: 48%; top: 72%; width: 46%; --rot:  3deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .qs-card { opacity: 1 !important; transform: none !important; }
+  }
+
   #servicesLead,
   #pricingIntro,
   #contactSub {
@@ -1504,14 +1555,25 @@
     <div class="container">
       <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
 
-      <div class="services-subsection">
-      <div class="section-head">
-        <span class="section-head__index">(01)</span>
-        <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
-      </div>
-      <p class="big-heading services-headline"><span id="servicesHeadline">NO DISEÑO PÁGINAS WEB<span class="accent">.</span> DISEÑO EXPERIENCIAS WEB<span class="accent">.</span></span></p>
-      <p class="services-lead" id="servicesLead">De pequeño me apasionaban el cine y los videojuegos. Crecí y diseñé estrategias digitales en marketing. Ahora vuelvo a ser un niño y junto las dos cosas para crear experiencias online inolvidables.</p>
-
+      <div class="services-subsection qs-pin-wrapper">
+        <div class="qs-pin">
+          <div class="qs-pin__text">
+            <div class="section-head">
+              <span class="section-head__index">(01)</span>
+              <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
+            </div>
+            <p class="big-heading services-headline"><span id="servicesHeadline">NO DISEÑO PÁGINAS WEB<span class="accent">.</span> DISEÑO EXPERIENCIAS WEB<span class="accent">.</span></span></p>
+            <p class="services-lead" id="servicesLead">De pequeño me apasionaban el cine y los videojuegos. Crecí y diseñé estrategias digitales en marketing. Ahora vuelvo a ser un niño y junto las dos cosas para crear experiencias online inolvidables.</p>
+          </div>
+          <div class="qs-pin__stage" aria-hidden="true">
+            <img class="qs-card" src="assets/projects/project-01.jpg" alt="" loading="lazy">
+            <img class="qs-card" src="assets/projects/project-02.jpg" alt="" loading="lazy">
+            <img class="qs-card" src="assets/projects/project-03.jpg" alt="" loading="lazy">
+            <img class="qs-card" src="assets/projects/project-04.jpg" alt="" loading="lazy">
+            <img class="qs-card" src="assets/projects/project-05.jpg" alt="" loading="lazy">
+            <img class="qs-card" src="assets/projects/project-06.jpg" alt="" loading="lazy">
+          </div>
+        </div>
       </div>
 
       <div class="services-subsection">
@@ -1973,6 +2035,65 @@
     );
   }
 
+  // ============================================
+  // QUIÉN SOY: pin + tarjetas que vienen "desde el fondo"
+  // ============================================
+  function killQsPinCards() {
+    if (typeof ScrollTrigger !== 'undefined') {
+      const st = ScrollTrigger.getById('qsPinCards');
+      if (st) st.kill();
+    }
+    const cards = document.querySelectorAll('.qs-card');
+    if (typeof gsap !== 'undefined' && cards.length) {
+      gsap.killTweensOf(cards);
+      // Solo limpiamos lo que GSAP escribe; left/top/width/--rot viven en CSS.
+      gsap.set(cards, { clearProps: 'transform,opacity,rotation,scale,translate,x,y,z,willChange' });
+    }
+  }
+
+  function initQsPinCards() {
+    killQsPinCards();
+    if (reduceMotion) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    // Solo desktop con espacio suficiente
+    if (!window.matchMedia('(min-width: 900px)').matches) return;
+    const wrapper = document.querySelector('.qs-pin-wrapper');
+    const cards = document.querySelectorAll('.qs-card');
+    if (!wrapper || !cards.length) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Estado inicial: muy lejos (scale mínima) y transparentes
+    gsap.set(cards, { opacity: 0, scale: 0.05, rotation: 0, force3D: true });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        id: 'qsPinCards',
+        trigger: wrapper,
+        start: 'top top',
+        end: () => '+=' + Math.round(window.innerHeight * 1.6),
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.6,
+        invalidateOnRefresh: true
+      }
+    });
+
+    // Cada tarjeta crece desde "muy lejos" hasta su posición real, con stagger
+    cards.forEach((card, i) => {
+      const finalRot = parseFloat(getComputedStyle(card).getPropertyValue('--rot')) || 0;
+      tl.fromTo(card,
+        { opacity: 0, scale: 0.05, rotation: 0 },
+        { opacity: 1, scale: 1, rotation: finalRot, ease: 'power2.out', duration: 0.55 },
+        i * 0.18
+      );
+    });
+
+    // Pequeño margen al final para que las 6 queden visibles antes de despinear
+    tl.to({}, { duration: 0.4 });
+  }
+
   function syncViewportAnimationMode() {
     const hero = document.querySelector('.hero-v2-section');
     const mob =
@@ -1991,6 +2112,7 @@
       }
     }
     initFeaturedVideoScrub();
+    initQsPinCards();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
