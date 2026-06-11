@@ -1422,6 +1422,7 @@
     gap: 1.5rem;
     align-items: start;
   }
+  .pricing-pin-wrapper { position: relative; }
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
   .price-card { border: 3px solid var(--hairline); border-radius: 14px; padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
   .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
@@ -1456,6 +1457,12 @@
   .price-card--featured:hover .price-card__cta { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
   .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
   @media (min-width: 900px) {
+    .pricing-pin-wrapper {
+      min-height: 92svh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
     .pricing-layout {
       grid-template-columns: minmax(260px, 0.68fr) minmax(520px, 1fr);
       gap: clamp(2rem, 5vw, 5rem);
@@ -1470,6 +1477,18 @@
       width: min(100%, 680px);
       justify-self: end;
       margin: 0;
+    }
+    .pricing-grid.is-pinned-stage {
+      position: relative;
+      height: clamp(420px, 55svh, 520px);
+      overflow: visible;
+    }
+    .pricing-grid.is-pinned-stage .price-card {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      width: min(100%, 680px);
+      transform: translateY(-50%);
     }
     .price-card {
       padding: 1.25rem 1.25rem 1.15rem;
@@ -1642,6 +1661,7 @@
       </div>
 
       <div class="services-subsection">
+      <div class="pricing-pin-wrapper">
       <div class="section-head">
         <span class="section-head__index">(02)</span>
         <span class="section-head__name" id="secHeadPricing">PRECIOS</span>
@@ -1679,6 +1699,7 @@
           <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
           <p class="price-card__note" id="price2Note">*Plazas muy limitadas. Selecciono pocos proyectos al año.</p>
         </article>
+      </div>
       </div>
       </div>
       <p class="pricing-vat" id="pricingVat">* Precios sin IVA.</p>
@@ -2159,6 +2180,70 @@
     tl.to({}, { duration: 0.4 });
   }
 
+  // ============================================
+  // PRECIOS: pin + una tarjeta visible por tramo
+  // ============================================
+  function killPricingPinCards() {
+    if (typeof ScrollTrigger !== 'undefined') {
+      const st = ScrollTrigger.getById('pricingPinCards');
+      if (st) st.kill();
+    }
+    const grid = document.querySelector('.pricing-grid');
+    const cards = document.querySelectorAll('.pricing-grid .price-card');
+    if (grid) grid.classList.remove('is-pinned-stage');
+    if (typeof gsap !== 'undefined' && cards.length) {
+      gsap.killTweensOf(cards);
+      gsap.set(cards, { clearProps: 'all' });
+    }
+  }
+
+  function initPricingPinCards() {
+    killPricingPinCards();
+    if (reduceMotion) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    if (!window.matchMedia('(min-width: 900px)').matches) return;
+
+    const wrapper = document.querySelector('.pricing-pin-wrapper');
+    const grid = document.querySelector('.pricing-grid');
+    const cards = gsap.utils.toArray('.pricing-grid .price-card');
+    if (!wrapper || !grid || cards.length < 2) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    grid.classList.add('is-pinned-stage');
+
+    gsap.set(cards, {
+      autoAlpha: 0,
+      x: 140,
+      scale: 0.96,
+      force3D: true
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        id: 'pricingPinCards',
+        trigger: wrapper,
+        start: 'top top',
+        end: () => '+=' + Math.round(window.innerHeight * 1.9),
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.65,
+        invalidateOnRefresh: true
+      }
+    });
+
+    tl.to({}, { duration: 0.22 });
+    tl.to(cards[0], { autoAlpha: 1, x: 0, scale: 1, ease: 'power2.out', duration: 0.32 });
+    tl.to(cards[0], { autoAlpha: 1, x: 0, scale: 1, ease: 'none', duration: 0.34 });
+    tl.to(cards[0], { autoAlpha: 0, x: -90, scale: 0.98, ease: 'power2.in', duration: 0.22 });
+    tl.to(cards[1], { autoAlpha: 1, x: 0, scale: 1, ease: 'power2.out', duration: 0.32 }, '+=0.02');
+    tl.to(cards[1], { autoAlpha: 1, x: 0, scale: 1, ease: 'none', duration: 0.42 });
+
+    if (!ScrollTrigger.getById('pricingPinCards')) {
+      killPricingPinCards();
+    }
+  }
+
   function syncViewportAnimationMode() {
     const hero = document.querySelector('.hero-v2-section');
     const mob =
@@ -2178,6 +2263,7 @@
     }
     initFeaturedVideoScrub();
     initQsPinCards();
+    initPricingPinCards();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -2267,6 +2353,12 @@
     const csub = document.getElementById('contactFormSubmit');
     if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     applyServicesI18n(d);
+    if (pageInitialized) {
+      setTimeout(() => {
+        initPricingPinCards();
+        if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+      }, 80);
+    }
   }
 
   function getContactFormEndpoint() {
