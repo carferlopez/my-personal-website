@@ -50,7 +50,7 @@
 <!-- Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; border-radius: 0; }
@@ -1295,11 +1295,6 @@
     line-height: 1.5;
     color: var(--ink-2);
   }
-  #servicesLead {
-    max-width: 38ch;
-    font-weight: 700;
-    color: var(--ink-2);
-  }
   @media (min-width: 768px) {
     .services-lead {
       max-width: 54ch;
@@ -1308,6 +1303,35 @@
     }
   }
   @media (min-width: 1200px) { .services-lead { font-size: 1.1rem; } }
+
+  #servicesLead,
+  #pricingIntro,
+  #contactSub {
+    max-width: 20ch;
+    color: var(--ink-2);
+    font-family: var(--font-sans);
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: 0;
+    text-wrap: balance;
+  }
+  @media (min-width: 768px) {
+    #servicesLead,
+    #pricingIntro,
+    #contactSub {
+      max-width: 21ch;
+      font-size: 2.15rem;
+      line-height: 1.03;
+    }
+  }
+  @media (min-width: 1200px) {
+    #servicesLead,
+    #pricingIntro,
+    #contactSub {
+      font-size: 2.7rem;
+    }
+  }
 
   .services-subline {
     font-size: 1.05rem;
