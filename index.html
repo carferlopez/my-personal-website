@@ -153,6 +153,9 @@
   .scroll-video-section__fade {
     display: none;
   }
+  .scroll-video-section__outro-fade {
+    display: none;
+  }
   @media (min-width: 640px) {
     .scroll-video-section,
     .scroll-video-section__sticky {
@@ -174,6 +177,15 @@
       background: #000000;
       opacity: 1;
     }
+    .scroll-video-section__outro-fade {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      display: block;
+      pointer-events: none;
+      background: var(--page-bg);
+      opacity: 0;
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     .scroll-video-section {
@@ -191,6 +203,9 @@
       clip-path: none !important;
     }
     .scroll-video-section__fade {
+      display: none;
+    }
+    .scroll-video-section__outro-fade {
       display: none;
     }
   }
@@ -1533,6 +1548,7 @@
         <source src="assets/hero-video.mp4" type="video/mp4">
       </video>
       <div class="scroll-video-section__fade" aria-hidden="true"></div>
+      <div class="scroll-video-section__outro-fade" aria-hidden="true"></div>
     </div>
   </section>
 
@@ -1885,6 +1901,8 @@
   const FEATURED_VIDEO_INTRO_MEDIA = '(min-width: 640px)';
   const FEATURED_VIDEO_INTRO_HOLD_PROGRESS = 0.06;
   const FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS = 0.24;
+  const FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS = 0.80;
+  const FEATURED_VIDEO_OUTRO_FADE_END_PROGRESS = 0.96;
   const HERO_TEXT_FADE_START_PROGRESS = 0.42;
   const HERO_TEXT_FADE_END_PROGRESS = 0.90;
   let featuredVideoNativeCleanup = null;
@@ -1892,23 +1910,26 @@
   function killFeaturedVideoScrub() {
     const video = document.getElementById('featuredScrollVideo');
     const fade = document.querySelector('.scroll-video-section__fade');
+    const outroFade = document.querySelector('.scroll-video-section__outro-fade');
     if (featuredVideoNativeCleanup) {
       featuredVideoNativeCleanup();
       featuredVideoNativeCleanup = null;
     }
-    if (fade) {
-      fade.style.opacity = '';
-      fade.style.willChange = '';
-    }
+    [fade, outroFade].forEach((el) => {
+      if (!el) return;
+      el.style.opacity = '';
+      el.style.willChange = '';
+    });
     if (typeof gsap !== 'undefined') {
       if (video) {
         gsap.killTweensOf(video);
         gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
       }
-      if (fade) {
-        gsap.killTweensOf(fade);
-        gsap.set(fade, { clearProps: 'opacity,willChange' });
-      }
+      [fade, outroFade].forEach((el) => {
+        if (!el) return;
+        gsap.killTweensOf(el);
+        gsap.set(el, { clearProps: 'opacity,willChange' });
+      });
     }
     if (typeof ScrollTrigger !== 'undefined') {
       const st = ScrollTrigger.getById('featuredVideoScrub');
@@ -1920,12 +1941,13 @@
     const section = document.querySelector('.scroll-video-section');
     const video = document.getElementById('featuredScrollVideo');
     const fade = section?.querySelector('.scroll-video-section__fade');
+    const outroFade = section?.querySelector('.scroll-video-section__outro-fade');
     if (!section || !video) return;
     killFeaturedVideoScrub();
 
     // Fuente según viewport (móvil usa un archivo más ligero).
     const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
-    const useIntroFade = Boolean(fade && !reduceMotion && window.matchMedia(FEATURED_VIDEO_INTRO_MEDIA).matches);
+    const useVideoFades = Boolean(fade && outroFade && !reduceMotion && window.matchMedia(FEATURED_VIDEO_INTRO_MEDIA).matches);
     const desiredSrc = isMobileVideo ? 'assets/hero_mobile.mp4' : 'assets/hero-video.mp4';
     const currentSrc = video.currentSrc || video.getAttribute('src') || '';
     if (!currentSrc.endsWith(desiredSrc)) {
@@ -1949,7 +1971,7 @@
 
     function getVideoScrubProgress(sectionProgress) {
       const progress = clampProgress(sectionProgress);
-      if (!useIntroFade) return progress;
+      if (!useVideoFades) return progress;
       if (progress <= FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS) return 0;
       return clampProgress(
         (progress - FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS) /
@@ -1959,7 +1981,7 @@
 
     function setVideoIntroFade(sectionProgress) {
       if (!fade) return;
-      if (!useIntroFade) {
+      if (!useVideoFades) {
         fade.style.opacity = '0';
         fade.style.willChange = '';
         return;
@@ -1973,9 +1995,26 @@
       fade.style.willChange = 'opacity';
     }
 
+    function setVideoOutroFade(sectionProgress) {
+      if (!outroFade) return;
+      if (!useVideoFades) {
+        outroFade.style.opacity = '0';
+        outroFade.style.willChange = '';
+        return;
+      }
+      const progress = clampProgress(sectionProgress);
+      const fadeProgress = clampProgress(
+        (progress - FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS) /
+        (FEATURED_VIDEO_OUTRO_FADE_END_PROGRESS - FEATURED_VIDEO_OUTRO_FADE_START_PROGRESS)
+      );
+      outroFade.style.opacity = String(fadeProgress);
+      outroFade.style.willChange = 'opacity';
+    }
+
     function updateVideoFromScroll(sectionProgress) {
       const progress = clampProgress(sectionProgress);
       setVideoIntroFade(progress);
+      setVideoOutroFade(progress);
       setVideoProgress(getVideoScrubProgress(progress));
     }
 
