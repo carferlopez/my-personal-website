@@ -1326,6 +1326,9 @@
       display: block;
       position: relative;
       height: 80svh;
+      width: 100%;
+      max-width: 740px;
+      justify-self: end;
       perspective: 1200px;
       perspective-origin: 50% 45%;
     }
@@ -1342,14 +1345,14 @@
       will-change: transform, opacity;
       display: block;
     }
-    /* Composición asimétrica pero ortogonal: tamaños y posiciones variadas,
-       rectas (sin rotación) y sin solaparse. */
-    .qs-pin__stage .qs-card:nth-child(1) { left:  4%; top:  3%; width: 42%; }
-    .qs-pin__stage .qs-card:nth-child(2) { left: 60%; top: 10%; width: 32%; }
-    .qs-pin__stage .qs-card:nth-child(3) { left: 16%; top: 36%; width: 36%; }
-    .qs-pin__stage .qs-card:nth-child(4) { left: 54%; top: 40%; width: 44%; }
-    .qs-pin__stage .qs-card:nth-child(5) { left:  6%; top: 68%; width: 36%; }
-    .qs-pin__stage .qs-card:nth-child(6) { left: 52%; top: 73%; width: 40%; }
+    /* Óvalo irregular: mantiene las tarjetas dentro de la columna visual derecha,
+       sin convertirlas en una retícula ni acercarlas al texto. */
+    .qs-pin__stage .qs-card:nth-child(1) { left: 29%; top:  3%; width: 36%; }
+    .qs-pin__stage .qs-card:nth-child(2) { left: 62%; top: 18%; width: 30%; }
+    .qs-pin__stage .qs-card:nth-child(3) { left: 56%; top: 45%; width: 40%; }
+    .qs-pin__stage .qs-card:nth-child(4) { left: 33%; top: 70%; width: 35%; }
+    .qs-pin__stage .qs-card:nth-child(5) { left:  8%; top: 56%; width: 34%; }
+    .qs-pin__stage .qs-card:nth-child(6) { left: 15%; top: 25%; width: 32%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .qs-card { opacity: 1 !important; transform: none !important; }
