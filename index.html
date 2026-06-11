@@ -1885,6 +1885,8 @@
   const FEATURED_VIDEO_INTRO_MEDIA = '(min-width: 640px)';
   const FEATURED_VIDEO_INTRO_HOLD_PROGRESS = 0.06;
   const FEATURED_VIDEO_INTRO_REVEAL_END_PROGRESS = 0.24;
+  const HERO_TEXT_FADE_START_PROGRESS = 0.42;
+  const HERO_TEXT_FADE_END_PROGRESS = 0.90;
   let featuredVideoNativeCleanup = null;
 
   function killFeaturedVideoScrub() {
@@ -2081,8 +2083,12 @@
     heroTl.fromTo(
       '.hero-v2-end-fade',
       { opacity: 0 },
-      { opacity: 1, ease: 'none', duration: 0.26 },
-      0.74
+      {
+        opacity: 1,
+        ease: 'none',
+        duration: HERO_TEXT_FADE_END_PROGRESS - HERO_TEXT_FADE_START_PROGRESS
+      },
+      HERO_TEXT_FADE_START_PROGRESS
     );
   }
 
@@ -2471,7 +2477,7 @@
     if (hero && !hero.classList.contains('hero-v2-section--static')) {
       const heroRect = hero.getBoundingClientRect();
       const heroProgress = clampProgress(-heroRect.top / Math.max(1, hero.offsetHeight));
-      if (heroRect.bottom > 0 && heroProgress >= 0.94) return true;
+      if (heroRect.bottom > 0 && heroProgress >= HERO_TEXT_FADE_START_PROGRESS) return true;
     }
 
     const videoSection = document.querySelector('.scroll-video-section');
