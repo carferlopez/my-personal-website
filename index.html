@@ -1342,14 +1342,14 @@
       will-change: transform, opacity;
       display: block;
     }
-    /* Posiciones por tarjeta — solo zona derecha del stage (la columna izquierda
-       ya está reservada para el texto). Cada una con su rotación final. */
-    .qs-pin__stage .qs-card:nth-child(1) { left: 8%;  top: 6%;  width: 46%; --rot: -3deg; }
-    .qs-pin__stage .qs-card:nth-child(2) { left: 46%; top: 14%; width: 40%; --rot:  4deg; }
-    .qs-pin__stage .qs-card:nth-child(3) { left: 18%; top: 38%; width: 50%; --rot: -2deg; }
-    .qs-pin__stage .qs-card:nth-child(4) { left: 56%; top: 46%; width: 38%; --rot:  5deg; }
-    .qs-pin__stage .qs-card:nth-child(5) { left: 6%;  top: 66%; width: 42%; --rot: -4deg; }
-    .qs-pin__stage .qs-card:nth-child(6) { left: 48%; top: 72%; width: 46%; --rot:  3deg; }
+    /* Layout ordenado en la zona derecha: grid 2×3, rectas, con espacio entre ellas.
+       width 42% deja un gap horizontal de ~12%; las filas dejan ~5% de aire. */
+    .qs-pin__stage .qs-card:nth-child(1) { left:  6%; top:  4%; width: 42%; }
+    .qs-pin__stage .qs-card:nth-child(2) { left: 52%; top:  4%; width: 42%; }
+    .qs-pin__stage .qs-card:nth-child(3) { left:  6%; top: 38%; width: 42%; }
+    .qs-pin__stage .qs-card:nth-child(4) { left: 52%; top: 38%; width: 42%; }
+    .qs-pin__stage .qs-card:nth-child(5) { left:  6%; top: 72%; width: 42%; }
+    .qs-pin__stage .qs-card:nth-child(6) { left: 52%; top: 72%; width: 42%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .qs-card { opacity: 1 !important; transform: none !important; }
@@ -2064,7 +2064,7 @@
     gsap.registerPlugin(ScrollTrigger);
 
     // Estado inicial: muy lejos (scale mínima) y transparentes
-    gsap.set(cards, { opacity: 0, scale: 0.05, rotation: 0, force3D: true });
+    gsap.set(cards, { opacity: 0, scale: 0.05, force3D: true });
 
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -2082,10 +2082,9 @@
 
     // Cada tarjeta crece desde "muy lejos" hasta su posición real, con stagger
     cards.forEach((card, i) => {
-      const finalRot = parseFloat(getComputedStyle(card).getPropertyValue('--rot')) || 0;
       tl.fromTo(card,
-        { opacity: 0, scale: 0.05, rotation: 0 },
-        { opacity: 1, scale: 1, rotation: finalRot, ease: 'power2.out', duration: 0.55 },
+        { opacity: 0, scale: 0.05 },
+        { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.55 },
         i * 0.18
       );
     });
