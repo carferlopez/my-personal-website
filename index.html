@@ -1074,7 +1074,6 @@
       flex-direction: row;
       align-items: stretch;
       gap: 1.5rem;
-      min-height: 100svh;
     }
     .contact-ojitos-row > #ojitos {
       flex: 0 0 calc(50% - 0.75rem);
@@ -2651,32 +2650,36 @@
     const pTop = textCol.querySelector('p:has(#contactDividerTextTop)');
     const pBot = textCol.querySelector('p:has(#contactDividerTextBottom)');
 
-    if (window.innerWidth < 768) {
-      if (pTop) { pTop.style.removeProperty('font-size'); pTop.style.whiteSpace = ''; }
-      if (pBot) { pBot.style.removeProperty('font-size'); pBot.style.whiteSpace = ''; }
-      return;
-    }
+    // Reset siempre primero para medir el alto natural de la sección
+    if (pTop) { pTop.style.removeProperty('font-size'); pTop.style.whiteSpace = ''; }
+    if (pBot) { pBot.style.removeProperty('font-size'); pBot.style.whiteSpace = ''; }
 
+    if (window.innerWidth < 768) return;
     if (!pTop || !pBot) return;
     const sub = document.getElementById('contactSub');
     if (!sub) return;
 
-    const H = window.innerHeight;
+    // Leer el alto natural del contenedor (forzar reflow tras el reset)
+    const H = textCol.clientHeight;
+    if (H < 16) return;
+
     const subH = sub.offsetHeight;
     const colGap = parseFloat(getComputedStyle(textCol).gap) || 0;
     const available = H - subH - 2 * colGap;
-    if (available < 16) return;
+    const maxW = textCol.clientWidth;
+    if (available < 16 || maxW < 16) return;
 
     pTop.style.whiteSpace = 'normal';
     pBot.style.whiteSpace = 'normal';
 
-    let lo = 4, hi = 600;
+    let lo = 4, hi = 400;
     for (let i = 0; i < 16; i++) {
       const mid = (lo + hi) * 0.5;
       pTop.style.setProperty('font-size', mid + 'px', 'important');
       pBot.style.setProperty('font-size', mid + 'px', 'important');
-      if (pTop.scrollHeight + pBot.scrollHeight + colGap <= available + 1) lo = mid;
-      else hi = mid;
+      const hOk = pTop.scrollHeight + pBot.scrollHeight + colGap <= available + 1;
+      const wOk = pTop.scrollWidth <= maxW + 1 && pBot.scrollWidth <= maxW + 1;
+      if (hOk && wOk) lo = mid; else hi = mid;
     }
     const best = Math.floor(lo) - 1;
     pTop.style.setProperty('font-size', best + 'px', 'important');
