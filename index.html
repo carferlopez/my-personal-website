@@ -1074,6 +1074,7 @@
       flex-direction: row;
       align-items: stretch;
       gap: 1.5rem;
+      min-height: 100svh;
     }
     .contact-ojitos-row > #ojitos {
       flex: 0 0 calc(50% - 0.75rem);
@@ -2355,6 +2356,7 @@
        llama a killHeroScrollAnimation → gsap.set clearProps:'all' que borra
        los inline styles de altura y justifyContent que fitHeroV2Lines aplica. */
     fitHeroV2Lines();
+    fitContactLines();
     initFeaturedVideoScrub();
     initQsPinCards();
     initPricingPinCards();
@@ -2664,6 +2666,44 @@
     }
     const best = Math.floor(lo) - 1;
     lines.forEach((line) => { line.style.fontSize = best + 'px'; });
+  }
+
+  function fitContactLines() {
+    const textCol = document.querySelector('.contact-ojitos-text');
+    if (!textCol) return;
+    const pTop = textCol.querySelector('p:has(#contactDividerTextTop)');
+    const pBot = textCol.querySelector('p:has(#contactDividerTextBottom)');
+
+    if (window.innerWidth < 768) {
+      if (pTop) { pTop.style.removeProperty('font-size'); pTop.style.whiteSpace = ''; }
+      if (pBot) { pBot.style.removeProperty('font-size'); pBot.style.whiteSpace = ''; }
+      return;
+    }
+
+    if (!pTop || !pBot) return;
+    const sub = document.getElementById('contactSub');
+    if (!sub) return;
+
+    const H = window.innerHeight;
+    const subH = sub.offsetHeight;
+    const colGap = parseFloat(getComputedStyle(textCol).gap) || 0;
+    const available = H - subH - 2 * colGap;
+    if (available < 16) return;
+
+    pTop.style.whiteSpace = 'normal';
+    pBot.style.whiteSpace = 'normal';
+
+    let lo = 4, hi = 600;
+    for (let i = 0; i < 16; i++) {
+      const mid = (lo + hi) * 0.5;
+      pTop.style.setProperty('font-size', mid + 'px', 'important');
+      pBot.style.setProperty('font-size', mid + 'px', 'important');
+      if (pTop.scrollHeight + pBot.scrollHeight + colGap <= available + 1) lo = mid;
+      else hi = mid;
+    }
+    const best = Math.floor(lo) - 1;
+    pTop.style.setProperty('font-size', best + 'px', 'important');
+    pBot.style.setProperty('font-size', best + 'px', 'important');
   }
 
   function shouldHeaderUseDarkTransition() {
