@@ -1300,7 +1300,8 @@
     max-width: 17ch;
   }
   @media (min-width: 1024px) {
-    .services-headline--sub:has(#pricingHeadline) {
+    .services-headline--sub:has(#pricingHeadline),
+    .services-headline--sub:has(#servicesHeadline) {
       max-width: none;
       width: 100%;
       font-size: clamp(3.4rem, 5.35vw, 5.35rem);
@@ -1695,7 +1696,7 @@
               <span class="section-head__index">(01)</span>
               <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
             </div>
-            <p class="big-heading services-headline"><span id="servicesHeadline">CREATIVIDAD <span class="accent">+</span> NEGOCIO <span class="accent">+</span> TECNOLOGÍA</span></p>
+            <p class="big-heading services-headline services-headline--sub"><span id="servicesHeadline">CREATIVIDAD <span class="accent">+</span> NEGOCIO <span class="accent">+</span> TECNOLOGÍA</span></p>
             <p class="services-lead" id="servicesLead">Me crié jugando a videojuegos, estudié cine y trabajé en marketing y publicidad para marcas como Kia, Signify y Starbucks. Hoy junto todo mi bagaje y experiencia y trabajo en la intersección de diseño, tecnología y negocio: convierto ideas en productos y experiencias que se recuerdan.</p>
           </div>
           <div class="qs-pin__stage" aria-hidden="true">
@@ -1752,16 +1753,6 @@
       </div>
       </div>
       <p class="services-subline" id="pricingOpenDoor">¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — escríbeme y lo montamos.</p>
-      <p class="pricing-vat" id="pricingVat">* Precios sin IVA.</p>
-
-      <div class="services-kit" id="servicesKitContainer">
-        <span class="services-kit__title" id="servicesKitTitle">Extras disponibles</span>
-        <ul class="services-kit__list" id="servicesKitList">
-          <li>Copy completo de conversión: +600 €</li>
-          <li>Identidad visual &amp; UI kit: +1.200 €</li>
-          <li>Animaciones, interacciones y 3D avanzado: +600 €</li>
-        </ul>
-      </div>
       </div>
     </div>
   </section>
@@ -1911,14 +1902,7 @@
       ],
       price2Cta: "Cuéntame tu universo",
       price2Note: "*Plazas muy limitadas. Selecciono pocos proyectos al año.",
-      pricingVat: "* Precios sin IVA.",
       pricingOpenDoor: "¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — escríbeme y lo montamos.",
-      servicesKitTitle: "Extras disponibles",
-      servicesKitList: [
-        "Copy completo de conversión: +600 €",
-        "Identidad visual &amp; UI kit: +1.200 €",
-        "Animaciones, interacciones y 3D avanzado: +600 €"
-      ],
       secHeadServices: "QUIÉN SOY",
       secHeadPricing: "PRECIOS",
       secHeadContact: "CONTACTO",
@@ -1981,14 +1965,7 @@
       ],
       price2Cta: "Tell me your universe",
       price2Note: "*Very limited slots. I take on few projects a year.",
-      pricingVat: "* Prices exclude VAT.",
       pricingOpenDoor: "Your project doesn't fit a box? Product, creative direction, custom collaboration — write to me and we'll build it.",
-      servicesKitTitle: "Available Extras",
-      servicesKitList: [
-        "Full conversion copy: +€600",
-        "Visual identity &amp; UI kit: +€1,200",
-        "Advanced animations, interactions & 3D: +€600"
-      ],
       secHeadServices: "WHO I AM",
       secHeadPricing: "PRICING",
       secHeadContact: "CONTACT",
