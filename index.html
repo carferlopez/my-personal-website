@@ -2339,7 +2339,6 @@
       window.matchMedia('(max-width: 639px)').matches;
 
     killHeroScrollAnimation();
-    fitHeroV2Lines();
 
     if (hero) {
       if (mob || reduceMotion) {
@@ -2349,6 +2348,10 @@
         initHeroScrollAnimation();
       }
     }
+    /* fitHeroV2Lines debe correr DESPUÉS de initHeroScrollAnimation porque esta
+       llama a killHeroScrollAnimation → gsap.set clearProps:'all' que borra
+       los inline styles de altura y justifyContent que fitHeroV2Lines aplica. */
+    fitHeroV2Lines();
     initFeaturedVideoScrub();
     initQsPinCards();
     initPricingPinCards();
@@ -2634,28 +2637,25 @@
     const lines = title.querySelectorAll('.hero-v2-line');
     if (!lines.length) return;
     const cs = getComputedStyle(sticky);
-    const W = sticky.clientWidth
-      - parseFloat(cs.paddingLeft)
-      - parseFloat(cs.paddingRight);
     const H = sticky.clientHeight
       - parseFloat(cs.paddingTop)
       - parseFloat(cs.paddingBottom);
-    if (W < 16 || H < 16) return;
+    if (H < 16) return;
 
-    /* Escala uniforme para todos: el tamaño de la letra es el mismo en las 4 líneas. */
-    /* Buscamos el tamaño máximo que permite que la línea más larga quepa en el ancho (W). */
+    /* Reset de sobreescrituras de iteraciones anteriores. */
+    title.style.height = '';
+    title.style.justifyContent = '';
+
+    /* Permite saltos de línea entre palabras completas — nunca a mitad de palabra. */
+    lines.forEach((line) => { line.style.whiteSpace = 'normal'; });
+
+    /* Crece la fuente hasta que el bloque de texto llena el alto disponible.
+       Con white-space: normal el navegador rompe por palabras automáticamente. */
     let lo = 4, hi = 800;
-    for (let iter = 0; iter < 12; iter++) {
+    for (let iter = 0; iter < 16; iter++) {
       const mid = (lo + hi) * 0.5;
       lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
-      const maxW = Math.max(...Array.from(lines, (l) => l.scrollWidth));
-      
-      /* En móvil portrait, ignoramos la restricción de altura (H) para que sea gigante y ocupe lo que necesite. */
-      const isMobilePortrait = window.innerWidth < 640 && window.innerHeight > window.innerWidth;
-      const constrainHeight = window.innerWidth >= 768 && !isMobilePortrait;
-      const totH = title.offsetHeight;
-
-      if (maxW <= W + 1 && (!constrainHeight || totH <= H + 1)) lo = mid;
+      if (title.scrollHeight <= H + 1) lo = mid;
       else hi = mid;
     }
     const best = Math.floor(lo) - 1;
