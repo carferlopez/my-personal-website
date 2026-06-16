@@ -124,24 +124,24 @@
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
   }
 
-  /* ==================== SCROLL VIDEO (post-hero) ====================
-     El scroll arrastra el vídeo fotograma a fotograma (ver initFeaturedVideoScrub).
-     La sección es alta (220svh) y el vídeo queda sticky a pantalla completa. */
+  /* ==================== VÍDEO DE APERTURA ====================
+     Se autoreproduce al cargar y, al terminar, se queda en el último fotograma
+     (ver initFeaturedVideo). Ocupa una pantalla completa antes del hero. */
   .scroll-video-section {
     position: relative;
     z-index: 2;
     width: 100%;
-    height: 220svh;
-    background: var(--page-bg);
+    height: 100svh;
+    background: #000000;
   }
   .scroll-video-section__sticky {
-    position: sticky;
+    position: relative;
     top: 0;
     width: 100%;
     height: 100svh;
     max-height: 100dvh;
     overflow: hidden;
-    background: var(--page-bg);
+    background: #000000;
   }
   .scroll-video-section video {
     display: block;
@@ -160,9 +160,6 @@
     .scroll-video-section,
     .scroll-video-section__sticky {
       background: #000000;
-    }
-    .scroll-video-section {
-      height: 250svh;
     }
     .scroll-video-section video {
       position: relative;
@@ -189,7 +186,7 @@
       z-index: 3;
       display: block;
       pointer-events: none;
-      background: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, var(--page-bg) 100%);
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, #000000 100%);
       opacity: 1;
     }
   }
@@ -1653,23 +1650,12 @@
 
 <main>
 
-  <!-- Hero tipo carlos-site-V2 -->
-  <section class="hero-v2-section" id="inicio" aria-label="I design like art. I build like software. I run like product.">
-    <div class="hero-v2-sticky">
-      <h1 class="hero-v2-title" id="heroV2Title">
-        <span class="hero-v2-line">I DESIGN LIKE ART<span class="hero-v2-dot">.</span></span>
-        <span class="hero-v2-line">I BUILD LIKE SOFTWARE<span class="hero-v2-dot">.</span></span>
-        <span class="hero-v2-line">I RUN LIKE PRODUCT<span class="hero-v2-dot">.</span></span>
-      </h1>
-      <div class="hero-v2-end-fade" aria-hidden="true"></div>
-    </div>
-  </section>
-
-  <!-- ==================== SCROLL VIDEO (se reproduce con el scroll) ==================== -->
-  <section class="scroll-video-section" id="scrollVideo" aria-label="Vídeo de presentación">
+  <!-- ==================== VÍDEO DE APERTURA (autoplay + congela último fotograma) ==================== -->
+  <section class="scroll-video-section" id="inicio" aria-label="Vídeo de presentación">
     <div class="scroll-video-section__sticky">
       <video
         id="featuredScrollVideo"
+        autoplay
         muted
         playsinline
         webkit-playsinline
@@ -1680,6 +1666,18 @@
     </div>
     <div class="scroll-video-section__fade" aria-hidden="true"></div>
     <div class="scroll-video-section__outro-fade" aria-hidden="true"></div>
+  </section>
+
+  <!-- Hero tipo carlos-site-V2 -->
+  <section class="hero-v2-section" id="presentacion" aria-label="I design like art. I build like software. I run like product.">
+    <div class="hero-v2-sticky">
+      <h1 class="hero-v2-title" id="heroV2Title">
+        <span class="hero-v2-line">I DESIGN LIKE ART<span class="hero-v2-dot">.</span></span>
+        <span class="hero-v2-line">I BUILD LIKE SOFTWARE<span class="hero-v2-dot">.</span></span>
+        <span class="hero-v2-line">I RUN LIKE PRODUCT<span class="hero-v2-dot">.</span></span>
+      </h1>
+      <div class="hero-v2-end-fade" aria-hidden="true"></div>
+    </div>
   </section>
 
   <!-- ==================== SERVICIOS + PRECIOS ==================== -->
@@ -1982,21 +1980,15 @@
   } catch (e) {}
 
   // ============================================
-  // Vídeo controlado por scroll (post-hero)
-  // El scroll arrastra el currentTime del vídeo, como una bobina de cine.
+  // Vídeo de apertura: autoplay muted + congela el último fotograma.
   // ============================================
   const VIDEO_EDGE_FADE_MEDIA = '(min-width: 640px)';
-  const VIDEO_HEADER_DARK_PROGRESS = 0.08;
   const HERO_TEXT_FADE_START_PROGRESS = 0.42;
   const HERO_TEXT_FADE_END_PROGRESS = 0.90;
-  let featuredVideoNativeCleanup = null;
+  let featuredVideoInitialized = false;
 
-  function killFeaturedVideoScrub() {
+  function killFeaturedVideo() {
     const video = document.getElementById('featuredScrollVideo');
-    if (featuredVideoNativeCleanup) {
-      featuredVideoNativeCleanup();
-      featuredVideoNativeCleanup = null;
-    }
     if (typeof gsap !== 'undefined' && video) {
       gsap.killTweensOf(video);
       gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
@@ -2007,11 +1999,12 @@
     }
   }
 
-  function initFeaturedVideoScrub() {
-    const section = document.querySelector('.scroll-video-section');
+  // Vídeo de apertura: se autoreproduce una vez (muted) y, al terminar, se
+  // queda congelado en el último fotograma (sin loop).
+  function initFeaturedVideo() {
     const video = document.getElementById('featuredScrollVideo');
-    if (!section || !video) return;
-    killFeaturedVideoScrub();
+    if (!video) return;
+    killFeaturedVideo();
 
     // Fuente según viewport (móvil usa un archivo más ligero).
     const isMobileVideo = window.matchMedia('(max-width: 767px)').matches;
@@ -2021,74 +2014,34 @@
       video.src = desiredSrc;
       video.load();
     }
-    video.pause();
 
-    function clampProgress(progress) {
-      return Math.max(0, Math.min(1, progress));
-    }
+    video.loop = false;
+    video.muted = true; // requisito para autoplay en navegadores modernos
 
-    function setVideoProgress(progress) {
-      if (!Number.isFinite(video.duration) || video.duration <= 0) return;
-      const maxTime = Math.max(0, video.duration - 0.04);
-      const nextTime = Math.max(0, Math.min(maxTime, maxTime * clampProgress(progress)));
-      if (Math.abs(video.currentTime - nextTime) > 0.035) {
-        video.currentTime = nextTime;
-      }
-    }
-
-    if (video.readyState >= 1) {
-      setVideoProgress(0);
-    } else {
-      video.addEventListener('loadedmetadata', () => setVideoProgress(0), { once: true });
-    }
-
-    if (reduceMotion) return;
-
-    // Sin GSAP: fallback con scroll nativo + rAF.
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      let ticking = false;
-      const updateFromScroll = () => {
-        ticking = false;
-        const travel = Math.max(1, section.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / travel));
-        setVideoProgress(progress);
-      };
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(updateFromScroll);
-      };
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      featuredVideoNativeCleanup = () => {
-        window.removeEventListener('scroll', requestUpdate);
-        window.removeEventListener('resize', requestUpdate);
-      };
-      requestUpdate();
+    // Respetamos prefers-reduced-motion: dejamos el primer fotograma fijo.
+    if (reduceMotion) {
+      video.removeAttribute('autoplay');
+      video.pause();
       return;
     }
 
-    gsap.registerPlugin(ScrollTrigger);
-    gsap.set(video, { willChange: 'transform' });
-    ScrollTrigger.create({
-      id: 'featuredVideoScrub',
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => setVideoProgress(self.progress),
-      onRefresh: (self) => setVideoProgress(self.progress)
-    });
+    // Evitamos volver a forzar play en cada resync (p. ej. tras un resize),
+    // para no reiniciar el vídeo si ya está reproduciéndose o ya terminó.
+    if (featuredVideoInitialized) return;
+    featuredVideoInitialized = true;
 
-    if (video.readyState < 1) {
-      video.addEventListener('loadedmetadata', () => {
-        const st = ScrollTrigger.getById('featuredVideoScrub');
-        if (st) {
-          setVideoProgress(st.progress);
-          ScrollTrigger.refresh();
-        }
-      }, { once: true });
+    const tryPlay = () => {
+      const p = video.play();
+      if (p && typeof p.catch === 'function') {
+        // Si el navegador bloquea el autoplay, dejamos el primer fotograma.
+        p.catch(() => {});
+      }
+    };
+
+    if (video.readyState >= 2) {
+      tryPlay();
+    } else {
+      video.addEventListener('loadeddata', tryPlay, { once: true });
     }
   }
 
@@ -2332,7 +2285,7 @@
        los inline styles de altura y justifyContent que fitHeroV2Lines aplica. */
     fitHeroV2Lines();
     fitContactLines();
-    initFeaturedVideoScrub();
+    initFeaturedVideo();
     initQsPinCards();
     initPricingPinCards();
     initPricingMobileCards();
@@ -2696,18 +2649,11 @@
       if (heroRect.bottom > 0 && heroProgress >= HERO_TEXT_FADE_START_PROGRESS) return true;
     }
 
+    // Vídeo de apertura (negro): cabecera en blanco mientras cubra el header.
     const videoSection = document.querySelector('.scroll-video-section');
     if (videoSection) {
       const videoRect = videoSection.getBoundingClientRect();
-      const videoTravel = Math.max(1, videoSection.offsetHeight - window.innerHeight);
-      const videoProgress = clampProgress(-videoRect.top / videoTravel);
-      if (
-        videoRect.top <= 0 &&
-        videoRect.bottom > 0 &&
-        videoProgress <= VIDEO_HEADER_DARK_PROGRESS
-      ) {
-        return true;
-      }
+      if (videoRect.top <= 0 && videoRect.bottom > 80) return true;
     }
 
     return false;
