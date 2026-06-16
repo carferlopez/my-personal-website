@@ -367,7 +367,12 @@
     font-weight: 400;
   }
   .site-header .logo .logo-dot {
-    color: var(--accent);
+    /* !important porque .site-header--over-dark fuerza -webkit-text-fill-color:
+       #FFFFFF en .logo (ancestro), y esa propiedad se hereda con prioridad de
+       pintado sobre "color" en motores WebKit/Blink. Sin esto el punto se ve
+       blanco en vez de rojo mientras el header está en modo "sobre fondo oscuro". */
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
     transition: color 0.15s ease;
   }
   .site-header .logo:hover {
@@ -379,6 +384,7 @@
   }
   .site-header .logo:hover .logo-dot {
     color: #FFFFFF !important;
+    -webkit-text-fill-color: #FFFFFF !important;
   }
   /* Scrolled: hover en carbón (fondo blanco) */
   .site-header.scrolled .logo:hover .logo-carlos,
@@ -387,6 +393,7 @@
   }
   .site-header.scrolled .logo:hover .logo-dot {
     color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
   }
 
   /* ==================== HERO V2 (carlos-site-V2) ==================== */
@@ -574,6 +581,7 @@
   }
   .logo .logo-dot {
     color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
   }
 
   .header-top nav {
