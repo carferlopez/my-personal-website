@@ -1305,6 +1305,14 @@
       font-size: clamp(3.4rem, 5.35vw, 5.35rem);
       white-space: nowrap;
     }
+    /* Mismo tamaño que "DOS NIVELES..." (clamp ligado al viewport, no al
+       contenedor, así ambos coinciden siempre). A diferencia de pricingHeadline,
+       este titular vive en la columna estrecha junto a las fotos, así que NO
+       forzamos nowrap: a este tamaño necesita partirse en 2 líneas para no
+       desbordar (ver intento revertido en 89f9ecf, que sí forzaba nowrap aquí). */
+    .services-headline:has(#servicesHeadline) {
+      font-size: clamp(3.4rem, 5.35vw, 5.35rem);
+    }
   }
   .services-lead {
     max-width: 48ch;
