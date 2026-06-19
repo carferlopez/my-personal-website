@@ -1359,10 +1359,9 @@
       perspective: 1200px;
       perspective-origin: 50% 45%;
     }
-    .qs-card {
+    .qs-card-link {
       position: absolute;
       aspect-ratio: 4/3;
-      object-fit: cover;
       border-radius: 8px;
       box-shadow: 0 24px 60px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12);
       background: var(--ink);
@@ -1371,16 +1370,28 @@
       transform-origin: center center;
       will-change: transform, opacity;
       display: block;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .qs-card-link .qs-card {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.3s ease;
+    }
+    .qs-card-link:hover .qs-card {
+      transform: scale(1.05);
     }
     /* Óvalo irregular: mantiene las tarjetas dentro de la columna visual derecha,
        sin convertirlas en una retícula ni acercarlas al texto. */
-    .qs-pin__stage .qs-card:nth-child(1) { left: 12%; top:  6%; width: 38%; }
-    .qs-pin__stage .qs-card:nth-child(2) { left: 54%; top: 16%; width: 36%; }
-    .qs-pin__stage .qs-card:nth-child(3) { left:  8%; top: 50%; width: 38%; }
-    .qs-pin__stage .qs-card:nth-child(4) { left: 50%; top: 62%; width: 38%; }
+    .qs-pin__stage .qs-card-link:nth-child(1) { left: 12%; top:  6%; width: 38%; }
+    .qs-pin__stage .qs-card-link:nth-child(2) { left: 54%; top: 16%; width: 36%; }
+    .qs-pin__stage .qs-card-link:nth-child(3) { left:  8%; top: 50%; width: 38%; }
+    .qs-pin__stage .qs-card-link:nth-child(4) { left: 50%; top: 62%; width: 38%; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .qs-card { opacity: 1 !important; transform: none !important; }
+    .qs-card-link { opacity: 1 !important; transform: none !important; }
   }
 
   #servicesLead,
@@ -1500,7 +1511,7 @@
   .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; padding-top: 1.25rem; }
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
-  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.6rem 0 0; line-height: 1.4; }
+  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.8rem 0 0.8rem; line-height: 1.4; }
   
   /* Botón de Conversión (CTA): Rojo puro de alto impacto ocupando todo el ancho */
   .price-card__cta {
@@ -1612,6 +1623,7 @@
     }
     .pricing-grid .price-card__note {
       margin-top: 0.75rem;
+      margin-bottom: 0.75rem;
     }
   }
   .services-kit {
@@ -1751,11 +1763,19 @@
             <p class="big-heading services-headline"><span id="servicesHeadline">CREATIVIDAD <span class="accent">+</span> NEGOCIO <span class="accent">+</span> TECNOLOGÍA</span></p>
             <p class="services-lead" id="servicesLead">Me crié jugando a videojuegos, estudié cine y trabajé en marketing y publicidad para marcas como Kia, Signify y Starbucks. Hoy junto todo mi bagaje y experiencia y trabajo en la intersección de diseño, tecnología y negocio: convierto ideas en productos y experiencias que se recuerdan.</p>
           </div>
-          <div class="qs-pin__stage" aria-hidden="true">
-            <img class="qs-card" src="assets/projects/project-01.jpg" alt="" loading="lazy">
-            <img class="qs-card" src="assets/projects/project-02.jpg" alt="" loading="lazy">
-            <img class="qs-card" src="assets/projects/project-03.jpg" alt="" loading="lazy">
-            <img class="qs-card" src="assets/projects/project-04.jpg" alt="" loading="lazy">
+          <div class="qs-pin__stage">
+            <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+              <img class="qs-card" src="assets/projects/project-01.jpg?v=2" alt="Brasa 17" loading="lazy">
+            </a>
+            <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+              <img class="qs-card" src="assets/projects/project-02.jpg?v=2" alt="Lurex Real Estate" loading="lazy">
+            </a>
+            <a href="https://batman-arkham-asylum.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+              <img class="qs-card" src="assets/projects/project-03.jpg?v=2" alt="Batman Arkham Asylum" loading="lazy">
+            </a>
+            <a href="https://lua-premium-cosmetics.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+              <img class="qs-card" src="assets/projects/project-04.jpg?v=2" alt="Lua Premium Cosmetics" loading="lazy">
+            </a>
           </div>
         </div>
       </div>
@@ -1782,8 +1802,8 @@
             <li>Una ronda de revisiones incluida, tras primera versión entregada.</li>
             <li>Entrega en 7-10 días desde que demos luz verde al proyecto.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
           <p class="price-card__note" id="price1Note">*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.</p>
+          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
         </article>
         <article class="price-card">
           <h3 class="price-card__name" id="price2Name">WEBXPERIENCE</h3>
@@ -1796,8 +1816,8 @@
             <li>Pensada para marcas y lanzamientos donde la atmósfera es el producto.</li>
             <li>Cada proyecto es único. Presupuesto y plazo a medida.</li>
           </ul>
-          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
           <p class="price-card__note" id="price2Note">*Plazas muy limitadas. Selecciono pocos proyectos al año.</p>
+          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
         </article>
       </div>
       </div>
@@ -2235,7 +2255,7 @@
       const st = ScrollTrigger.getById('qsPinCards');
       if (st) st.kill();
     }
-    const cards = document.querySelectorAll('.qs-card');
+    const cards = document.querySelectorAll('.qs-card-link');
     if (typeof gsap !== 'undefined' && cards.length) {
       gsap.killTweensOf(cards);
       // Solo limpiamos lo que GSAP escribe; left/top/width/--rot viven en CSS.
@@ -2250,7 +2270,7 @@
     // Solo desktop con espacio suficiente
     if (!window.matchMedia('(min-width: 900px)').matches) return;
     const wrapper = document.querySelector('.qs-pin-wrapper');
-    const cards = document.querySelectorAll('.qs-card');
+    const cards = document.querySelectorAll('.qs-card-link');
     if (!wrapper || !cards.length) return;
 
     gsap.registerPlugin(ScrollTrigger);
