@@ -1735,12 +1735,11 @@
   </section>
 
   <!-- Hero tipo carlos-site-V2 -->
-  <section class="hero-v2-section" id="presentacion" aria-label="I design like art. I build like software. I run like product.">
+  <section class="hero-v2-section" id="presentacion" aria-label="La potencia de un estudio. La agilidad de una persona.">
     <div class="hero-v2-sticky">
       <h1 class="hero-v2-title" id="heroV2Title">
-        <span class="hero-v2-line">I DESIGN LIKE ART<span class="hero-v2-dot">.</span></span>
-        <span class="hero-v2-line">I BUILD LIKE SOFTWARE<span class="hero-v2-dot">.</span></span>
-        <span class="hero-v2-line">I RUN LIKE PRODUCT<span class="hero-v2-dot">.</span></span>
+        <span class="hero-v2-line">LA POTENCIA DE UN <span class="hero-v2-dot">ESTUDIO</span><span class="hero-v2-dot">.</span></span>
+        <span class="hero-v2-line">LA AGILIDAD DE UNA <span class="hero-v2-dot">PERSONA</span><span class="hero-v2-dot">.</span></span>
       </h1>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
@@ -2417,6 +2416,7 @@
        los inline styles de altura y justifyContent que fitHeroV2Lines aplica. */
     fitHeroV2Lines();
     fitContactLines();
+    fitServicesHeadline();
     initFeaturedVideo();
     initFeaturedVideoToBlack();
     initQsPinCards();
@@ -2727,6 +2727,24 @@
     }
     const best = Math.floor(lo) - 1;
     lines.forEach((line) => { line.style.fontSize = best + 'px'; });
+  }
+
+  function fitServicesHeadline() {
+    const headline = document.getElementById('servicesHeadline');
+    if (!headline) return;
+    const container = headline.closest('.big-heading');
+    if (!container) return;
+    if (window.innerWidth >= 640) { container.style.fontSize = ''; return; }
+    const availableWidth = container.clientWidth;
+    if (availableWidth < 16) return;
+    const probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;top:-9999px;left:-9999px;visibility:hidden;white-space:nowrap;font-weight:900;text-transform:uppercase;letter-spacing:0;font-family:inherit;font-size:100px;';
+    probe.textContent = 'CREATIVIDAD +';
+    document.body.appendChild(probe);
+    const refWidth = probe.offsetWidth;
+    document.body.removeChild(probe);
+    if (refWidth <= 0) return;
+    container.style.fontSize = Math.floor(availableWidth / refWidth * 100) + 'px';
   }
 
   function fitContactLines() {
