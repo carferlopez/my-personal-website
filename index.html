@@ -1432,11 +1432,58 @@
   }
   .pricing-pin-wrapper { position: relative; }
   .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
-  .price-card { border: 3px solid var(--hairline); border-radius: 14px; padding: 1.9rem 1.6rem; display: flex; flex-direction: column; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
-  .price-card:not(.price-card--featured):hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-  .price-card--featured { background: var(--ink); color: var(--paper); border-color: var(--ink); position: relative; transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease; }
-  .price-card--featured:hover { background: var(--accent); color: #FFFFFF; border-color: var(--accent); }
-  .price-card--featured:hover .price-card__name { color: #FFFFFF; }
+  .price-card {
+    border: 3px solid var(--hairline);
+    border-radius: 14px;
+    padding: 1.9rem 1.6rem;
+    display: flex;
+    flex-direction: column;
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  
+  /* Tarjeta 2 (WebExperience): Fondo claro puro, texto oscuro, borde fino definido */
+  .price-card:not(.price-card--featured) {
+    background: #FFFFFF;
+    color: var(--ink);
+    border-color: var(--hairline);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  }
+  .price-card:not(.price-card--featured):hover {
+    border-color: var(--accent);
+  }
+  .price-card:not(.price-card--featured) .price-card__name {
+    color: var(--ink-2);
+  }
+  .price-card:not(.price-card--featured) .price-card__tagline {
+    color: #71717A;
+  }
+  .price-card:not(.price-card--featured) .price-card__list {
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  /* Tarjeta 1 (Web de Autor): Fondo oscuro sólido, texto claro, bordes sutiles */
+  .price-card--featured {
+    background: #0A0A0A;
+    color: var(--paper);
+    border-color: #262626;
+    position: relative;
+  }
+  .price-card--featured:hover {
+    border-color: var(--accent);
+  }
+  .price-card--featured .price-card__name {
+    color: var(--ink-3);
+  }
+  .price-card--featured:hover .price-card__name {
+    color: #FFFFFF;
+  }
+  .price-card--featured .price-card__tagline {
+    color: #A1A1A5;
+  }
+  .price-card--featured .price-card__list {
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
   .price-card__badge {
     position: absolute; top: -0.95rem; left: 1.6rem;
     background: var(--paper); color: var(--ink);
@@ -1445,25 +1492,32 @@
     padding: 0.28rem 0.6rem; border: 2px solid var(--ink);
   }
   .price-card__name {
-    color: var(--ink-3);
     font-family: var(--font-mono);
     font-weight: 700; text-transform: uppercase;
     font-size: 0.85rem; margin: 0 0 1rem; letter-spacing: 0.04em;
   }
   .price-card__price { font-weight: 900; font-size: 1.45rem; line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 0.2rem; }
   .price-card__price span { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 400; letter-spacing: 0; opacity: 0.7; }
-  .price-card__tagline { font-size: 0.9rem; opacity: 0.6; margin: 0.35rem 0 0; line-height: 1.4; font-style: italic; }
-  .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; border-top: 1px solid currentColor; padding-top: 1.25rem; }
+  .price-card__tagline { font-size: 0.9rem; margin: 0.35rem 0 0; line-height: 1.4; font-style: italic; }
+  .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; flex-grow: 1; padding-top: 1.25rem; }
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
   .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.6rem 0 0; line-height: 1.4; }
-  .price-card__cta { align-self: stretch; text-align: center; }
-  .price-card .price-card__cta { color: var(--paper); background: var(--accent); border: 3px solid var(--accent); }
-  .price-card .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
-  .price-card--featured .price-card__cta { color: var(--paper); background: var(--accent); border-color: var(--accent); }
-  .price-card--featured .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
-  .price-card--featured:hover .price-card__cta { background: var(--ink); color: #FFFFFF; border-color: var(--ink); }
-  .price-card--featured:hover .price-card__cta:hover { background: #FFFFFF; color: var(--ink); border-color: #FFFFFF; }
+  
+  /* Botón de Conversión (CTA): Rojo puro de alto impacto ocupando todo el ancho */
+  .price-card__cta {
+    align-self: stretch;
+    text-align: center;
+    color: #FFFFFF !important;
+    background: var(--accent) !important;
+    border: 3px solid var(--accent) !important;
+    font-weight: 900;
+  }
+  .price-card__cta:hover {
+    background: #CC0000 !important;
+    border-color: #CC0000 !important;
+    color: #FFFFFF !important;
+  }
   @media (min-width: 900px) {
     .pricing-pin-wrapper {
       min-height: 92svh;
@@ -1878,29 +1932,29 @@
       servicesLead: "Me crié jugando a videojuegos, estudié cine y trabajé en marketing y publicidad para marcas como Kia, Signify y Starbucks. Hoy junto todo mi bagaje y experiencia y trabajo en la intersección de diseño, tecnología y negocio: convierto ideas en productos y experiencias que se recuerdan.",
       pricingHeadline: "DOS NIVELES<span class=\"accent\">.</span> EL MISMO CUIDADO<span class=\"accent\">.</span>",
       pricingIntro: "Desde una web con criterio, resuelta en días, hasta una experiencia inmersiva ambientada en tu propio universo. Eliges según lo que tu proyecto necesita — y en los dos casos, el mismo ojo detrás.",
-      priceNote: "*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.",
+      priceNote: "*Arrancamos con un 50% por adelantado. Los textos y contenidos corren por tu cuenta, o se cotizan como extra.",
       price1Name: "WEB DE AUTOR",
       price1Tagline: "Tu web, resuelta. Precio fijo, scope fijo, sin reuniones.",
       price1Price: "1.500 €",
       price1List: [
-        "Una página web completa diseñada a medida, con una estética distintiva para tu negocio también a medida: ¿quieres una estética cinematográfica? ¿retro? Hablemos sobre lo que tienes en mente y le damos forma.",
+        "Una página web completa con una estructura rotunda y una estética distintiva, adaptada por completo a la identidad de tu negocio. Olvídate de plantillas genéricas; le damos forma a tu criterio.",
         "Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.",
         "Formulario de contacto y analítica web listos desde el primer día.",
         "Una ronda de revisiones incluida, tras primera versión entregada.",
         "Entrega en 7-10 días desde que demos luz verde al proyecto."
       ],
-      price1Cta: "Quiero mi web",
-      price2Name: "WEBXPERIENCE",
+      price1Cta: "Quiero Mi Web",
+      price2Name: "WEBEXPERIENCE",
       price2Tagline: "No una web. Un universo en el que entrar.",
       price2Price: "desde 6.000 € <span>· a medida</span>",
       price2List: [
-        "Una experiencia inmersiva ambientada en un universo propio, diseñada de cero como una pieza de cine interactivo.",
+        "Un despliegue inmersivo ambientado en tu propio universo visual, construido desde cero como una obra de arte interactiva.",
         "Producción creativa completa: dirección de arte, vídeo, imagen, 3D, animación y sonido.",
         "Navegación intuitiva y cinematográfica — el efecto wow sin que el usuario tenga que aprender nada.",
         "Pensada para marcas y lanzamientos donde la atmósfera es el producto.",
         "Cada proyecto es único. Presupuesto y plazo a medida."
       ],
-      price2Cta: "Cuéntame tu universo",
+      price2Cta: "Cuéntame Tu Universo",
       price2Note: "*Plazas muy limitadas. Selecciono pocos proyectos al año.",
       pricingOpenDoor: "¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — escríbeme y lo montamos.",
       secHeadServices: "QUIÉN SOY",
@@ -1941,29 +1995,29 @@
       servicesLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for brands like Kia, Signify and Starbucks. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
       pricingHeadline: "TWO LEVELS<span class=\"accent\">.</span> THE SAME EYE<span class=\"accent\">.</span>",
       pricingIntro: "From a website with judgment, shipped in days, to an immersive experience set in your own universe. You choose what your project needs — and either way, the same eye behind it.",
-      priceNote: "*We start with 50% upfront. You provide the copy, or add it as an extra.",
+      priceNote: "*We start with 50% upfront. You provide the copy and content, or it is quoted as an extra.",
       price1Name: "WEB DE AUTOR",
       price1Tagline: "Your website, sorted. Fixed price, fixed scope, no meetings.",
-      price1Price: "€1,500",
+      price1Price: "1,500 €",
       price1List: [
-        "A complete custom-designed web page with a distinctive aesthetic tailored to your business: want a cinematic look? retro? Let's talk about what you have in mind and we'll shape it.",
+        "A complete website with a solid structure and a distinctive aesthetic, fully adapted to your business identity. Forget generic templates; we shape it to your standards.",
         "Up to 6 sections, genuinely responsive, with animations and interactions dialed in.",
         "Contact form and web analytics ready from day one.",
         "One round of revisions included, after the first version is delivered.",
         "Delivered in 7-10 days from the moment we give the green light."
       ],
-      price1Cta: "I want my site",
-      price2Name: "WEBXPERIENCE",
+      price1Cta: "I Want My Web",
+      price2Name: "WEBEXPERIENCE",
       price2Tagline: "Not a website. A universe you step into.",
-      price2Price: "from €6,000 <span>· custom</span>",
+      price2Price: "from 6,000 € <span>· custom</span>",
       price2List: [
-        "An immersive experience set in its own universe, designed from scratch like a piece of interactive cinema.",
+        "An immersive deployment set in your own visual universe, built from scratch as an interactive piece of art.",
         "Full creative production: art direction, video, imagery, 3D, animation and sound.",
         "Intuitive, cinematic navigation — the wow without the user having to learn anything.",
         "Built for brands and launches where atmosphere is the product.",
         "Every project is unique. Custom budget and timeline."
       ],
-      price2Cta: "Tell me your universe",
+      price2Cta: "Tell Me Your Universe",
       price2Note: "*Very limited slots. I take on few projects a year.",
       pricingOpenDoor: "Your project doesn't fit a box? Product, creative direction, custom collaboration — write to me and we'll build it.",
       secHeadServices: "WHO I AM",
