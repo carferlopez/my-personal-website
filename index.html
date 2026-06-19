@@ -1350,45 +1350,42 @@
     }
     .qs-pin__text { max-width: 100%; }
     .qs-pin__stage {
-      display: block;
-      position: relative;
-      height: 80svh;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
       width: 100%;
       max-width: 740px;
       justify-self: end;
-      perspective: 1200px;
-      perspective-origin: 50% 45%;
+      align-content: center;
     }
     .qs-card-link {
-      position: absolute;
+      position: relative;
       aspect-ratio: 16/9;
       border-radius: 8px;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.22), 0 4px 12px rgba(0,0,0,0.12);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
       background: var(--ink);
       opacity: 0;
-      transform: translateZ(-800px) scale(0.05);
-      transform-origin: center center;
+      transform: translateY(40px);
       will-change: transform, opacity;
       display: block;
       overflow: hidden;
       cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .qs-card-link:hover {
+      transform: translateY(-4px) !important;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.12);
     }
     .qs-card-link .qs-card {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
-      transition: transform 0.3s ease;
+      transition: transform 0.4s ease;
     }
     .qs-card-link:hover .qs-card {
       transform: scale(1.05);
     }
-    /* Óvalo irregular: mantiene las tarjetas dentro de la columna visual derecha,
-       sin convertirlas en una retícula ni acercarlas al texto. */
-    .qs-pin__stage .qs-card-link:nth-child(1) { left: 12%; top:  6%; width: 38%; }
-    .qs-pin__stage .qs-card-link:nth-child(2) { left: 54%; top: 16%; width: 36%; }
-    .qs-pin__stage .qs-card-link:nth-child(3) { left:  8%; top: 50%; width: 38%; }
-    .qs-pin__stage .qs-card-link:nth-child(4) { left: 50%; top: 62%; width: 38%; }
   }
   @media (prefers-reduced-motion: reduce) {
     .qs-card-link { opacity: 1 !important; transform: none !important; }
@@ -1766,16 +1763,16 @@
           </div>
           <div class="qs-pin__stage">
             <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/project-01.jpg?v=2" alt="Brasa 17" loading="lazy">
+              <video class="qs-card" src="assets/projects/project-01.mp4" autoplay loop muted playsinline></video>
             </a>
             <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/project-02.jpg?v=2" alt="Lurex Real Estate" loading="lazy">
+              <video class="qs-card" src="assets/projects/project-02.mp4" autoplay loop muted playsinline></video>
             </a>
             <a href="https://batman-arkham-asylum.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/project-03.jpg?v=2" alt="Batman Arkham Asylum" loading="lazy">
+              <video class="qs-card" src="assets/projects/project-03.mp4" autoplay loop muted playsinline></video>
             </a>
             <a href="https://lua-premium-cosmetics.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/project-04.jpg?v=2" alt="Lua Premium Cosmetics" loading="lazy">
+              <video class="qs-card" src="assets/projects/project-04.mp4" autoplay loop muted playsinline></video>
             </a>
           </div>
         </div>
@@ -2258,8 +2255,7 @@
     const cards = document.querySelectorAll('.qs-card-link');
     if (typeof gsap !== 'undefined' && cards.length) {
       gsap.killTweensOf(cards);
-      // Solo limpiamos lo que GSAP escribe; left/top/width/--rot viven en CSS.
-      gsap.set(cards, { clearProps: 'transform,opacity,rotation,scale,translate,x,y,z,willChange' });
+      gsap.set(cards, { clearProps: 'all' });
     }
   }
 
@@ -2275,34 +2271,22 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
-    // Estado inicial: muy lejos (scale mínima) y transparentes
-    gsap.set(cards, { opacity: 0, scale: 0.05, force3D: true });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        id: 'qsPinCards',
-        trigger: wrapper,
-        start: 'top top',
-        end: () => '+=' + Math.round(window.innerHeight * 1.3),
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        scrub: 0.6,
-        invalidateOnRefresh: true
+    ScrollTrigger.create({
+      id: 'qsPinCards',
+      trigger: wrapper,
+      start: 'top 75%',
+      once: true,
+      onEnter: () => {
+        gsap.to(cards, {
+          y: 0,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.15,
+          clearProps: 'transform,opacity'
+        });
       }
     });
-
-    // Cada tarjeta crece desde "muy lejos" hasta su posición real, con stagger
-    cards.forEach((card, i) => {
-      tl.fromTo(card,
-        { opacity: 0, scale: 0.05 },
-        { opacity: 1, scale: 1, ease: 'power2.out', duration: 0.55 },
-        i * 0.18
-      );
-    });
-
-    // Pequeño margen al final para que las 6 queden visibles antes de despinear
-    tl.to({}, { duration: 0.4 });
   }
 
   // ============================================
