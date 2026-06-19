@@ -1391,6 +1391,28 @@
     .qs-card-link { opacity: 1 !important; transform: none !important; }
   }
 
+  .qs-stage-cta { display: none; }
+  @media (min-width: 900px) {
+    .qs-stage-cta {
+      grid-column: 1 / -1;
+      margin-top: 0.25rem;
+      font-size: 0.78rem;
+      font-weight: 500;
+      line-height: 1.45;
+      color: var(--ink-2);
+    }
+    .qs-stage-cta a {
+      color: var(--ink);
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+    .qs-stage-cta a:hover {
+      color: var(--accent);
+      -webkit-text-fill-color: var(--accent);
+    }
+  }
+
   #servicesLead,
   #pricingIntro,
   #contactSub {
@@ -1773,6 +1795,7 @@
             <a href="https://lua-premium-cosmetics.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
               <img class="qs-card" src="assets/projects/project-04-static.jpg" alt="Lua Premium Cosmetics" loading="lazy">
             </a>
+            <p class="qs-stage-cta">¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — <a href="#contacto">escríbeme</a> y lo montamos.</p>
           </div>
         </div>
       </div>
