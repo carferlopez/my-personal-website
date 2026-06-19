@@ -1511,11 +1511,12 @@
   .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; padding-top: 1.25rem; }
   .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
   .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
-  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: auto 0 0.8rem; line-height: 1.4; }
+  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.8rem 0 0.8rem; line-height: 1.4; }
   
   /* Botón de Conversión (CTA): Rojo puro de alto impacto ocupando todo el ancho */
   .price-card__cta {
     align-self: stretch;
+    margin-top: auto;
     text-align: center;
     color: #FFFFFF !important;
     background: var(--accent) !important;
@@ -1802,7 +1803,7 @@
             <li>Una ronda de revisiones incluida, tras primera versión entregada.</li>
             <li>Entrega en 7-10 días desde que demos luz verde al proyecto.</li>
           </ul>
-          <p class="price-card__note" id="price1Note">*Arrancamos con un 50% por adelantado. Los textos los pones tú, o los sumas como extra.</p>
+          <p class="price-card__note" id="price1Note">*Comenzamos con un 50% por adelantado.</p>
           <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
         </article>
         <article class="price-card">
@@ -1816,7 +1817,6 @@
             <li>Pensada para marcas y lanzamientos donde la atmósfera es el producto.</li>
             <li>Cada proyecto es único. Presupuesto y plazo a medida.</li>
           </ul>
-          <p class="price-card__note" id="price2Note">*Plazas muy limitadas. Selecciono pocos proyectos al año.</p>
           <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
         </article>
       </div>
