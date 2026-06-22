@@ -1391,6 +1391,30 @@
     .qs-card-link { opacity: 1 !important; transform: none !important; }
   }
 
+  /* Live iframe previews */
+  .qs-iframe-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: inherit;
+  }
+  .qs-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1280px;
+    height: 900px;
+    border: none;
+    transform-origin: top left;
+    transform: scale(var(--qs-iframe-scale, 0.27));
+    pointer-events: none;
+    display: block;
+  }
+  @media (min-width: 900px) {
+    /* Third card spans both columns */
+    .qs-card-link--wide { grid-column: 1 / -1; }
+  }
+
   .qs-stage-cta { display: none; }
   @media (min-width: 900px) {
     .qs-stage-cta {
@@ -1760,8 +1784,8 @@
   <section class="hero-v2-section" id="presentacion" aria-label="Where web meets cinema & video games.">
     <div class="hero-v2-sticky">
       <h1 class="hero-v2-title" id="heroV2Title">
-        <span class="hero-v2-line">WHERE WEB MEETS</span>
-        <span class="hero-v2-line">CINEMA <span class="hero-v2-dot">&amp;</span> VIDEO GAMES<span class="hero-v2-dot">.</span></span>
+        <span class="hero-v2-line">WHERE <span class="hero-v2-dot">WEB</span> MEETS</span>
+        <span class="hero-v2-line"><span class="hero-v2-dot">CINEMA</span> &amp; <span class="hero-v2-dot">VIDEO GAMES</span>.</span>
       </h1>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
@@ -1784,16 +1808,19 @@
           </div>
           <div class="qs-pin__stage">
             <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
+              <div class="qs-iframe-wrap">
+                <iframe src="https://brasa-17.vercel.app/" class="qs-iframe" title="Brasa 17" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+              </div>
             </a>
             <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/lurex-real-estate.webp" alt="Lurex Real Estate" loading="lazy">
+              <div class="qs-iframe-wrap">
+                <iframe src="https://lurex-real-estate.vercel.app/" class="qs-iframe" title="Lurex Real Estate" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+              </div>
             </a>
-            <a href="https://batman-arkham-asylum.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/batman-arkham-asylum.webp" alt="Batman Arkham Asylum" loading="lazy">
-            </a>
-            <a href="https://lua-premium-cosmetics.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/lua-premium-cosmetics.webp" alt="Lua Premium Cosmetics" loading="lazy">
+            <a href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link qs-card-link--wide">
+              <div class="qs-iframe-wrap">
+                <iframe src="https://be-the-bat.vercel.app/" class="qs-iframe" title="Be The Bat" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
+              </div>
             </a>
             <p class="qs-stage-cta">¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — <a href="#contacto">escríbeme</a> y lo montamos.</p>
           </div>
@@ -2281,6 +2308,18 @@
     }
   }
 
+  function initQsIframes() {
+    const cards = document.querySelectorAll('.qs-card-link');
+    if (!cards.length || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(entries => {
+      for (const entry of entries) {
+        const w = entry.contentRect.width;
+        if (w > 0) entry.target.style.setProperty('--qs-iframe-scale', (w / 1280).toFixed(4));
+      }
+    });
+    cards.forEach(c => ro.observe(c));
+  }
+
   function initQsPinCards() {
     killQsPinCards();
     if (reduceMotion) return;
@@ -2442,6 +2481,7 @@
     fitServicesHeadline();
     initFeaturedVideo();
     initFeaturedVideoToBlack();
+    initQsIframes();
     initQsPinCards();
     initPricingPinCards();
     initPricingMobileCards();
