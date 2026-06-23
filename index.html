@@ -2729,13 +2729,15 @@
       return;
     }
 
+    // Igual que en desktop, el titular ("Web meets cinema") se revela cuando el
+    // vídeo queda parado. Como aquí no hay scroll, ese momento es el final del
+    // vídeo (evento 'ended' → se pausa solo). NO lo mostramos en un temporizador
+    // fijo: debe esperar a que el vídeo termine/se pause de verdad.
     video.addEventListener('ended', markEnded, { once: true });
 
-    // En móvil/estático el titular debe aparecer PRONTO, sin esperar a que el
-    // vídeo (≈7s) termine: si sigue parado a 1.2s (autoplay bloqueado) o como
-    // tope a 2.8s, mostramos el titular sí o sí. markEnded es idempotente.
+    // Único fallback: si a 1.2s el vídeo sigue parado (autoplay bloqueado por el
+    // navegador), no llegará a reproducirse nunca → mostramos el titular igual.
     setTimeout(() => { if (video.paused) markEnded(); }, 1200);
-    setTimeout(markEnded, 2800);
 
     // Evitamos volver a forzar play en cada resync (p. ej. tras un resize).
     if (featuredVideoInitialized) return;
@@ -3491,13 +3493,21 @@
     /* Permite saltos de línea entre palabras completas — nunca a mitad de palabra. */
     lines.forEach((line) => { line.style.whiteSpace = 'normal'; });
 
-    /* Crece la fuente hasta que el bloque de texto llena el alto disponible.
-       Con white-space: normal el navegador rompe por palabras automáticamente. */
+    /* Ancho disponible: el titular nunca debe desbordar por los lados (móvil). */
+    const W = sticky.clientWidth
+      - parseFloat(cs.paddingLeft)
+      - parseFloat(cs.paddingRight);
+
+    /* Crece la fuente hasta que el bloque de texto llena el alto disponible,
+       sin que ninguna palabra se salga por el ancho. Con white-space: normal el
+       navegador rompe por palabras automáticamente. */
     let lo = 4, hi = 800;
     for (let iter = 0; iter < 16; iter++) {
       const mid = (lo + hi) * 0.5;
       lines.forEach((line) => { line.style.fontSize = mid + 'px'; });
-      if (title.scrollHeight <= H + 1) lo = mid;
+      const fitsH = title.scrollHeight <= H + 1;
+      const fitsW = title.scrollWidth <= W + 1;
+      if (fitsH && fitsW) lo = mid;
       else hi = mid;
     }
     const best = Math.floor(lo) - 1;
