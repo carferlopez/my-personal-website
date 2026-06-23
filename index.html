@@ -1854,6 +1854,13 @@
     object-position: center 25%;
     display: block;
   }
+  /* Contenido VERTICAL: se ancla arriba (center top) para no cortar caras ni
+     cabeceras en el peor sitio. Lo marca initServicesMedia según la orientación
+     real del archivo (img.naturalWidth/Height · video.videoWidth/Height). */
+  .svc-card__media img.is-portrait,
+  .svc-card__media video.is-portrait {
+    object-position: center top;
+  }
 
   /* Cuerpo */
   .svc-card__body {
@@ -2967,6 +2974,20 @@
 
   function initServicesMedia() {
     killServicesMedia();
+
+    // --- Orientación automática: el contenido vertical se ancla arriba
+    //     (.is-portrait → object-position: center top) para no cortar caras ni
+    //     cabeceras; el horizontal mantiene center 25%. Se re-evalúa por cada
+    //     clip de la playlist al cargar sus metadatos. ---
+    const markPortrait = (el, w, h) => { if (w && h) el.classList.toggle('is-portrait', h > w); };
+    document.querySelectorAll('.svc-card__media img').forEach((img) => {
+      if (img.complete && img.naturalWidth) markPortrait(img, img.naturalWidth, img.naturalHeight);
+      else img.addEventListener('load', () => markPortrait(img, img.naturalWidth, img.naturalHeight), { once: true });
+    });
+    document.querySelectorAll('.svc-card__media video').forEach((vid) => {
+      vid.addEventListener('loadedmetadata', () => markPortrait(vid, vid.videoWidth, vid.videoHeight));
+    });
+
     if (reduceMotion) return;
 
     // --- Vídeos (#svcCard2, #svcCard3, #svcCard4): bucle infinito, mudos y sin
