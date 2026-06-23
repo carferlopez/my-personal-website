@@ -1856,9 +1856,13 @@
     font-weight: 800;
     line-height: 1.12;
     letter-spacing: -0.02em;
+    color: #FFFFFF;
+    -webkit-text-fill-color: #FFFFFF;
+    margin: 0 0 1.1rem;
+  }
+  .svc-card__concept .svc-dot {
     color: var(--accent);
     -webkit-text-fill-color: var(--accent);
-    margin: 0 0 1.1rem;
   }
   .svc-card--anchor .svc-card__concept {
     font-size: clamp(1.2rem, 3vw, 1.7rem);
@@ -1944,8 +1948,8 @@
     transition: background-color 0.14s, border-color 0.14s, color 0.14s;
   }
   .svc-card__cta:hover {
-    background: rgba(255, 255, 255, 0.07);
-    border-color: rgba(255, 255, 255, 0.42);
+    background: var(--accent);
+    border-color: var(--accent);
     color: #FFFFFF;
   }
   .svc-card__cta:focus-visible {
@@ -2157,7 +2161,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc1Name">SESIÓN IA</h3>
-              <p class="svc-card__concept" id="svc1Concept">Tu marca, vista de nuevo.</p>
+              <p class="svc-card__concept" id="svc1Concept">Tu marca, vista de nuevo<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
                 <dd id="svc1Includes">Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.</dd>
@@ -2190,7 +2194,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc2Name">BRAND FILM</h3>
-              <p class="svc-card__concept" id="svc2Concept">Cine de lo que vendes.</p>
+              <p class="svc-card__concept" id="svc2Concept">Cine de lo que vendes<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel2Inc">Incluye</dt>
                 <dd id="svc2Includes">Imágenes + film de marca corto. Dirección y montaje.</dd>
@@ -2222,7 +2226,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc3Name">WEB DE AUTOR</h3>
-              <p class="svc-card__concept" id="svc3Concept">Una página que parece tuya y de nadie más.</p>
+              <p class="svc-card__concept" id="svc3Concept">Una página que parece tuya y de nadie más<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel3Inc">Incluye</dt>
                 <dd id="svc3Includes">One-page con dirección de arte y narrativa scroll. Responsive.</dd>
@@ -2254,7 +2258,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc4Name">WEBXPERIENCE</h3>
-              <p class="svc-card__concept" id="svc4Concept">No una web. Un mundo en el que entrar.</p>
+              <p class="svc-card__concept" id="svc4Concept">No una web<span class="svc-dot">.</span> Un mundo en el que entrar<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel4Inc">Incluye</dt>
                 <dd id="svc4Includes">Experiencia inmersiva e interactiva con dirección cinematográfica completa.</dd>
@@ -2427,26 +2431,26 @@
       svcLabelIncludes: "Incluye",
       svcLabelFor: "Para",
       svc1Name: "SESIÓN IA",
-      svc1Concept: "Tu marca, vista de nuevo.",
+      svc1Concept: "Tu marca, vista de nuevo<span class=\"svc-dot\">.</span>",
       svc1Includes: "Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.",
       svc1For: "Renovar tu imagen sin volver a producir.",
       svc1Price: "450 €",
       svc1Limit: "Hasta 10 imágenes",
       svc1Cta: "Hablemos",
       svc2Name: "BRAND FILM",
-      svc2Concept: "Cine de lo que vendes.",
+      svc2Concept: "Cine de lo que vendes<span class=\"svc-dot\">.</span>",
       svc2Includes: "Imágenes + film de marca corto. Dirección y montaje.",
       svc2For: "Presencia con movimiento, lista para campaña en días.",
       svc2Price: "1.200 €",
       svc2Cta: "Hablemos",
       svc3Name: "WEB DE AUTOR",
-      svc3Concept: "Una página que parece tuya y de nadie más.",
+      svc3Concept: "Una página que parece tuya y de nadie más<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page con dirección de arte y narrativa scroll. Responsive.",
       svc3For: "Dejar de parecer uno más.",
       svc3Price: "1.500 €",
       svc3Cta: "Hablemos",
       svc4Name: "WEBXPERIENCE",
-      svc4Concept: "No una web. Un mundo en el que entrar.",
+      svc4Concept: "No una web<span class=\"svc-dot\">.</span> Un mundo en el que entrar<span class=\"svc-dot\">.</span>",
       svc4Includes: "Experiencia inmersiva e interactiva con dirección cinematográfica completa.",
       svc4For: "Marcas que quieren algo inolvidable.",
       svc4Price: "Desde 6.000 €",
@@ -2518,26 +2522,26 @@
       svcLabelIncludes: "Includes",
       svcLabelFor: "For",
       svc1Name: "AI SESSION",
-      svc1Concept: "Your brand, seen anew.",
+      svc1Concept: "Your brand, seen anew<span class=\"svc-dot\">.</span>",
       svc1Includes: "Up to 10 new images with art direction drawn from your existing material.",
       svc1For: "Renew your image without going back to production.",
       svc1Price: "450 €",
       svc1Limit: "Up to 10 images",
       svc1Cta: "Let's talk",
       svc2Name: "BRAND FILM",
-      svc2Concept: "Cinema for what you sell.",
+      svc2Concept: "Cinema for what you sell<span class=\"svc-dot\">.</span>",
       svc2Includes: "Stills + a short brand film. Direction and editing included.",
       svc2For: "Presence with movement, ready to campaign in days.",
       svc2Price: "1,200 €",
       svc2Cta: "Let's talk",
       svc3Name: "WEB DE AUTOR",
-      svc3Concept: "A page that looks like yours and no one else's.",
+      svc3Concept: "A page that looks like yours and no one else's<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page with art direction and scroll narrative. Responsive.",
       svc3For: "Stop looking like everyone else.",
       svc3Price: "1,500 €",
       svc3Cta: "Let's talk",
       svc4Name: "WEBXPERIENCE",
-      svc4Concept: "Not a website. A world you step into.",
+      svc4Concept: "Not a website<span class=\"svc-dot\">.</span> A world you step into<span class=\"svc-dot\">.</span>",
       svc4Includes: "Immersive, interactive experience with full cinematic art direction.",
       svc4For: "Brands that want something unforgettable.",
       svc4Price: "From 6,000 €",
@@ -3034,13 +3038,13 @@
       setText('svcLabel' + _i + 'For', d.svcLabelFor);
     }
     // Tarjeta 1: Sesión IA
-    setText('svc1Name', d.svc1Name); setText('svc1Concept', d.svc1Concept); setText('svc1Includes', d.svc1Includes); setText('svc1For', d.svc1For); setText('svc1Price', d.svc1Price); setText('svc1Limit', d.svc1Limit); setText('svc1Cta', d.svc1Cta);
+    setText('svc1Name', d.svc1Name); setHTML('svc1Concept', d.svc1Concept); setText('svc1Includes', d.svc1Includes); setText('svc1For', d.svc1For); setText('svc1Price', d.svc1Price); setText('svc1Limit', d.svc1Limit); setText('svc1Cta', d.svc1Cta);
     // Tarjeta 2: Brand Film
-    setText('svc2Name', d.svc2Name); setText('svc2Concept', d.svc2Concept); setText('svc2Includes', d.svc2Includes); setText('svc2For', d.svc2For); setText('svc2Price', d.svc2Price); setText('svc2Cta', d.svc2Cta);
+    setText('svc2Name', d.svc2Name); setHTML('svc2Concept', d.svc2Concept); setText('svc2Includes', d.svc2Includes); setText('svc2For', d.svc2For); setText('svc2Price', d.svc2Price); setText('svc2Cta', d.svc2Cta);
     // Tarjeta 3: Web de Autor
-    setText('svc3Name', d.svc3Name); setText('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta);
+    setText('svc3Name', d.svc3Name); setHTML('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta);
     // Tarjeta 4: WebXperience
-    setText('svc4Name', d.svc4Name); setText('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta);
+    setText('svc4Name', d.svc4Name); setHTML('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta);
     if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
