@@ -1870,6 +1870,16 @@
   .svc-card__media video.is-portrait {
     object-position: center top;
   }
+  /* Brand Film (#svcCard2): los clips de IA llevan marca de agua (Veo/Gemini)
+     en una esquina inferior. Se reencuadra para sacarla del cuadro. */
+  #svcCard2 .svc-card__video {
+    transform: scale(1.33);          /* horizontal: amplía ~133% y la marca sale del marco */
+    transform-origin: center;
+  }
+  #svcCard2 .svc-card__video.is-portrait {
+    transform: none;                 /* vertical: no amplía... */
+    object-position: center 70%;     /* ...baja el encuadre al tercer cuarto (marca fuera por abajo) */
+  }
 
   /* Cuerpo */
   .svc-card__body {
@@ -1885,7 +1895,7 @@
     text-transform: uppercase;
     font-size: 0.7rem;
     letter-spacing: 0.1em;
-    color: rgba(255, 255, 255, 0.36);
+    color: var(--accent);
     margin: 0 0 0.55rem;
   }
 
@@ -3028,31 +3038,57 @@
         if (!v.dataset.playlist) return;
         const list = v.dataset.playlist.split(',').map((s) => s.trim()).filter(Boolean);
         if (!list.length) return;
-        let last = -1, alive = false;
 
-        const cut = () => {
+        // Doble buffer: un <video> gemelo precarga el siguiente corte y el cambio
+        // es instantáneo. Así nunca reaparece el poster entre clips (bug del
+        // "frame de Lua", que era el poster brand-film-poster.jpg al hacer load()).
+        const buf = v.cloneNode(false);
+        buf.removeAttribute('poster');
+        buf.removeAttribute('data-playlist');
+        buf.removeAttribute('autoplay');
+        v.parentNode.appendChild(buf);
+        [v, buf].forEach((el) => {
+          el.muted = true; el.defaultMuted = true; el.loop = true;
+          el.controls = false; el.playsInline = true; el.setAttribute('playsinline', '');
+        });
+        v.style.opacity = '1';
+        buf.style.opacity = '0';
+
+        let front = v, back = buf, last = -1, alive = false;
+
+        const showNext = () => {
           if (!alive) return;
           let i = Math.floor(Math.random() * list.length);
           if (list.length > 1 && i === last) i = (i + 1) % list.length;  // no repetir clip
           last = i;
-          v.src = list[i];
-          v.load();   // → 'loadedmetadata': salta a punto aleatorio + play + timer
+          back.src = list[i];
+          back.load();
+          const onReady = () => {
+            back.removeEventListener('loadedmetadata', onReady);
+            if (!alive) return;
+            const seg = SEG_MIN + Math.random() * (SEG_MAX - SEG_MIN);
+            if (back.duration && isFinite(back.duration)) {
+              try { back.currentTime = Math.random() * Math.max(0, back.duration - seg); } catch (e) {}
+            }
+            back.classList.toggle('is-portrait', back.videoHeight > back.videoWidth);
+            back.play().then(() => {
+              if (!alive) { back.pause(); return; }
+              back.style.opacity = '1';   // swap instantáneo (sin hueco de poster)
+              front.style.opacity = '0';
+              front.pause();
+              const tmp = front; front = back; back = tmp;
+              if (_svcBrandTimer) clearTimeout(_svcBrandTimer);
+              _svcBrandTimer = setTimeout(showNext, seg * 1000);
+            }).catch(() => {
+              if (alive) { if (_svcBrandTimer) clearTimeout(_svcBrandTimer); _svcBrandTimer = setTimeout(showNext, 200); }
+            });
+          };
+          back.addEventListener('loadedmetadata', onReady, { signal: sig });
         };
-        v.addEventListener('loadedmetadata', () => {
-          if (!alive) return;
-          const seg = SEG_MIN + Math.random() * (SEG_MAX - SEG_MIN);
-          if (v.duration && isFinite(v.duration)) {
-            try { v.currentTime = Math.random() * Math.max(0, v.duration - seg); } catch (e) {}
-          }
-          v.play().catch(() => {});
-          if (_svcBrandTimer) clearTimeout(_svcBrandTimer);
-          _svcBrandTimer = setTimeout(cut, seg * 1000);
-        }, { signal: sig });
-        v.addEventListener('ended', cut, { signal: sig });  // por si el corte alcanza el final
 
         players.set(v, {
-          start: () => { if (!alive) { alive = true; cut(); } else v.play().catch(() => {}); },
-          stop:  () => { alive = false; v.pause(); if (_svcBrandTimer) { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; } },
+          start: () => { if (!alive) { alive = true; showNext(); } else front.play().catch(() => {}); },
+          stop:  () => { alive = false; v.pause(); buf.pause(); if (_svcBrandTimer) { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; } },
         });
       });
 
