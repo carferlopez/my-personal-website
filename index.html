@@ -766,7 +766,7 @@
 
   /* ==================== Hamburguesa móvil ==================== */
   .hamburger-btn {
-    display: none;
+    display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -795,33 +795,71 @@
   .site-header.nav-open .hamburger-btn span:nth-child(3) {
     transform: translateY(-7px) rotate(-45deg);
   }
-  @media (max-width: 639px) {
-    .hamburger-btn { display: flex; }
-    .header-top { position: relative; }
-    .header-top .header-actions {
-      display: none;
-      position: absolute;
-      top: calc(100% + 0.75rem);
-      right: 0;
-      z-index: 200;
-      background: rgba(255, 255, 255, 0.97);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      padding: 1rem 1.25rem 0.85rem;
-      flex-direction: column;
-      gap: 0.75rem;
-      align-items: flex-start;
-      min-width: 11rem;
-      border: 1px solid rgba(0, 0, 0, 0.2);
-      margin-left: 0;
-    }
-    .site-header.nav-open .header-top .header-actions {
-      display: flex;
-    }
-    .header-top .header-actions > nav {
-      margin-inline-start: 0;
-      gap: 0.75rem;
-    }
+
+  /* Panel desplegable de la hamburguesa — mismo comportamiento en escritorio y móvil */
+  .header-top { position: relative; }
+  .header-top .header-actions {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.75rem);
+    right: 0;
+    z-index: 200;
+    background: rgba(255, 255, 255, 0.97);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    padding: 1rem 1.25rem 0.85rem;
+    flex-direction: column;
+    gap: 0.75rem;
+    align-items: flex-start;
+    min-width: 12rem;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-left: 0;
+  }
+  .site-header.nav-open .header-top .header-actions {
+    display: flex;
+  }
+  .header-top .header-actions > nav {
+    margin-inline-start: 0;
+    gap: 0.75rem;
+  }
+
+  /* Menú de secciones dentro del panel (texto oscuro sobre panel claro, sin importar el estado del header) */
+  .section-nav {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.05rem;
+    width: 100%;
+    margin: 0;
+    padding: 0 0 0.7rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  }
+  .section-nav__link {
+    display: block;
+    padding: 0.35rem 0;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    transition: color 0.15s ease;
+  }
+  /* El panel siempre tiene fondo claro al abrirse, así que su contenido va en oscuro,
+     pase lo que pase con el estado over-dark del header (que fuerza blanco con !important). */
+  .site-header.nav-open .header-actions .section-nav__link,
+  .site-header.nav-open .header-actions > nav a,
+  .site-header.nav-open .header-actions .lang-select__btn,
+  .site-header.nav-open .header-actions .lang-select__option {
+    color: #16120f !important;
+    -webkit-text-fill-color: #16120f !important;
+  }
+  .site-header.nav-open .header-actions .section-nav__link:hover,
+  .site-header.nav-open .header-actions .section-nav__link:focus-visible,
+  .site-header.nav-open .header-actions .section-nav__link.is-current,
+  .site-header.nav-open .header-actions > nav a:hover,
+  .site-header.nav-open .header-actions .lang-select__btn:hover {
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
 
   .u-sr-only {
@@ -2068,6 +2106,12 @@
           <span></span><span></span><span></span>
         </button>
         <div class="header-actions" id="headerActions">
+          <nav class="section-nav" aria-label="Secciones">
+            <a href="#inicio" class="section-nav__link" data-nav id="navInicio">Inicio</a>
+            <a href="#quien-soy" class="section-nav__link" data-nav id="navQuienSoy">Quién soy</a>
+            <a href="#servicios-lista" class="section-nav__link" data-nav id="navServicios">Servicios</a>
+            <a href="#contacto" class="section-nav__link" data-nav id="navContacto">Contacto</a>
+          </nav>
           <nav aria-label="Redes y contacto">
             <a href="#contacto" aria-label="Formulario de contacto">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
@@ -2139,7 +2183,7 @@
     <div class="container">
       <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
 
-      <div class="services-subsection qs-pin-wrapper">
+      <div class="services-subsection qs-pin-wrapper" id="quien-soy">
         <div class="qs-pin">
           <div class="qs-pin__text">
             <div class="section-head">
@@ -2147,7 +2191,7 @@
               <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
             </div>
             <p class="big-heading services-headline"><span id="servicesHeadline">CREATIVE DEVELOPER <span class="accent">&amp;</span> DIGITAL CONTENT CREATOR<span class="accent">.</span></span></p>
-            <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style="font-weight:700;color:var(--ink)">Starbucks, Kia y Philips</span>. Hoy, pongo todo mi bagaje y experiencia en un único lugar: creo productos online que se sienten como verdaderas experiencias.</p>
+            <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style="font-weight:700;color:var(--ink)">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner mi bagaje y experiencia en un único lugar: productos online para marcas y usuarios, que se sienten como verdaderas experiencias.</p>
           </div>
           <div class="qs-pin__stage">
             <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
@@ -2164,7 +2208,7 @@
       </div>
 
       <!-- ==================== SERVICIOS v2: 4 tarjetas con media ==================== -->
-      <div class="services-subsection svc-section">
+      <div class="services-subsection svc-section" id="servicios-lista">
         <div class="section-head">
           <span class="section-head__index">(02)</span>
           <span class="section-head__name" id="secHeadPricing">SERVICIOS</span>
@@ -2458,7 +2502,7 @@
       contactAltLabel: "O si prefieres:",
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "CREATIVE DEVELOPER <span class=\"accent\">&amp;</span> DIGITAL CONTENT CREATOR<span class=\"accent\">.</span>",
-      servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style=\"font-weight:700;color:var(--ink)\">Starbucks, Kia y Philips</span>. Hoy, pongo todo mi bagaje y experiencia en un único lugar: creo productos online que se sienten como verdaderas experiencias.",
+      servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style=\"font-weight:700;color:var(--ink)\">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner mi bagaje y experiencia en un único lugar: productos online para marcas y usuarios, que se sienten como verdaderas experiencias.",
       pricingHeadline: "CALIDAD DE ESTUDIO<span class=\"accent\">.</span> AGILIDAD DE STARTUP<span class=\"accent\">.</span>",
       pricingIntro: "Calidad cinematográfica. Ejecución ágil y eficiente. Utilizo mi criterio y experiencia en múltiples areas para ejecutar proyectos de altísima calidad de principio a fin y sin intermediarios. La IA me permite multiplicar mi eficiencia y reducir mis costes.",
       priceNote: "*Arrancamos con un 50% por adelantado. Los textos y contenidos corren por tu cuenta, o se cotizan como extra.",
@@ -2489,6 +2533,10 @@
       secHeadServices: "QUIÉN SOY",
       secHeadPricing: "SERVICIOS",
       secHeadContact: "CONTACTO",
+      navInicio: "Inicio",
+      navQuienSoy: "Quién soy",
+      navServicios: "Servicios",
+      navContacto: "Contacto",
       contactMeta: "RESPUESTA EN 24H",
       svcLabelIncludes: "Incluye",
       svcLabelFor: "Para",
@@ -2580,6 +2628,10 @@
       secHeadServices: "WHO I AM",
       secHeadPricing: "SERVICES",
       secHeadContact: "CONTACT",
+      navInicio: "Home",
+      navQuienSoy: "Who I am",
+      navServicios: "Services",
+      navContacto: "Contact",
       contactMeta: "REPLY WITHIN 24H",
       svcLabelIncludes: "Includes",
       svcLabelFor: "For",
@@ -3244,6 +3296,8 @@
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     const secHeadContactEl = document.getElementById('secHeadContact');
     if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
+    [['navInicio', d.navInicio], ['navQuienSoy', d.navQuienSoy], ['navServicios', d.navServicios], ['navContacto', d.navContacto]]
+      .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
     const contactMetaEl = document.getElementById('contactMeta');
     if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
 
@@ -3435,6 +3489,68 @@
         }
       });
     }
+  }
+
+  // ============================================
+  // Navegación por secciones (menú): scroll suave que "imanta" la sección al centro
+  // ============================================
+  function scrollToSection(hash) {
+    const id = (hash || '').replace('#', '');
+    const behavior = reduceMotion ? 'auto' : 'smooth';
+    if (!id || id === 'inicio') {
+      window.scrollTo({ top: 0, behavior });
+      return;
+    }
+    const el = document.getElementById(id);
+    if (!el) return;
+    // Centramos el encabezado de la sección (texto corto) en el viewport.
+    const anchor = el.querySelector('.section-head') || el;
+    const rect = anchor.getBoundingClientRect();
+    const absoluteTop = rect.top + window.pageYOffset;
+    const target = absoluteTop - Math.max(0, (window.innerHeight - rect.height) / 2);
+    window.scrollTo({ top: Math.max(0, target), behavior });
+  }
+
+  function initSectionNav() {
+    const links = document.querySelectorAll('[data-nav]');
+    const header = document.getElementById('siteHeader');
+    const btn = document.getElementById('hamburgerBtn');
+    links.forEach((a) => {
+      a.addEventListener('click', (e) => {
+        const hash = a.getAttribute('href');
+        if (!hash || hash.charAt(0) !== '#') return;
+        e.preventDefault();
+        if (header) header.classList.remove('nav-open');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        scrollToSection(hash);
+      });
+    });
+
+    // Scrollspy: marca como activa la sección cuyo centro está más cerca del centro de pantalla.
+    const map = [
+      ['inicio', document.getElementById('navInicio')],
+      ['quien-soy', document.getElementById('navQuienSoy')],
+      ['servicios-lista', document.getElementById('navServicios')],
+      ['contacto', document.getElementById('navContacto')]
+    ].filter(([secId, link]) => document.getElementById(secId) && link);
+    if (!map.length) return;
+    let ticking = false;
+    const update = () => {
+      ticking = false;
+      const mid = window.innerHeight / 2;
+      let best = null, bestDist = Infinity;
+      map.forEach(([secId, link]) => {
+        const r = document.getElementById(secId).getBoundingClientRect();
+        if (r.bottom <= 0 || r.top >= window.innerHeight) return;
+        const dist = Math.abs((r.top + r.height / 2) - mid);
+        if (dist < bestDist) { bestDist = dist; best = link; }
+      });
+      map.forEach(([, link]) => link.classList.toggle('is-current', link === best));
+    };
+    const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+    window.addEventListener('scroll', req, { passive: true });
+    window.addEventListener('resize', req);
+    update();
   }
 
   function initLogoNavigation() {
@@ -3640,6 +3756,7 @@
     initContactForm();
 
     initHamburger();
+    initSectionNav();
     initLogoNavigation();
     updateHeaderTheme();
     runViewportSyncWhenReady();
