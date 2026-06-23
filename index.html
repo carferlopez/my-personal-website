@@ -904,13 +904,13 @@
     padding-top: 0;
   }
   #contacto {
-    background: var(--ink);
-    color: #FFFFFF;
+    background: var(--page-bg);
+    color: var(--ink);
   }
   /* Sin padding horizontal: el bloque vive dentro de .container (--container-pad-x), mismo criterio que .site-header */
   .contact-box {
     background: transparent;
-    color: #FFFFFF;
+    color: var(--ink);
     padding: 0 0 1.25rem 0;
     display: flex;
     flex-direction: column;
@@ -922,18 +922,18 @@
   @media (min-width: 1024px) { .contact-box { padding: 0 0 5rem 0; } }
 
   #contacto .section-head {
-    border-top-color: #FFFFFF;
+    border-top-color: var(--ink);
   }
   #contacto .section-head__index {
-    color: rgba(255, 255, 255, 0.58);
+    color: rgba(0, 0, 0, 0.58);
   }
   #contacto .section-head__name {
-    color: #FFFFFF;
+    color: var(--ink);
   }
 
-  .contact-sub { color: rgba(255, 255, 255, 0.88); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
+  .contact-sub { color: rgba(0, 0, 0, 0.88); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   #contacto .contact-sub {
-    color: rgba(255, 255, 255, 0.88);
+    color: rgba(0, 0, 0, 0.88);
     margin-left: auto;
     text-align: right;
   }
@@ -962,9 +962,9 @@
     border-color: var(--accent);
   }
   .contact-box .contact-btn:hover:not(:disabled) {
-    background: #FFFFFF;
-    color: var(--ink);
-    border-color: #FFFFFF;
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
   }
 
 
@@ -992,9 +992,9 @@
     transition: background-color 0.15s, color 0.15s, border-color 0.15s;
   }
   .contact-alt-link:hover {
-    background: #FFFFFF;
-    color: var(--ink);
-    border-color: #FFFFFF;
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
   }
 
 
@@ -1065,8 +1065,8 @@
     margin-top: -1.5rem;
   }
   .contact-ojitos-text .big-heading--mid {
-    color: #FFFFFF;
-    -webkit-text-fill-color: #FFFFFF;
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   .contact-ojitos-text .contact-divider-mark {
     color: var(--accent);
@@ -1078,12 +1078,12 @@
     gap: 0.5rem;
   }
   .contact-ojitos-text > p.big-heading {
-    color: #FFFFFF;
-    -webkit-text-fill-color: #FFFFFF;
+    color: var(--ink);
+    -webkit-text-fill-color: var(--ink);
   }
   #contacto .contact-ojitos-text [style*="--ink"] {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
+    color: var(--ink) !important;
+    -webkit-text-fill-color: var(--ink) !important;
   }
   @media (min-width: 768px) {
     .contact-ojitos-row {
@@ -1166,8 +1166,8 @@
     font-weight: 500;
     padding: 0.55rem 0.7rem;
     border: 3px solid var(--hairline);
-    background: var(--paper);
-    color: var(--ink);
+    background: var(--ink);
+    color: var(--paper);
     min-width: 0;
   }
   .contact-form__input:hover,
@@ -1181,12 +1181,12 @@
   }
   .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
   .contact-form__select option {
-    color: var(--ink);
-    background: var(--paper);
+    color: var(--paper);
+    background: var(--ink);
   }
   .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
   .contact-form__status {
-    color: #FFFFFF;
+    color: var(--ink);
     font-size: 0.95rem;
     font-weight: 600;
     max-width: 42rem;
@@ -1196,7 +1196,7 @@
     max-width: 42rem;
     font-size: 1rem;
     line-height: 1.55;
-    color: #FFFFFF;
+    color: var(--ink);
     margin-top: 1.25rem;
   }
   @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
@@ -1213,9 +1213,9 @@
       position: relative;
       width: 100%;
       aspect-ratio: 2400 / 1792;
-      margin: 0; 
+      margin: 0;
       overflow: hidden;
-      background: #111;
+      background: #eee;
       border-radius: 18px;
   }
   @media (min-width: 768px) {
