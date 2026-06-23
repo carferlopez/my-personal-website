@@ -1787,9 +1787,14 @@
     background: #0D0D0D;
     flex-shrink: 0;
   }
-  .svc-card--anchor .svc-card__media { aspect-ratio: 21 / 9; }
+  /* Ancla (WebXperience): tamaño intermedio y centrado, no a sangre completa. */
+  .svc-card--anchor .svc-card__media {
+    aspect-ratio: 16 / 9;
+    max-width: 60rem;
+    margin-inline: auto;
+  }
   @media (max-width: 639px) {
-    .svc-card--anchor .svc-card__media { aspect-ratio: 16 / 9; }
+    .svc-card--anchor .svc-card__media { max-width: none; }
   }
 
   .svc-card__video {
@@ -1833,8 +1838,8 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    /* Corte seco (< intervalo de 550ms) para un "montaje picado" profesional */
-    transition: opacity 0.12s linear;
+    /* Fundido largo y elegante (crossfade) entre imágenes */
+    transition: opacity 1.2s ease-in-out;
   }
   .svc-carousel__item.is-active { opacity: 1; }
 
@@ -2206,12 +2211,11 @@
                 <span>/media/servicios/brand-film.mp4</span>
               </div>
               <video class="svc-card__video"
-                muted loop autoplay playsinline
+                muted autoplay playsinline
                 preload="metadata"
                 poster="/media/servicios/brand-film-poster.jpg"
-                aria-hidden="true">
-                <source data-src="/media/servicios/brand-film.mp4" type="video/mp4">
-              </video>
+                data-playlist="/media/servicios/brand-film-01.mp4,/media/servicios/brand-film-02.mp4,/media/servicios/brand-film-03.mp4,/media/servicios/brand-film-04.mp4,/media/servicios/brand-film-05.mp4,/media/servicios/brand-film-06.mp4,/media/servicios/brand-film-07.mp4,/media/servicios/brand-film-08.mp4,/media/servicios/brand-film-09.mp4,/media/servicios/brand-film-10.mp4,/media/servicios/brand-film-11.mp4,/media/servicios/brand-film-12.mp4,/media/servicios/brand-film-13.mp4,/media/servicios/brand-film-14.mp4,/media/servicios/brand-film-15.mp4"
+                aria-hidden="true"></video>
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc2Name">BRAND FILM</h3>
@@ -2241,6 +2245,7 @@
                 muted loop autoplay playsinline
                 preload="metadata"
                 poster="/media/servicios/web-autor-poster.jpg"
+                data-random-start
                 aria-hidden="true">
                 <source data-src="/media/servicios/web-autor.mp4" type="video/mp4">
               </video>
@@ -2971,18 +2976,54 @@
       videos.forEach((v) => {
         v.muted = true;            // requisito de autoplay + estrictamente mudo
         v.defaultMuted = true;     // blinda el autoplay mudo en Safari/iOS
-        v.loop = true;             // bucle infinito
         v.controls = false;        // sin controles
         v.playsInline = true;
         v.setAttribute('playsinline', '');
+        v.loop = !v.dataset.playlist;  // el reproductor de playlist gestiona el avance
       });
+
+      // Brand Film (#svcCard2): reproduce en secuencia TODOS los clips de
+      // data-playlist, avanzando al terminar cada uno y volviendo al primero
+      // al acabar la lista (loop infinito de la playlist completa).
+      const playlists = new Map();
+      videos.forEach((v) => {
+        if (!v.dataset.playlist) return;
+        const list = v.dataset.playlist.split(',').map((s) => s.trim()).filter(Boolean);
+        if (!list.length) return;
+        let idx = 0;
+        const loadClip = (i, autoplay) => {
+          v.src = list[i];
+          v.load();
+          if (autoplay) v.play().catch(() => {});
+        };
+        v.addEventListener('ended', () => { idx = (idx + 1) % list.length; loadClip(idx, true); });
+        playlists.set(v, loadClip);
+      });
+
+      // Web de Autor (#svcCard3): arranca en un punto aleatorio en cada carga,
+      // para que "abra a algo distinto" cada vez sin recargar la página.
+      videos.forEach((v) => {
+        if (!('randomStart' in v.dataset)) return;
+        v.addEventListener('loadedmetadata', () => {
+          if (v.duration && isFinite(v.duration)) {
+            v.currentTime = Math.random() * Math.max(0, v.duration - 4);
+          }
+        }, { once: true });
+      });
+
       _svcVideoObs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           const v = entry.target;
           if (entry.isIntersecting) {
-            const s = v.querySelector('source[data-src]');
-            if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); }
-            v.play().catch(() => {});
+            const loadClip = playlists.get(v);
+            if (loadClip) {
+              if (!v.src) loadClip(0, true);   // primera carga diferida
+              else v.play().catch(() => {});   // reanuda el clip en curso
+            } else {
+              const s = v.querySelector('source[data-src]');
+              if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); }
+              v.play().catch(() => {});
+            }
           } else {
             v.pause();
           }
@@ -2991,8 +3032,9 @@
       videos.forEach((v) => _svcVideoObs.observe(v));
     }
 
-    // --- Carrusel 'Sesión IA' (#svcCard1): montaje picado a 550ms, alternando
-    //     la clase .is-active solo mientras la tarjeta está en viewport. ---
+    // --- Carrusel 'Sesión IA' (#svcCard1): sucesión lenta y elegante con
+    //     fundido largo (3s por imagen), alternando la clase .is-active solo
+    //     mientras la tarjeta está en viewport. ---
     const carousel = document.querySelector('#svcCard1 .svc-carousel');
     if (!carousel) return;
     const items = Array.from(carousel.querySelectorAll('.svc-carousel__item'));
@@ -3007,7 +3049,7 @@
     _svcCarouselObs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 550);
+          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 3000);
         } else if (_svcCarouselTimer) {
           clearInterval(_svcCarouselTimer);
           _svcCarouselTimer = null;
