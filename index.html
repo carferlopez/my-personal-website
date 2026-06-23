@@ -1842,6 +1842,15 @@
     transition: opacity 1.2s ease-in-out;
   }
   .svc-carousel__item.is-active { opacity: 1; }
+  /* Ken Burns sutil: la imagen activa hace un lento acercamiento que se
+     reinicia con cada cambio, para un carrusel más vivo sin distraer. */
+  .svc-carousel__item img {
+    transform: scale(1);
+    transform-origin: center;
+    transition: transform 5s ease-out;
+    will-change: transform;
+  }
+  .svc-carousel__item.is-active img { transform: scale(1.08); }
 
   /* Encuadre automático global: cualquier img/video dentro de la zona media se
      recorta a cover y se ancla en el tercio superior (center 25%), salvando
@@ -2038,6 +2047,7 @@
     .svc-card__video { display: none; }
     .svc-carousel__item { transition: none; }
     .svc-carousel__item:not(.is-active) { display: none; }
+    .svc-carousel__item img { transition: none; transform: none; }
   }
 </style>
 </head>
