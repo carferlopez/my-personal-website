@@ -1833,13 +1833,20 @@
     position: absolute;
     inset: 0;
     opacity: 0;
-    transition: opacity 0.75s ease;
+    /* Corte seco (< intervalo de 550ms) para un "montaje picado" profesional */
+    transition: opacity 0.12s linear;
   }
   .svc-carousel__item.is-active { opacity: 1; }
-  .svc-carousel__item img {
+
+  /* Encuadre automático global: cualquier img/video dentro de la zona media se
+     recorta a cover y se ancla en el tercio superior (center 25%), salvando
+     caras de retratos IA y headers de webs sin ajustes manuales por tarjeta. */
+  .svc-card__media img,
+  .svc-card__media video {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center 25%;
     display: block;
   }
 
@@ -2954,9 +2961,18 @@
     killServicesMedia();
     if (reduceMotion) return;
 
-    // Vídeos: carga lazy del src + play cuando entra en viewport, pause al salir
+    // --- Vídeos (#svcCard2, #svcCard3, #svcCard4): bucle infinito, mudos y sin
+    //     controles. Carga diferida + play al entrar en viewport, pause al salir. ---
     const videos = document.querySelectorAll('.svc-card__video');
     if (videos.length) {
+      videos.forEach((v) => {
+        v.muted = true;            // requisito de autoplay + estrictamente mudo
+        v.defaultMuted = true;     // blinda el autoplay mudo en Safari/iOS
+        v.loop = true;             // bucle infinito
+        v.controls = false;        // sin controles
+        v.playsInline = true;
+        v.setAttribute('playsinline', '');
+      });
       _svcVideoObs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           const v = entry.target;
@@ -2972,12 +2988,14 @@
       videos.forEach((v) => _svcVideoObs.observe(v));
     }
 
-    // Carrusel Sesión IA: avanza solo cuando está en viewport
-    const carousel = document.querySelector('.svc-carousel');
+    // --- Carrusel 'Sesión IA' (#svcCard1): montaje picado a 550ms, alternando
+    //     la clase .is-active solo mientras la tarjeta está en viewport. ---
+    const carousel = document.querySelector('#svcCard1 .svc-carousel');
     if (!carousel) return;
     const items = Array.from(carousel.querySelectorAll('.svc-carousel__item'));
     if (items.length < 2) return;
-    let current = 0;
+    let current = items.findIndex((it) => it.classList.contains('is-active'));
+    if (current < 0) { current = 0; items[0].classList.add('is-active'); }
     const advance = () => {
       items[current].classList.remove('is-active');
       current = (current + 1) % items.length;
@@ -2986,8 +3004,8 @@
     _svcCarouselObs = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 2800);
-        } else {
+          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 550);
+        } else if (_svcCarouselTimer) {
           clearInterval(_svcCarouselTimer);
           _svcCarouselTimer = null;
         }
