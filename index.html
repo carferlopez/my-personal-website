@@ -1856,7 +1856,8 @@
     font-weight: 800;
     line-height: 1.12;
     letter-spacing: -0.02em;
-    color: #FF6B00;
+    color: var(--accent);
+    -webkit-text-fill-color: var(--accent);
     margin: 0 0 1.1rem;
   }
   .svc-card--anchor .svc-card__concept {
@@ -1893,8 +1894,8 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #FF6B00;
-    border: 1px solid rgba(255, 107, 0, 0.28);
+    color: var(--accent);
+    border: 1px solid rgba(255, 0, 0, 0.30);
     padding: 0.22em 0.55em;
     width: fit-content;
     margin-bottom: 0.75rem;
@@ -1954,17 +1955,17 @@
 
   /* WebXperience — ancla */
   .svc-card--anchor {
-    border: 1px solid rgba(255, 107, 0, 0.14);
+    border: 1px solid rgba(255, 0, 0, 0.16);
   }
   .svc-card--anchor .svc-card__cta {
-    background: #FF6B00;
-    border-color: #FF6B00;
+    background: var(--accent);
+    border-color: var(--accent);
     color: #FFFFFF;
     margin-top: 1.25rem;
   }
   .svc-card--anchor .svc-card__cta:hover {
-    background: #d95d00;
-    border-color: #d95d00;
+    background: #cc0000;
+    border-color: #cc0000;
     color: #FFFFFF;
   }
 
@@ -2240,7 +2241,7 @@
             <div class="svc-card__media">
               <!-- PLACEHOLDER → soltar /media/servicios/webxperience.mp4 + webxperience-poster.jpg (Be The Bat) -->
               <div class="svc-media__placeholder">
-                <svg width="28" height="28" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <svg width="28" height="28" fill="none" stroke="rgba(255,0,0,0.35)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
                 <span>/media/servicios/webxperience.mp4</span>
               </div>
               <video class="svc-card__video"
