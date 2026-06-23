@@ -1990,35 +1990,27 @@
     text-transform: uppercase;
     letter-spacing: 0.1em;
     text-align: center;
-    color: var(--paper);
-    border: 2px solid rgba(255, 255, 255, 0.2);
-    background: transparent;
+    color: #FFFFFF;
+    border: 2px solid var(--accent);
+    background: var(--accent);
     transition: background-color 0.14s, border-color 0.14s, color 0.14s;
   }
   .svc-card__cta:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #FFFFFF;
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: var(--accent);
   }
   .svc-card__cta:focus-visible {
     outline: 2px solid var(--paper);
     outline-offset: 3px;
   }
 
-  /* WebXperience — ancla */
+  /* WebXperience — ancla (hereda el rojo→blanco del CTA base) */
   .svc-card--anchor {
     border: 1px solid rgba(255, 0, 0, 0.16);
   }
   .svc-card--anchor .svc-card__cta {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #FFFFFF;
     margin-top: 1.25rem;
-  }
-  .svc-card--anchor .svc-card__cta:hover {
-    background: #cc0000;
-    border-color: #cc0000;
-    color: #FFFFFF;
   }
 
   /* Tablet: 2 columnas */
@@ -2245,7 +2237,7 @@
               <div class="svc-card__price-row">
                 <p class="svc-card__price" id="svc1Price">450 €</p>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc1Cta">Hablemos</a>
+              <a class="svc-card__cta" href="#contacto" id="svc1Cta">LA QUIERO</a>
             </div>
           </article>
 
@@ -2276,7 +2268,7 @@
               <div class="svc-card__price-row">
                 <p class="svc-card__price" id="svc2Price">1.200 €</p>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc2Cta">Hablemos</a>
+              <a class="svc-card__cta" href="#contacto" id="svc2Cta">LO QUIERO</a>
             </div>
           </article>
 
@@ -2309,7 +2301,7 @@
               <div class="svc-card__price-row">
                 <p class="svc-card__price" id="svc3Price">1.500 €</p>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc3Cta">Hablemos</a>
+              <a class="svc-card__cta" href="#contacto" id="svc3Cta">LA QUIERO</a>
             </div>
           </article>
 
@@ -2342,7 +2334,7 @@
                 <p class="svc-card__price" id="svc4Price">Desde 6.000 €</p>
                 <span class="svc-card__price-note" id="svc4PriceNote">· proyecto a medida · plazas limitadas</span>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc4Cta">Cuéntame tu proyecto</a>
+              <a class="svc-card__cta" href="#contacto" id="svc4Cta">LA QUIERO</a>
             </div>
           </article>
 
@@ -2509,26 +2501,26 @@
       svc1For: "Renovar tu imagen sin volver a producir.",
       svc1Price: "450 €",
       svc1Limit: "Hasta 10 imágenes",
-      svc1Cta: "Hablemos",
+      svc1Cta: "LA QUIERO",
       svc2Name: "BRAND FILM",
       svc2Concept: "Cine de lo que vendes<span class=\"svc-dot\">.</span>",
       svc2Includes: "Imágenes + film de marca corto. Dirección y montaje.",
       svc2For: "Presencia con movimiento, lista para campaña en días.",
       svc2Price: "1.200 €",
-      svc2Cta: "Hablemos",
+      svc2Cta: "LO QUIERO",
       svc3Name: "WEB DE AUTOR",
       svc3Concept: "Una página que parece tuya y de nadie más<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page con dirección de arte y narrativa scroll. Responsive.",
       svc3For: "Dejar de parecer uno más.",
       svc3Price: "1.500 €",
-      svc3Cta: "Hablemos",
+      svc3Cta: "LA QUIERO",
       svc4Name: "WEBXPERIENCE",
       svc4Concept: "No una web<span class=\"svc-dot\">.</span> Un mundo en el que entrar<span class=\"svc-dot\">.</span>",
       svc4Includes: "Experiencia inmersiva e interactiva con dirección cinematográfica completa.",
       svc4For: "Marcas que quieren algo inolvidable.",
       svc4Price: "Desde 6.000 €",
       svc4PriceNote: "· proyecto a medida · plazas limitadas",
-      svc4Cta: "Cuéntame tu proyecto"
+      svc4Cta: "LA QUIERO"
     },
     en: {
       langMenuAria: "Language menu",
@@ -2600,26 +2592,26 @@
       svc1For: "Renew your image without going back to production.",
       svc1Price: "450 €",
       svc1Limit: "Up to 10 images",
-      svc1Cta: "Let's talk",
+      svc1Cta: "I WANT IT",
       svc2Name: "BRAND FILM",
       svc2Concept: "Cinema for what you sell<span class=\"svc-dot\">.</span>",
       svc2Includes: "Stills + a short brand film. Direction and editing included.",
       svc2For: "Presence with movement, ready to campaign in days.",
       svc2Price: "1,200 €",
-      svc2Cta: "Let's talk",
+      svc2Cta: "I WANT IT",
       svc3Name: "WEB DE AUTOR",
       svc3Concept: "A page that looks like yours and no one else's<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page with art direction and scroll narrative. Responsive.",
       svc3For: "Stop looking like everyone else.",
       svc3Price: "1,500 €",
-      svc3Cta: "Let's talk",
+      svc3Cta: "I WANT IT",
       svc4Name: "WEBXPERIENCE",
       svc4Concept: "Not a website<span class=\"svc-dot\">.</span> A world you step into<span class=\"svc-dot\">.</span>",
       svc4Includes: "Immersive, interactive experience with full cinematic art direction.",
       svc4For: "Brands that want something unforgettable.",
       svc4Price: "From 6,000 €",
       svc4PriceNote: "· custom project · limited slots",
-      svc4Cta: "Tell me your project"
+      svc4Cta: "I WANT IT"
     }
   };
 
@@ -2725,8 +2717,10 @@
     video.loop = false;
     video.muted = true; // requisito para autoplay en navegadores modernos
 
+    let endedHandled = false;
     const markEnded = () => {
-      if (!scene) return;
+      if (endedHandled || !scene) return;
+      endedHandled = true;
       scene.classList.add('is-scrim-black');
       setTimeout(() => scene.classList.add('is-title-visible'), 550);
     };
@@ -2739,6 +2733,13 @@
     }
 
     video.addEventListener('ended', markEnded, { once: true });
+
+    // Garantía de que el TITULAR aparezca siempre, aunque el autoplay esté
+    // bloqueado (móvil en bajo consumo / ahorro de datos / pestaña en 2º plano):
+    //  - si a los 1.5s el vídeo sigue parado, mostramos ya el titular;
+    //  - red de seguridad final por si no llega 'ended'.
+    setTimeout(() => { if (video.paused) markEnded(); }, 1500);
+    setTimeout(markEnded, ((isFinite(video.duration) && video.duration) || 7) * 1000 + 600);
 
     // Evitamos volver a forzar play en cada resync (p. ej. tras un resize).
     if (featuredVideoInitialized) return;
