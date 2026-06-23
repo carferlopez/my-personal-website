@@ -1866,12 +1866,11 @@
   /* Contenido VERTICAL: se ancla arriba (center top) para no cortar caras ni
      cabeceras en el peor sitio. Lo marca initServicesMedia según la orientación
      real del archivo (img.naturalWidth/Height · video.videoWidth/Height). */
-  /* Vertical: encuadra el 50% SUPERIOR de la pieza, con la banda visible
-     centrada dentro de esa mitad (object-position vertical al 25%). */
-  .svc-card__media img.is-portrait,
-  .svc-card__media video.is-portrait {
-    object-position: center 25%;
-  }
+  /* Vertical: encuadre por tipo de pieza.
+     - Imágenes: algo más abajo (center 38%).
+     - Vídeos: tercio superior (center 17%). */
+  .svc-card__media img.is-portrait   { object-position: center 38%; }
+  .svc-card__media video.is-portrait { object-position: center 17%; }
   /* Brand Film (#svcCard2): los clips de IA llevan marca de agua (Veo/Gemini)
      en una esquina inferior. Se reencuadra para sacarla del cuadro. */
   #svcCard2 .svc-card__video {
