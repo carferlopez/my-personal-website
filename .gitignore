@@ -1,6 +1,10 @@
 node_modules/
 .env
 
+# Caché local de Wrangler (account id, etc.)
+.wrangler/
+worker/.wrangler/
+
 # Material fuente / de trabajo (no se despliega)
 assets/assets para servicios web/
 assets/0616/
