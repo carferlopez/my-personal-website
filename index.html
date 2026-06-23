@@ -935,7 +935,7 @@
     border-top-color: var(--ink);
   }
   #contacto .section-head__index {
-    color: rgba(0, 0, 0, 0.58);
+    color: var(--accent);
   }
   #contacto .section-head__name {
     color: var(--ink);
@@ -1284,7 +1284,7 @@
     margin: 0 0 2.5rem;
   }
   .section-head__index {
-    color: var(--ink-3);
+    color: var(--accent);
     font-family: var(--font-mono);
     font-weight: 700;
     font-size: 0.8rem;
@@ -1344,7 +1344,7 @@
   }
   .services-lead {
     max-width: 48ch;
-    font-size: 0.8rem;
+    font-size: 0.72rem;
     font-weight: 500;
     margin: 0 0 2.35rem;
     line-height: 1.5;
@@ -1353,11 +1353,11 @@
   @media (min-width: 768px) {
     .services-lead {
       max-width: 54ch;
-      font-size: 0.86rem;
+      font-size: 0.78rem;
       margin-bottom: 3rem;
     }
   }
-  @media (min-width: 1200px) { .services-lead { font-size: 0.88rem; } }
+  @media (min-width: 1200px) { .services-lead { font-size: 0.8rem; } }
 
   /* ==================== QUIÉN SOY: pin + tarjetas viniendo desde el fondo ==================== */
   /* Wrapper que se hace pin durante el scroll (initQsPinCards). */
@@ -1759,7 +1759,7 @@
   .svc-section .section-head {
     border-top-color: rgba(255, 255, 255, 0.14);
   }
-  .svc-section .section-head__index { color: rgba(255, 255, 255, 0.36); }
+  .svc-section .section-head__index { color: var(--accent); }
   .svc-section .section-head__name  { color: var(--paper); }
 
   /* El grid rompe el padding de svc-section para ir de borde a borde */
@@ -2219,14 +2219,11 @@
                 <div class="svc-carousel__item">
                   <img src="/media/servicios/sesion-ia-13.jpg" alt="" loading="lazy">
                 </div>
-                <div class="svc-carousel__item">
-                  <img src="/media/servicios/sesion-ia-14.jpg" alt="" loading="lazy">
-                </div>
               </div>
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc1Name">SESIÓN IA</h3>
-              <p class="svc-card__concept" id="svc1Concept">Tu marca, vista de nuevo<span class="svc-dot">.</span></p>
+              <p class="svc-card__concept" id="svc1Concept">Imágenes de estudio, sin estudio<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
                 <dd id="svc1Includes">Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.</dd>
@@ -2253,12 +2250,12 @@
                 muted autoplay playsinline
                 preload="metadata"
                 poster="/media/servicios/brand-film-poster.jpg"
-                data-playlist="/media/servicios/brand-film-01.mp4,/media/servicios/brand-film-02.mp4,/media/servicios/brand-film-03.mp4,/media/servicios/brand-film-04.mp4,/media/servicios/brand-film-05.mp4,/media/servicios/brand-film-06.mp4,/media/servicios/brand-film-07.mp4,/media/servicios/brand-film-08.mp4,/media/servicios/brand-film-09.mp4,/media/servicios/brand-film-10.mp4,/media/servicios/brand-film-11.mp4,/media/servicios/brand-film-12.mp4,/media/servicios/brand-film-13.mp4,/media/servicios/brand-film-14.mp4,/media/servicios/brand-film-15.mp4"
+                data-playlist="/media/servicios/brand-film-01.mp4,/media/servicios/brand-film-02.mp4,/media/servicios/brand-film-04.mp4,/media/servicios/brand-film-05.mp4,/media/servicios/brand-film-06.mp4,/media/servicios/brand-film-07.mp4,/media/servicios/brand-film-08.mp4,/media/servicios/brand-film-09.mp4,/media/servicios/brand-film-10.mp4,/media/servicios/brand-film-11.mp4,/media/servicios/brand-film-12.mp4,/media/servicios/brand-film-13.mp4,/media/servicios/brand-film-14.mp4,/media/servicios/brand-film-15.mp4"
                 aria-hidden="true"></video>
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc2Name">BRAND FILM</h3>
-              <p class="svc-card__concept" id="svc2Concept">Cine de lo que vendes<span class="svc-dot">.</span></p>
+              <p class="svc-card__concept" id="svc2Concept">Convierte cualquier cosa en cine<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel2Inc">Incluye</dt>
                 <dd id="svc2Includes">Imágenes + film de marca corto. Dirección y montaje.</dd>
@@ -2291,7 +2288,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc3Name">WEB DE AUTOR</h3>
-              <p class="svc-card__concept" id="svc3Concept">Una página que parece tuya y de nadie más<span class="svc-dot">.</span></p>
+              <p class="svc-card__concept" id="svc3Concept">Tu web, completamente a medida<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel3Inc">Incluye</dt>
                 <dd id="svc3Includes">One-page con dirección de arte y narrativa scroll. Responsive.</dd>
@@ -2323,10 +2320,10 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc4Name">WEBXPERIENCE</h3>
-              <p class="svc-card__concept" id="svc4Concept">No una web<span class="svc-dot">.</span> Un mundo en el que entrar<span class="svc-dot">.</span></p>
+              <p class="svc-card__concept" id="svc4Concept">No es una web<span class="svc-dot">.</span> Es una experiencia interactiva<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel4Inc">Incluye</dt>
-                <dd id="svc4Includes">Experiencia inmersiva e interactiva con dirección cinematográfica completa.</dd>
+                <dd id="svc4Includes">Todo lo anterior. Experiencia inmersiva e interactiva con dirección cinematográfica completa.</dd>
                 <dt class="svc-card__label" id="svcLabel4For">Para</dt>
                 <dd id="svc4For">Marcas que quieren algo inolvidable.</dd>
               </dl>
@@ -2496,27 +2493,27 @@
       svcLabelIncludes: "Incluye",
       svcLabelFor: "Para",
       svc1Name: "SESIÓN IA",
-      svc1Concept: "Tu marca, vista de nuevo<span class=\"svc-dot\">.</span>",
+      svc1Concept: "Imágenes de estudio, sin estudio<span class=\"svc-dot\">.</span>",
       svc1Includes: "Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.",
       svc1For: "Renovar tu imagen sin volver a producir.",
       svc1Price: "450 €",
       svc1Limit: "Hasta 10 imágenes",
       svc1Cta: "LA QUIERO",
       svc2Name: "BRAND FILM",
-      svc2Concept: "Cine de lo que vendes<span class=\"svc-dot\">.</span>",
+      svc2Concept: "Convierte cualquier cosa en cine<span class=\"svc-dot\">.</span>",
       svc2Includes: "Imágenes + film de marca corto. Dirección y montaje.",
       svc2For: "Presencia con movimiento, lista para campaña en días.",
       svc2Price: "1.200 €",
       svc2Cta: "LO QUIERO",
       svc3Name: "WEB DE AUTOR",
-      svc3Concept: "Una página que parece tuya y de nadie más<span class=\"svc-dot\">.</span>",
+      svc3Concept: "Tu web, completamente a medida<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page con dirección de arte y narrativa scroll. Responsive.",
       svc3For: "Dejar de parecer uno más.",
       svc3Price: "1.500 €",
       svc3Cta: "LA QUIERO",
       svc4Name: "WEBXPERIENCE",
-      svc4Concept: "No una web<span class=\"svc-dot\">.</span> Un mundo en el que entrar<span class=\"svc-dot\">.</span>",
-      svc4Includes: "Experiencia inmersiva e interactiva con dirección cinematográfica completa.",
+      svc4Concept: "No es una web<span class=\"svc-dot\">.</span> Es una experiencia interactiva<span class=\"svc-dot\">.</span>",
+      svc4Includes: "Todo lo anterior. Experiencia inmersiva e interactiva con dirección cinematográfica completa.",
       svc4For: "Marcas que quieren algo inolvidable.",
       svc4Price: "Desde 6.000 €",
       svc4PriceNote: "· proyecto a medida · plazas limitadas",
@@ -2587,27 +2584,27 @@
       svcLabelIncludes: "Includes",
       svcLabelFor: "For",
       svc1Name: "AI SESSION",
-      svc1Concept: "Your brand, seen anew<span class=\"svc-dot\">.</span>",
+      svc1Concept: "Studio-grade images, no studio<span class=\"svc-dot\">.</span>",
       svc1Includes: "Up to 10 new images with art direction drawn from your existing material.",
       svc1For: "Renew your image without going back to production.",
       svc1Price: "450 €",
       svc1Limit: "Up to 10 images",
       svc1Cta: "I WANT IT",
       svc2Name: "BRAND FILM",
-      svc2Concept: "Cinema for what you sell<span class=\"svc-dot\">.</span>",
+      svc2Concept: "Turn anything into cinema<span class=\"svc-dot\">.</span>",
       svc2Includes: "Stills + a short brand film. Direction and editing included.",
       svc2For: "Presence with movement, ready to campaign in days.",
       svc2Price: "1,200 €",
       svc2Cta: "I WANT IT",
       svc3Name: "WEB DE AUTOR",
-      svc3Concept: "A page that looks like yours and no one else's<span class=\"svc-dot\">.</span>",
+      svc3Concept: "Your website, fully bespoke<span class=\"svc-dot\">.</span>",
       svc3Includes: "One-page with art direction and scroll narrative. Responsive.",
       svc3For: "Stop looking like everyone else.",
       svc3Price: "1,500 €",
       svc3Cta: "I WANT IT",
       svc4Name: "WEBXPERIENCE",
-      svc4Concept: "Not a website<span class=\"svc-dot\">.</span> A world you step into<span class=\"svc-dot\">.</span>",
-      svc4Includes: "Immersive, interactive experience with full cinematic art direction.",
+      svc4Concept: "Not a website<span class=\"svc-dot\">.</span> An interactive experience<span class=\"svc-dot\">.</span>",
+      svc4Includes: "Everything above. Immersive, interactive experience with full cinematic art direction.",
       svc4For: "Brands that want something unforgettable.",
       svc4Price: "From 6,000 €",
       svc4PriceNote: "· custom project · limited slots",
@@ -2734,12 +2731,11 @@
 
     video.addEventListener('ended', markEnded, { once: true });
 
-    // Garantía de que el TITULAR aparezca siempre, aunque el autoplay esté
-    // bloqueado (móvil en bajo consumo / ahorro de datos / pestaña en 2º plano):
-    //  - si a los 1.5s el vídeo sigue parado, mostramos ya el titular;
-    //  - red de seguridad final por si no llega 'ended'.
-    setTimeout(() => { if (video.paused) markEnded(); }, 1500);
-    setTimeout(markEnded, ((isFinite(video.duration) && video.duration) || 7) * 1000 + 600);
+    // En móvil/estático el titular debe aparecer PRONTO, sin esperar a que el
+    // vídeo (≈7s) termine: si sigue parado a 1.2s (autoplay bloqueado) o como
+    // tope a 2.8s, mostramos el titular sí o sí. markEnded es idempotente.
+    setTimeout(() => { if (video.paused) markEnded(); }, 1200);
+    setTimeout(markEnded, 2800);
 
     // Evitamos volver a forzar play en cada resync (p. ej. tras un resize).
     if (featuredVideoInitialized) return;
@@ -3156,7 +3152,9 @@
     if (current < 0) { current = 0; items[0].classList.add('is-active'); }
     const advance = () => {
       items[current].classList.remove('is-active');
-      current = (current + 1) % items.length;
+      let next = Math.floor(Math.random() * items.length);
+      if (items.length > 1 && next === current) next = (next + 1) % items.length;  // evita repetir
+      current = next;
       items[current].classList.add('is-active');
     };
     _svcCarouselObs = new IntersectionObserver((entries) => {
