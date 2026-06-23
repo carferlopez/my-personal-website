@@ -207,13 +207,14 @@
       height: 100svh;
       max-height: none;
     }
-    .hero-scene.is-video-ended .hero-scene__title.hero-v2-sticky {
+    /* Móvil: primero negro, luego texto */
+    .hero-scene.is-scrim-black .hero-scene__scrim {
       opacity: 1;
-      transition: opacity 0.8s ease;
+      transition: opacity 0.5s ease;
     }
-    .hero-scene.is-video-ended .hero-scene__scrim {
-      opacity: 0.5;
-      transition: opacity 0.8s ease;
+    .hero-scene.is-title-visible .hero-scene__title.hero-v2-sticky {
+      opacity: 1;
+      transition: opacity 0.7s ease;
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -235,7 +236,7 @@
       opacity: 1 !important;
     }
     .hero-scene__scrim {
-      opacity: 0.5 !important;
+      opacity: 0.65 !important;
     }
   }
 
@@ -2577,13 +2578,15 @@
   const VIDEO_EDGE_FADE_MEDIA = '(min-width: 640px)';
   // Sub-tramos del recorrido de scroll de la escena (progress global 0..1):
   const HERO_VIDEO_END        = 0.42; // 0 → fin del scrub del vídeo
-  const HERO_TITLE_IN_START   = 0.42; // velo + titular empiezan a aparecer
-  const HERO_TITLE_IN_END     = 0.54; // titular totalmente visible
-  const HERO_ZOOM_START       = 0.54; // empieza el zoom del titular
+  const HERO_SCRIM_IN_START   = 0.42; // velo empieza a fundirse a negro
+  const HERO_SCRIM_IN_END     = 0.50; // velo totalmente negro
+  const HERO_TITLE_IN_START   = 0.50; // titular empieza (sobre negro)
+  const HERO_TITLE_IN_END     = 0.60; // titular totalmente visible
+  const HERO_ZOOM_START       = 0.60; // empieza el zoom del titular
   const HERO_ZOOM_END         = 0.92; // fin del zoom
   const HERO_TEXT_FADE_START_PROGRESS = 0.80; // empieza el fundido a blanco
   const HERO_TEXT_FADE_END_PROGRESS   = 0.96; // pantalla blanca → "Quién soy"
-  const HERO_SCRIM_MAX = 0.55; // opacidad máxima del velo bajo el titular
+  const HERO_SCRIM_MAX        = 1.0;  // negro completo antes de mostrar texto
   let featuredVideoInitialized = false;
   let heroSceneNativeCleanup = null;
 
@@ -2611,9 +2614,12 @@
     // 1) Scrub del vídeo (0 → HERO_VIDEO_END).
     setHeroVideoProgress(video, p / HERO_VIDEO_END);
 
-    // 2) Velo + fade-in del titular como capa encima del fotograma final.
+    // 2) Velo funde a negro completo primero (sin texto todavía).
+    const tScrim = _clamp01((p - HERO_SCRIM_IN_START) / (HERO_SCRIM_IN_END - HERO_SCRIM_IN_START));
+    if (scrim) scrim.style.opacity = (tScrim * HERO_SCRIM_MAX).toFixed(3);
+
+    // 3) Titular aparece solo cuando el negro está completo.
     const tIn = _clamp01((p - HERO_TITLE_IN_START) / (HERO_TITLE_IN_END - HERO_TITLE_IN_START));
-    if (scrim) scrim.style.opacity = (tIn * HERO_SCRIM_MAX).toFixed(3);
     if (layer) layer.style.opacity = tIn.toFixed(3);
 
     // 3) Zoom del titular.
@@ -2658,7 +2664,11 @@
     video.loop = false;
     video.muted = true; // requisito para autoplay en navegadores modernos
 
-    const markEnded = () => { if (scene) scene.classList.add('is-video-ended'); };
+    const markEnded = () => {
+      if (!scene) return;
+      scene.classList.add('is-scrim-black');
+      setTimeout(() => scene.classList.add('is-title-visible'), 550);
+    };
 
     // Respetamos prefers-reduced-motion: primer fotograma fijo, titular ya visible.
     if (reduceMotion) {
