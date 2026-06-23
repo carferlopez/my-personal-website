@@ -2270,7 +2270,7 @@
               <p class="svc-card__concept" id="svc1Concept">Imágenes de estudio, sin estudio<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
-                <dd id="svc1Includes">Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.</dd>
+                <dd id="svc1Includes">Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual.</dd>
                 <dt class="svc-card__label" id="svcLabel1For">Para</dt>
                 <dd id="svc1For">Renovar tu imagen sin volver a producir.</dd>
               </dl>
@@ -2302,7 +2302,7 @@
               <p class="svc-card__concept" id="svc2Concept">Convierte cualquier cosa en cine<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel2Inc">Incluye</dt>
-                <dd id="svc2Includes">Imágenes + film de marca corto. Dirección y montaje.</dd>
+                <dd id="svc2Includes">Todo lo incluido en SESIÓN IA + film de marca de hasta 20 segundos. Dirección y montaje.</dd>
                 <dt class="svc-card__label" id="svcLabel2For">Para</dt>
                 <dd id="svc2For">Presencia con movimiento, lista para campaña en días.</dd>
               </dl>
@@ -2542,14 +2542,14 @@
       svcLabelFor: "Para",
       svc1Name: "SESIÓN IA",
       svc1Concept: "Imágenes de estudio, sin estudio<span class=\"svc-dot\">.</span>",
-      svc1Includes: "Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.",
+      svc1Includes: "Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual.",
       svc1For: "Renovar tu imagen sin volver a producir.",
       svc1Price: "450 €",
       svc1Limit: "Hasta 10 imágenes",
       svc1Cta: "LA QUIERO",
       svc2Name: "BRAND FILM",
       svc2Concept: "Convierte cualquier cosa en cine<span class=\"svc-dot\">.</span>",
-      svc2Includes: "Imágenes + film de marca corto. Dirección y montaje.",
+      svc2Includes: "Todo lo incluido en SESIÓN IA + film de marca de hasta 20 segundos. Dirección y montaje.",
       svc2For: "Presencia con movimiento, lista para campaña en días.",
       svc2Price: "1.200 €",
       svc2Cta: "LO QUIERO",
@@ -3553,6 +3553,50 @@
     update();
   }
 
+  // Imán suave: al parar de scrollear cerca de una sección "tranquila", la ajusta
+  // sola al centro. NO toca el hero (scrub del vídeo) ni precios (pin+scrub): esas
+  // secciones quedan fuera de la lista, y la proximidad evita imantar desde lejos.
+  function initSectionMagnet() {
+    if (reduceMotion) return;
+    const calmIds = ['quien-soy', 'servicios-lista', 'contacto'];
+    const sections = calmIds.map((id) => document.getElementById(id)).filter(Boolean);
+    if (!sections.length) return;
+
+    let snapping = false;
+    let settleTimer = null;
+    const anchorRect = (sec) => (sec.querySelector('.section-head') || sec).getBoundingClientRect();
+
+    const magnet = () => {
+      if (snapping) return;
+      const vh = window.innerHeight;
+      const mid = vh / 2;
+      const proximity = vh * 0.32; // sólo imanta si ya estás cerca del centro
+      const deadzone = 14;         // no microajustar si ya está centrada
+      let bestSec = null, bestDist = Infinity;
+      sections.forEach((sec) => {
+        const r = anchorRect(sec);
+        const dist = (r.top + r.height / 2) - mid;
+        if (Math.abs(dist) < Math.abs(bestDist)) { bestDist = dist; bestSec = sec; }
+      });
+      if (!bestSec) return;
+      if (Math.abs(bestDist) <= deadzone || Math.abs(bestDist) > proximity) return;
+      snapping = true;
+      const r = anchorRect(bestSec);
+      const target = (r.top + window.pageYOffset) - Math.max(0, (vh - r.height) / 2);
+      window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      setTimeout(() => { snapping = false; }, 700);
+    };
+
+    if ('onscrollend' in window) {
+      window.addEventListener('scrollend', magnet, { passive: true });
+    } else {
+      window.addEventListener('scroll', () => {
+        clearTimeout(settleTimer);
+        settleTimer = setTimeout(magnet, 140);
+      }, { passive: true });
+    }
+  }
+
   function initLogoNavigation() {
     const logo = document.getElementById('siteLogo');
     if (!logo) return;
@@ -3757,6 +3801,7 @@
 
     initHamburger();
     initSectionNav();
+    initSectionMagnet();
     initLogoNavigation();
     updateHeaderTheme();
     runViewportSyncWhenReady();
