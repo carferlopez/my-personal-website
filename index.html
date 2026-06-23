@@ -531,6 +531,22 @@
     color: #FFFFFF !important;
     -webkit-text-fill-color: #FFFFFF !important;
   }
+  .hero-v2-sub {
+    margin-top: clamp(1rem, 2.5svh, 1.75rem);
+    font-size: clamp(0.68rem, 1.35vw, 0.88rem);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    line-height: 1.3;
+    color: #FFFFFF;
+    -webkit-text-fill-color: #FFFFFF;
+    position: relative;
+    z-index: 1;
+  }
+  .hero-v2-sub .hero-v2-dot {
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
+  }
 
   .header-top {
     display: flex;
@@ -1717,6 +1733,278 @@
     opacity: 0.6;
     font-family: var(--font-mono);
   }
+
+  /* ==================== SERVICIOS v2 — 4 tarjetas con media embebida ==================== */
+  .svc-section {
+    /* Fondo negro a borde completo: cancela el padding del .container */
+    margin-left:  calc(-1 * max(var(--container-pad-x), env(safe-area-inset-left,  0px)));
+    margin-right: calc(-1 * max(var(--container-pad-x), env(safe-area-inset-right, 0px)));
+    padding-left:  max(var(--container-pad-x), env(safe-area-inset-left,  0px));
+    padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
+    padding-top: clamp(2rem, 3vw, 3rem);
+    padding-bottom: clamp(2rem, 3vw, 3rem);
+    background: var(--ink);
+    color: var(--paper);
+  }
+  .svc-section .section-head {
+    border-top-color: rgba(255, 255, 255, 0.14);
+  }
+  .svc-section .section-head__index { color: rgba(255, 255, 255, 0.36); }
+  .svc-section .section-head__name  { color: var(--paper); }
+
+  /* El grid rompe el padding de svc-section para ir de borde a borde */
+  .svc-grid {
+    margin-left:  calc(-1 * max(var(--container-pad-x), env(safe-area-inset-left,  0px)));
+    margin-right: calc(-1 * max(var(--container-pad-x), env(safe-area-inset-right, 0px)));
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1px;
+    background: rgba(255, 255, 255, 0.07);
+  }
+
+  .svc-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--ink);
+  }
+
+  /* Zona media */
+  .svc-card__media {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: #0D0D0D;
+    flex-shrink: 0;
+  }
+  .svc-card--anchor .svc-card__media { aspect-ratio: 21 / 9; }
+  @media (max-width: 639px) {
+    .svc-card--anchor .svc-card__media { aspect-ratio: 16 / 9; }
+  }
+
+  .svc-card__video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    z-index: 1;
+  }
+
+  /* Placeholder: visible mientras el asset no existe; el vídeo/carousel lo cubre cuando carga */
+  .svc-media__placeholder {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    pointer-events: none;
+  }
+  .svc-media__placeholder span {
+    font-family: var(--font-mono);
+    font-size: 0.56rem;
+    color: rgba(255, 255, 255, 0.18);
+    text-align: center;
+    padding: 0 1.5rem;
+    line-height: 1.55;
+  }
+
+  /* Carrusel Sesión IA */
+  .svc-carousel {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .svc-carousel__item {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    transition: opacity 0.75s ease;
+  }
+  .svc-carousel__item.is-active { opacity: 1; }
+  .svc-carousel__item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Cuerpo */
+  .svc-card__body {
+    padding: 1.4rem 1.25rem 1.65rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .svc-card__name {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: rgba(255, 255, 255, 0.36);
+    margin: 0 0 0.55rem;
+  }
+
+  .svc-card__concept {
+    font-size: clamp(1.05rem, 2.5vw, 1.3rem);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    color: #FF6B00;
+    margin: 0 0 1.1rem;
+  }
+  .svc-card--anchor .svc-card__concept {
+    font-size: clamp(1.2rem, 3vw, 1.7rem);
+  }
+
+  .svc-card__meta {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 0.75rem;
+    margin: 0 0 1.1rem;
+    align-items: baseline;
+  }
+  .svc-card__label {
+    font-family: var(--font-mono);
+    font-size: 0.57rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: rgba(255, 255, 255, 0.34);
+    white-space: nowrap;
+  }
+  .svc-card__meta dd {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: rgba(255, 255, 255, 0.68);
+    margin: 0;
+  }
+
+  /* Badge "hasta 10 imágenes" visible en Sesión IA */
+  .svc-card__limit-badge {
+    font-family: var(--font-mono);
+    font-size: 0.57rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #FF6B00;
+    border: 1px solid rgba(255, 107, 0, 0.28);
+    padding: 0.22em 0.55em;
+    width: fit-content;
+    margin-bottom: 0.75rem;
+  }
+
+  .svc-card__price-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.35rem 0.6rem;
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .svc-card__price {
+    font-weight: 900;
+    font-size: clamp(1.2rem, 3vw, 1.5rem);
+    letter-spacing: -0.03em;
+    line-height: 1;
+    color: var(--paper);
+    margin: 0;
+  }
+  .svc-card--anchor .svc-card__price {
+    font-size: clamp(1.3rem, 3.5vw, 1.7rem);
+  }
+  .svc-card__price-note {
+    font-family: var(--font-mono);
+    font-size: 0.61rem;
+    color: rgba(255, 255, 255, 0.36);
+    line-height: 1.4;
+    align-self: center;
+  }
+
+  .svc-card__cta {
+    display: block;
+    margin-top: 1rem;
+    padding: 0.55rem 1rem;
+    font-size: 0.77rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-align: center;
+    color: var(--paper);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+    transition: background-color 0.14s, border-color 0.14s, color 0.14s;
+  }
+  .svc-card__cta:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(255, 255, 255, 0.42);
+    color: #FFFFFF;
+  }
+  .svc-card__cta:focus-visible {
+    outline: 2px solid var(--paper);
+    outline-offset: 3px;
+  }
+
+  /* WebXperience — ancla */
+  .svc-card--anchor {
+    border: 1px solid rgba(255, 107, 0, 0.14);
+  }
+  .svc-card--anchor .svc-card__cta {
+    background: #FF6B00;
+    border-color: #FF6B00;
+    color: #FFFFFF;
+    margin-top: 1.25rem;
+  }
+  .svc-card--anchor .svc-card__cta:hover {
+    background: #d95d00;
+    border-color: #d95d00;
+    color: #FFFFFF;
+  }
+
+  /* Tablet: 2 columnas */
+  @media (min-width: 640px) {
+    .svc-grid { grid-template-columns: repeat(2, 1fr); }
+    .svc-card--anchor { grid-column: 1 / -1; }
+    .svc-card--anchor .svc-card__body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      column-gap: clamp(3rem, 6vw, 6rem);
+      align-items: start;
+    }
+    .svc-card--anchor .svc-card__name,
+    .svc-card--anchor .svc-card__concept,
+    .svc-card--anchor .svc-card__cta  { grid-column: 1 / -1; }
+    .svc-card--anchor .svc-card__price-row { margin-top: 0; }
+    .svc-card--anchor .svc-card__cta { max-width: 20rem; }
+  }
+
+  /* Desktop: 3 columnas */
+  @media (min-width: 900px) {
+    .svc-grid { grid-template-columns: repeat(3, 1fr); }
+    .svc-card__body { padding: 1.6rem 1.4rem 1.8rem; }
+    .svc-card--anchor .svc-card__body {
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: 1.75rem 1.5rem 2rem;
+      column-gap: clamp(2.5rem, 4vw, 5rem);
+    }
+    .svc-card--anchor .svc-card__concept {
+      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    }
+  }
+
+  /* prefers-reduced-motion: solo poster, sin autoplay ni transición */
+  @media (prefers-reduced-motion: reduce) {
+    .svc-card__video { display: none; }
+    .svc-carousel__item { transition: none; }
+    .svc-carousel__item:not(.is-active) { display: none; }
+  }
 </style>
 </head>
 <body>
@@ -1789,6 +2077,7 @@
         <span class="hero-v2-line">WEB MEETS</span>
         <span class="hero-v2-line">CINEMA <span class="hero-v2-dot">&amp;</span> VIDEO GAMES<span class="hero-v2-dot">.</span></span>
       </h1>
+      <p class="hero-v2-sub">CREATIVE DEVELOPER <span class="hero-v2-dot">&amp;</span> DIGITAL CONTENT CREATOR<span class="hero-v2-dot">.</span></p>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
   </section>
@@ -1824,51 +2113,162 @@
                 <iframe src="https://be-the-bat.vercel.app/" class="qs-iframe" title="Be The Bat" loading="lazy" scrolling="no" tabindex="-1" aria-hidden="true"></iframe>
               </div>
             </a>
+            <a href="https://lua-premium-cosmetics.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+              <img class="qs-card" src="assets/projects/lua-premium-cosmetics.webp" alt="Lua Premium Cosmetics" loading="lazy">
+            </a>
           </div>
         </div>
       </div>
 
-      <div class="services-subsection">
-      <div class="pricing-pin-wrapper">
-      <div class="section-head">
-        <span class="section-head__index">(02)</span>
-        <span class="section-head__name" id="secHeadPricing">SERVICIOS</span>
-      </div>
-      <p class="big-heading services-headline services-headline--sub"><span id="pricingHeadline">CALIDAD DE ESTUDIO<span class="accent">.</span> AGILIDAD DE STARTUP<span class="accent">.</span></span></p>
-      <div class="pricing-layout">
-      <p class="services-lead" id="pricingIntro">Calidad cinematográfica. Ejecución ágil y eficiente. Utilizo mi criterio y experiencia en múltiples areas para ejecutar proyectos de altísima calidad de principio a fin y sin intermediarios. La IA me permite multiplicar mi eficiencia y reducir mis costes.</p>
+      <!-- ==================== SERVICIOS v2: 4 tarjetas con media ==================== -->
+      <div class="services-subsection svc-section">
+        <div class="section-head">
+          <span class="section-head__index">(02)</span>
+          <span class="section-head__name" id="secHeadPricing">SERVICIOS</span>
+        </div>
+        <div class="svc-grid">
 
-      <div class="pricing-grid">
-        <article class="price-card price-card--featured">
-          <h3 class="price-card__name" id="price1Name">WEB DE AUTOR</h3>
-          <p class="price-card__price" id="price1Price">1.500 €</p>
-          <p class="price-card__tagline" id="price1Tagline">Tu web, resuelta. Precio fijo, scope fijo, sin reuniones.</p>
-          <ul class="price-card__list" id="price1List">
-            <li>Una página web completa diseñada a medida, con una estética distintiva para tu negocio también a medida: ¿quieres una estética cinematográfica? ¿retro? Hablemos sobre lo que tienes en mente y le damos forma.</li>
-            <li>Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.</li>
-            <li>Formulario de contacto y analítica web listos desde el primer día.</li>
-            <li>Una ronda de revisiones incluida, tras primera versión entregada.</li>
-            <li>Entrega en 7-10 días desde que demos luz verde al proyecto.</li>
-          </ul>
-          <p class="price-card__note" id="price1Note">*Comenzamos con un 50% por adelantado.</p>
-          <a class="contact-btn price-card__cta" id="price1Cta" href="#contacto">Quiero mi web</a>
-        </article>
-        <article class="price-card">
-          <h3 class="price-card__name" id="price2Name">WEBXPERIENCE</h3>
-          <p class="price-card__price" id="price2Price">desde 6.000 € <span>· a medida</span></p>
-          <p class="price-card__tagline" id="price2Tagline">No una web. Un universo en el que entrar.</p>
-          <ul class="price-card__list" id="price2List">
-            <li>Una experiencia inmersiva ambientada en un universo propio, diseñada de cero como una pieza de cine interactivo.</li>
-            <li>Producción creativa completa: dirección de arte, vídeo, imagen, 3D, animación y sonido.</li>
-            <li>Navegación intuitiva y cinematográfica — el efecto wow sin que el usuario tenga que aprender nada.</li>
-            <li>Pensada para marcas y lanzamientos donde la atmósfera es el producto.</li>
-            <li>Cada proyecto es único. Presupuesto y plazo a medida.</li>
-          </ul>
-          <a class="contact-btn price-card__cta" id="price2Cta" href="#contacto">Cuéntame tu universo</a>
-        </article>
-      </div>
-      </div>
-      </div>
+          <!-- Tarjeta 1: Sesión IA -->
+          <article class="svc-card" id="svcCard1">
+            <div class="svc-card__media">
+              <!-- PLACEHOLDER → soltar imágenes reales en /media/servicios/sesion-ia-01…05.jpg -->
+              <div class="svc-media__placeholder">
+                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9l4-4 5 5 3-3 5 4"/><circle cx="8.5" cy="13.5" r="1.5"/></svg>
+                <span>/media/servicios/sesion-ia-01…05.jpg</span>
+              </div>
+              <div class="svc-carousel" aria-hidden="true">
+                <div class="svc-carousel__item is-active">
+                  <img src="/media/servicios/sesion-ia-01.jpg" alt="" loading="lazy">
+                </div>
+                <div class="svc-carousel__item">
+                  <img src="/media/servicios/sesion-ia-02.jpg" alt="" loading="lazy">
+                </div>
+                <div class="svc-carousel__item">
+                  <img src="/media/servicios/sesion-ia-03.jpg" alt="" loading="lazy">
+                </div>
+                <div class="svc-carousel__item">
+                  <img src="/media/servicios/sesion-ia-04.jpg" alt="" loading="lazy">
+                </div>
+                <div class="svc-carousel__item">
+                  <img src="/media/servicios/sesion-ia-05.jpg" alt="" loading="lazy">
+                </div>
+              </div>
+            </div>
+            <div class="svc-card__body">
+              <h3 class="svc-card__name" id="svc1Name">SESIÓN IA</h3>
+              <p class="svc-card__concept" id="svc1Concept">Tu marca, vista de nuevo.</p>
+              <dl class="svc-card__meta">
+                <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
+                <dd id="svc1Includes">Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.</dd>
+                <dt class="svc-card__label" id="svcLabel1For">Para</dt>
+                <dd id="svc1For">Renovar tu imagen sin volver a producir.</dd>
+              </dl>
+              <span class="svc-card__limit-badge" id="svc1Limit">Hasta 10 imágenes</span>
+              <div class="svc-card__price-row">
+                <p class="svc-card__price" id="svc1Price">450 €</p>
+              </div>
+              <a class="svc-card__cta" href="#contacto" id="svc1Cta">Hablemos</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 2: Brand Film -->
+          <article class="svc-card" id="svcCard2">
+            <div class="svc-card__media">
+              <!-- PLACEHOLDER → soltar /media/servicios/brand-film.mp4 + brand-film-poster.jpg -->
+              <div class="svc-media__placeholder">
+                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>/media/servicios/brand-film.mp4</span>
+              </div>
+              <video class="svc-card__video"
+                muted loop autoplay playsinline
+                preload="metadata"
+                poster="/media/servicios/brand-film-poster.jpg"
+                aria-hidden="true">
+                <source data-src="/media/servicios/brand-film.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="svc-card__body">
+              <h3 class="svc-card__name" id="svc2Name">BRAND FILM</h3>
+              <p class="svc-card__concept" id="svc2Concept">Cine de lo que vendes.</p>
+              <dl class="svc-card__meta">
+                <dt class="svc-card__label" id="svcLabel2Inc">Incluye</dt>
+                <dd id="svc2Includes">Imágenes + film de marca corto. Dirección y montaje.</dd>
+                <dt class="svc-card__label" id="svcLabel2For">Para</dt>
+                <dd id="svc2For">Presencia con movimiento, lista para campaña en días.</dd>
+              </dl>
+              <div class="svc-card__price-row">
+                <p class="svc-card__price" id="svc2Price">1.200 €</p>
+              </div>
+              <a class="svc-card__cta" href="#contacto" id="svc2Cta">Hablemos</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 3: Web de Autor -->
+          <article class="svc-card" id="svcCard3">
+            <div class="svc-card__media">
+              <!-- PLACEHOLDER → soltar /media/servicios/web-autor.mp4 + web-autor-poster.jpg (scroll de Brasa 17) -->
+              <div class="svc-media__placeholder">
+                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>/media/servicios/web-autor.mp4</span>
+              </div>
+              <video class="svc-card__video"
+                muted loop autoplay playsinline
+                preload="metadata"
+                poster="/media/servicios/web-autor-poster.jpg"
+                aria-hidden="true">
+                <source data-src="/media/servicios/web-autor.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="svc-card__body">
+              <h3 class="svc-card__name" id="svc3Name">WEB DE AUTOR</h3>
+              <p class="svc-card__concept" id="svc3Concept">Una página que parece tuya y de nadie más.</p>
+              <dl class="svc-card__meta">
+                <dt class="svc-card__label" id="svcLabel3Inc">Incluye</dt>
+                <dd id="svc3Includes">One-page con dirección de arte y narrativa scroll. Responsive.</dd>
+                <dt class="svc-card__label" id="svcLabel3For">Para</dt>
+                <dd id="svc3For">Dejar de parecer uno más.</dd>
+              </dl>
+              <div class="svc-card__price-row">
+                <p class="svc-card__price" id="svc3Price">1.500 €</p>
+              </div>
+              <a class="svc-card__cta" href="#contacto" id="svc3Cta">Hablemos</a>
+            </div>
+          </article>
+
+          <!-- Tarjeta 4: WebXperience (ANCLA — destacada, full-width) -->
+          <article class="svc-card svc-card--anchor" id="svcCard4">
+            <div class="svc-card__media">
+              <!-- PLACEHOLDER → soltar /media/servicios/webxperience.mp4 + webxperience-poster.jpg (Be The Bat) -->
+              <div class="svc-media__placeholder">
+                <svg width="28" height="28" fill="none" stroke="rgba(255,107,0,0.35)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                <span>/media/servicios/webxperience.mp4</span>
+              </div>
+              <video class="svc-card__video"
+                muted loop autoplay playsinline
+                preload="metadata"
+                poster="/media/servicios/webxperience-poster.jpg"
+                aria-hidden="true">
+                <source data-src="/media/servicios/webxperience.mp4" type="video/mp4">
+              </video>
+            </div>
+            <div class="svc-card__body">
+              <h3 class="svc-card__name" id="svc4Name">WEBXPERIENCE</h3>
+              <p class="svc-card__concept" id="svc4Concept">No una web. Un mundo en el que entrar.</p>
+              <dl class="svc-card__meta">
+                <dt class="svc-card__label" id="svcLabel4Inc">Incluye</dt>
+                <dd id="svc4Includes">Experiencia inmersiva e interactiva con dirección cinematográfica completa.</dd>
+                <dt class="svc-card__label" id="svcLabel4For">Para</dt>
+                <dd id="svc4For">Marcas que quieren algo inolvidable.</dd>
+              </dl>
+              <div class="svc-card__price-row">
+                <p class="svc-card__price" id="svc4Price">Desde 6.000 €</p>
+                <span class="svc-card__price-note" id="svc4PriceNote">· proyecto a medida · plazas limitadas</span>
+              </div>
+              <a class="svc-card__cta" href="#contacto" id="svc4Cta">Cuéntame tu proyecto</a>
+            </div>
+          </article>
+
+        </div>
       </div>
     </div>
   </section>
@@ -2022,7 +2422,35 @@
       secHeadServices: "QUIÉN SOY",
       secHeadPricing: "SERVICIOS",
       secHeadContact: "CONTACTO",
-      contactMeta: "RESPUESTA EN 24H"
+      contactMeta: "RESPUESTA EN 24H",
+      svcLabelIncludes: "Incluye",
+      svcLabelFor: "Para",
+      svc1Name: "SESIÓN IA",
+      svc1Concept: "Tu marca, vista de nuevo.",
+      svc1Includes: "Hasta 10 imágenes nuevas con la dirección de arte de tu material actual.",
+      svc1For: "Renovar tu imagen sin volver a producir.",
+      svc1Price: "450 €",
+      svc1Limit: "Hasta 10 imágenes",
+      svc1Cta: "Hablemos",
+      svc2Name: "BRAND FILM",
+      svc2Concept: "Cine de lo que vendes.",
+      svc2Includes: "Imágenes + film de marca corto. Dirección y montaje.",
+      svc2For: "Presencia con movimiento, lista para campaña en días.",
+      svc2Price: "1.200 €",
+      svc2Cta: "Hablemos",
+      svc3Name: "WEB DE AUTOR",
+      svc3Concept: "Una página que parece tuya y de nadie más.",
+      svc3Includes: "One-page con dirección de arte y narrativa scroll. Responsive.",
+      svc3For: "Dejar de parecer uno más.",
+      svc3Price: "1.500 €",
+      svc3Cta: "Hablemos",
+      svc4Name: "WEBXPERIENCE",
+      svc4Concept: "No una web. Un mundo en el que entrar.",
+      svc4Includes: "Experiencia inmersiva e interactiva con dirección cinematográfica completa.",
+      svc4For: "Marcas que quieren algo inolvidable.",
+      svc4Price: "Desde 6.000 €",
+      svc4PriceNote: "· proyecto a medida · plazas limitadas",
+      svc4Cta: "Cuéntame tu proyecto"
     },
     en: {
       langMenuAria: "Language menu",
@@ -2085,7 +2513,35 @@
       secHeadServices: "WHO I AM",
       secHeadPricing: "SERVICES",
       secHeadContact: "CONTACT",
-      contactMeta: "REPLY WITHIN 24H"
+      contactMeta: "REPLY WITHIN 24H",
+      svcLabelIncludes: "Includes",
+      svcLabelFor: "For",
+      svc1Name: "AI SESSION",
+      svc1Concept: "Your brand, seen anew.",
+      svc1Includes: "Up to 10 new images with art direction drawn from your existing material.",
+      svc1For: "Renew your image without going back to production.",
+      svc1Price: "450 €",
+      svc1Limit: "Up to 10 images",
+      svc1Cta: "Let's talk",
+      svc2Name: "BRAND FILM",
+      svc2Concept: "Cinema for what you sell.",
+      svc2Includes: "Stills + a short brand film. Direction and editing included.",
+      svc2For: "Presence with movement, ready to campaign in days.",
+      svc2Price: "1,200 €",
+      svc2Cta: "Let's talk",
+      svc3Name: "WEB DE AUTOR",
+      svc3Concept: "A page that looks like yours and no one else's.",
+      svc3Includes: "One-page with art direction and scroll narrative. Responsive.",
+      svc3For: "Stop looking like everyone else.",
+      svc3Price: "1,500 €",
+      svc3Cta: "Let's talk",
+      svc4Name: "WEBXPERIENCE",
+      svc4Concept: "Not a website. A world you step into.",
+      svc4Includes: "Immersive, interactive experience with full cinematic art direction.",
+      svc4For: "Brands that want something unforgettable.",
+      svc4Price: "From 6,000 €",
+      svc4PriceNote: "· custom project · limited slots",
+      svc4Cta: "Tell me your project"
     }
   };
 
@@ -2457,6 +2913,65 @@
     }
   }
 
+  // ============================================
+  // SERVICIOS v2: play/pause vídeos por viewport + carrusel Sesión IA
+  // ============================================
+  let _svcVideoObs = null;
+  let _svcCarouselObs = null;
+  let _svcCarouselTimer = null;
+
+  function killServicesMedia() {
+    if (_svcVideoObs)    { _svcVideoObs.disconnect();    _svcVideoObs    = null; }
+    if (_svcCarouselObs) { _svcCarouselObs.disconnect(); _svcCarouselObs = null; }
+    if (_svcCarouselTimer) { clearInterval(_svcCarouselTimer); _svcCarouselTimer = null; }
+  }
+
+  function initServicesMedia() {
+    killServicesMedia();
+    if (reduceMotion) return;
+
+    // Vídeos: carga lazy del src + play cuando entra en viewport, pause al salir
+    const videos = document.querySelectorAll('.svc-card__video');
+    if (videos.length) {
+      _svcVideoObs = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          const v = entry.target;
+          if (entry.isIntersecting) {
+            const s = v.querySelector('source[data-src]');
+            if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); }
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      }, { threshold: 0.25 });
+      videos.forEach((v) => _svcVideoObs.observe(v));
+    }
+
+    // Carrusel Sesión IA: avanza solo cuando está en viewport
+    const carousel = document.querySelector('.svc-carousel');
+    if (!carousel) return;
+    const items = Array.from(carousel.querySelectorAll('.svc-carousel__item'));
+    if (items.length < 2) return;
+    let current = 0;
+    const advance = () => {
+      items[current].classList.remove('is-active');
+      current = (current + 1) % items.length;
+      items[current].classList.add('is-active');
+    };
+    _svcCarouselObs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 2800);
+        } else {
+          clearInterval(_svcCarouselTimer);
+          _svcCarouselTimer = null;
+        }
+      });
+    }, { threshold: 0.2 });
+    _svcCarouselObs.observe(carousel);
+  }
+
   function syncViewportAnimationMode() {
     const hero = document.querySelector('.hero-v2-section');
     const mob =
@@ -2485,6 +3000,7 @@
     initQsPinCards();
     initPricingPinCards();
     initPricingMobileCards();
+    initServicesMedia();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -2511,6 +3027,19 @@
     setList('servicesKitList', d.servicesKitList);
     setText('secHeadServices', d.secHeadServices);
     setText('secHeadPricing', d.secHeadPricing);
+    // Tarjetas v2 — labels compartidos
+    for (let _i = 1; _i <= 4; _i++) {
+      setText('svcLabel' + _i + 'Inc', d.svcLabelIncludes);
+      setText('svcLabel' + _i + 'For', d.svcLabelFor);
+    }
+    // Tarjeta 1: Sesión IA
+    setText('svc1Name', d.svc1Name); setText('svc1Concept', d.svc1Concept); setText('svc1Includes', d.svc1Includes); setText('svc1For', d.svc1For); setText('svc1Price', d.svc1Price); setText('svc1Limit', d.svc1Limit); setText('svc1Cta', d.svc1Cta);
+    // Tarjeta 2: Brand Film
+    setText('svc2Name', d.svc2Name); setText('svc2Concept', d.svc2Concept); setText('svc2Includes', d.svc2Includes); setText('svc2For', d.svc2For); setText('svc2Price', d.svc2Price); setText('svc2Cta', d.svc2Cta);
+    // Tarjeta 3: Web de Autor
+    setText('svc3Name', d.svc3Name); setText('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta);
+    // Tarjeta 4: WebXperience
+    setText('svc4Name', d.svc4Name); setText('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta);
     if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
