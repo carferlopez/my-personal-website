@@ -1945,14 +1945,16 @@
   }
   .svc-carousel__item.is-active { opacity: 1; }
   /* Ken Burns sutil: la imagen activa hace un lento acercamiento que se
-     reinicia con cada cambio, para un carrusel más vivo sin distraer. */
+     reinicia con cada cambio. El ORIGEN del zoom (--kb-origin) y la ESCALA
+     (--kb-scale) los fija el JS al azar en cada pase, de modo que cada vez se
+     revela una zona distinta y aleatoria de la pieza, no siempre el centro. */
   .svc-carousel__item img {
     transform: scale(1);
-    transform-origin: center;
+    transform-origin: var(--kb-origin, center);
     transition: transform 5s ease-out;
     will-change: transform;
   }
-  .svc-carousel__item.is-active img { transform: scale(1.08); }
+  .svc-carousel__item.is-active img { transform: scale(var(--kb-scale, 1.08)); }
 
   /* Encuadre automático global: cualquier img/video dentro de la zona media se
      recorta a cover y se ancla en el tercio superior (center 25%), salvando
@@ -3266,13 +3268,27 @@
     if (!carousel) return;
     const items = Array.from(carousel.querySelectorAll('.svc-carousel__item'));
     if (items.length < 2) return;
+    // Encuadre aleatorio: fija un origen de zoom (zona de la foto) y una escala
+    // al azar en la imagen que se va a activar, para que cada pase muestre una
+    // "parte" distinta de la pieza, no siempre el mismo acercamiento al centro.
+    const randomFrame = (item) => {
+      const img = item.querySelector('img');
+      if (!img) return;
+      const ox = (15 + Math.random() * 70).toFixed(1);   // 15–85% horizontal
+      const oy = (15 + Math.random() * 70).toFixed(1);    // 15–85% vertical
+      const scale = (1.10 + Math.random() * 0.14).toFixed(3); // 1.10–1.24
+      img.style.setProperty('--kb-origin', ox + '% ' + oy + '%');
+      img.style.setProperty('--kb-scale', scale);
+    };
     let current = items.findIndex((it) => it.classList.contains('is-active'));
     if (current < 0) { current = 0; items[0].classList.add('is-active'); }
+    randomFrame(items[current]);
     const advance = () => {
       items[current].classList.remove('is-active');
       let next = Math.floor(Math.random() * items.length);
       if (items.length > 1 && next === current) next = (next + 1) % items.length;  // evita repetir
       current = next;
+      randomFrame(items[current]);          // nueva zona/escala aleatoria
       items[current].classList.add('is-active');
     };
     _svcCarouselObs = new IntersectionObserver((entries) => {
