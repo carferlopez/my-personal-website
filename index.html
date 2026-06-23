@@ -2975,15 +2975,21 @@
   let _svcVideoObs = null;
   let _svcCarouselObs = null;
   let _svcCarouselTimer = null;
+  let _svcBrandTimer = null;
+  let _svcMediaAbort = null;
 
   function killServicesMedia() {
     if (_svcVideoObs)    { _svcVideoObs.disconnect();    _svcVideoObs    = null; }
     if (_svcCarouselObs) { _svcCarouselObs.disconnect(); _svcCarouselObs = null; }
     if (_svcCarouselTimer) { clearInterval(_svcCarouselTimer); _svcCarouselTimer = null; }
+    if (_svcBrandTimer)  { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; }
+    if (_svcMediaAbort)  { _svcMediaAbort.abort(); _svcMediaAbort = null; }
   }
 
   function initServicesMedia() {
     killServicesMedia();
+    _svcMediaAbort = new AbortController();
+    const sig = _svcMediaAbort.signal;   // limpia todos los listeners en cada re-init
 
     // --- Orientación automática: el contenido vertical se ancla arriba
     //     (.is-portrait → object-position: center top) para no cortar caras ni
@@ -2992,10 +2998,10 @@
     const markPortrait = (el, w, h) => { if (w && h) el.classList.toggle('is-portrait', h > w); };
     document.querySelectorAll('.svc-card__media img').forEach((img) => {
       if (img.complete && img.naturalWidth) markPortrait(img, img.naturalWidth, img.naturalHeight);
-      else img.addEventListener('load', () => markPortrait(img, img.naturalWidth, img.naturalHeight), { once: true });
+      else img.addEventListener('load', () => markPortrait(img, img.naturalWidth, img.naturalHeight), { once: true, signal: sig });
     });
     document.querySelectorAll('.svc-card__media video').forEach((vid) => {
-      vid.addEventListener('loadedmetadata', () => markPortrait(vid, vid.videoWidth, vid.videoHeight));
+      vid.addEventListener('loadedmetadata', () => markPortrait(vid, vid.videoWidth, vid.videoHeight), { signal: sig });
     });
 
     if (reduceMotion) return;
@@ -3013,22 +3019,42 @@
         v.loop = !v.dataset.playlist;  // el reproductor de playlist gestiona el avance
       });
 
-      // Brand Film (#svcCard2): reproduce en secuencia TODOS los clips de
-      // data-playlist, avanzando al terminar cada uno y volviendo al primero
-      // al acabar la lista (loop infinito de la playlist completa).
-      const playlists = new Map();
+      // Brand Film (#svcCard2): montaje "zapping" — DOBLE azar. Elige un clip al
+      // azar (sin repetir el anterior), salta a un punto al azar dentro del clip
+      // y reproduce solo unos segundos antes de cortar a otro. SEG_MIN/MAX = la
+      // duración (en s) de cada corte.
+      const SEG_MIN = 2.2, SEG_MAX = 4.2;
+      const players = new Map();
       videos.forEach((v) => {
         if (!v.dataset.playlist) return;
         const list = v.dataset.playlist.split(',').map((s) => s.trim()).filter(Boolean);
         if (!list.length) return;
-        let idx = 0;
-        const loadClip = (i, autoplay) => {
+        let last = -1, alive = false;
+
+        const cut = () => {
+          if (!alive) return;
+          let i = Math.floor(Math.random() * list.length);
+          if (list.length > 1 && i === last) i = (i + 1) % list.length;  // no repetir clip
+          last = i;
           v.src = list[i];
-          v.load();
-          if (autoplay) v.play().catch(() => {});
+          v.load();   // → 'loadedmetadata': salta a punto aleatorio + play + timer
         };
-        v.addEventListener('ended', () => { idx = (idx + 1) % list.length; loadClip(idx, true); });
-        playlists.set(v, loadClip);
+        v.addEventListener('loadedmetadata', () => {
+          if (!alive) return;
+          const seg = SEG_MIN + Math.random() * (SEG_MAX - SEG_MIN);
+          if (v.duration && isFinite(v.duration)) {
+            try { v.currentTime = Math.random() * Math.max(0, v.duration - seg); } catch (e) {}
+          }
+          v.play().catch(() => {});
+          if (_svcBrandTimer) clearTimeout(_svcBrandTimer);
+          _svcBrandTimer = setTimeout(cut, seg * 1000);
+        }, { signal: sig });
+        v.addEventListener('ended', cut, { signal: sig });  // por si el corte alcanza el final
+
+        players.set(v, {
+          start: () => { if (!alive) { alive = true; cut(); } else v.play().catch(() => {}); },
+          stop:  () => { alive = false; v.pause(); if (_svcBrandTimer) { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; } },
+        });
       });
 
       // Web de Autor (#svcCard3): arranca en un punto aleatorio en cada carga,
@@ -3039,24 +3065,23 @@
           if (v.duration && isFinite(v.duration)) {
             v.currentTime = Math.random() * Math.max(0, v.duration - 4);
           }
-        }, { once: true });
+        }, { once: true, signal: sig });
       });
 
       _svcVideoObs = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
           const v = entry.target;
+          const player = players.get(v);
           if (entry.isIntersecting) {
-            const loadClip = playlists.get(v);
-            if (loadClip) {
-              if (!v.src) loadClip(0, true);   // primera carga diferida
-              else v.play().catch(() => {});   // reanuda el clip en curso
+            if (player) {
+              player.start();                  // arranca/reanuda el zapping aleatorio
             } else {
               const s = v.querySelector('source[data-src]');
               if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); }
               v.play().catch(() => {});
             }
           } else {
-            v.pause();
+            if (player) player.stop(); else v.pause();
           }
         });
       }, { threshold: 0.25 });
