@@ -124,19 +124,22 @@
     padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
   }
 
-  /* ==================== VÍDEO DE APERTURA ====================
-     Se autoreproduce al cargar y, al terminar, se queda en el último fotograma
-     (ver initFeaturedVideo). Tiene un tramo de scroll extra (ver
-     initFeaturedVideoToBlack) durante el cual un overlay funde el fotograma
-     congelado a negro antes de dar paso al hero (también negro). */
-  .scroll-video-section {
+  /* ==================== ESCENA HERO (vídeo scrub + titular como capa) ====================
+     Una sola escena sticky. initFeaturedVideoScrub arrastra el currentTime del
+     vídeo con el scroll; al llegar al final, el titular hace fade-in ENCIMA del
+     fotograma congelado (sobre .hero-scene__scrim, que lo oscurece para dar
+     contraste) y después zoom + fundido a blanco (initHeroScrollAnimation, mismo
+     recorrido). En móvil/reduced-motion la escena es estática y el vídeo cae al
+     fallback de autoplay (initFeaturedVideo). */
+  .hero-scene {
     position: relative;
     z-index: 2;
     width: 100%;
-    height: 145svh;
+    height: 520svh;
     background: #000000;
+    color: var(--ink);
   }
-  .scroll-video-section__sticky {
+  .hero-scene__sticky {
     position: sticky;
     top: 0;
     width: 100%;
@@ -145,66 +148,94 @@
     overflow: hidden;
     background: #000000;
   }
-  .scroll-video-section video {
+  .hero-scene__video {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     transform-origin: center center;
   }
-  .scroll-video-section__to-black {
+  /* Velo que oscurece el fotograma final para que el titular blanco se lea */
+  .hero-scene__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: #000000;
+    opacity: 0;
+    pointer-events: none;
+  }
+  /* Degradado superior bajo el header fijo */
+  .hero-scene__fade {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: clamp(3rem, 8svh, 6rem);
+    z-index: 2;
+    pointer-events: none;
+    background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0) 100%);
+  }
+  /* Capa del titular: reutiliza el padding/centrado responsive de .hero-v2-sticky,
+     pero posicionada en absoluto sobre el vídeo y oculta hasta el fade-in. */
+  .hero-scene__title.hero-v2-sticky {
     position: absolute;
     inset: 0;
     z-index: 3;
-    background: #000000;
-    pointer-events: none;
+    height: 100%;
+    min-height: 0;
+    max-height: none;
     opacity: 0;
+    will-change: opacity;
   }
-  .scroll-video-section__fade {
-    display: none;
+  /* El fundido a blanco final debe cubrir también el titular */
+  .hero-scene .hero-v2-end-fade {
+    z-index: 4;
   }
-  @media (min-width: 640px) {
-    .scroll-video-section,
-    .scroll-video-section__sticky {
-      background: #000000;
+
+  /* Móvil: escena estática; el vídeo hace autoplay (fallback) y el titular
+     aparece encima cuando el vídeo termina (clase .is-video-ended vía JS). */
+  @media (max-width: 639px) {
+    .hero-scene {
+      height: auto;
+      min-height: 100svh;
     }
-    .scroll-video-section video {
+    .hero-scene__sticky {
       position: relative;
-      z-index: 1;
+      height: 100svh;
+      max-height: none;
     }
-    .scroll-video-section__fade {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: clamp(3rem, 8svh, 6rem);
-      z-index: 2;
-      display: block;
-      pointer-events: none;
-      background: linear-gradient(to bottom, #000000 0%, rgba(0, 0, 0, 0) 100%);
+    .hero-scene.is-video-ended .hero-scene__title.hero-v2-sticky {
       opacity: 1;
+      transition: opacity 0.8s ease;
+    }
+    .hero-scene.is-video-ended .hero-scene__scrim {
+      opacity: 0.5;
+      transition: opacity 0.8s ease;
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .scroll-video-section {
+    .hero-scene {
       height: auto;
+      min-height: 100svh;
     }
-    .scroll-video-section__sticky {
+    .hero-scene__sticky {
       position: relative;
-      height: auto;
+      height: 100svh;
       max-height: none;
     }
-    .scroll-video-section video {
-      height: auto;
+    .hero-scene__video {
       opacity: 1 !important;
       transform: none !important;
-      clip-path: none !important;
     }
-    .scroll-video-section__to-black {
-      display: none;
+    /* Sin animación: titular visible y legible sobre el primer fotograma */
+    .hero-scene__title.hero-v2-sticky {
+      opacity: 1 !important;
     }
-    .scroll-video-section__fade {
-      display: none;
+    .hero-scene__scrim {
+      opacity: 0.5 !important;
     }
   }
 
@@ -396,18 +427,7 @@
     -webkit-text-fill-color: var(--ink) !important;
   }
 
-  /* ==================== HERO V2 (carlos-site-V2) ==================== */
-  .hero-v2-section {
-    height: 300vh;
-    position: relative;
-    background: #000000;
-    color: var(--ink);
-  }
-  .hero-v2-section.hero-v2-section--static {
-    height: auto;
-    min-height: 100svh;
-  }
-
+  /* ==================== HERO V2 (titular, reutilizado dentro de .hero-scene) ==================== */
   /* Último tramo del hero: fundido a blanco antes de revelar "Quién soy" */
   .hero-v2-end-fade {
     position: absolute;
@@ -417,7 +437,8 @@
     pointer-events: none;
     opacity: 0;
   }
-  .hero-v2-section--static .hero-v2-end-fade {
+  /* Escena estática (móvil/reduced-motion): sin fundido a blanco */
+  .hero-scene.is-static .hero-v2-end-fade {
     display: none;
   }
 
@@ -824,18 +845,6 @@
     .section-pad {
       padding-top: 0.75rem;
       padding-bottom: 0.75rem;
-    }
-    .hero-v2-section.hero-v2-section--static {
-      min-height: 100svh;
-    }
-    .hero-v2-section.hero-v2-section--static .hero-v2-sticky {
-      position: relative;
-      height: auto;
-      min-height: 100svh;
-      min-height: 100dvh;
-      max-height: none;
-      justify-content: center;
-      padding-bottom: clamp(1rem, 4vw, 2rem);
     }
     #heroV2Title {
       will-change: auto;
@@ -2057,12 +2066,18 @@
 
 <main>
 
-  <!-- ==================== VÍDEO DE APERTURA (autoplay + congela último fotograma) ==================== -->
-  <section class="scroll-video-section" id="inicio" aria-label="Vídeo de presentación">
-    <div class="scroll-video-section__sticky">
+  <!-- ==================== ESCENA HERO: vídeo (scrub por scroll) + titular superpuesto ====================
+       Una sola escena sticky: el scroll arrastra el vídeo fotograma a fotograma
+       (initFeaturedVideoScrub) y, al llegar al último fotograma, el titular
+       "WEB MEETS / CINEMA & VIDEO GAMES." hace fade-in COMO CAPA encima del
+       vídeo congelado (con un velo .hero-scene__scrim para garantizar contraste),
+       luego hace zoom y funde a blanco hacia "Quién soy". En móvil/reduced-motion
+       el vídeo cae al fallback de autoplay y el titular se queda estático. -->
+  <section class="hero-scene" id="inicio" aria-label="Web meets cinema & video games.">
+    <div class="hero-scene__sticky">
       <video
         id="featuredScrollVideo"
-        autoplay
+        class="hero-scene__video"
         muted
         playsinline
         webkit-playsinline
@@ -2070,19 +2085,15 @@
         aria-hidden="true">
         <source src="assets/hero-video.mp4" type="video/mp4">
       </video>
-      <div class="scroll-video-section__to-black" aria-hidden="true"></div>
-    </div>
-    <div class="scroll-video-section__fade" aria-hidden="true"></div>
-  </section>
-
-  <!-- Hero tipo carlos-site-V2 -->
-  <section class="hero-v2-section" id="presentacion" aria-label="Web meets cinema & video games.">
-    <div class="hero-v2-sticky">
-      <h1 class="hero-v2-title" id="heroV2Title">
-        <span class="hero-v2-line">WEB MEETS</span>
-        <span class="hero-v2-line">CINEMA <span class="hero-v2-dot">&amp;</span> VIDEO GAMES<span class="hero-v2-dot">.</span></span>
-      </h1>
-      <p class="hero-v2-sub">CREATIVE DEVELOPER <span class="hero-v2-dot">&amp;</span> DIGITAL CONTENT CREATOR<span class="hero-v2-dot">.</span></p>
+      <div class="hero-scene__scrim" aria-hidden="true"></div>
+      <div class="hero-scene__fade" aria-hidden="true"></div>
+      <div class="hero-v2-sticky hero-scene__title" id="presentacion">
+        <h1 class="hero-v2-title" id="heroV2Title">
+          <span class="hero-v2-line">WEB MEETS</span>
+          <span class="hero-v2-line">CINEMA <span class="hero-v2-dot">&amp;</span> VIDEO GAMES<span class="hero-v2-dot">.</span></span>
+        </h1>
+        <p class="hero-v2-sub">CREATIVE DEVELOPER <span class="hero-v2-dot">&amp;</span> DIGITAL CONTENT CREATOR<span class="hero-v2-dot">.</span></p>
+      </div>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
   </section>
@@ -2564,9 +2575,60 @@
   // Vídeo de apertura: autoplay muted + congela el último fotograma.
   // ============================================
   const VIDEO_EDGE_FADE_MEDIA = '(min-width: 640px)';
-  const HERO_TEXT_FADE_START_PROGRESS = 0.42;
-  const HERO_TEXT_FADE_END_PROGRESS = 0.90;
+  // Sub-tramos del recorrido de scroll de la escena (progress global 0..1):
+  const HERO_VIDEO_END        = 0.42; // 0 → fin del scrub del vídeo
+  const HERO_TITLE_IN_START   = 0.42; // velo + titular empiezan a aparecer
+  const HERO_TITLE_IN_END     = 0.54; // titular totalmente visible
+  const HERO_ZOOM_START       = 0.54; // empieza el zoom del titular
+  const HERO_ZOOM_END         = 0.92; // fin del zoom
+  const HERO_TEXT_FADE_START_PROGRESS = 0.80; // empieza el fundido a blanco
+  const HERO_TEXT_FADE_END_PROGRESS   = 0.96; // pantalla blanca → "Quién soy"
+  const HERO_SCRIM_MAX = 0.55; // opacidad máxima del velo bajo el titular
   let featuredVideoInitialized = false;
+  let heroSceneNativeCleanup = null;
+
+  const _clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+  // Ajusta el fotograma del vídeo según un progreso 0..1 (scrub).
+  function setHeroVideoProgress(video, progress) {
+    if (!video || !Number.isFinite(video.duration) || video.duration <= 0) return;
+    const maxTime = Math.max(0, video.duration - 0.04);
+    const nextTime = Math.max(0, Math.min(maxTime, maxTime * _clamp01(progress)));
+    if (Math.abs(video.currentTime - nextTime) > 0.035) {
+      video.currentTime = nextTime;
+    }
+  }
+
+  // Aplica TODO el estado visual de la escena para un progreso global 0..1.
+  function applyHeroSceneProgress(progress) {
+    const video   = document.getElementById('featuredScrollVideo');
+    const scrim   = document.querySelector('.hero-scene__scrim');
+    const title   = document.getElementById('heroV2Title');
+    const layer   = document.querySelector('.hero-scene__title');
+    const endFade = document.querySelector('.hero-scene .hero-v2-end-fade');
+    const p = _clamp01(progress);
+
+    // 1) Scrub del vídeo (0 → HERO_VIDEO_END).
+    setHeroVideoProgress(video, p / HERO_VIDEO_END);
+
+    // 2) Velo + fade-in del titular como capa encima del fotograma final.
+    const tIn = _clamp01((p - HERO_TITLE_IN_START) / (HERO_TITLE_IN_END - HERO_TITLE_IN_START));
+    if (scrim) scrim.style.opacity = (tIn * HERO_SCRIM_MAX).toFixed(3);
+    if (layer) layer.style.opacity = tIn.toFixed(3);
+
+    // 3) Zoom del titular.
+    const tZoom = _clamp01((p - HERO_ZOOM_START) / (HERO_ZOOM_END - HERO_ZOOM_START));
+    if (title) {
+      const scale = 1 + tZoom * 6;
+      const rot = tZoom * 22;
+      if (typeof gsap !== 'undefined') gsap.set(title, { scale, rotationZ: rot });
+      else title.style.transform = `scale(${scale}) rotate(${rot}deg)`;
+    }
+
+    // 4) Fundido a blanco.
+    const tFade = _clamp01((p - HERO_TEXT_FADE_START_PROGRESS) / (HERO_TEXT_FADE_END_PROGRESS - HERO_TEXT_FADE_START_PROGRESS));
+    if (endFade) endFade.style.opacity = tFade.toFixed(3);
+  }
 
   function killFeaturedVideo() {
     const video = document.getElementById('featuredScrollVideo');
@@ -2574,87 +2636,13 @@
       gsap.killTweensOf(video);
       gsap.set(video, { clearProps: 'opacity,transform,clipPath,willChange' });
     }
-    if (typeof ScrollTrigger !== 'undefined') {
-      const st = ScrollTrigger.getById('featuredVideoScrub');
-      if (st) st.kill();
-    }
   }
 
-  let featuredVideoToBlackNativeCleanup = null;
-
-  function killFeaturedVideoToBlack() {
-    const overlay = document.querySelector('.scroll-video-section__to-black');
-    if (featuredVideoToBlackNativeCleanup) {
-      featuredVideoToBlackNativeCleanup();
-      featuredVideoToBlackNativeCleanup = null;
-    }
-    if (typeof gsap !== 'undefined' && overlay) {
-      gsap.killTweensOf(overlay);
-      gsap.set(overlay, { clearProps: 'opacity' });
-    }
-    if (typeof ScrollTrigger !== 'undefined') {
-      const st = ScrollTrigger.getById('featuredVideoToBlack');
-      if (st) st.kill();
-    }
-  }
-
-  // Tramo de scroll tras el vídeo congelado: funde el fotograma final a negro
-  // antes de que el hero (también negro) ocupe la pantalla.
-  function initFeaturedVideoToBlack() {
-    const section = document.querySelector('.scroll-video-section');
-    const overlay = document.querySelector('.scroll-video-section__to-black');
-    if (!section || !overlay) return;
-    killFeaturedVideoToBlack();
-
-    if (reduceMotion) return;
-
-    // El fundido completa hacia el 65% del tramo de scroll, dejando un
-    // margen de negro sólido antes de que el hero tome el relevo.
-    const setOverlayOpacity = (progress) => {
-      const eased = Math.max(0, Math.min(1, progress / 0.65));
-      overlay.style.opacity = eased;
-    };
-
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-      let ticking = false;
-      const updateFromScroll = () => {
-        ticking = false;
-        const travel = Math.max(1, section.offsetHeight - window.innerHeight);
-        const progress = Math.max(0, Math.min(1, -section.getBoundingClientRect().top / travel));
-        setOverlayOpacity(progress);
-      };
-      const requestUpdate = () => {
-        if (ticking) return;
-        ticking = true;
-        requestAnimationFrame(updateFromScroll);
-      };
-      window.addEventListener('scroll', requestUpdate, { passive: true });
-      window.addEventListener('resize', requestUpdate);
-      featuredVideoToBlackNativeCleanup = () => {
-        window.removeEventListener('scroll', requestUpdate);
-        window.removeEventListener('resize', requestUpdate);
-      };
-      requestUpdate();
-      return;
-    }
-
-    gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.create({
-      id: 'featuredVideoToBlack',
-      trigger: section,
-      start: 'top top',
-      end: 'bottom bottom',
-      scrub: true,
-      invalidateOnRefresh: true,
-      onUpdate: (self) => setOverlayOpacity(self.progress),
-      onRefresh: (self) => setOverlayOpacity(self.progress)
-    });
-  }
-
-  // Vídeo de apertura: se autoreproduce una vez (muted) y, al terminar, se
-  // queda congelado en el último fotograma (sin loop).
+  // Fallback (móvil / reduced-motion / sin GSAP): el vídeo se autoreproduce una
+  // vez y, al terminar, dispara el fade-in del titular (clase .is-video-ended).
   function initFeaturedVideo() {
     const video = document.getElementById('featuredScrollVideo');
+    const scene = document.querySelector('.hero-scene');
     if (!video) return;
     killFeaturedVideo();
 
@@ -2670,89 +2658,111 @@
     video.loop = false;
     video.muted = true; // requisito para autoplay en navegadores modernos
 
-    // Respetamos prefers-reduced-motion: dejamos el primer fotograma fijo.
+    const markEnded = () => { if (scene) scene.classList.add('is-video-ended'); };
+
+    // Respetamos prefers-reduced-motion: primer fotograma fijo, titular ya visible.
     if (reduceMotion) {
-      video.removeAttribute('autoplay');
       video.pause();
+      markEnded();
       return;
     }
 
-    // Evitamos volver a forzar play en cada resync (p. ej. tras un resize),
-    // para no reiniciar el vídeo si ya está reproduciéndose o ya terminó.
+    video.addEventListener('ended', markEnded, { once: true });
+
+    // Evitamos volver a forzar play en cada resync (p. ej. tras un resize).
     if (featuredVideoInitialized) return;
     featuredVideoInitialized = true;
 
     const tryPlay = () => {
       const p = video.play();
-      if (p && typeof p.catch === 'function') {
-        // Si el navegador bloquea el autoplay, dejamos el primer fotograma.
-        p.catch(() => {});
-      }
+      // Si el navegador bloquea el autoplay, mostramos igualmente el titular.
+      if (p && typeof p.catch === 'function') p.catch(() => markEnded());
     };
-
-    if (video.readyState >= 2) {
-      tryPlay();
-    } else {
-      video.addEventListener('loadeddata', tryPlay, { once: true });
-    }
+    if (video.readyState >= 2) tryPlay();
+    else video.addEventListener('loadeddata', tryPlay, { once: true });
   }
 
-  function killHeroScrollAnimation() {
-    const hero = document.querySelector('.hero-v2-section');
+  function killHeroScene() {
+    const video = document.getElementById('featuredScrollVideo');
+    if (heroSceneNativeCleanup) { heroSceneNativeCleanup(); heroSceneNativeCleanup = null; }
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf('#heroV2Title');
-      gsap.killTweensOf('.hero-v2-end-fade');
-      gsap.set(['#heroV2Title', '.hero-v2-end-fade'], { clearProps: 'all' });
+      gsap.set('#heroV2Title', { clearProps: 'transform,willChange' });
+      if (video) gsap.set(video, { clearProps: 'willChange' });
     }
-    if (typeof ScrollTrigger !== 'undefined' && hero) {
-      const st = ScrollTrigger.getById('heroV2Trigger');
+    if (typeof ScrollTrigger !== 'undefined') {
+      const st = ScrollTrigger.getById('heroScene');
       if (st) st.kill();
-      // Alternativa: matar todos los ST asociados al elemento
-      ScrollTrigger.getAll().forEach((st) => {
-        if (st.trigger === hero) st.kill();
-      });
     }
   }
+  // Compat con syncViewportAnimationMode.
+  function killHeroScrollAnimation() { killHeroScene(); }
 
-  function initHeroScrollAnimation() {
-    if (reduceMotion) return;
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    if (window.matchMedia('(max-width: 639px)').matches) return;
+  // Escena hero unificada: scrub del vídeo + capa de titular + zoom + fundido.
+  function initHeroScene() {
+    const scene = document.querySelector('.hero-scene');
+    const video = document.getElementById('featuredScrollVideo');
+    if (!scene || !video) return;
+    killHeroScene();
+
+    const mobile = window.matchMedia('(max-width: 639px)').matches;
+
+    // Móvil o reduced-motion → escena estática con autoplay de fallback.
+    if (mobile || reduceMotion) {
+      scene.classList.add('is-static');
+      initFeaturedVideo();
+      return;
+    }
+
+    scene.classList.remove('is-static', 'is-video-ended');
+    video.pause();
+
+    // Coloca el primer fotograma en cuanto haya metadata.
+    if (video.readyState >= 1) applyHeroSceneProgress(0);
+    else video.addEventListener('loadedmetadata', () => applyHeroSceneProgress(0), { once: true });
+
+    // Sin GSAP → fallback con scroll nativo + rAF.
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
+      let ticking = false;
+      const update = () => {
+        ticking = false;
+        const travel = Math.max(1, scene.offsetHeight - window.innerHeight);
+        applyHeroSceneProgress(-scene.getBoundingClientRect().top / travel);
+      };
+      const req = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+      window.addEventListener('scroll', req, { passive: true });
+      window.addEventListener('resize', req);
+      heroSceneNativeCleanup = () => {
+        window.removeEventListener('scroll', req);
+        window.removeEventListener('resize', req);
+      };
+      req();
+      return;
+    }
+
     gsap.registerPlugin(ScrollTrigger);
-    killHeroScrollAnimation();
-    
-    gsap.set('#heroV2Title', { willChange: "transform" });
-
-    const heroTl = gsap.timeline({ 
-      scrollTrigger: {
-        id: 'heroV2Trigger',
-        trigger: '.hero-v2-section',
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 0.8,
-        invalidateOnRefresh: true,
-        onRefresh: self => {
-          if (self.progress > 0) self.animation.progress(self.progress);
-        }
-      } 
+    gsap.set('#heroV2Title', { willChange: 'transform' });
+    gsap.set(video, { willChange: 'transform' });
+    ScrollTrigger.create({
+      id: 'heroScene',
+      trigger: scene,
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 0.6,
+      invalidateOnRefresh: true,
+      onUpdate: (self) => applyHeroSceneProgress(self.progress),
+      onRefresh: (self) => applyHeroSceneProgress(self.progress)
     });
-    heroTl.fromTo(
-      '#heroV2Title',
-      { scale: 1, rotationZ: 0 },
-      { scale: 7, rotationZ: 22, ease: 'none', duration: 1 },
-      0
-    );
-    heroTl.fromTo(
-      '.hero-v2-end-fade',
-      { opacity: 0 },
-      {
-        opacity: 1,
-        ease: 'none',
-        duration: HERO_TEXT_FADE_END_PROGRESS - HERO_TEXT_FADE_START_PROGRESS
-      },
-      HERO_TEXT_FADE_START_PROGRESS
-    );
+
+    if (video.readyState < 1) {
+      video.addEventListener('loadedmetadata', () => {
+        const st = ScrollTrigger.getById('heroScene');
+        if (st) { applyHeroSceneProgress(st.progress); ScrollTrigger.refresh(); }
+      }, { once: true });
+    }
   }
+  // Compat con syncViewportAnimationMode.
+  function initHeroScrollAnimation() { initHeroScene(); }
 
   // ============================================
   // QUIÉN SOY: pin + tarjetas que vienen "desde el fondo"
@@ -2978,29 +2988,14 @@
   }
 
   function syncViewportAnimationMode() {
-    const hero = document.querySelector('.hero-v2-section');
-    const mob =
-      typeof window.matchMedia !== 'undefined' &&
-      window.matchMedia('(max-width: 639px)').matches;
-
-    killHeroScrollAnimation();
-
-    if (hero) {
-      if (mob || reduceMotion) {
-        hero.classList.add('hero-v2-section--static');
-      } else {
-        hero.classList.remove('hero-v2-section--static');
-        initHeroScrollAnimation();
-      }
-    }
-    /* fitHeroV2Lines debe correr DESPUÉS de initHeroScrollAnimation porque esta
-       llama a killHeroScrollAnimation → gsap.set clearProps:'all' que borra
-       los inline styles de altura y justifyContent que fitHeroV2Lines aplica. */
+    // initHeroScene decide internamente desktop (scrub + capa) vs. móvil/reduced
+    // (autoplay de fallback), y aplica las clases .is-static / .is-video-ended.
+    initHeroScene();
+    /* fitHeroV2Lines debe correr DESPUÉS de initHeroScene porque killHeroScene
+       limpia transform/willChange del titular. */
     fitHeroV2Lines();
     fitContactLines();
     fitServicesHeadline();
-    initFeaturedVideo();
-    initFeaturedVideoToBlack();
     initQsIframes();
     initQsPinCards();
     initPricingPinCards();
@@ -3389,30 +3384,17 @@
   function shouldHeaderUseDarkTransition() {
     if (reduceMotion || !window.matchMedia(VIDEO_EDGE_FADE_MEDIA).matches) return false;
 
-    const clampProgress = (value) => Math.max(0, Math.min(1, value));
-    const hero = document.querySelector('.hero-v2-section');
-    if (hero && !hero.classList.contains('hero-v2-section--static')) {
-      const heroRect = hero.getBoundingClientRect();
-      const heroProgress = clampProgress(-heroRect.top / Math.max(1, hero.offsetHeight));
-      // Por debajo de END_PROGRESS el fondo sigue siendo negro (texto blanco).
-      // A partir de ahí el fundido a blanco ya cubre la pantalla: dejamos que
-      // el header recupere su estilo claro (tinta oscura sobre fondo claro).
-      if (
-        heroRect.bottom > 0 &&
-        heroProgress >= HERO_TEXT_FADE_START_PROGRESS &&
-        heroProgress < HERO_TEXT_FADE_END_PROGRESS
-      ) {
-        return true;
-      }
+    // La escena hero (vídeo + titular sobre negro) cubre el header: cabecera en
+    // blanco, salvo cuando el fundido a blanco final ya ocupa la pantalla.
+    const scene = document.querySelector('.hero-scene');
+    if (!scene) return false;
+    const rect = scene.getBoundingClientRect();
+    if (rect.top <= 0 && rect.bottom > 80) {
+      const travel = Math.max(1, scene.offsetHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, -rect.top / travel));
+      if (progress >= HERO_TEXT_FADE_END_PROGRESS) return false;
+      return true;
     }
-
-    // Vídeo de apertura (negro): cabecera en blanco mientras cubra el header.
-    const videoSection = document.querySelector('.scroll-video-section');
-    if (videoSection) {
-      const videoRect = videoSection.getBoundingClientRect();
-      if (videoRect.top <= 0 && videoRect.bottom > 80) return true;
-    }
-
     return false;
   }
 
