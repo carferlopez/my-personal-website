@@ -3494,6 +3494,23 @@
   // ============================================
   // Navegación por secciones (menú): scroll suave que "imanta" la sección al centro
   // ============================================
+  // Posición de scroll para "encuadrar" una sección: si cabe en una pantalla,
+  // se centra todo el bloque; si es más alta, se encuadra desde justo debajo del
+  // header (sin dejar hueco vacío arriba).
+  function sectionScrollTarget(el) {
+    const vh = window.innerHeight;
+    const header = document.getElementById('siteHeader');
+    const headerH = header ? header.getBoundingClientRect().height : 0;
+    const gap = 12;
+    const rect = el.getBoundingClientRect();
+    const absoluteTop = rect.top + window.pageYOffset;
+    const h = rect.height;
+    const target = (h <= vh * 1.05)
+      ? absoluteTop - (vh - h) / 2          // bloque centrado en pantalla completa
+      : absoluteTop - (headerH + gap);      // sección larga: encuadrada bajo el header
+    return Math.max(0, target);
+  }
+
   function scrollToSection(hash) {
     const id = (hash || '').replace('#', '');
     const behavior = reduceMotion ? 'auto' : 'smooth';
@@ -3503,12 +3520,7 @@
     }
     const el = document.getElementById(id);
     if (!el) return;
-    // Centramos el encabezado de la sección (texto corto) en el viewport.
-    const anchor = el.querySelector('.section-head') || el;
-    const rect = anchor.getBoundingClientRect();
-    const absoluteTop = rect.top + window.pageYOffset;
-    const target = absoluteTop - Math.max(0, (window.innerHeight - rect.height) / 2);
-    window.scrollTo({ top: Math.max(0, target), behavior });
+    window.scrollTo({ top: sectionScrollTarget(el), behavior });
   }
 
   function initSectionNav() {
@@ -3564,26 +3576,21 @@
 
     let snapping = false;
     let settleTimer = null;
-    const anchorRect = (sec) => (sec.querySelector('.section-head') || sec).getBoundingClientRect();
 
     const magnet = () => {
       if (snapping) return;
       const vh = window.innerHeight;
-      const mid = vh / 2;
-      const proximity = vh * 0.32; // sólo imanta si ya estás cerca del centro
-      const deadzone = 14;         // no microajustar si ya está centrada
-      let bestSec = null, bestDist = Infinity;
+      const proximity = vh * 0.32; // sólo imanta si ya estás cerca del encuadre
+      const deadzone = 14;         // no microajustar si ya está encuadrada
+      let bestTarget = null, bestDist = Infinity;
       sections.forEach((sec) => {
-        const r = anchorRect(sec);
-        const dist = (r.top + r.height / 2) - mid;
-        if (Math.abs(dist) < Math.abs(bestDist)) { bestDist = dist; bestSec = sec; }
+        const dist = sectionScrollTarget(sec) - window.pageYOffset;
+        if (Math.abs(dist) < Math.abs(bestDist)) { bestDist = dist; bestTarget = sectionScrollTarget(sec); }
       });
-      if (!bestSec) return;
+      if (bestTarget === null) return;
       if (Math.abs(bestDist) <= deadzone || Math.abs(bestDist) > proximity) return;
       snapping = true;
-      const r = anchorRect(bestSec);
-      const target = (r.top + window.pageYOffset) - Math.max(0, (vh - r.height) / 2);
-      window.scrollTo({ top: Math.max(0, target), behavior: 'smooth' });
+      window.scrollTo({ top: bestTarget, behavior: 'smooth' });
       setTimeout(() => { snapping = false; }, 700);
     };
 
