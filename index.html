@@ -1360,6 +1360,11 @@
     margin: 0 0.55rem;
     color: var(--hairline);
   }
+  @media (max-width: 639px) {
+    /* Mantener la jerarquía: el titular de servicios (fitServicesHeadline) se comprime
+       a ~5vw en móvil; los nombres de disciplina nunca deben superarlo. */
+    .crafts-item__name { font-size: 4.8vw; }
+  }
   @media (min-width: 768px) {
     .crafts-item {
       grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
