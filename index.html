@@ -2023,12 +2023,23 @@
     border-color: var(--accent);
     color: #FFFFFF;
   }
+  /* "LA QUIERO" y "VER WEB" en la misma fila, mitad y mitad */
+  .svc-card__cta-row {
+    display: flex;
+    gap: 0.6rem;
+    margin-top: 1rem;
+  }
+  .svc-card__cta-row .svc-card__cta {
+    flex: 1 1 0;
+    min-width: 0;
+    margin-top: 0;
+  }
 
   /* WebXperience — ancla (hereda el rojo→blanco del CTA base) */
   .svc-card--anchor {
     border: 1px solid rgba(255, 0, 0, 0.16);
   }
-  .svc-card--anchor .svc-card__cta {
+  .svc-card--anchor .svc-card__cta-row {
     margin-top: 1.25rem;
   }
 
@@ -2053,7 +2064,7 @@
       justify-content: center;
       margin-top: 1.2rem;
     }
-    .svc-card--anchor .svc-card__cta { max-width: 20rem; margin-inline: auto; }
+    .svc-card--anchor .svc-card__cta-row { max-width: 24rem; margin-inline: auto; }
   }
 
   /* Desktop: 3 columnas */
@@ -2323,8 +2334,10 @@
               <div class="svc-card__price-row">
                 <p class="svc-card__price" id="svc3Price">1.500 €</p>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc3Cta">LA QUIERO</a>
-              <a class="svc-card__cta svc-card__cta--ghost" href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc3View">VER WEB ↗</a>
+              <div class="svc-card__cta-row">
+                <a class="svc-card__cta" href="#contacto" id="svc3Cta">LA QUIERO</a>
+                <a class="svc-card__cta svc-card__cta--ghost" href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc3View">VER WEB ↗</a>
+              </div>
             </div>
           </article>
 
@@ -2357,8 +2370,10 @@
                 <p class="svc-card__price" id="svc4Price">Desde 6.000 €</p>
                 <span class="svc-card__price-note" id="svc4PriceNote">· proyecto a medida · plazas limitadas</span>
               </div>
-              <a class="svc-card__cta" href="#contacto" id="svc4Cta">LA QUIERO</a>
-              <a class="svc-card__cta svc-card__cta--ghost" href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc4View">VER WEB ↗</a>
+              <div class="svc-card__cta-row">
+                <a class="svc-card__cta" href="#contacto" id="svc4Cta">LA QUIERO</a>
+                <a class="svc-card__cta svc-card__cta--ghost" href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc4View">VER WEB ↗</a>
+              </div>
             </div>
           </article>
 
