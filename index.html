@@ -2003,6 +2003,17 @@
     outline: 2px solid var(--paper);
     outline-offset: 3px;
   }
+  /* Botón secundario: ver la web ya hecha (outline, se rellena al hover) */
+  .svc-card__cta--ghost {
+    margin-top: 0.6rem;
+    background: transparent;
+    color: var(--accent);
+  }
+  .svc-card__cta--ghost:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #FFFFFF;
+  }
 
   /* WebXperience — ancla (hereda el rojo→blanco del CTA base) */
   .svc-card--anchor {
@@ -2151,7 +2162,7 @@
               <span class="section-head__index">(01)</span>
               <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
             </div>
-            <p class="big-heading services-headline"><span id="servicesHeadline">CREATIVE DEVELOPER <span class="accent">&amp;</span> DIGITAL CONTENT CREATOR<span class="accent">.</span></span></p>
+            <p class="big-heading services-headline"><span id="servicesHeadline">DESARROLLADOR WEB CREATIVO <span class="accent">&amp;</span> CREADOR DE CONTENIDO DIGITAL<span class="accent">.</span></span></p>
             <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style="font-weight:700;color:var(--ink)">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner mi bagaje y experiencia en un único lugar: productos online para marcas y usuarios, que se sienten como verdaderas experiencias.</p>
           </div>
           <div class="qs-pin__stage">
@@ -2228,7 +2239,7 @@
             </div>
             <div class="svc-card__body">
               <h3 class="svc-card__name" id="svc1Name">SESIÓN FOTOGRÁFICA 100% IA</h3>
-              <p class="svc-card__concept" id="svc1Concept">No sustituye a tu fotógrafo de confianza; lo complementa<span class="svc-dot">.</span></p>
+              <p class="svc-card__concept" id="svc1Concept">No sustituye tu sesión fotográfica; la multiplica<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
                 <dd id="svc1Includes">Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual.</dd>
@@ -2296,7 +2307,7 @@
               <p class="svc-card__concept" id="svc3Concept">Tu web, completamente a medida<span class="svc-dot">.</span></p>
               <dl class="svc-card__meta">
                 <dt class="svc-card__label" id="svcLabel3Inc">Incluye</dt>
-                <dd id="svc3Includes">One-page con dirección de arte y narrativa scroll. Responsive.</dd>
+                <dd id="svc3Includes">Diseño completo de layout y desarrollo Front-End a medida (nada de plantillas). One-page responsive con dirección de arte.</dd>
                 <dt class="svc-card__label" id="svcLabel3For">Para</dt>
                 <dd id="svc3For">Dejar de parecer uno más.</dd>
               </dl>
@@ -2304,6 +2315,7 @@
                 <p class="svc-card__price" id="svc3Price">1.500 €</p>
               </div>
               <a class="svc-card__cta" href="#contacto" id="svc3Cta">LA QUIERO</a>
+              <a class="svc-card__cta svc-card__cta--ghost" href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc3View">VER WEB ↗</a>
             </div>
           </article>
 
@@ -2337,6 +2349,7 @@
                 <span class="svc-card__price-note" id="svc4PriceNote">· proyecto a medida · plazas limitadas</span>
               </div>
               <a class="svc-card__cta" href="#contacto" id="svc4Cta">LA QUIERO</a>
+              <a class="svc-card__cta svc-card__cta--ghost" href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc4View">VER WEB ↗</a>
             </div>
           </article>
 
@@ -2446,7 +2459,7 @@
       svcLabelIncludes: "Incluye",
       svcLabelFor: "Para",
       svc1Name: "SESIÓN FOTOGRÁFICA 100% IA",
-      svc1Concept: "No sustituye a tu fotógrafo de confianza; lo complementa<span class=\"svc-dot\">.</span>",
+      svc1Concept: "No sustituye tu sesión fotográfica; la multiplica<span class=\"svc-dot\">.</span>",
       svc1Includes: "Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual.",
       svc1For: "Renovar tu imagen sin volver a producir.",
       svc1Price: "450 €",
@@ -2460,17 +2473,19 @@
       svc2Cta: "LO QUIERO",
       svc3Name: "WEB DE AUTOR",
       svc3Concept: "Tu web, completamente a medida<span class=\"svc-dot\">.</span>",
-      svc3Includes: "One-page con dirección de arte y narrativa scroll. Responsive.",
+      svc3Includes: "Diseño completo de layout y desarrollo Front-End a medida (nada de plantillas). One-page responsive con dirección de arte.",
       svc3For: "Dejar de parecer uno más.",
       svc3Price: "1.500 €",
       svc3Cta: "LA QUIERO",
+      svc3View: "VER WEB ↗",
       svc4Name: "WEBXPERIENCE",
       svc4Concept: "No es una web<span class=\"svc-dot\">.</span> Es una experiencia interactiva<span class=\"svc-dot\">.</span>",
       svc4Includes: "Todo lo anterior. Experiencia inmersiva e interactiva con dirección cinematográfica completa. Sin límite de imágenes o vídeos. Totalmente a medida.",
       svc4For: "Marcas que quieren algo inolvidable.",
       svc4Price: "Desde 6.000 €",
       svc4PriceNote: "· proyecto a medida · plazas limitadas",
-      svc4Cta: "LA QUIERO"
+      svc4Cta: "LA QUIERO",
+      svc4View: "VER WEB ↗"
     },
     en: {
       langMenuAria: "Language menu",
@@ -2520,7 +2535,7 @@
       svcLabelIncludes: "Includes",
       svcLabelFor: "For",
       svc1Name: "100% AI PHOTO SESSION",
-      svc1Concept: "Studio-grade images, no studio<span class=\"svc-dot\">.</span>",
+      svc1Concept: "It doesn't replace your photoshoot; it multiplies it<span class=\"svc-dot\">.</span>",
       svc1Includes: "Up to 10 new images with art direction drawn from your existing material.",
       svc1For: "Renew your image without going back to production.",
       svc1Price: "450 €",
@@ -2534,17 +2549,19 @@
       svc2Cta: "I WANT IT",
       svc3Name: "WEB DE AUTOR",
       svc3Concept: "Your website, fully bespoke<span class=\"svc-dot\">.</span>",
-      svc3Includes: "One-page with art direction and scroll narrative. Responsive.",
+      svc3Includes: "Complete layout design and bespoke front-end development (no templates). Responsive one-page with art direction.",
       svc3For: "Stop looking like everyone else.",
       svc3Price: "1,500 €",
       svc3Cta: "I WANT IT",
+      svc3View: "VIEW SITE ↗",
       svc4Name: "WEBXPERIENCE",
       svc4Concept: "Not a website<span class=\"svc-dot\">.</span> An interactive experience<span class=\"svc-dot\">.</span>",
       svc4Includes: "Everything above. Immersive, interactive experience with full cinematic art direction. No limit on images or videos. Fully bespoke.",
       svc4For: "Brands that want something unforgettable.",
       svc4Price: "From 6,000 €",
       svc4PriceNote: "· custom project · limited slots",
-      svc4Cta: "I WANT IT"
+      svc4Cta: "I WANT IT",
+      svc4View: "VIEW SITE ↗"
     }
   };
 
@@ -3172,9 +3189,9 @@
     // Tarjeta 2: Brand Film
     setText('svc2Name', d.svc2Name); setHTML('svc2Concept', d.svc2Concept); setText('svc2Includes', d.svc2Includes); setText('svc2For', d.svc2For); setText('svc2Price', d.svc2Price); setText('svc2Cta', d.svc2Cta);
     // Tarjeta 3: Web de Autor
-    setText('svc3Name', d.svc3Name); setHTML('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta);
+    setText('svc3Name', d.svc3Name); setHTML('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta); setText('svc3View', d.svc3View);
     // Tarjeta 4: WebXperience
-    setText('svc4Name', d.svc4Name); setHTML('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta);
+    setText('svc4Name', d.svc4Name); setHTML('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta); setText('svc4View', d.svc4View);
     if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
