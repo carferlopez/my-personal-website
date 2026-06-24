@@ -1067,6 +1067,8 @@
     color: var(--paper);
     border-color: var(--ink);
   }
+  /* El email no debe capitalizarse: se muestra tal cual (minúsculas) */
+  #contactEmailBtn { text-transform: none; }
 
 
   .contact-alt {
@@ -1103,9 +1105,6 @@
   .contact-divider {
     margin-top: 0;
     padding: 0;
-  }
-  #contacto .contact-form-wrap {
-    max-width: 72rem;
   }
   .contact-divider p:has(#contactDividerTextTop),
   .contact-divider p:has(#contactDividerTextBottom),
@@ -1211,103 +1210,6 @@
       margin-top: auto;
       margin-bottom: 0;
     }
-  }
-
-  .contact-form-wrap { width: 100%; max-width: 100%; }
-  .contact-form {
-    margin-top: 1.25rem;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-areas:
-      "name    message"
-      "email   message"
-      "topic   submit";
-    grid-template-rows: auto auto auto;
-    column-gap: 1.5rem;
-    row-gap: 1rem;
-    max-width: 100%;
-    position: relative;
-  }
-  /* Honeypot e input hidden fuera del flujo */
-  .contact-form input[type="hidden"] { display: none; }
-  .contact-form__hp { display: none !important; }
-
-  /* Asignación de áreas */
-  .contact-form > .contact-form__row:nth-child(2) { grid-area: name; }
-  .contact-form > .contact-form__row:nth-child(3) { grid-area: email; }
-  .contact-form > .contact-form__row:nth-child(4) { grid-area: topic; }
-  .contact-form > .contact-form__row:nth-child(5) { grid-area: message; display: flex; flex-direction: column; }
-  .contact-form > .contact-form__row:nth-child(5) .contact-form__textarea { flex: 1; resize: none; min-height: 220px; }
-  .contact-form > .contact-form__row:nth-child(7) { grid-area: submit; align-self: end; }
-
-  /* Móvil: columna única */
-  @media (max-width: 639px) {
-    .contact-form {
-      grid-template-columns: 1fr;
-      grid-template-areas: none;
-    }
-    .contact-form > .contact-form__row:nth-child(n) { grid-area: auto; }
-    .contact-form > .contact-form__row:nth-child(5) .contact-form__textarea { min-height: 8rem; resize: vertical; }
-  }
-
-  .contact-form__row { display: flex; flex-direction: column; gap: 0.35rem; }
-  .contact-form__label {
-    font-weight: 700;
-    font-size: 0.9rem;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-  }
-  .contact-form__input,
-  .contact-form__select,
-  .contact-form__textarea {
-    width: 100%;
-    max-width: 100%;
-    font: inherit;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.55rem 0.7rem;
-    border: 3px solid var(--hairline);
-    background: var(--ink);
-    color: var(--paper);
-    min-width: 0;
-  }
-  .contact-form__input:hover,
-  .contact-form__textarea:hover { cursor: text; }
-  .contact-form__select:hover { cursor: pointer; }
-  .contact-form__input:focus,
-  .contact-form__select:focus,
-  .contact-form__textarea:focus {
-    outline: none;
-    box-shadow: 0 0 0 1px var(--accent);
-  }
-  .contact-form__textarea { min-height: 8rem; resize: vertical; line-height: 1.5; }
-  .contact-form__select option {
-    color: var(--paper);
-    background: var(--ink);
-  }
-  .contact-form__submit:disabled { opacity: 0.55; cursor: not-allowed; }
-  .contact-form__status {
-    color: var(--ink);
-    font-size: 0.95rem;
-    font-weight: 600;
-    max-width: 42rem;
-    margin-top: 0.5rem;
-  }
-  .contact-form__done {
-    max-width: 42rem;
-    font-size: 1rem;
-    line-height: 1.55;
-    color: var(--ink);
-    margin-top: 1.25rem;
-  }
-  @media (min-width: 640px) { .contact-form__done { font-size: 1.125rem; } }
-  @media (min-width: 768px) { .contact-form__done { font-size: 1.25rem; } }
-  .contact-form__hp {
-    position: absolute;
-    left: -10000px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
   }
 
   .face-container {
@@ -2172,7 +2074,7 @@
             <a href="#contacto" class="section-nav__link" data-nav id="navContacto">Contacto</a>
           </nav>
           <nav aria-label="Redes y contacto">
-            <a href="#contacto" aria-label="Formulario de contacto">
+            <a href="mailto:hola@carlosmakes.com" aria-label="Escríbeme un correo">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
             </a>
             <a href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
@@ -2474,48 +2376,12 @@
           </div>
         </div>
 
-        <div class="contact-form__done" id="contactFormSuccess" hidden>
-          <p id="contactFormSuccessText"></p>
-        </div>
-
-        <div class="contact-form-wrap" id="contactFormBlock">
-          <form id="contactForm" class="contact-form" novalidate>
-            <input type="hidden" name="startedAt" id="cf-started-at" value="">
-            <div class="contact-form__row">
-              <label class="contact-form__label" for="cf-name" id="label-cf-name">Nombre</label>
-              <input class="contact-form__input" type="text" name="name" id="cf-name" required maxlength="200" autocomplete="name" />
-            </div>
-            <div class="contact-form__row">
-              <label class="contact-form__label" for="cf-email" id="label-cf-email">Email</label>
-              <input class="contact-form__input" type="email" name="email" id="cf-email" required autocomplete="email" />
-            </div>
-            <div class="contact-form__row">
-              <label class="contact-form__label" for="cf-topic" id="label-cf-topic">Asunto</label>
-              <select class="contact-form__select" name="topic" id="cf-topic" required>
-                <option value="" id="cf-topic-placeholder">—</option>
-                <option value="colaboracion" id="opt-cf-colaboracion">Quiero una web</option>
-                <option value="proyecto" id="opt-cf-proyecto">Cuidado &amp; evolución</option>
-                <option value="consulta" id="opt-cf-consulta">Tengo una duda</option>
-                <option value="otro" id="opt-cf-otro">Otro</option>
-              </select>
-            </div>
-            <div class="contact-form__row">
-              <label class="contact-form__label" for="cf-message" id="label-cf-message">Mensaje</label>
-              <textarea class="contact-form__textarea" name="message" id="cf-message" required minlength="20" maxlength="5000" rows="5"></textarea>
-            </div>
-            <div class="contact-form__row contact-form__hp" aria-hidden="true">
-              <label for="cf-gotcha">Company website</label>
-              <input type="text" name="_gotcha" id="cf-gotcha" tabindex="-1" autocomplete="off" />
-            </div>
-            <div class="contact-form__row">
-              <button type="submit" class="contact-btn contact-form__submit" id="contactFormSubmit">Enviar</button>
-            </div>
-          </form>
-          <p class="contact-form__status" id="contactFormStatus" role="status" aria-live="polite" hidden></p>
+        <div class="contact-buttons">
+          <a class="contact-btn" href="mailto:hola@carlosmakes.com" id="contactEmailBtn">hola@carlosmakes.com</a>
         </div>
 
         <div class="contact-alt">
-          <span class="contact-alt-label" id="contactAltLabel">O si prefieres:</span>
+          <span class="contact-alt-label" id="contactAltLabel">O encuéntrame en:</span>
           <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
           <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
@@ -2538,27 +2404,7 @@
       contactDividerBottom: "(Y OJOS)",
       contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que merece.",
       contactDividerEscribeme: "ESCRÍBEME",
-      contactFormName: "Nombre",
-      contactFormEmail: "Email",
-      contactFormTopic: "Asunto",
-      contactFormMessage: "Mensaje",
-      contactFormTopicPh: "Elige un asunto",
-      contactTopicColab: "Quiero una web",
-      contactTopicProyecto: "Cuidado & evolución",
-      contactTopicConsulta: "Tengo una duda",
-      contactTopicOtro: "Otro",
-      contactFormSend: "Enviar",
-      contactFormSending: "Enviando…",
-      contactFormSuccess: [
-        "Recibido. Te respondo cuando el café haga efecto.",
-        "Mensaje recibido. Ahora solo hace falta leerlo ;)",
-        "Recibido. Me pongo con ello en cuanto cierre estas 47 pestañas.",
-        "¡Recibido! Lo leeré entre reunión y reunión, que es cuando pasan las cosas importantes.",
-        "Anotado. Ahora solo tengo que acordarme de responder.",
-      ],
-      contactFormErrGeneric: "No se ha podido enviar. Revisa la conexión o inténtalo en un rato.",
-      contactFormErr429: "Has enviado varios mensajes seguidos. Toma un café e inténtalo dentro de unos minutos.",
-      contactAltLabel: "O si prefieres:",
+      contactAltLabel: "O encuéntrame en:",
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "CREATIVE DEVELOPER <span class=\"accent\">&amp;</span> DIGITAL CONTENT CREATOR<span class=\"accent\">.</span>",
       servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style=\"font-weight:700;color:var(--ink)\">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner mi bagaje y experiencia en un único lugar: productos online para marcas y usuarios, que se sienten como verdaderas experiencias.",
@@ -2632,28 +2478,7 @@
       contactDividerBottom: "(AND I SEE YOU)",
       contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
       contactDividerEscribeme: "WRITE TO ME",
-      contactFormName: "Name",
-      contactFormEmail: "Email",
-      contactFormTopic: "Topic",
-      contactFormMessage: "Message",
-      contactFormTopicPh: "Choose a topic",
-      contactTopicColab: "I want a website",
-      contactTopicProyecto: "Care & evolution",
-      contactTopicConsulta: "I have a question",
-      contactTopicOtro: "Other",
-      contactFormSend: "Send",
-      contactFormSending: "Sending…",
-      contactFormSuccess: [
-        "Got it. I'll get back to you when the caffeine kicks in.",
-        "Message received. Now I just need to actually open my inbox.",
-        "Noted. On it — or I'll convincingly pretend to be until I am.",
-        "Got it. I'll get to it once I close these 47 tabs.",
-        "Landed! I'll read it between meetings, which is when real things happen.",
-        "Saved. I'll reply before it gets buried under other emails. Probably.",
-      ],
-      contactFormErrGeneric: "Couldn't send. Check your connection or try again in a bit.",
-      contactFormErr429: "That's a few messages in a row. Grab a coffee and try again in a few minutes.",
-      contactAltLabel: "Or if you prefer:",
+      contactAltLabel: "Or find me on:",
       servicesEyebrow: "WHAT I DO FOR YOU",
       servicesHeadline: "CREATIVE DEVELOPER <span class=\"accent\">&amp;</span> DIGITAL CONTENT CREATOR<span class=\"accent\">.</span>",
       servicesLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for brands like Kia, Signify and Starbucks. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
@@ -3395,26 +3220,6 @@
     if (contactSubEl && d.contactSub) contactSubEl.innerHTML = d.contactSub;
     const dividerEscribeme = document.getElementById('contactDividerTextEscribeme');
     if (dividerEscribeme) dividerEscribeme.innerHTML = d.contactDividerEscribeme;
-    const lname = document.getElementById('label-cf-name');
-    if (lname) lname.textContent = d.contactFormName;
-    const lem = document.getElementById('label-cf-email');
-    if (lem) lem.textContent = d.contactFormEmail;
-    const ltop = document.getElementById('label-cf-topic');
-    if (ltop) ltop.textContent = d.contactFormTopic;
-    const lmsg = document.getElementById('label-cf-message');
-    if (lmsg) lmsg.textContent = d.contactFormMessage;
-    const tph = document.getElementById('cf-topic-placeholder');
-    if (tph) tph.textContent = d.contactFormTopicPh;
-    const o1 = document.getElementById('opt-cf-colaboracion');
-    if (o1) o1.textContent = d.contactTopicColab;
-    const o2 = document.getElementById('opt-cf-proyecto');
-    if (o2) o2.textContent = d.contactTopicProyecto;
-    const o3 = document.getElementById('opt-cf-consulta');
-    if (o3) o3.textContent = d.contactTopicConsulta;
-    const o4 = document.getElementById('opt-cf-otro');
-    if (o4) o4.textContent = d.contactTopicOtro;
-    const csub = document.getElementById('contactFormSubmit');
-    if (csub && csub.type === 'submit') csub.textContent = d.contactFormSend;
     applyServicesI18n(d);
     if (pageInitialized) {
       setTimeout(() => {
@@ -3424,73 +3229,6 @@
       }, 80);
     }
   }
-
-  function getContactFormEndpoint() {
-    try {
-      if (typeof location !== 'undefined' && location.protocol && location.protocol !== 'file:') {
-        return location.origin + '/api/contact';
-      }
-    } catch (e) {}
-    return 'https://carlosmakes.com/api/contact';
-  }
-
-  function initContactForm() {
-    const form = document.getElementById('contactForm');
-    if (!form) return;
-    const st = document.getElementById('cf-started-at');
-    if (st) st.value = String(Date.now());
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const d = t[lang];
-      const status = document.getElementById('contactFormStatus');
-      const btn = document.getElementById('contactFormSubmit');
-      const block = document.getElementById('contactFormBlock');
-      const done = document.getElementById('contactFormSuccess');
-      if (!status || !btn || !block || !done) return;
-      status.hidden = true;
-      status.textContent = '';
-      btn.disabled = true;
-      btn.textContent = d.contactFormSending;
-      try {
-        const payload = {
-          name: document.getElementById('cf-name').value.trim(),
-          email: document.getElementById('cf-email').value.trim(),
-          topic: document.getElementById('cf-topic').value,
-          message: document.getElementById('cf-message').value,
-          _gotcha: document.getElementById('cf-gotcha').value,
-          startedAt: (st && st.value) || String(Date.now()),
-        };
-        const r = await fetch(getContactFormEndpoint(), {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept-Language': lang === 'en' ? 'en' : 'es' },
-          body: JSON.stringify(payload),
-        });
-        const j = await r.json().catch(() => ({}));
-        if (r.status === 200 && j.ok) {
-          const cfin = document.getElementById('contactFormSuccessText');
-          if (cfin) {
-            const msgs = t[lang].contactFormSuccess;
-            cfin.textContent = Array.isArray(msgs) ? msgs[Math.floor(Math.random() * msgs.length)] : msgs;
-          }
-          block.hidden = true;
-          done.hidden = false;
-          if (st) st.value = String(Date.now());
-          return;
-        }
-        status.textContent = r.status === 429 ? d.contactFormErr429
-          : (j?.details?.[0]?.message || d.contactFormErrGeneric);
-        status.hidden = false;
-      } catch {
-        status.textContent = t[lang].contactFormErrGeneric;
-        status.hidden = false;
-      } finally {
-        btn.disabled = false;
-        btn.textContent = t[lang].contactFormSend;
-      }
-    });
-  }
-
-
 
   function setLangMenuOpen(open) {
     const root = document.getElementById('langSelect');
@@ -3877,7 +3615,6 @@
     }
     initLangSelect();
     applyLang();
-    initContactForm();
 
     initHamburger();
     initSectionNav();

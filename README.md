@@ -1,39 +1,25 @@
-# Carlos Site + Resend (secure setup)
+# Carlos Site
 
-## 1) Configure environment variables
+Sitio personal estático (HTML/CSS/JS en `index.html`), desplegado en GitHub Pages
+(dominio `carlosmakes.com` vía `CNAME`).
 
-Copy `.env.example` to `.env` and replace the API key placeholder:
+## Contacto
 
-```bash
-cp .env.example .env
-```
+El contacto es directo, sin backend:
 
-Replace `re_xxxxxxxxx` with your real key in `.env`.
+- Email: **hola@carlosmakes.com** (enlaces `mailto:` en el header y en la sección de contacto).
+- Redes: X e Instagram.
 
-## 2) Run the server
+> Antes había un formulario que enviaba a un Cloudflare Worker (`/api/contact`, vía Resend).
+> Se retiró para eliminar esa superficie de ataque. Si el Worker sigue desplegado en
+> Cloudflare, conviene borrarlo: `cd worker` (en una copia anterior) y `npx wrangler delete`,
+> o eliminarlo desde el panel de Cloudflare.
 
-```bash
-npm run dev
-```
+## Worker de redirección (se mantiene)
 
-This serves your site and exposes the same path as production:
-
-- `POST /api/contact` (alias: `POST /api/send-email`)
-
-## 3) Test the Resend endpoint
+`worker/www-redirect/` es un Worker mínimo que hace 301 de `https://www.carlosmakes.com/*`
+al ápex `https://carlosmakes.com` (mismo path y query), para que el host canónico sea el ápex.
 
 ```bash
-curl -X POST http://localhost:3000/api/contact \
-  -H "Content-Type: application/json" \
-  -d '{"name":"Carlos","email":"hola@carlosmakes.com","topic":"consulta","message":"Hola Carlos, me gustaría hablar de un proyecto en detalle.","_gotcha":""}'
+npm run deploy:www-redirect
 ```
-
-## Notes
-
-- Keep `.env` private; it is ignored via `.gitignore`.
-- Email sending must happen server-side, not in browser JavaScript.
-- Production: a **separate** tiny Worker in `worker/www-redirect/` should handle `https://www.carlosmakes.com/*` with **301** to `https://carlosmakes.com` (same path and query) so the canonical host is the apex. Deploy it and add the route in Cloudflare. See `worker/README.md`.
-- The contact API Worker is at `https://carlosmakes.com/api/contact`. The form uses `location.origin + '/api/contact'`.
-- Local `npm run dev` uses `http://localhost:PORT/api/contact`.
-- `resend-example.js` is kept as a standalone script if you want to run a direct test with Node.
-- Anti-spam protections included: IP rate limit, cooldown, honeypot field, minimum form fill time, server-side validation.
