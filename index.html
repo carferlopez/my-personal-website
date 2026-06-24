@@ -1316,6 +1316,61 @@
   /* ==================== SERVICIOS + PRECIOS ==================== */
   #servicios { background: var(--page-bg); color: var(--ink); overflow-x: clip; }
   .services-subsection + .services-subsection { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
+
+  /* ==================== ONE VISION — THREE CRAFTS ==================== */
+  .crafts-list { display: flex; flex-direction: column; }
+  .crafts-item {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.9rem;
+    padding: 1.75rem 0;
+    border-top: 1px solid var(--hairline);
+    opacity: 0;
+    transform: translateY(24px);
+    will-change: transform, opacity;
+  }
+  .crafts-item:last-child { border-bottom: 1px solid var(--hairline); }
+  .crafts-item__name {
+    font-weight: 900;
+    font-size: clamp(1.6rem, 3.5vw, 2.75rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+  .crafts-item__name .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+  .crafts-item__body { display: flex; flex-direction: column; gap: 0.9rem; }
+  .crafts-item__desc {
+    font-size: clamp(0.9rem, 1.4vw, 1rem);
+    line-height: 1.65;
+    color: var(--ink-2);
+  }
+  .crafts-item__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+  }
+  .crafts-item__tag + .crafts-item__tag::before {
+    content: '\00B7';
+    margin: 0 0.55rem;
+    color: var(--hairline);
+  }
+  @media (min-width: 768px) {
+    .crafts-item {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
+      gap: 0 3rem;
+      padding: 2.25rem 0;
+      align-items: start;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .crafts-item { opacity: 1 !important; transform: none !important; }
+  }
   .services-eyebrow {
     color: var(--ink-3);
     font-family: var(--font-mono);
@@ -2205,6 +2260,58 @@
         </div>
       </div>
 
+      <!-- ==================== ONE VISION — THREE CRAFTS ==================== -->
+      <div class="services-subsection" id="crafts" aria-labelledby="craftsEyebrow">
+        <div class="section-head">
+          <span class="section-head__name" id="craftsEyebrow">ONE VISION — THREE CRAFTS</span>
+        </div>
+        <div class="crafts-list">
+
+          <!-- Web Design -->
+          <div class="crafts-item">
+            <h3 class="crafts-item__name">Web <span class="accent">Design</span></h3>
+            <div class="crafts-item__body">
+              <p class="crafts-item__desc" id="craftsDesc1">Authored one-page sites and full immersive WebXperiences — every interaction directed, every frame intentional.</p>
+              <div class="crafts-item__tags" aria-label="Stack">
+                <span class="crafts-item__tag">Next.js</span>
+                <span class="crafts-item__tag">GSAP</span>
+                <span class="crafts-item__tag">Three.js</span>
+                <span class="crafts-item__tag">React Three Fiber</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Art Direction -->
+          <div class="crafts-item">
+            <h3 class="crafts-item__name">Art <span class="accent">Direction</span></h3>
+            <div class="crafts-item__body">
+              <p class="crafts-item__desc" id="craftsDesc2">A coherent visual world across type, motion and color. Restraint with punctuation — the base disappears, the detail stays.</p>
+              <div class="crafts-item__tags" aria-label="Disciplines">
+                <span class="crafts-item__tag">Identity</span>
+                <span class="crafts-item__tag">Motion</span>
+                <span class="crafts-item__tag">Type</span>
+                <span class="crafts-item__tag">Color</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Filmmaking -->
+          <div class="crafts-item">
+            <h3 class="crafts-item__name"><span class="accent">Film</span>making</h3>
+            <div class="crafts-item__body">
+              <p class="crafts-item__desc" id="craftsDesc3">AI-driven brand films and cinematic pieces — directed shot by shot, not prompted. Keyframe workflows for real character continuity.</p>
+              <div class="crafts-item__tags" aria-label="Tools">
+                <span class="crafts-item__tag">Veo</span>
+                <span class="crafts-item__tag">Flow</span>
+                <span class="crafts-item__tag">Kling</span>
+                <span class="crafts-item__tag">Suno</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
       <!-- ==================== SERVICIOS v2: 4 tarjetas con media ==================== -->
       <div class="services-subsection svc-section" id="servicios-lista">
         <div class="section-head">
@@ -2517,7 +2624,11 @@
       svc4Price: "Desde 6.000 €",
       svc4PriceNote: "· proyecto a medida · plazas limitadas",
       svc4Cta: "LA QUIERO",
-      svc4View: "VER WEB ↗"
+      svc4View: "VER WEB ↗",
+      craftsEyebrow: "ONE VISION — THREE CRAFTS",
+      craftsDesc1: "Webs de una sola página y WebXperiences completamente inmersivas — cada interacción dirigida, cada fotograma intencional.",
+      craftsDesc2: "Un mundo visual coherente a través de tipografía, movimiento y color. Contención con puntuación — la base desaparece, el detalle permanece.",
+      craftsDesc3: "Brand films y piezas cinematográficas con IA — dirigidas plano a plano, no generadas. Flujos de trabajo por keyframes para continuidad de personaje real."
     },
     en: {
       langMenuAria: "Language menu",
@@ -2593,7 +2704,11 @@
       svc4Price: "From 6,000 €",
       svc4PriceNote: "· custom project · limited slots",
       svc4Cta: "I WANT IT",
-      svc4View: "VIEW SITE ↗"
+      svc4View: "VIEW SITE ↗",
+      craftsEyebrow: "ONE VISION — THREE CRAFTS",
+      craftsDesc1: "Authored one-page sites and full immersive WebXperiences — every interaction directed, every frame intentional.",
+      craftsDesc2: "A coherent visual world across type, motion and color. Restraint with punctuation — the base disappears, the detail stays.",
+      craftsDesc3: "AI-driven brand films and cinematic pieces — directed shot by shot, not prompted. Keyframe workflows for real character continuity."
     }
   };
 
@@ -2868,6 +2983,32 @@
           y: 0,
           opacity: 1,
           duration: 0.8,
+          ease: 'power3.out',
+          stagger: 0.15
+        });
+      }
+    });
+  }
+
+  // ============================================
+  // ONE VISION — THREE CRAFTS: stagger al entrar en viewport
+  // ============================================
+  function initCrafts() {
+    if (reduceMotion) return;
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
+    const items = document.querySelectorAll('.crafts-item');
+    if (!items.length) return;
+    gsap.registerPlugin(ScrollTrigger);
+    ScrollTrigger.create({
+      id: 'crafts',
+      trigger: '#crafts',
+      start: 'top 78%',
+      once: true,
+      onEnter: () => {
+        gsap.to(items, {
+          y: 0,
+          opacity: 1,
+          duration: 0.75,
           ease: 'power3.out',
           stagger: 0.15
         });
@@ -3182,6 +3323,7 @@
     fitServicesHeadline();
     initQsIframes();
     initQsPinCards();
+    initCrafts();
     initPricingPinCards();
     initPricingMobileCards();
     initServicesMedia();
@@ -3224,6 +3366,11 @@
     setText('svc3Name', d.svc3Name); setHTML('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Price', d.svc3Price); setText('svc3Cta', d.svc3Cta); setText('svc3View', d.svc3View);
     // Tarjeta 4: WebXperience
     setText('svc4Name', d.svc4Name); setHTML('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Price', d.svc4Price); setText('svc4PriceNote', d.svc4PriceNote); setText('svc4Cta', d.svc4Cta); setText('svc4View', d.svc4View);
+    // Three Crafts
+    setText('craftsEyebrow', d.craftsEyebrow);
+    setText('craftsDesc1', d.craftsDesc1);
+    setText('craftsDesc2', d.craftsDesc2);
+    setText('craftsDesc3', d.craftsDesc3);
     if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
       const c = document.getElementById('price1Cta');
       if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
