@@ -3525,9 +3525,10 @@
     const rect = el.getBoundingClientRect();
     const absoluteTop = rect.top + window.pageYOffset;
     const h = rect.height;
-    const target = (h <= vh * 1.05)
-      ? absoluteTop - (vh - h) / 2          // bloque centrado en pantalla completa
-      : absoluteTop - (headerH + gap);      // sección larga: encuadrada bajo el header
+    const availableH = vh - headerH - gap; // espacio visible por debajo del header
+    const target = (h <= availableH)
+      ? absoluteTop - headerH - gap - (availableH - h) / 2  // bloque centrado en el espacio visible bajo el header
+      : absoluteTop - (headerH + gap);                       // sección larga: encuadrada bajo el header
     return Math.max(0, target);
   }
 
