@@ -576,6 +576,28 @@
     -webkit-text-fill-color: var(--accent) !important;
   }
 
+  /* Hero: subtítulo discreto bajo el titular (a quién ayudo) */
+  .hero-v2-subtitle {
+    margin: 0.9rem 0 0;
+    max-width: 34ch;
+    font-size: clamp(0.85rem, 1.7vw, 1.05rem);
+    font-weight: 400;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.7);
+    -webkit-text-fill-color: rgba(255, 255, 255, 0.7);
+    position: relative;
+    z-index: 1;
+  }
+  @media (max-width: 639px) {
+    .hero-v2-subtitle {
+      max-width: 26ch;
+      font-size: 0.85rem;
+      margin-top: 0.7rem;
+    }
+  }
+
   .header-top {
     display: flex;
     justify-content: space-between;
@@ -1432,6 +1454,48 @@
   }
   @media (min-width: 1200px) { .services-lead { font-size: 0.8rem; } }
 
+  /* ==================== PRUEBA SOCIAL: franja de marcas ==================== */
+  .social-proof {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+    margin: 0 0 2.25rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--hairline);
+  }
+  .social-proof__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-3);
+    white-space: nowrap;
+  }
+  .social-proof__list {
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 1.5rem;
+    row-gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .social-proof__list li {
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+    color: var(--ink-2);
+    filter: grayscale(1);
+    opacity: 0.75;
+  }
+  @media (min-width: 768px) {
+    .social-proof { margin-bottom: 2.75rem; }
+    .social-proof__list li { font-size: 0.9rem; }
+  }
+
   /* ==================== QUIÉN SOY: pin + tarjetas viniendo desde el fondo ==================== */
   /* Wrapper que se hace pin durante el scroll (initQsPinCards). */
   .qs-pin-wrapper { position: relative; }
@@ -1487,6 +1551,27 @@
     }
     .qs-card-link:hover .qs-card {
       transform: scale(1.05);
+    }
+    .qs-card__caption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      padding: 1.1rem 1rem 0.85rem;
+      font-size: 0.72rem;
+      font-weight: 500;
+      line-height: 1.4;
+      color: #FFFFFF;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+    }
+    .qs-card-link:hover .qs-card__caption,
+    .qs-card-link:focus-visible .qs-card__caption {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -2149,6 +2234,10 @@
     .svc-card--anchor .svc-card__concept {
       font-size: clamp(1.4rem, 2.6vw, 1.9rem);
     }
+    .svc-card:not(.svc-card--anchor) .svc-card__concept {
+      font-size: 1.15rem;
+      letter-spacing: -0.03em;
+    }
   }
 
   /* prefers-reduced-motion: solo poster, sin autoplay ni transición */
@@ -2237,6 +2326,7 @@
           <span class="hero-v2-line">DESIGNED LIKE <span class="hero-v2-accent">ART</span><span class="hero-v2-dot">.</span></span>
           <span class="hero-v2-line">BUILT LIKE <span class="hero-v2-accent">SOFTWARE</span><span class="hero-v2-dot">.</span></span>
         </h1>
+        <p class="hero-v2-subtitle" id="heroV2Subtitle">Webs cinematográficas para marcas de autor que quieren dejar de parecer una más.</p>
       </div>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
@@ -2248,6 +2338,14 @@
       <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
 
       <div class="services-subsection qs-pin-wrapper" id="quien-soy">
+        <div class="social-proof" id="socialProof" aria-label="Marcas con las que he trabajado">
+          <span class="social-proof__eyebrow" id="socialProofEyebrow">Experiencia con marcas como</span>
+          <ul class="social-proof__list">
+            <li>Starbucks</li>
+            <li>Kia</li>
+            <li>Philips</li>
+          </ul>
+        </div>
         <div class="qs-pin">
           <div class="qs-pin__text">
             <div class="section-head">
@@ -2255,17 +2353,20 @@
               <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
             </div>
             <p class="big-heading services-headline"><span id="servicesHeadline">AI CREATIVE DIRECTOR<span class="accent">.</span></span></p>
-            <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style="font-weight:700;color:var(--ink)">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style="font-weight:700;color:var(--ink)">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span></p>
+            <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style="font-weight:700;color:var(--ink)">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span></p>
           </div>
           <div class="qs-pin__stage">
             <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
               <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
+              <span class="qs-card__caption" id="qsCaption1">[Problema] → [qué reimaginé]</span>
             </a>
             <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
               <img class="qs-card" src="assets/projects/lurex-real-estate.webp" alt="Lurex Real Estate" loading="lazy">
+              <span class="qs-card__caption" id="qsCaption2">[Problema] → [qué reimaginé]</span>
             </a>
             <a href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link qs-card-link--wide">
               <img class="qs-card" src="assets/projects/batman-arkham-asylum.webp" alt="Be The Bat" loading="lazy">
+              <span class="qs-card__caption" id="qsCaption3">[Problema] → [qué reimaginé]</span>
             </a>
           </div>
         </div>
@@ -2569,9 +2670,14 @@
       contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que merece — sin fricción y a velocidad de software.",
       contactDividerEscribeme: "ESCRÍBEME",
       contactAltLabel: "O encuéntrame en:",
+      heroSubtitle: "Webs cinematográficas para marcas de autor que quieren dejar de parecer una más.",
+      socialProofEyebrow: "Experiencia con marcas como",
+      qsCaption1: "[Problema] → [qué reimaginé]",
+      qsCaption2: "[Problema] → [qué reimaginé]",
+      qsCaption3: "[Problema] → [qué reimaginé]",
       servicesEyebrow: "QUÉ HAGO POR TI",
       servicesHeadline: "AI CREATIVE DIRECTOR<span class=\"accent\">.</span>",
-      servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas como <span style=\"font-weight:700;color:var(--ink)\">Starbucks, Kia y Philips</span>. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style=\"font-weight:700;color:var(--ink)\">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span>",
+      servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style=\"font-weight:700;color:var(--ink)\">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span>",
       pricingHeadline: "ANYTHING YOU CAN IMAGINE<span class=\"accent\">.</span>",
       pricingIntro: "Calidad cinematográfica. Ejecución ágil y eficiente. Utilizo mi criterio y experiencia en múltiples áreas para ejecutar proyectos de altísima calidad de principio a fin y sin intermediarios. La IA me permite multiplicar mi eficiencia operativa y reducir drásticamente los costes de producción.",
       priceNote: "*Arrancamos con un 50% por adelantado. Los textos y contenidos corren por tu cuenta, o se cotizan como extra.",
@@ -2649,9 +2755,14 @@
       contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
       contactDividerEscribeme: "WRITE TO ME",
       contactAltLabel: "Or find me on:",
+      heroSubtitle: "Cinematic websites for founder-led brands ready to stop looking like everyone else.",
+      socialProofEyebrow: "Experience with brands like",
+      qsCaption1: "[Problem] → [what I reimagined]",
+      qsCaption2: "[Problem] → [what I reimagined]",
+      qsCaption3: "[Problem] → [what I reimagined]",
       servicesEyebrow: "WHAT I DO FOR YOU",
       servicesHeadline: "AI CREATIVE DIRECTOR<span class=\"accent\">.</span>",
-      servicesLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for brands like Kia, Signify and Starbucks. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
+      servicesLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for major international brands. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
       pricingHeadline: "ANYTHING YOU CAN IMAGINE<span class=\"accent\">.</span>",
       pricingIntro: "Cinematic quality. Agile and efficient execution. I leverage my experience across multiple creative verticals to own full end-to-end pipelines. AI multiplies my operational efficiency and reduces production overhead.",
       priceNote: "*We start with 50% upfront. You provide the copy and content, or it is quoted as an extra.",
@@ -2767,11 +2878,12 @@
 
   // Aplica TODO el estado visual de la escena para un progreso global 0..1.
   function applyHeroSceneProgress(progress) {
-    const video   = document.getElementById('featuredScrollVideo');
-    const scrim   = document.querySelector('.hero-scene__scrim');
-    const title   = document.getElementById('heroV2Title');
-    const layer   = document.querySelector('.hero-scene__title');
-    const endFade = document.querySelector('.hero-scene .hero-v2-end-fade');
+    const video    = document.getElementById('featuredScrollVideo');
+    const scrim    = document.querySelector('.hero-scene__scrim');
+    const title    = document.getElementById('heroV2Title');
+    const subtitle = document.getElementById('heroV2Subtitle');
+    const layer    = document.querySelector('.hero-scene__title');
+    const endFade  = document.querySelector('.hero-scene .hero-v2-end-fade');
     const p = _clamp01(progress);
 
     // 1) Scrub del vídeo (0 → HERO_VIDEO_END).
@@ -2792,6 +2904,13 @@
       const rot = tZoom * 22;
       if (typeof gsap !== 'undefined') gsap.set(title, { scale, rotationZ: rot });
       else title.style.transform = `scale(${scale}) rotate(${rot}deg)`;
+    }
+
+    // 3b) El subtítulo no tiene el zoom del titular: se apaga en cuanto este
+    // empieza a crecer para que no quede solapado debajo de las letras gigantes.
+    if (subtitle) {
+      const tSubOut = _clamp01(tZoom / 0.05);
+      subtitle.style.opacity = (1 - tSubOut).toFixed(3);
     }
 
     // 4) Fundido a blanco.
@@ -2867,6 +2986,8 @@
 
   function killHeroScene() {
     const video = document.getElementById('featuredScrollVideo');
+    const subtitle = document.getElementById('heroV2Subtitle');
+    if (subtitle) subtitle.style.opacity = '';
     if (heroSceneNativeCleanup) { heroSceneNativeCleanup(); heroSceneNativeCleanup = null; }
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf('#heroV2Title');
@@ -3353,6 +3474,11 @@
       const el = document.getElementById(id);
       if (el && Array.isArray(arr)) el.innerHTML = arr.map((x) => '<li>' + x + '</li>').join('');
     };
+    setText('heroV2Subtitle', d.heroSubtitle);
+    setText('socialProofEyebrow', d.socialProofEyebrow);
+    setText('qsCaption1', d.qsCaption1);
+    setText('qsCaption2', d.qsCaption2);
+    setText('qsCaption3', d.qsCaption3);
     setText('servicesEyebrow', d.servicesEyebrow);
     setHTML('servicesHeadline', d.servicesHeadline);
     setHTML('servicesLead', d.servicesLead);
@@ -3669,9 +3795,14 @@
     const lines = title.querySelectorAll('.hero-v2-line');
     if (!lines.length) return;
     const cs = getComputedStyle(sticky);
+    const subtitle = document.getElementById('heroV2Subtitle');
+    const subtitleH = subtitle
+      ? subtitle.offsetHeight + parseFloat(getComputedStyle(subtitle).marginTop)
+      : 0;
     const H = sticky.clientHeight
       - parseFloat(cs.paddingTop)
-      - parseFloat(cs.paddingBottom);
+      - parseFloat(cs.paddingBottom)
+      - subtitleH;
     if (H < 16) return;
 
     /* Reset de sobreescrituras de iteraciones anteriores. */
