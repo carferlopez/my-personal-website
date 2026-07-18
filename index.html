@@ -2323,8 +2323,8 @@
       <div class="hero-scene__fade" aria-hidden="true"></div>
       <div class="hero-v2-sticky hero-scene__title" id="presentacion">
         <h1 class="hero-v2-title" id="heroV2Title">
-          <span class="hero-v2-line">DESIGNED LIKE <span class="hero-v2-accent">ART</span><span class="hero-v2-dot">.</span></span>
-          <span class="hero-v2-line">BUILT LIKE <span class="hero-v2-accent">SOFTWARE</span><span class="hero-v2-dot">.</span></span>
+          <span class="hero-v2-line" id="heroV2Line1">DESIGNED LIKE <span class="hero-v2-accent">ART</span><span class="hero-v2-dot">.</span></span>
+          <span class="hero-v2-line" id="heroV2Line2">BUILT LIKE <span class="hero-v2-accent">SOFTWARE</span><span class="hero-v2-dot">.</span></span>
         </h1>
         <p class="hero-v2-subtitle" id="heroV2Subtitle">Webs cinematográficas para marcas de autor que quieren dejar de parecer una más.</p>
       </div>
@@ -2670,6 +2670,9 @@
       contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que merece — sin fricción y a velocidad de software.",
       contactDividerEscribeme: "ESCRÍBEME",
       contactAltLabel: "O encuéntrame en:",
+      heroTitleLine1: "DISEÑADO COMO <span class=\"hero-v2-accent\">ARTE</span><span class=\"hero-v2-dot\">.</span>",
+      heroTitleLine2: "CONSTRUIDO COMO <span class=\"hero-v2-accent\">SOFTWARE</span><span class=\"hero-v2-dot\">.</span>",
+      heroSceneAria: "Diseñado como arte. Construido como software.",
       heroSubtitle: "Webs cinematográficas para marcas de autor que quieren dejar de parecer una más.",
       socialProofEyebrow: "Experiencia con marcas como",
       qsCaption1: "[Problema] → [qué reimaginé]",
@@ -2755,6 +2758,9 @@
       contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
       contactDividerEscribeme: "WRITE TO ME",
       contactAltLabel: "Or find me on:",
+      heroTitleLine1: "DESIGNED LIKE <span class=\"hero-v2-accent\">ART</span><span class=\"hero-v2-dot\">.</span>",
+      heroTitleLine2: "BUILT LIKE <span class=\"hero-v2-accent\">SOFTWARE</span><span class=\"hero-v2-dot\">.</span>",
+      heroSceneAria: "Designed like art. Built like software.",
       heroSubtitle: "Cinematic websites for founder-led brands ready to stop looking like everyone else.",
       socialProofEyebrow: "Experience with brands like",
       qsCaption1: "[Problem] → [what I reimagined]",
@@ -3524,6 +3530,13 @@
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
     const introH = document.getElementById('introHeading');
     if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
+
+    const heroLine1 = document.getElementById('heroV2Line1');
+    if (heroLine1 && d.heroTitleLine1) heroLine1.innerHTML = d.heroTitleLine1;
+    const heroLine2 = document.getElementById('heroV2Line2');
+    if (heroLine2 && d.heroTitleLine2) heroLine2.innerHTML = d.heroTitleLine2;
+    const heroSceneEl = document.getElementById('inicio');
+    if (heroSceneEl && d.heroSceneAria) heroSceneEl.setAttribute('aria-label', d.heroSceneAria);
 
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
