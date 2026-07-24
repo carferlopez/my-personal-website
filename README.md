@@ -1,25 +1,13 @@
 # Carlos Site
 
-Sitio personal estático (HTML/CSS/JS en `index.html`), desplegado en GitHub Pages
-(dominio `carlosmakes.com` vía `CNAME`).
+Sitio personal estatico (HTML/CSS/JS en index.html), desplegado en Vercel (proyecto carlosmakes, deploy automatico con cada push a main). DNS y dominio (carlosmakes.com) gestionados en Cloudflare; el email (hola@carlosmakes.com) es Google Workspace.
 
 ## Contacto
 
-El contacto es directo, sin backend:
+El contacto es directo, sin backend. Email: hola@carlosmakes.com (enlaces mailto en el header y en la seccion de contacto). Redes: X e Instagram.
 
-- Email: **hola@carlosmakes.com** (enlaces `mailto:` en el header y en la sección de contacto).
-- Redes: X e Instagram.
+Nota: antes habia un formulario que enviaba a un Cloudflare Worker (/api/contact, via Resend). Se retiro para eliminar esa superficie de ataque, y el Worker (carlosmakes-contact) se ha eliminado de Cloudflare.
 
-> Antes había un formulario que enviaba a un Cloudflare Worker (`/api/contact`, vía Resend).
-> Se retiró para eliminar esa superficie de ataque. Si el Worker sigue desplegado en
-> Cloudflare, conviene borrarlo: `cd worker` (en una copia anterior) y `npx wrangler delete`,
-> o eliminarlo desde el panel de Cloudflare.
+## Redireccion www a apex
 
-## Worker de redirección (se mantiene)
-
-`worker/www-redirect/` es un Worker mínimo que hace 301 de `https://www.carlosmakes.com/*`
-al ápex `https://carlosmakes.com` (mismo path y query), para que el host canónico sea el ápex.
-
-```bash
-npm run deploy:www-redirect
-```
+https://www.carlosmakes.com redirige (301) a https://carlosmakes.com mediante la configuracion de dominios del proyecto en Vercel. Ya no depende de un Worker propio (el antiguo worker/www-redirect/ se ha retirado de Cloudflare).
