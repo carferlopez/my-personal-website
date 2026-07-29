@@ -1576,8 +1576,7 @@
         <div class="header-actions" id="headerActions">
           <nav class="section-nav" aria-label="Secciones">
             <a href="#inicio" class="section-nav__link" data-nav id="navInicio">Inicio</a>
-            <a href="#quien-soy" class="section-nav__link" data-nav id="navQuienSoy">Quién soy</a>
-            <a href="#servicios-lista" class="section-nav__link" data-nav id="navServicios">Servicios</a>
+            <a href="#proyectos" class="section-nav__link" data-nav id="navProyectos">Proyectos</a>
             <a href="#contacto" class="section-nav__link" data-nav id="navContacto">Contacto</a>
           </nav>
           <nav aria-label="Redes y contacto">
@@ -1721,7 +1720,7 @@
             <div class="contact-ojitos-text">
               <p class="big-heading"><span id="contactDividerTextTop">SOY TODO OÍDOS</span></p>
               <p class="big-heading"><span id="contactDividerTextBottom">(Y OJOS)</span><span class="contact-divider-mark">.</span></p>
-              <p class="contact-sub" id="contactSub">Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que merece.</p>
+              <p class="contact-sub" id="contactSub">TODO_CONTACTO</p>
             </div>
           </div>
         </div>
@@ -1754,7 +1753,7 @@
       langMenuAria: "Menú de idioma",
       contactDividerTop: "SOY TODO OÍDOS",
       contactDividerBottom: "(Y OJOS)",
-      contactSub: "Escríbeme con tu concepto y le daremos la estructura, el diseño y la tecnología que merece — sin fricción y a velocidad de software.",
+      contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "ESCRÍBEME",
       contactAltLabel: "O encuéntrame en:",
       heroTitleLine1: "LA IA SIN <span class=\"hero-v2-accent\">CRITERIO</span>",
@@ -1771,8 +1770,7 @@
       secHeadProyectos: "PROYECTOS",
       secHeadContact: "CONTACTO",
       navInicio: "Inicio",
-      navQuienSoy: "Quién soy",
-      navServicios: "Servicios",
+      navProyectos: "Proyectos",
       navContacto: "Contacto",
       contactMeta: "RESPUESTA EN 24H",
     },
@@ -1780,7 +1778,7 @@
       langMenuAria: "Language menu",
       contactDividerTop: "I LISTEN TO YOU",
       contactDividerBottom: "(AND I SEE YOU)",
-      contactSub: "Write to me with your concept and we'll give it the structure, design and technology it deserves — fast and friction-free.",
+      contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "WRITE TO ME",
       contactAltLabel: "Or find me on:",
       heroTitleLine1: "AI WITHOUT <span class=\"hero-v2-accent\">JUDGMENT</span>",
@@ -1797,8 +1795,7 @@
       secHeadProyectos: "PROJECTS",
       secHeadContact: "CONTACT",
       navInicio: "Home",
-      navQuienSoy: "Who I am",
-      navServicios: "Services",
+      navProyectos: "Projects",
       navContacto: "Contact",
       contactMeta: "REPLY WITHIN 24H",
     }
@@ -2144,7 +2141,7 @@
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     const secHeadContactEl = document.getElementById('secHeadContact');
     if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
-    [['navInicio', d.navInicio], ['navQuienSoy', d.navQuienSoy], ['navServicios', d.navServicios], ['navContacto', d.navContacto]]
+    [['navInicio', d.navInicio], ['navProyectos', d.navProyectos], ['navContacto', d.navContacto]]
       .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
     const contactMetaEl = document.getElementById('contactMeta');
     if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
@@ -2302,8 +2299,7 @@
     // Scrollspy: marca como activa la sección cuyo centro está más cerca del centro de pantalla.
     const map = [
       ['inicio', document.getElementById('navInicio')],
-      ['quien-soy', document.getElementById('navQuienSoy')],
-      ['servicios-lista', document.getElementById('navServicios')],
+      ['proyectos', document.getElementById('navProyectos')],
       ['contacto', document.getElementById('navContacto')]
     ].filter(([secId, link]) => document.getElementById(secId) && link);
     if (!map.length) return;
@@ -2331,7 +2327,7 @@
   // secciones quedan fuera de la lista, y la proximidad evita imantar desde lejos.
   function initSectionMagnet() {
     if (reduceMotion) return;
-    const calmIds = ['quien-soy', 'servicios-lista', 'contacto'];
+    const calmIds = ['quien-soy', 'proyectos', 'contacto'];
     const sections = calmIds.map((id) => document.getElementById(id)).filter(Boolean);
     if (!sections.length) return;
 
