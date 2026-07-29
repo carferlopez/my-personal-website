@@ -1340,104 +1340,15 @@
     margin-left: auto;
   }
 
-  /* ==================== SERVICIOS + PRECIOS ==================== */
-  #servicios { background: var(--page-bg); color: var(--ink); overflow-x: clip; }
-  .services-subsection + .services-subsection { margin-top: clamp(3.5rem, 7vw, 5.5rem); }
+  /* ==================== QUIÉN SOY / PROYECTOS ==================== */
+  #quien-soy, #proyectos { overflow-x: clip; }
 
-  /* ==================== ONE VISION — THREE CRAFTS ==================== */
-  .crafts-list { display: flex; flex-direction: column; }
-  .crafts-item {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.9rem;
-    padding: 1.75rem 0;
-    border-top: 1px solid var(--hairline);
-    opacity: 0;
-    transform: translateY(24px);
-    will-change: transform, opacity;
-  }
-  .crafts-item:last-child { border-bottom: 1px solid var(--hairline); }
-  .crafts-item__name {
-    font-weight: 900;
-    font-size: clamp(1.6rem, 3.5vw, 2.75rem);
-    letter-spacing: -0.02em;
-    line-height: 1;
-    text-transform: uppercase;
-  }
-  .crafts-item__name .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
-  .crafts-item__body { display: flex; flex-direction: column; gap: 0.9rem; }
-  .crafts-item__desc {
-    font-size: clamp(0.9rem, 1.4vw, 1rem);
-    line-height: 1.65;
-    color: var(--ink-2);
-  }
-  .crafts-item__tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 0;
-    font-family: var(--font-mono);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-  }
-  .crafts-item__tag + .crafts-item__tag::before {
-    content: '\00B7';
-    margin: 0 0.55rem;
-    color: var(--hairline);
-  }
-  @media (max-width: 639px) {
-    /* Mantener la jerarquía: el titular de servicios (fitServicesHeadline) se comprime
-       a ~5vw en móvil; los nombres de disciplina nunca deben superarlo. */
-    .crafts-item__name { font-size: 4.8vw; }
-  }
-  @media (min-width: 768px) {
-    .crafts-item {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr);
-      gap: 0 3rem;
-      padding: 2.25rem 0;
-      align-items: start;
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .crafts-item { opacity: 1 !important; transform: none !important; }
-  }
-  .services-eyebrow {
-    color: var(--ink-3);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    font-size: 0.78rem;
-    margin: 0 0 1.1rem;
-  }
-  .services-headline { margin: 0 0 1.1rem; }
-  .services-headline .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
-  .services-headline--sub {
-    line-height: 0.9;
-    letter-spacing: 0;
-    max-width: 17ch;
-  }
+  .qs-headline { margin: 0 0 1.1rem; }
+  .qs-headline .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
   @media (min-width: 1024px) {
-    .services-headline--sub:has(#pricingHeadline) {
-      max-width: none;
-      width: 100%;
-      font-size: clamp(3.4rem, 5.35vw, 5.35rem);
-      white-space: normal;
-      overflow-wrap: normal;
-      word-break: normal;
-    }
-    /* Mismo tamaño que "DOS NIVELES..." (clamp ligado al viewport, no al
-       contenedor, así ambos coinciden siempre). A diferencia de pricingHeadline,
-       este titular vive en la columna estrecha junto a las fotos, así que NO
-       forzamos nowrap: a este tamaño necesita partirse en 2 líneas para no
-       desbordar (ver intento revertido en 89f9ecf, que sí forzaba nowrap aquí). */
-    .services-headline:has(#servicesHeadline) {
-      font-size: clamp(3.4rem, 5.35vw, 5.35rem);
-    }
+    .qs-headline { font-size: clamp(3.4rem, 5.35vw, 5.35rem); }
   }
-  .services-lead {
+  .qs-lead {
     max-width: 48ch;
     font-size: 0.72rem;
     font-weight: 500;
@@ -1446,13 +1357,13 @@
     color: var(--ink-2);
   }
   @media (min-width: 768px) {
-    .services-lead {
+    .qs-lead {
       max-width: 54ch;
       font-size: 0.78rem;
       margin-bottom: 3rem;
     }
   }
-  @media (min-width: 1200px) { .services-lead { font-size: 0.8rem; } }
+  @media (min-width: 1200px) { .qs-lead { font-size: 0.8rem; } }
 
   /* ==================== PRUEBA SOCIAL: franja de marcas ==================== */
   .social-proof {
@@ -1496,77 +1407,74 @@
     .social-proof__list li { font-size: 0.9rem; }
   }
 
-  /* ==================== QUIÉN SOY: pin + tarjetas viniendo desde el fondo ==================== */
-  /* Wrapper que se hace pin durante el scroll (initQsPinCards). */
+  /* ==================== PROYECTOS: tarjetas (initQsPinCards) ==================== */
+  /* Wrapper que dispara el reveal-on-scroll (initQsPinCards). */
   .qs-pin-wrapper { position: relative; }
-  .qs-pin {
+  .proyectos-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 2rem;
-    align-items: center;
+    gap: 1.5rem;
   }
-  /* En móvil: solo texto, sin escenario. */
-  .qs-pin__stage { display: none; }
+  .qs-card-link {
+    position: relative;
+    aspect-ratio: 16/9;
+    border-radius: 8px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
+    background: var(--ink);
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .qs-card-link[hidden] { display: none; }
+  .qs-card-link:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.12);
+  }
+  .qs-card-link .qs-card {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .qs-card-link:hover .qs-card {
+    transform: scale(1.05);
+  }
+  .qs-card__caption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.1rem 1rem 0.85rem;
+    font-size: 0.72rem;
+    font-weight: 500;
+    line-height: 1.4;
+    color: #FFFFFF;
+    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+    pointer-events: none;
+  }
+  /* Escritorio: 2 columnas, motion de reveal-on-scroll + caption solo al hover
+     (en móvil, sin hover, la caption queda siempre visible). */
   @media (min-width: 900px) {
-    .qs-pin {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      gap: 2.5rem;
-      min-height: 92svh;
-      align-items: start;
-    }
-    .qs-pin__text { max-width: 100%; }
-    .qs-pin__stage {
-      display: grid;
+    .proyectos-grid {
       grid-template-columns: repeat(2, 1fr);
       gap: 1.5rem;
-      width: 100%;
-      max-width: 740px;
-      justify-self: end;
-      align-content: start;
+      max-width: 960px;
     }
+    .qs-card-link--wide { grid-column: 1 / -1; }
     .qs-card-link {
-      position: relative;
-      aspect-ratio: 16/9;
-      border-radius: 8px;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
-      background: var(--ink);
       opacity: 0;
       transform: translateY(40px);
       will-change: transform, opacity;
-      display: block;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .qs-card-link:hover {
       transform: translateY(-4px) !important;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.12);
-    }
-    .qs-card-link .qs-card {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .qs-card-link:hover .qs-card {
-      transform: scale(1.05);
     }
     .qs-card__caption {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 1.1rem 1rem 0.85rem;
-      font-size: 0.72rem;
-      font-weight: 500;
-      line-height: 1.4;
-      color: #FFFFFF;
-      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
       opacity: 0;
       transform: translateY(6px);
       transition: opacity 0.25s ease, transform 0.25s ease;
-      pointer-events: none;
     }
     .qs-card-link:hover .qs-card__caption,
     .qs-card-link:focus-visible .qs-card__caption {
@@ -1575,7 +1483,7 @@
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .qs-card-link { opacity: 1 !important; transform: none !important; }
+    .qs-card-link:not([hidden]) { opacity: 1 !important; transform: none !important; }
   }
 
   /* Live iframe previews */
@@ -1624,8 +1532,7 @@
     }
   }
 
-  #servicesLead,
-  #pricingIntro,
+  #quienSoyLead,
   #contactSub {
     max-width: 20ch;
     color: var(--ink-2);
@@ -1637,8 +1544,7 @@
     text-wrap: balance;
   }
   @media (min-width: 768px) {
-    #servicesLead,
-    #pricingIntro,
+    #quienSoyLead,
     #contactSub {
       max-width: 21ch;
       font-size: 1.25rem;
@@ -1646,607 +1552,16 @@
     }
   }
   @media (min-width: 1200px) {
-    #servicesLead,
-    #pricingIntro,
+    #quienSoyLead,
     #contactSub {
       font-size: 1.5rem;
     }
   }
   /* "Quién soy": el párrafo de intro va algo más pequeño (era demasiado grande). */
-  #servicesLead { font-size: 0.98rem; max-width: 30ch; }
-  @media (min-width: 768px) { #servicesLead { font-size: 1.02rem; max-width: 32ch; } }
-  @media (min-width: 1200px) { #servicesLead { font-size: 1.18rem; max-width: 34ch; } }
+  #quienSoyLead { font-size: 0.98rem; max-width: 30ch; }
+  @media (min-width: 768px) { #quienSoyLead { font-size: 1.02rem; max-width: 32ch; } }
+  @media (min-width: 1200px) { #quienSoyLead { font-size: 1.18rem; max-width: 34ch; } }
 
-  .services-subline {
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: var(--ink);
-    margin: 0 0 1.5rem;
-    line-height: 1.4;
-    max-width: 44ch;
-  }
-  @media (min-width: 768px) { .services-subline { font-size: 1.15rem; margin-bottom: 2rem; } }
-
-  .pricing-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
-    align-items: start;
-  }
-  .pricing-pin-wrapper { position: relative; }
-  .pricing-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; margin: 0; align-items: stretch; }
-  .price-card {
-    border: 3px solid var(--hairline);
-    border-radius: 14px;
-    padding: 1.9rem 1.6rem;
-    display: flex;
-    flex-direction: column;
-    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-  }
-  
-  /* Tarjeta 2 (WebExperience): Fondo claro puro, texto oscuro, borde fino definido */
-  .price-card:not(.price-card--featured) {
-    background: #FFFFFF;
-    color: var(--ink);
-    border-color: var(--hairline);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-  }
-  .price-card:not(.price-card--featured):hover {
-    border-color: var(--accent);
-  }
-  .price-card:not(.price-card--featured) .price-card__name {
-    color: var(--ink-2);
-  }
-  .price-card:not(.price-card--featured) .price-card__tagline {
-    color: #71717A;
-  }
-  .price-card:not(.price-card--featured) .price-card__list {
-    border-top: 1px solid rgba(0, 0, 0, 0.1);
-  }
-
-  /* Tarjeta 1 (Web de Autor): Fondo oscuro sólido, texto claro, bordes sutiles */
-  .price-card--featured {
-    background: #0A0A0A;
-    color: var(--paper);
-    border-color: #262626;
-    position: relative;
-  }
-  .price-card--featured:hover {
-    border-color: var(--accent);
-  }
-  .price-card--featured .price-card__name {
-    color: var(--ink-3);
-  }
-  .price-card--featured:hover .price-card__name {
-    color: #FFFFFF;
-  }
-  .price-card--featured .price-card__tagline {
-    color: #A1A1A5;
-  }
-  .price-card--featured .price-card__list {
-    border-top: 1px solid rgba(255, 255, 255, 0.15);
-  }
-
-  .price-card__badge {
-    position: absolute; top: -0.95rem; left: 1.6rem;
-    background: var(--paper); color: var(--ink);
-    font-family: var(--font-mono); font-weight: 700;
-    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.06em;
-    padding: 0.28rem 0.6rem; border: 2px solid var(--ink);
-  }
-  .price-card__name {
-    font-family: var(--font-mono);
-    font-weight: 700; text-transform: uppercase;
-    font-size: 0.85rem; margin: 0 0 1rem; letter-spacing: 0.04em;
-  }
-  .price-card__price { font-weight: 900; font-size: 1.45rem; line-height: 1.02; letter-spacing: -0.02em; margin: 0 0 0.2rem; }
-  .price-card__price span { font-family: var(--font-mono); font-size: 0.85rem; font-weight: 400; letter-spacing: 0; opacity: 0.7; }
-  .price-card__tagline { font-size: 0.9rem; margin: 0.35rem 0 0; line-height: 1.4; font-style: italic; }
-  .price-card__list { list-style: none; padding: 0; margin: 1.5rem 0 1.75rem; display: flex; flex-direction: column; gap: 0.65rem; padding-top: 1.25rem; }
-  .price-card__list li { font-size: 0.95rem; line-height: 1.4; padding-left: 1.3rem; position: relative; }
-  .price-card__list li::before { content: "\2192"; position: absolute; left: 0; font-weight: 900; }
-  .price-card__note { font-size: 0.72rem; opacity: 0.5; margin: 0.8rem 0 0.8rem; line-height: 1.4; }
-  
-  /* Botón de Conversión (CTA): Rojo puro de alto impacto ocupando todo el ancho */
-  .price-card__cta {
-    align-self: stretch;
-    margin-top: auto;
-    text-align: center;
-    color: #FFFFFF !important;
-    background: var(--accent) !important;
-    border: 3px solid var(--accent) !important;
-    font-weight: 900;
-  }
-  .price-card__cta:hover {
-    background: #CC0000 !important;
-    border-color: #CC0000 !important;
-    color: #FFFFFF !important;
-  }
-  @media (min-width: 900px) {
-    .pricing-pin-wrapper {
-      min-height: 92svh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .pricing-layout {
-      grid-template-columns: minmax(260px, 0.45fr) 1.55fr;
-      gap: clamp(2rem, 4vw, 4rem);
-    }
-    .pricing-layout #pricingIntro {
-      align-self: start;
-      margin: 0;
-    }
-    .pricing-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.25rem;
-      width: 100%;
-      max-width: 920px;
-      justify-self: end;
-      margin: 0;
-    }
-    .pricing-grid.is-pinned-stage {
-      position: relative;
-      overflow: visible;
-    }
-    .price-card {
-      padding: 1.25rem 1.25rem 1.15rem;
-    }
-    .price-card__name {
-      margin-bottom: 0.65rem;
-    }
-    .price-card__price {
-      font-size: 1.3rem;
-    }
-    .price-card__tagline {
-      margin-top: 0.25rem;
-    }
-    .price-card__list {
-      margin: 1rem 0 1.05rem;
-      gap: 0.42rem;
-      padding-top: 0.9rem;
-    }
-    .price-card__list li {
-      font-size: 0.84rem;
-      line-height: 1.32;
-    }
-  }
-  @media (max-width: 899px) {
-    .pricing-layout {
-      gap: clamp(1.5rem, 8svh, 3.5rem);
-    }
-    .pricing-grid {
-      gap: clamp(2.5rem, 18svh, 7rem);
-      align-items: stretch;
-    }
-    .pricing-grid .price-card {
-      min-height: calc(100svh - 5.5rem);
-      min-height: calc(100dvh - 5.5rem);
-      border-radius: 18px;
-      padding: clamp(1.1rem, 5vw, 1.55rem);
-      justify-content: flex-start;
-      scroll-margin-top: 5.25rem;
-      opacity: 1;
-      transform: none;
-    }
-    .js .pricing-grid .price-card {
-      opacity: 0;
-      transform: translateY(2rem);
-      transition: opacity 0.45s ease, transform 0.45s ease;
-    }
-    .js .pricing-grid .price-card.is-mobile-visible {
-      opacity: 1 !important;
-      transform: none !important;
-    }
-    .pricing-grid .price-card__name {
-      margin-bottom: 0.7rem;
-    }
-    .pricing-grid .price-card__price {
-      font-size: clamp(1.35rem, 7vw, 2rem);
-    }
-    .pricing-grid .price-card__tagline {
-      font-size: 0.9rem;
-    }
-    .pricing-grid .price-card__list {
-      margin: 1rem 0 1.15rem;
-      gap: 0.5rem;
-      padding-top: 1rem;
-    }
-    .pricing-grid .price-card__list li {
-      font-size: clamp(0.78rem, 3.45vw, 0.92rem);
-      line-height: 1.32;
-    }
-    .pricing-grid .price-card__note {
-      margin-top: 0.75rem;
-      margin-bottom: 0.75rem;
-    }
-  }
-  .services-kit {
-    margin: 2.5rem 0 0;
-    font-family: var(--font-mono);
-    font-size: 0.82rem;
-    font-weight: 400;
-    line-height: 1.6;
-    color: var(--ink-2);
-    border-top: 2px solid var(--ink);
-    padding-top: 1.25rem;
-    max-width: 60ch;
-  }
-  .services-kit__title {
-    display: block;
-    font-weight: 700;
-    text-transform: uppercase;
-    margin-bottom: 0.75rem;
-    color: var(--ink);
-  }
-  .services-kit__list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-  .services-kit__list li {
-    font-size: 0.82rem;
-    line-height: 1.4;
-    padding-left: 1.3rem;
-    position: relative;
-  }
-  .services-kit__list li::before {
-    content: "\2192";
-    position: absolute;
-    left: 0;
-    font-weight: 900;
-    color: var(--accent);
-  }
-  .pricing-vat {
-    margin-top: 1.5rem;
-    font-size: 0.72rem;
-    opacity: 0.6;
-    font-family: var(--font-mono);
-  }
-
-  /* ==================== SERVICIOS v2 — 4 tarjetas con media embebida ==================== */
-  .svc-section {
-    /* Fondo negro a borde completo: cancela el padding del .container */
-    margin-left:  calc(-1 * max(var(--container-pad-x), env(safe-area-inset-left,  0px)));
-    margin-right: calc(-1 * max(var(--container-pad-x), env(safe-area-inset-right, 0px)));
-    padding-left:  max(var(--container-pad-x), env(safe-area-inset-left,  0px));
-    padding-right: max(var(--container-pad-x), env(safe-area-inset-right, 0px));
-    padding-top: clamp(2rem, 3vw, 3rem);
-    padding-bottom: clamp(2rem, 3vw, 3rem);
-    background: var(--ink);
-    color: var(--paper);
-  }
-  .svc-section .section-head {
-    border-top-color: rgba(255, 255, 255, 0.14);
-  }
-  .svc-section .section-head__index { color: var(--accent); }
-  .svc-section .section-head__name  { color: var(--paper); }
-
-  /* El grid rompe el padding de svc-section para ir de borde a borde */
-  .svc-grid {
-    margin-left:  calc(-1 * max(var(--container-pad-x), env(safe-area-inset-left,  0px)));
-    margin-right: calc(-1 * max(var(--container-pad-x), env(safe-area-inset-right, 0px)));
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 1px;
-    background: rgba(255, 255, 255, 0.07);
-  }
-
-  .svc-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--ink);
-  }
-
-  /* Zona media */
-  .svc-card__media {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 16 / 9;
-    overflow: hidden;
-    background: #0D0D0D;
-    flex-shrink: 0;
-  }
-  /* Ancla (WebXperience): tamaño intermedio y centrado, no a sangre completa. */
-  .svc-card--anchor .svc-card__media {
-    aspect-ratio: 16 / 9;
-    max-width: 44rem;
-    margin-inline: auto;
-  }
-  @media (max-width: 639px) {
-    .svc-card--anchor .svc-card__media { max-width: none; }
-  }
-
-  .svc-card__video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    z-index: 1;
-  }
-
-  /* Placeholder: visible mientras el asset no existe; el vídeo/carousel lo cubre cuando carga */
-  .svc-media__placeholder {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-    pointer-events: none;
-  }
-  .svc-media__placeholder span {
-    font-family: var(--font-mono);
-    font-size: 0.56rem;
-    color: rgba(255, 255, 255, 0.18);
-    text-align: center;
-    padding: 0 1.5rem;
-    line-height: 1.55;
-  }
-
-  /* Carrusel Sesión IA */
-  .svc-carousel {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-  .svc-carousel__item {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    /* Fundido largo y elegante (crossfade) entre imágenes */
-    transition: opacity 1.2s ease-in-out;
-  }
-  .svc-carousel__item.is-active { opacity: 1; }
-  /* Ken Burns sutil: la imagen activa hace un lento acercamiento que se
-     reinicia con cada cambio. El ORIGEN del zoom (--kb-origin) y la ESCALA
-     (--kb-scale) los fija el JS al azar en cada pase, de modo que cada vez se
-     revela una zona distinta y aleatoria de la pieza, no siempre el centro. */
-  .svc-carousel__item img {
-    transform: scale(1);
-    transform-origin: var(--kb-origin, center);
-    transition: transform 5s ease-out;
-    will-change: transform;
-  }
-  .svc-carousel__item.is-active img { transform: scale(var(--kb-scale, 1.08)); }
-
-  /* Encuadre automático global: cualquier img/video dentro de la zona media se
-     recorta a cover y se ancla en el tercio superior (center 25%), salvando
-     caras de retratos IA y headers de webs sin ajustes manuales por tarjeta. */
-  .svc-card__media img,
-  .svc-card__media video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 25%;
-    display: block;
-  }
-  /* Contenido VERTICAL: se ancla arriba (center top) para no cortar caras ni
-     cabeceras en el peor sitio. Lo marca initServicesMedia según la orientación
-     real del archivo (img.naturalWidth/Height · video.videoWidth/Height). */
-  /* Vertical: encuadre por tipo de pieza.
-     - Imágenes: algo más abajo (center 38%).
-     - Vídeos: tercio superior (center 17%). */
-  .svc-card__media img.is-portrait   { object-position: center 38%; }
-  .svc-card__media video.is-portrait { object-position: center 17%; }
-  /* Brand Film (#svcCard2): los clips de IA llevan marca de agua (Veo/Gemini)
-     en una esquina inferior. Se reencuadra para sacarla del cuadro. */
-  #svcCard2 .svc-card__video {
-    transform: scale(1.33);          /* horizontal: amplía ~133% y la marca sale del marco */
-    transform-origin: center;
-  }
-  #svcCard2 .svc-card__video.is-portrait {
-    transform: none;                 /* vertical: no amplía; usa el encuadre del 50% superior */
-  }
-
-  /* Cuerpo */
-  .svc-card__body {
-    padding: 1.4rem 1.25rem 1.65rem;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-
-  .svc-card__name {
-    font-family: var(--font-mono);
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    margin: 0 0 0.55rem;
-  }
-
-  .svc-card__concept {
-    font-size: clamp(1.05rem, 2.5vw, 1.3rem);
-    font-weight: 800;
-    line-height: 1.12;
-    letter-spacing: -0.02em;
-    color: #FFFFFF;
-    -webkit-text-fill-color: #FFFFFF;
-    margin: 0 0 1.1rem;
-  }
-  .svc-card__concept .svc-dot {
-    color: var(--accent);
-    -webkit-text-fill-color: var(--accent);
-  }
-  .svc-card--anchor .svc-card__concept {
-    font-size: clamp(1.2rem, 3vw, 1.7rem);
-  }
-
-  .svc-card__meta {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 0.3rem 0.75rem;
-    margin: 0 0 1.1rem;
-    align-items: baseline;
-  }
-  .svc-card__label {
-    font-family: var(--font-mono);
-    font-size: 0.57rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.13em;
-    color: rgba(255, 255, 255, 0.34);
-    white-space: nowrap;
-  }
-  .svc-card__meta dd {
-    font-size: 0.82rem;
-    line-height: 1.45;
-    color: rgba(255, 255, 255, 0.68);
-    margin: 0;
-  }
-
-  /* Badge "hasta 10 imágenes" visible en Sesión IA */
-  .svc-card__limit-badge {
-    font-family: var(--font-mono);
-    font-size: 0.57rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--accent);
-    border: 1px solid rgba(255, 0, 0, 0.30);
-    padding: 0.22em 0.55em;
-    width: fit-content;
-    margin-bottom: 0.75rem;
-  }
-
-  .svc-card__price-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 0.35rem 0.6rem;
-    margin-top: auto;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-  }
-  .svc-card__price {
-    font-weight: 900;
-    font-size: clamp(1.2rem, 3vw, 1.5rem);
-    letter-spacing: -0.03em;
-    line-height: 1;
-    color: var(--paper);
-    margin: 0;
-  }
-  .svc-card--anchor .svc-card__price {
-    font-size: clamp(1.3rem, 3.5vw, 1.7rem);
-  }
-  .svc-card__price-note {
-    font-family: var(--font-mono);
-    font-size: 0.61rem;
-    color: rgba(255, 255, 255, 0.36);
-    line-height: 1.4;
-    align-self: center;
-  }
-
-  .svc-card__cta {
-    display: block;
-    margin-top: 1rem;
-    padding: 0.55rem 1rem;
-    font-size: 0.77rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    text-align: center;
-    color: #FFFFFF;
-    border: 2px solid var(--accent);
-    background: var(--accent);
-    transition: background-color 0.14s, border-color 0.14s, color 0.14s;
-  }
-  .svc-card__cta:hover {
-    background: #FFFFFF;
-    border-color: #FFFFFF;
-    color: var(--accent);
-  }
-  .svc-card__cta:focus-visible {
-    outline: 2px solid var(--paper);
-    outline-offset: 3px;
-  }
-  /* Botón secundario: ver la web ya hecha (outline, se rellena al hover) */
-  .svc-card__cta--ghost {
-    margin-top: 0.6rem;
-    background: transparent;
-    color: var(--accent);
-  }
-  .svc-card__cta--ghost:hover {
-    background: var(--accent);
-    border-color: var(--accent);
-    color: #FFFFFF;
-  }
-  /* "LA QUIERO" y "VER WEB" en la misma fila, mitad y mitad */
-  .svc-card__cta-row {
-    display: flex;
-    gap: 0.6rem;
-    margin-top: 1rem;
-  }
-  .svc-card__cta-row .svc-card__cta {
-    flex: 1 1 0;
-    min-width: 0;
-    margin-top: 0;
-  }
-
-  /* WebXperience — ancla (hereda el rojo→blanco del CTA base) */
-  .svc-card--anchor {
-    border: 1px solid rgba(255, 0, 0, 0.16);
-  }
-  .svc-card--anchor .svc-card__cta-row {
-    margin-top: 1.25rem;
-  }
-
-  /* Tablet: 2 columnas */
-  @media (min-width: 640px) {
-    .svc-grid { grid-template-columns: repeat(2, 1fr); }
-    .svc-card--anchor { grid-column: 1 / -1; }
-    /* Cuerpo del ancla: todo centrado en la página, igual que el vídeo. */
-    .svc-card--anchor .svc-card__body {
-      max-width: 44rem;
-      margin-inline: auto;
-      align-items: center;
-      text-align: center;
-    }
-    .svc-card--anchor .svc-card__meta {
-      justify-content: center;
-      text-align: left;
-      max-width: 32rem;
-      margin-inline: auto;
-    }
-    .svc-card--anchor .svc-card__price-row {
-      justify-content: center;
-      margin-top: 1.2rem;
-    }
-    .svc-card--anchor .svc-card__cta-row { width: 100%; max-width: 34rem; margin-inline: auto; }
-  }
-
-  /* Desktop: 3 columnas */
-  @media (min-width: 900px) {
-    .svc-grid { grid-template-columns: repeat(3, 1fr); }
-    .svc-card__body { padding: 1.6rem 1.4rem 1.8rem; }
-    .svc-card--anchor .svc-card__body {
-      padding: 1.9rem 1.5rem 2.1rem;
-    }
-    .svc-card--anchor .svc-card__concept {
-      font-size: clamp(1.4rem, 2.6vw, 1.9rem);
-    }
-    .svc-card:not(.svc-card--anchor) .svc-card__concept {
-      font-size: 1.15rem;
-      letter-spacing: -0.03em;
-    }
-  }
-
-  /* prefers-reduced-motion: solo poster, sin autoplay ni transición */
-  @media (prefers-reduced-motion: reduce) {
-    .svc-card__video { display: none; }
-    .svc-carousel__item { transition: none; }
-    .svc-carousel__item:not(.is-active) { display: none; }
-    .svc-carousel__item img { transition: none; transform: none; }
-  }
 </style>
 </head>
 <body>
@@ -2332,268 +1647,49 @@
     </div>
   </section>
 
-  <!-- ==================== SERVICIOS + PRECIOS ==================== -->
-  <section id="servicios" class="section-pad" aria-labelledby="servicesTitleSr">
+  <!-- ==================== QUIÉN SOY ==================== -->
+  <section id="quien-soy" class="section-pad">
     <div class="container">
-      <h2 class="u-sr-only" id="servicesTitleSr">Servicios y precios</h2>
-
-      <div class="services-subsection qs-pin-wrapper" id="quien-soy">
-        <div class="social-proof" id="socialProof" aria-label="Marcas con las que he trabajado">
-          <span class="social-proof__eyebrow" id="socialProofEyebrow">Experiencia con marcas como</span>
-          <ul class="social-proof__list">
-            <li>Starbucks</li>
-            <li>Kia</li>
-            <li>Philips</li>
-          </ul>
-        </div>
-        <div class="qs-pin">
-          <div class="qs-pin__text">
-            <div class="section-head">
-              <span class="section-head__index">(01)</span>
-              <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
-            </div>
-            <p class="big-heading services-headline"><span id="servicesHeadline">CREATIVE DEVELOPER<span class="accent">.</span></span></p>
-            <p class="services-lead" id="servicesLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style="font-weight:700;color:var(--ink)">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span></p>
-          </div>
-          <div class="qs-pin__stage">
-            <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
-              <span class="qs-card__caption" id="qsCaption1">[Problema] → [qué reimaginé]</span>
-            </a>
-            <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
-              <img class="qs-card" src="assets/projects/lurex-real-estate.webp" alt="Lurex Real Estate" loading="lazy">
-              <span class="qs-card__caption" id="qsCaption2">[Problema] → [qué reimaginé]</span>
-            </a>
-            <a href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link qs-card-link--wide">
-              <img class="qs-card" src="assets/projects/batman-arkham-asylum.webp" alt="Be The Bat" loading="lazy">
-              <span class="qs-card__caption" id="qsCaption3">[Problema] → [qué reimaginé]</span>
-            </a>
-          </div>
-        </div>
+      <div class="social-proof" id="socialProof" aria-label="Marcas con las que he trabajado">
+        <span class="social-proof__eyebrow" id="socialProofEyebrow">Experiencia con marcas como</span>
+        <ul class="social-proof__list">
+          <li>Starbucks</li>
+          <li>Kia</li>
+          <li>Philips</li>
+        </ul>
       </div>
-
-      <!-- ==================== ONE VISION — THREE CRAFTS ==================== -->
-      <div class="services-subsection" id="crafts" aria-labelledby="craftsEyebrow">
-        <div class="section-head">
-          <span class="section-head__name" id="craftsEyebrow">ONE VISION — THREE CRAFTS</span>
-        </div>
-        <div class="crafts-list">
-
-          <!-- Web Design -->
-          <div class="crafts-item">
-            <h3 class="crafts-item__name">Web <span class="accent">Design</span></h3>
-            <div class="crafts-item__body">
-              <p class="crafts-item__desc" id="craftsDesc1">Authored one-page sites and full immersive WebXperiences — every interaction directed, every frame intentional.</p>
-              <div class="crafts-item__tags" aria-label="Stack">
-                <span class="crafts-item__tag">Next.js</span>
-                <span class="crafts-item__tag">GSAP</span>
-                <span class="crafts-item__tag">Three.js</span>
-                <span class="crafts-item__tag">React Three Fiber</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Art Direction -->
-          <div class="crafts-item">
-            <h3 class="crafts-item__name">Art <span class="accent">Direction</span></h3>
-            <div class="crafts-item__body">
-              <p class="crafts-item__desc" id="craftsDesc2">A coherent visual world across type, motion and color. Restraint with punctuation — the base disappears, the detail stays.</p>
-              <div class="crafts-item__tags" aria-label="Disciplines">
-                <span class="crafts-item__tag">Identity</span>
-                <span class="crafts-item__tag">Motion</span>
-                <span class="crafts-item__tag">Type</span>
-                <span class="crafts-item__tag">Color</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Filmmaking -->
-          <div class="crafts-item">
-            <h3 class="crafts-item__name"><span class="accent">Film</span>making</h3>
-            <div class="crafts-item__body">
-              <p class="crafts-item__desc" id="craftsDesc3">AI-driven brand films and cinematic pieces — directed shot by shot, not prompted. Keyframe workflows for real character continuity.</p>
-              <div class="crafts-item__tags" aria-label="Tools">
-                <span class="crafts-item__tag">Veo</span>
-                <span class="crafts-item__tag">Flow</span>
-                <span class="crafts-item__tag">Kling</span>
-                <span class="crafts-item__tag">Suno</span>
-              </div>
-            </div>
-          </div>
-
-        </div>
+      <div class="section-head">
+        <span class="section-head__index">(01)</span>
+        <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
       </div>
+      <p class="big-heading qs-headline"><span id="quienSoyHeadline">CREATIVE DEVELOPER<span class="accent">.</span></span></p>
+      <p class="qs-lead" id="quienSoyLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style="font-weight:700;color:var(--ink)">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span></p>
+    </div>
+  </section>
 
-      <!-- ==================== SERVICIOS v2: 4 tarjetas con media ==================== -->
-      <div class="services-subsection svc-section" id="servicios-lista">
-        <div class="section-head">
-          <span class="section-head__index">(02)</span>
-          <span class="section-head__name" id="secHeadPricing">SERVICIOS</span>
-        </div>
-        <p class="big-heading services-headline"><span id="pricingHeadline">ANYTHING YOU CAN IMAGINE<span class="accent">.</span></span></p>
-        <div class="svc-grid">
-
-          <!-- Tarjeta 1: Sesión IA -->
-          <article class="svc-card" id="svcCard1">
-            <div class="svc-card__media">
-              <!-- PLACEHOLDER → soltar imágenes reales en /media/servicios/sesion-ia-01…05.jpg -->
-              <div class="svc-media__placeholder">
-                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9l4-4 5 5 3-3 5 4"/><circle cx="8.5" cy="13.5" r="1.5"/></svg>
-                <span>/media/servicios/sesion-ia-01…05.jpg</span>
-              </div>
-              <div class="svc-carousel" aria-hidden="true">
-                <div class="svc-carousel__item is-active">
-                  <img src="media/servicios/sesion-ia-01.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-02.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-03.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-04.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-05.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-06.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-07.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-08.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-09.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-10.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-11.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-12.jpg" alt="" loading="lazy">
-                </div>
-                <div class="svc-carousel__item">
-                  <img src="media/servicios/sesion-ia-13.jpg" alt="" loading="lazy">
-                </div>
-              </div>
-            </div>
-            <div class="svc-card__body">
-              <h3 class="svc-card__name" id="svc1Name">SESIÓN FOTOGRÁFICA 100% IA</h3>
-              <p class="svc-card__concept" id="svc1Concept">No sustituye tu sesión fotográfica; la multiplica<span class="svc-dot">.</span></p>
-              <dl class="svc-card__meta">
-                <dt class="svc-card__label" id="svcLabel1Inc">Incluye</dt>
-                <dd id="svc1Includes">Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual.</dd>
-                <dt class="svc-card__label" id="svcLabel1For">Para</dt>
-                <dd id="svc1For">Renovar tu imagen sin volver a producir.</dd>
-              </dl>
-              <span class="svc-card__limit-badge" id="svc1Limit">Hasta 10 imágenes</span>
-              <div class="svc-card__price-row"></div>
-              <a class="svc-card__cta" href="#contacto" id="svc1Cta">LA QUIERO</a>
-            </div>
-          </article>
-
-          <!-- Tarjeta 2: Brand Film -->
-          <article class="svc-card" id="svcCard2">
-            <div class="svc-card__media">
-              <!-- PLACEHOLDER → soltar /media/servicios/brand-film.mp4 + brand-film-poster.jpg -->
-              <div class="svc-media__placeholder">
-                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>/media/servicios/brand-film.mp4</span>
-              </div>
-              <video class="svc-card__video"
-                muted autoplay playsinline
-                preload="metadata"
-                poster="media/servicios/brand-film-poster.jpg"
-                data-playlist="media/servicios/brand-film-01.mp4,media/servicios/brand-film-02.mp4,media/servicios/brand-film-04.mp4,media/servicios/brand-film-05.mp4,media/servicios/brand-film-06.mp4,media/servicios/brand-film-07.mp4,media/servicios/brand-film-08.mp4,media/servicios/brand-film-09.mp4,media/servicios/brand-film-10.mp4,media/servicios/brand-film-11.mp4,media/servicios/brand-film-12.mp4,media/servicios/brand-film-13.mp4,media/servicios/brand-film-14.mp4,media/servicios/brand-film-15.mp4"
-                aria-hidden="true"></video>
-            </div>
-            <div class="svc-card__body">
-              <h3 class="svc-card__name" id="svc2Name">BRAND FILM 100% IA</h3>
-              <p class="svc-card__concept" id="svc2Concept">Convierte tu marca en cine<span class="svc-dot">.</span></p>
-              <dl class="svc-card__meta">
-                <dt class="svc-card__label" id="svcLabel2Inc">Incluye</dt>
-                <dd id="svc2Includes">Todo lo incluido en SESIÓN FOTOGRÁFICA 100% IA + 3 vídeos de marca de hasta 20 segundos cada uno. Dirección y montaje.</dd>
-                <dt class="svc-card__label" id="svcLabel2For">Para</dt>
-                <dd id="svc2For">Presencia con movimiento, lista para campaña en días.</dd>
-              </dl>
-              <div class="svc-card__price-row"></div>
-              <a class="svc-card__cta" href="#contacto" id="svc2Cta">LO QUIERO</a>
-            </div>
-          </article>
-
-          <!-- Tarjeta 3: Web de Autor -->
-          <article class="svc-card" id="svcCard3">
-            <div class="svc-card__media">
-              <!-- PLACEHOLDER → soltar /media/servicios/web-autor.mp4 + web-autor-poster.jpg (scroll de Brasa 17) -->
-              <div class="svc-media__placeholder">
-                <svg width="28" height="28" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>/media/servicios/web-autor.mp4</span>
-              </div>
-              <video class="svc-card__video"
-                muted loop autoplay playsinline
-                preload="metadata"
-                poster="media/servicios/web-autor-poster.jpg"
-                data-random-start
-                aria-hidden="true">
-                <source data-src="media/servicios/web-autor.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="svc-card__body">
-              <h3 class="svc-card__name" id="svc3Name">WEB DE AUTOR</h3>
-              <p class="svc-card__concept" id="svc3Concept">Tu web, completamente a medida<span class="svc-dot">.</span></p>
-              <dl class="svc-card__meta">
-                <dt class="svc-card__label" id="svcLabel3Inc">Incluye</dt>
-                <dd id="svc3Includes">Diseño completo de layout y desarrollo Front-End a medida (nada de plantillas). One-page responsive con dirección de arte.</dd>
-                <dt class="svc-card__label" id="svcLabel3For">Para</dt>
-                <dd id="svc3For">Dejar de parecer uno más.</dd>
-              </dl>
-              <div class="svc-card__price-row"></div>
-              <div class="svc-card__cta-row">
-                <a class="svc-card__cta" href="#contacto" id="svc3Cta">LA QUIERO</a>
-                <a class="svc-card__cta svc-card__cta--ghost" href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc3View">VER WEB ↗</a>
-              </div>
-            </div>
-          </article>
-
-          <!-- Tarjeta 4: WebXperience (ANCLA — destacada, full-width) -->
-          <article class="svc-card svc-card--anchor" id="svcCard4">
-            <div class="svc-card__media">
-              <!-- PLACEHOLDER → soltar /media/servicios/webxperience.mp4 + webxperience-poster.jpg (Be The Bat) -->
-              <div class="svc-media__placeholder">
-                <svg width="28" height="28" fill="none" stroke="rgba(255,0,0,0.35)" stroke-width="1.5" viewBox="0 0 24 24" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                <span>/media/servicios/webxperience.mp4</span>
-              </div>
-              <video class="svc-card__video"
-                muted loop autoplay playsinline
-                preload="metadata"
-                poster="media/servicios/webxperience-poster.jpg"
-                aria-hidden="true">
-                <source data-src="media/servicios/webxperience.mp4" type="video/mp4">
-              </video>
-            </div>
-            <div class="svc-card__body">
-              <h3 class="svc-card__name" id="svc4Name">WEBXPERIENCE</h3>
-              <p class="svc-card__concept" id="svc4Concept">No es una web<span class="svc-dot">.</span> Es una experiencia interactiva<span class="svc-dot">.</span></p>
-              <dl class="svc-card__meta">
-                <dt class="svc-card__label" id="svcLabel4Inc">Incluye</dt>
-                <dd id="svc4Includes">Todo lo anterior. Experiencia inmersiva e interactiva con dirección cinematográfica completa. Sin límite de imágenes o vídeos. Totalmente a medida.</dd>
-                <dt class="svc-card__label" id="svcLabel4For">Para</dt>
-                <dd id="svc4For">Marcas que quieren algo inolvidable.</dd>
-              </dl>
-              <div class="svc-card__price-row"></div>
-              <div class="svc-card__cta-row">
-                <a class="svc-card__cta" href="#contacto" id="svc4Cta">LA QUIERO</a>
-                <a class="svc-card__cta svc-card__cta--ghost" href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" id="svc4View">VER WEB ↗</a>
-              </div>
-            </div>
-          </article>
-
+  <!-- ==================== PROYECTOS ==================== -->
+  <section id="proyectos" class="section-pad qs-pin-wrapper">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-head__index">(02)</span>
+        <span class="section-head__name" id="secHeadProyectos">PROYECTOS</span>
+      </div>
+      <div class="proyectos-grid">
+        <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+          <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
+          <span class="qs-card__caption" id="qsCaption1">TODO_CAPTION_1</span>
+        </a>
+        <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
+          <img class="qs-card" src="assets/projects/lurex-real-estate.webp" alt="Lurex Real Estate" loading="lazy">
+          <span class="qs-card__caption" id="qsCaption2">TODO_CAPTION_2</span>
+        </a>
+        <a href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link qs-card-link--wide">
+          <img class="qs-card" src="assets/projects/batman-arkham-asylum.webp" alt="Be The Bat" loading="lazy">
+          <span class="qs-card__caption" id="qsCaption3">TODO_CAPTION_3</span>
+        </a>
+        <div class="qs-card-link" data-slot="app-1" hidden>
+          <img class="qs-card" src="" alt="" loading="lazy">
+          <span class="qs-card__caption"></span>
         </div>
       </div>
     </div>
@@ -2669,73 +1765,16 @@
       qsCaption1: "[Problema] → [qué reimaginé]",
       qsCaption2: "[Problema] → [qué reimaginé]",
       qsCaption3: "[Problema] → [qué reimaginé]",
-      servicesEyebrow: "QUÉ HAGO POR TI",
-      servicesHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
-      servicesLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style=\"font-weight:700;color:var(--ink)\">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span>",
-      pricingHeadline: "ANYTHING YOU CAN IMAGINE<span class=\"accent\">.</span>",
-      pricingIntro: "Calidad cinematográfica. Ejecución ágil y eficiente. Utilizo mi criterio y experiencia en múltiples áreas para ejecutar proyectos de altísima calidad de principio a fin y sin intermediarios. La IA me permite multiplicar mi eficiencia operativa y reducir drásticamente los costes de producción.",
-      priceNote: "*Arrancamos con un 50% por adelantado. Los textos y contenidos corren por tu cuenta, o se cotizan como extra.",
-      price1Name: "WEB DE AUTOR",
-      price1Tagline: "Tu web, resuelta. Precio fijo, scope fijo, sin reuniones.",
-      price1Price: "1.500 €",
-      price1List: [
-        "Una página web completa con una estructura rotunda y una estética distintiva, adaptada por completo a la identidad de tu negocio. Olvídate de plantillas genéricas; le damos forma a tu criterio.",
-        "Hasta 6 secciones, responsive de verdad y con animaciones e interacciones cuidadas al milímetro.",
-        "Formulario de contacto y analítica web listos desde el primer día.",
-        "Una ronda de revisiones incluida, tras primera versión entregada.",
-        "Entrega en 7-10 días desde que demos luz verde al proyecto."
-      ],
-      price1Cta: "Quiero Mi Web",
-      price2Name: "WEBEXPERIENCE",
-      price2Tagline: "No una web. Un universo en el que entrar.",
-      price2Price: "desde 6.000 € <span>· a medida</span>",
-      price2List: [
-        "Un despliegue inmersivo ambientado en tu propio universo visual, construido desde cero como una obra de arte interactiva.",
-        "Producción creativa completa: dirección de arte, vídeo, imagen, 3D, animación y sonido.",
-        "Navegación intuitiva y cinematográfica — el efecto wow sin que el usuario tenga que aprender nada.",
-        "Pensada para marcas y lanzamientos donde la atmósfera es el producto.",
-        "Cada proyecto es único. Presupuesto y plazo a medida."
-      ],
-      price2Cta: "Cuéntame Tu Universo",
-      price2Note: "*Plazas muy limitadas. Selecciono pocos proyectos al año.",
-      pricingOpenDoor: "¿Tu proyecto no entra en ninguna caja? Producto, dirección creativa, colaboración a medida — escríbeme y lo montamos.",
+      quienSoyHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
+      quienSoyLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style=\"font-weight:700;color:var(--ink)\">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span>",
       secHeadServices: "QUIÊN SOY",
-      secHeadPricing: "SERVICIOS",
+      secHeadProyectos: "PROYECTOS",
       secHeadContact: "CONTACTO",
       navInicio: "Inicio",
       navQuienSoy: "Quién soy",
       navServicios: "Servicios",
       navContacto: "Contacto",
       contactMeta: "RESPUESTA EN 24H",
-      svcLabelIncludes: "Incluye",
-      svcLabelFor: "Para",
-      svc1Name: "SESIÓN FOTOGRÁFICA 100% IA",
-      svc1Concept: "Contenido infinito sin costes de producción. No sustituye tu material, lo expande<span class=\"svc-dot\">.</span>",
-      svc1Includes: "Hasta 10 imágenes realizadas 100% con IA, con la misma iluminación, fotografía y dirección de arte de tu material actual para garantizar absoluta consistencia de marca.",
-      svc1For: "Renovar y escalar tu imagen visual sin volver a incurrir en costes de producción de sets.",
-      svc1Limit: "Hasta 10 imágenes",
-      svc1Cta: "LA QUIERO",
-      svc2Name: "BRAND FILM 100% IA",
-      svc2Concept: "Narrativa cinematográfica a velocidad de software<span class=\"svc-dot\">.</span>",
-      svc2Includes: "Todo lo incluido en SESIÓN FOTOGRÁFICA 100% IA + 3 vídeos de campaña de hasta 20 segundos cada uno. Dirección, montaje y control estricto de framing plano a plano sin depender de prompts aleatorios.",
-      svc2For: "Campañas y presencia con movimiento de alto impacto, listas para distribución digital en tiempo récord.",
-      svc2Cta: "LO QUIERO",
-      svc3Name: "WEB DE AUTOR",
-      svc3Concept: "Tu web, completamente a medida<span class=\"svc-dot\">.</span>",
-      svc3Includes: "Diseño completo de layout y desarrollo Front-End a medida (nada de plantillas). One-page responsive con dirección de arte.",
-      svc3For: "Dejar de parecer uno más.",
-      svc3Cta: "LA QUIERO",
-      svc3View: "VER WEB ↗",
-      svc4Name: "WEBXPERIENCE",
-      svc4Concept: "La intersección definitiva entre diseño, tecnología y negocio<span class=\"svc-dot\">.</span>",
-      svc4Includes: "Un despliegue inmersivo y de alta retención diseñado para marcas que no compiten por precio, sino por el monopolio de la atención. Experiencia interactiva completa con dirección cinematográfica a medida y assets multimedia ilimitados.",
-      svc4For: "Marcas y lanzamientos globales que exigen un posicionamiento premium inolvidable.",
-      svc4Cta: "LA QUIERO",
-      svc4View: "VER WEB ↗",
-      craftsEyebrow: "ONE VISION — THREE CRAFTS",
-      craftsDesc1: "Webs de nivel profesional totalmente a medida y WebXperiences completamente inmersivas — cada interacción dirigida, cada fotograma intencional.",
-      craftsDesc2: "Un mundo visual coherente a través de tipografía, movimiento y color. Contención con puntuación — la base desaparece, el detalle permanece.",
-      craftsDesc3: "Brand films y piezas cinematográficas con IA — dirigidas plano a plano, no generadas de forma aleatoria. Flujos de trabajo por keyframes para continuidad de personaje real."
     },
     en: {
       langMenuAria: "Language menu",
@@ -2752,80 +1791,19 @@
       qsCaption1: "[Problem] → [what I reimagined]",
       qsCaption2: "[Problem] → [what I reimagined]",
       qsCaption3: "[Problem] → [what I reimagined]",
-      servicesEyebrow: "WHAT I DO FOR YOU",
-      servicesHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
-      servicesLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for major international brands. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
-      pricingHeadline: "ANYTHING YOU CAN IMAGINE<span class=\"accent\">.</span>",
-      pricingIntro: "Cinematic quality. Agile and efficient execution. I leverage my experience across multiple creative verticals to own full end-to-end pipelines. AI multiplies my operational efficiency and reduces production overhead.",
-      priceNote: "*We start with 50% upfront. You provide the copy and content, or it is quoted as an extra.",
-      price1Name: "WEB DE AUTOR",
-      price1Tagline: "Your website, sorted. Fixed price, fixed scope, no meetings.",
-      price1Price: "1,500 €",
-      price1List: [
-        "A complete website with a solid structure and a distinctive aesthetic, fully adapted to your business identity. Forget generic templates; we shape it to your standards.",
-        "Up to 6 sections, genuinely responsive, with animations and interactions dialed in.",
-        "Contact form and web analytics ready from day one.",
-        "One round of revisions included, after the first version is delivered.",
-        "Delivered in 7-10 days from the moment we give the green light."
-      ],
-      price1Cta: "I Want My Web",
-      price2Name: "WEBEXPERIENCE",
-      price2Tagline: "Not a website. A universe you step into.",
-      price2Price: "from 6,000 € <span>· custom</span>",
-      price2List: [
-        "An immersive deployment set in your own visual universe, built from scratch as an interactive piece of art.",
-        "Full creative production: art direction, video, imagery, 3D, animation and sound.",
-        "Intuitive, cinematic navigation — the wow without the user having to learn anything.",
-        "Built for brands and launches where atmosphere is the product.",
-        "Every project is unique. Custom budget and timeline."
-      ],
-      price2Cta: "Tell Me Your Universe",
-      price2Note: "*Very limited slots. I take on few projects a year.",
-      pricingOpenDoor: "Your project doesn't fit a box? Product, creative direction, custom collaboration — write to me and we'll build it.",
+      quienSoyHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
+      quienSoyLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for major international brands. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
       secHeadServices: "WHO I AM",
-      secHeadPricing: "SERVICES",
+      secHeadProyectos: "PROJECTS",
       secHeadContact: "CONTACT",
       navInicio: "Home",
       navQuienSoy: "Who I am",
       navServicios: "Services",
       navContacto: "Contact",
       contactMeta: "REPLY WITHIN 24H",
-      svcLabelIncludes: "Includes",
-      svcLabelFor: "For",
-      svc1Name: "100% AI PHOTO SESSION",
-      svc1Concept: "Infinite content scaling without production overhead. It doesn't replace your assets; it expands them<span class=\"svc-dot\">.</span>",
-      svc1Includes: "Up to 10 fully bespoke AI-generated assets, perfectly matched to your current lighting, photography, and art direction to guarantee strict brand consistency.",
-      svc1For: "Refreshing and scaling your visual presence without recurring physical production setups.",
-      svc1Limit: "Up to 10 images",
-      svc1Cta: "I WANT IT",
-      svc2Name: "BRAND FILM 100% AI",
-      svc2Concept: "Cinematic storytelling at the speed of software<span class=\"svc-dot\">.</span>",
-      svc2Includes: "Everything from the AI Photo Session + 3 targeted campaign videos up to 20 seconds each. Full direction and shot-by-shot framing control, removing algorithmic randomness.",
-      svc2For: "High-impact moving assets, fully optimized and ready for digital campaign rollout in record time.",
-      svc2Cta: "I WANT IT",
-      svc3Name: "WEB DE AUTOR",
-      svc3Concept: "Your website, fully bespoke<span class=\"svc-dot\">.</span>",
-      svc3Includes: "Complete layout design and bespoke front-end development (no templates). Responsive one-page with art direction.",
-      svc3For: "Stop looking like everyone else.",
-      svc3Cta: "I WANT IT",
-      svc3View: "VIEW SITE ↗",
-      svc4Name: "WEBXPERIENCE",
-      svc4Concept: "The ultimate convergence of design, technology, and business operations<span class=\"svc-dot\">.</span>",
-      svc4Includes: "An immersive, high-retention digital deployment built for brands that don't compete on price, but on capturing the absolute monopoly of attention. Bespoke interactive mechanics and cinematic direction.",
-      svc4For: "Premium brands and global launches demanding a lasting, high-retention digital atmosphere.",
-      svc4Cta: "I WANT IT",
-      svc4View: "VIEW SITE ↗",
-      craftsEyebrow: "ONE VISION — THREE CRAFTS",
-      craftsDesc1: "Authored one-page sites and full immersive WebXperiences — every interaction directed, every frame intentional.",
-      craftsDesc2: "A coherent visual world across type, motion and color. Restraint with punctuation — the base disappears, the detail stays.",
-      craftsDesc3: "AI-driven brand films and cinematic pieces — directed shot by shot, not prompted. Keyframe workflows for real character continuity."
     }
   };
 
-
-  // Pega aquí tu Stripe Checkout de la Web de Autor para cobrar al instante.
-  // Si lo dejas vacío, el CTA "Quiero mi web" lleva al formulario de contacto.
-  const WEB_AUTOR_PAY_URL = '';
 
   let lang = 'es';
   try {
@@ -3111,328 +2089,6 @@
     });
   }
 
-  // ============================================
-  // ONE VISION — THREE CRAFTS: stagger al entrar en viewport
-  // ============================================
-  function initCrafts() {
-    if (reduceMotion) return;
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    const items = document.querySelectorAll('.crafts-item');
-    if (!items.length) return;
-    gsap.registerPlugin(ScrollTrigger);
-    ScrollTrigger.create({
-      id: 'crafts',
-      trigger: '#crafts',
-      start: 'top 78%',
-      once: true,
-      onEnter: () => {
-        gsap.to(items, {
-          y: 0,
-          opacity: 1,
-          duration: 0.75,
-          ease: 'power3.out',
-          stagger: 0.15
-        });
-      }
-    });
-  }
-
-  // ============================================
-  // PRECIOS: pin + una tarjeta visible por tramo
-  // ============================================
-  let pricingMobileObserver = null;
-
-  function killPricingMobileCards() {
-    if (pricingMobileObserver) {
-      pricingMobileObserver.disconnect();
-      pricingMobileObserver = null;
-    }
-    document.querySelectorAll('.pricing-grid .price-card').forEach((card) => {
-      card.classList.remove('is-mobile-visible');
-    });
-  }
-
-  function killPricingPinCards() {
-    if (typeof ScrollTrigger !== 'undefined') {
-      const st = ScrollTrigger.getById('pricingPinCards');
-      if (st) st.kill();
-    }
-    const grid = document.querySelector('.pricing-grid');
-    const cards = document.querySelectorAll('.pricing-grid .price-card');
-    if (grid) grid.classList.remove('is-pinned-stage');
-    if (typeof gsap !== 'undefined' && cards.length) {
-      gsap.killTweensOf(cards);
-      gsap.set(cards, { clearProps: 'all' });
-    }
-  }
-
-  function initPricingMobileCards() {
-    killPricingMobileCards();
-    const cards = document.querySelectorAll('.pricing-grid .price-card');
-    if (!cards.length) return;
-    if (!window.matchMedia('(max-width: 899px)').matches || reduceMotion) {
-      cards.forEach((card) => card.classList.add('is-mobile-visible'));
-      return;
-    }
-    if (typeof IntersectionObserver === 'undefined') {
-      cards.forEach((card) => card.classList.add('is-mobile-visible'));
-      return;
-    }
-
-    pricingMobileObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-mobile-visible');
-        }
-      });
-    }, {
-      root: null,
-      threshold: 0.28,
-      rootMargin: '0px 0px -12% 0px'
-    });
-
-    cards.forEach((card) => pricingMobileObserver.observe(card));
-  }
-
-  function initPricingPinCards() {
-    killPricingPinCards();
-    if (reduceMotion) return;
-    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
-    if (!window.matchMedia('(min-width: 900px)').matches) return;
-
-    const wrapper = document.querySelector('.pricing-pin-wrapper');
-    const grid = document.querySelector('.pricing-grid');
-    const cards = gsap.utils.toArray('.pricing-grid .price-card');
-    if (!wrapper || !grid || cards.length < 2) return;
-
-    gsap.registerPlugin(ScrollTrigger);
-    grid.classList.add('is-pinned-stage');
-
-    gsap.set(cards, {
-      autoAlpha: 0,
-      y: 80,
-      scale: 0.98,
-      force3D: true
-    });
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        id: 'pricingPinCards',
-        trigger: wrapper,
-        start: 'top top',
-        end: () => '+=' + Math.round(window.innerHeight * 0.85),
-        pin: true,
-        pinSpacing: true,
-        anticipatePin: 1,
-        scrub: 0.65,
-        invalidateOnRefresh: true
-      }
-    });
-
-    tl.to({}, { duration: 0.2 });
-    tl.to(cards, {
-      autoAlpha: 1,
-      y: 0,
-      scale: 1,
-      ease: 'power2.out',
-      duration: 0.5,
-      stagger: 0.15
-    });
-    tl.to({}, { duration: 0.4 });
-
-    if (!ScrollTrigger.getById('pricingPinCards')) {
-      killPricingPinCards();
-    }
-  }
-
-  // ============================================
-  // SERVICIOS v2: play/pause vídeos por viewport + carrusel Sesión IA
-  // ============================================
-  let _svcVideoObs = null;
-  let _svcCarouselObs = null;
-  let _svcCarouselTimer = null;
-  let _svcBrandTimer = null;
-  let _svcMediaAbort = null;
-
-  function killServicesMedia() {
-    if (_svcVideoObs)    { _svcVideoObs.disconnect();    _svcVideoObs    = null; }
-    if (_svcCarouselObs) { _svcCarouselObs.disconnect(); _svcCarouselObs = null; }
-    if (_svcCarouselTimer) { clearInterval(_svcCarouselTimer); _svcCarouselTimer = null; }
-    if (_svcBrandTimer)  { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; }
-    if (_svcMediaAbort)  { _svcMediaAbort.abort(); _svcMediaAbort = null; }
-  }
-
-  function initServicesMedia() {
-    killServicesMedia();
-    _svcMediaAbort = new AbortController();
-    const sig = _svcMediaAbort.signal;   // limpia todos los listeners en cada re-init
-
-    // --- Orientación automática: el contenido vertical se ancla arriba
-    //     (.is-portrait → object-position: center top) para no cortar caras ni
-    //     cabeceras; el horizontal mantiene center 25%. Se re-evalúa por cada
-    //     clip de la playlist al cargar sus metadatos. ---
-    const markPortrait = (el, w, h) => { if (w && h) el.classList.toggle('is-portrait', h > w); };
-    document.querySelectorAll('.svc-card__media img').forEach((img) => {
-      if (img.complete && img.naturalWidth) markPortrait(img, img.naturalWidth, img.naturalHeight);
-      else img.addEventListener('load', () => markPortrait(img, img.naturalWidth, img.naturalHeight), { once: true, signal: sig });
-    });
-    document.querySelectorAll('.svc-card__media video').forEach((vid) => {
-      vid.addEventListener('loadedmetadata', () => markPortrait(vid, vid.videoWidth, vid.videoHeight), { signal: sig });
-    });
-
-    if (reduceMotion) return;
-
-    // --- Vídeos (#svcCard2, #svcCard3, #svcCard4): bucle infinito, mudos y sin
-    //     controles. Carga diferida + play al entrar en viewport, pause al salir. ---
-    const videos = document.querySelectorAll('.svc-card__video');
-    if (videos.length) {
-      videos.forEach((v) => {
-        v.muted = true;            // requisito de autoplay + estrictamente mudo
-        v.defaultMuted = true;     // blinda el autoplay mudo en Safari/iOS
-        v.controls = false;        // sin controles
-        v.playsInline = true;
-        v.setAttribute('playsinline', '');
-        v.loop = !v.dataset.playlist;  // el reproductor de playlist gestiona el avance
-      });
-
-      // Brand Film (#svcCard2): montaje "zapping" — DOBLE azar. Elige un clip al
-      // azar (sin repetir el anterior), salta a un punto al azar dentro del clip
-      // y reproduce solo unos segundos antes de cortar a otro. SEG_MIN/MAX = la
-      // duración (en s) de cada corte.
-      const SEG_MIN = 2.2, SEG_MAX = 4.2;
-      const players = new Map();
-      videos.forEach((v) => {
-        if (!v.dataset.playlist) return;
-        const list = v.dataset.playlist.split(',').map((s) => s.trim()).filter(Boolean);
-        if (!list.length) return;
-
-        // Doble buffer: un <video> gemelo precarga el siguiente corte y el cambio
-        // es instantáneo. Así nunca reaparece el poster entre clips (bug del
-        // "frame de Lua", que era el poster brand-film-poster.jpg al hacer load()).
-        const buf = v.cloneNode(false);
-        buf.removeAttribute('poster');
-        buf.removeAttribute('data-playlist');
-        buf.removeAttribute('autoplay');
-        v.parentNode.appendChild(buf);
-        [v, buf].forEach((el) => {
-          el.muted = true; el.defaultMuted = true; el.loop = true;
-          el.controls = false; el.playsInline = true; el.setAttribute('playsinline', '');
-        });
-        v.style.opacity = '1';
-        buf.style.opacity = '0';
-
-        let front = v, back = buf, last = -1, alive = false;
-
-        const showNext = () => {
-          if (!alive) return;
-          let i = Math.floor(Math.random() * list.length);
-          if (list.length > 1 && i === last) i = (i + 1) % list.length;  // no repetir clip
-          last = i;
-          back.src = list[i];
-          back.load();
-          const onReady = () => {
-            back.removeEventListener('loadedmetadata', onReady);
-            if (!alive) return;
-            const seg = SEG_MIN + Math.random() * (SEG_MAX - SEG_MIN);
-            if (back.duration && isFinite(back.duration)) {
-              try { back.currentTime = Math.random() * Math.max(0, back.duration - seg); } catch (e) {}
-            }
-            back.classList.toggle('is-portrait', back.videoHeight > back.videoWidth);
-            back.play().then(() => {
-              if (!alive) { back.pause(); return; }
-              back.style.opacity = '1';   // swap instantáneo (sin hueco de poster)
-              front.style.opacity = '0';
-              front.pause();
-              const tmp = front; front = back; back = tmp;
-              if (_svcBrandTimer) clearTimeout(_svcBrandTimer);
-              _svcBrandTimer = setTimeout(showNext, seg * 1000);
-            }).catch(() => {
-              if (alive) { if (_svcBrandTimer) clearTimeout(_svcBrandTimer); _svcBrandTimer = setTimeout(showNext, 200); }
-            });
-          };
-          back.addEventListener('loadedmetadata', onReady, { signal: sig });
-        };
-
-        players.set(v, {
-          start: () => { if (!alive) { alive = true; showNext(); } else front.play().catch(() => {}); },
-          stop:  () => { alive = false; v.pause(); buf.pause(); if (_svcBrandTimer) { clearTimeout(_svcBrandTimer); _svcBrandTimer = null; } },
-        });
-      });
-
-      // Web de Autor (#svcCard3): arranca en un punto aleatorio en cada carga,
-      // para que "abra a algo distinto" cada vez sin recargar la página.
-      videos.forEach((v) => {
-        if (!('randomStart' in v.dataset)) return;
-        v.addEventListener('loadedmetadata', () => {
-          if (v.duration && isFinite(v.duration)) {
-            v.currentTime = Math.random() * Math.max(0, v.duration - 4);
-          }
-        }, { once: true, signal: sig });
-      });
-
-      _svcVideoObs = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          const v = entry.target;
-          const player = players.get(v);
-          if (entry.isIntersecting) {
-            if (player) {
-              player.start();                  // arranca/reanuda el zapping aleatorio
-            } else {
-              const s = v.querySelector('source[data-src]');
-              if (s) { s.src = s.dataset.src; s.removeAttribute('data-src'); v.load(); }
-              v.play().catch(() => {});
-            }
-          } else {
-            if (player) player.stop(); else v.pause();
-          }
-        });
-      }, { threshold: 0.25 });
-      videos.forEach((v) => _svcVideoObs.observe(v));
-    }
-
-    // --- Carrusel 'Sesión IA' (#svcCard1): sucesión lenta y elegante con
-    //     fundido largo (3s por imagen), alternando la clase .is-active solo
-    //     mientras la tarjeta está en viewport. ---
-    const carousel = document.querySelector('#svcCard1 .svc-carousel');
-    if (!carousel) return;
-    const items = Array.from(carousel.querySelectorAll('.svc-carousel__item'));
-    if (items.length < 2) return;
-    // Encuadre aleatorio: fija un origen de zoom (zona de la foto) y una escala
-    // al azar en la imagen que se va a activar, para que cada pase muestre una
-    // "parte" distinta de la pieza, no siempre el mismo acercamiento al centro.
-    const randomFrame = (item) => {
-      const img = item.querySelector('img');
-      if (!img) return;
-      const ox = (15 + Math.random() * 70).toFixed(1);   // 15–85% horizontal
-      const oy = (15 + Math.random() * 70).toFixed(1);    // 15–85% vertical
-      const scale = (1.10 + Math.random() * 0.14).toFixed(3); // 1.10–1.24
-      img.style.setProperty('--kb-origin', ox + '% ' + oy + '%');
-      img.style.setProperty('--kb-scale', scale);
-    };
-    let current = items.findIndex((it) => it.classList.contains('is-active'));
-    if (current < 0) { current = 0; items[0].classList.add('is-active'); }
-    randomFrame(items[current]);
-    const advance = () => {
-      items[current].classList.remove('is-active');
-      let next = Math.floor(Math.random() * items.length);
-      if (items.length > 1 && next === current) next = (next + 1) % items.length;  // evita repetir
-      current = next;
-      randomFrame(items[current]);          // nueva zona/escala aleatoria
-      items[current].classList.add('is-active');
-    };
-    _svcCarouselObs = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          if (!_svcCarouselTimer) _svcCarouselTimer = setInterval(advance, 3000);
-        } else if (_svcCarouselTimer) {
-          clearInterval(_svcCarouselTimer);
-          _svcCarouselTimer = null;
-        }
-      });
-    }, { threshold: 0.2 });
-    _svcCarouselObs.observe(carousel);
-  }
-
   function syncViewportAnimationMode() {
     // initHeroScene decide internamente desktop (scrub + capa) vs. móvil/reduced
     // (autoplay de fallback), y aplica las clases .is-static / .is-video-ended.
@@ -3444,10 +2100,6 @@
     fitServicesHeadline();
     initQsIframes();
     initQsPinCards();
-    initCrafts();
-    initPricingPinCards();
-    initPricingMobileCards();
-    initServicesMedia();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
   }
 
@@ -3466,41 +2118,10 @@
     setText('qsCaption1', d.qsCaption1);
     setText('qsCaption2', d.qsCaption2);
     setText('qsCaption3', d.qsCaption3);
-    setText('servicesEyebrow', d.servicesEyebrow);
-    setHTML('servicesHeadline', d.servicesHeadline);
-    setHTML('servicesLead', d.servicesLead);
-    setHTML('pricingHeadline', d.pricingHeadline);
-    setText('pricingIntro', d.pricingIntro);
-    setText('price1Name', d.price1Name); setText('price1Tagline', d.price1Tagline); setHTML('price1Price', d.price1Price); setList('price1List', d.price1List); setText('price1Cta', d.price1Cta); setText('price1Note', d.priceNote);
-    setText('price2Name', d.price2Name); setText('price2Tagline', d.price2Tagline); setHTML('price2Price', d.price2Price); setList('price2List', d.price2List); setText('price2Cta', d.price2Cta); setText('price2Note', d.price2Note);
-    setText('pricingVat', d.pricingVat);
-    setText('pricingOpenDoor', d.pricingOpenDoor);
-    setText('servicesKitTitle', d.servicesKitTitle);
-    setList('servicesKitList', d.servicesKitList);
+    setHTML('quienSoyHeadline', d.quienSoyHeadline);
+    setHTML('quienSoyLead', d.quienSoyLead);
     setText('secHeadServices', d.secHeadServices);
-    setText('secHeadPricing', d.secHeadPricing);
-    // Tarjetas v2 — labels compartidos
-    for (let _i = 1; _i <= 4; _i++) {
-      setText('svcLabel' + _i + 'Inc', d.svcLabelIncludes);
-      setText('svcLabel' + _i + 'For', d.svcLabelFor);
-    }
-    // Tarjeta 1: Sesión IA
-    setText('svc1Name', d.svc1Name); setHTML('svc1Concept', d.svc1Concept); setText('svc1Includes', d.svc1Includes); setText('svc1For', d.svc1For); setText('svc1Limit', d.svc1Limit); setText('svc1Cta', d.svc1Cta);
-    // Tarjeta 2: Brand Film
-    setText('svc2Name', d.svc2Name); setHTML('svc2Concept', d.svc2Concept); setText('svc2Includes', d.svc2Includes); setText('svc2For', d.svc2For); setText('svc2Cta', d.svc2Cta);
-    // Tarjeta 3: Web de Autor
-    setText('svc3Name', d.svc3Name); setHTML('svc3Concept', d.svc3Concept); setText('svc3Includes', d.svc3Includes); setText('svc3For', d.svc3For); setText('svc3Cta', d.svc3Cta); setText('svc3View', d.svc3View);
-    // Tarjeta 4: WebXperience
-    setText('svc4Name', d.svc4Name); setHTML('svc4Concept', d.svc4Concept); setText('svc4Includes', d.svc4Includes); setText('svc4For', d.svc4For); setText('svc4Cta', d.svc4Cta); setText('svc4View', d.svc4View);
-    // Three Crafts
-    setText('craftsEyebrow', d.craftsEyebrow);
-    setText('craftsDesc1', d.craftsDesc1);
-    setText('craftsDesc2', d.craftsDesc2);
-    setText('craftsDesc3', d.craftsDesc3);
-    if (typeof WEB_AUTOR_PAY_URL === 'string' && WEB_AUTOR_PAY_URL) {
-      const c = document.getElementById('price1Cta');
-      if (c) { c.setAttribute('href', WEB_AUTOR_PAY_URL); c.setAttribute('target', '_blank'); c.setAttribute('rel', 'noopener noreferrer'); }
-    }
+    setText('secHeadProyectos', d.secHeadProyectos);
   }
 
   function applyLang() {
@@ -3552,8 +2173,7 @@
     applyServicesI18n(d);
     if (pageInitialized) {
       setTimeout(() => {
-        initPricingPinCards();
-        initPricingMobileCards();
+        initQsPinCards();
         if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
       }, 80);
     }
@@ -3828,7 +2448,7 @@
   }
 
   function fitServicesHeadline() {
-    const headline = document.getElementById('servicesHeadline');
+    const headline = document.getElementById('quienSoyHeadline');
     if (!headline) return;
     const container = headline.closest('.big-heading');
     if (!container) return;
