@@ -548,8 +548,8 @@
     -webkit-text-fill-color: #FFFFFF !important;
   }
   #heroV2Title .hero-v2-dot {
-    color: #FFFFFF !important;
-    -webkit-text-fill-color: #FFFFFF !important;
+    color: var(--accent) !important;
+    -webkit-text-fill-color: var(--accent) !important;
   }
   #heroV2Title .hero-v2-accent {
     color: var(--accent) !important;
@@ -574,28 +574,6 @@
   .hero-v2-sub .hero-v2-dot {
     color: var(--accent) !important;
     -webkit-text-fill-color: var(--accent) !important;
-  }
-
-  /* Hero: subtítulo discreto bajo el titular (a quién ayudo) */
-  .hero-v2-subtitle {
-    margin: 0.9rem 0 0;
-    max-width: 34ch;
-    font-size: clamp(0.85rem, 1.7vw, 1.05rem);
-    font-weight: 400;
-    letter-spacing: 0;
-    text-transform: none;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.7);
-    -webkit-text-fill-color: rgba(255, 255, 255, 0.7);
-    position: relative;
-    z-index: 1;
-  }
-  @media (max-width: 639px) {
-    .hero-v2-subtitle {
-      max-width: 26ch;
-      font-size: 0.85rem;
-      margin-top: 0.7rem;
-    }
   }
 
   .header-top {
@@ -1617,11 +1595,12 @@
   <!-- ==================== ESCENA HERO: vídeo (scrub por scroll) + titular superpuesto ====================
        Una sola escena sticky: el scroll arrastra el vídeo fotograma a fotograma
        (initFeaturedVideoScrub) y, al llegar al último fotograma, el titular
-       "DESIGNED LIKE ART. BUILT LIKE SOFTWARE." hace fade-in COMO CAPA encima del
-       vídeo congelado (con un velo .hero-scene__scrim para garantizar contraste),
-       luego hace zoom y funde a blanco hacia "Quién soy". En móvil/reduced-motion
-       el vídeo cae al fallback de autoplay y el titular se queda estático. -->
-  <section class="hero-scene" id="inicio" aria-label="La IA sin criterio no vale nada.">
+       "CREO PROGRAMAS. QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA." hace fade-in COMO CAPA
+       encima del vídeo congelado (con un velo .hero-scene__scrim para garantizar
+       contraste), luego hace zoom y funde a blanco hacia "Proyectos". En
+       móvil/reduced-motion el vídeo cae al fallback de autoplay y el titular se
+       queda estático. -->
+  <section class="hero-scene" id="inicio" aria-label="Creo programas. Quizá alguno solucione tu problema.">
     <div class="hero-scene__sticky">
       <video
         id="featuredScrollVideo"
@@ -1637,10 +1616,9 @@
       <div class="hero-scene__fade" aria-hidden="true"></div>
       <div class="hero-v2-sticky hero-scene__title" id="presentacion">
         <h1 class="hero-v2-title" id="heroV2Title">
-          <span class="hero-v2-line" id="heroV2Line1">LA IA SIN <span class="hero-v2-accent">CRITERIO</span></span>
-          <span class="hero-v2-line" id="heroV2Line2">NO VALE <span class="hero-v2-accent">NADA</span><span class="hero-v2-dot">.</span></span>
+          <span class="hero-v2-line" id="heroV2Line1">CREO PROGRAMAS<span class="hero-v2-dot">.</span></span>
+          <span class="hero-v2-line" id="heroV2Line2">QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA<span class="hero-v2-dot">.</span></span>
         </h1>
-        <p class="hero-v2-subtitle" id="heroV2Subtitle">TODO_SUBTITULO</p>
       </div>
       <div class="hero-v2-end-fade" aria-hidden="true"></div>
     </div>
@@ -1756,10 +1734,9 @@
       contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "ESCRÍBEME",
       contactAltLabel: "O encuéntrame en:",
-      heroTitleLine1: "LA IA SIN <span class=\"hero-v2-accent\">CRITERIO</span>",
-      heroTitleLine2: "NO VALE <span class=\"hero-v2-accent\">NADA</span><span class=\"hero-v2-dot\">.</span>",
-      heroSceneAria: "La IA sin criterio no vale nada.",
-      heroSubtitle: "TODO_SUBTITULO",
+      heroTitleLine1: "CREO PROGRAMAS<span class=\"hero-v2-dot\">.</span>",
+      heroTitleLine2: "QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA<span class=\"hero-v2-dot\">.</span>",
+      heroSceneAria: "Creo programas. Quizá alguno solucione tu problema.",
       socialProofEyebrow: "Experiencia con marcas como",
       qsCaption1: "TODO_CAPTION_1",
       qsCaption2: "TODO_CAPTION_2",
@@ -1781,10 +1758,9 @@
       contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "WRITE TO ME",
       contactAltLabel: "Or find me on:",
-      heroTitleLine1: "AI WITHOUT <span class=\"hero-v2-accent\">JUDGMENT</span>",
-      heroTitleLine2: "IS <span class=\"hero-v2-accent\">WORTHLESS</span><span class=\"hero-v2-dot\">.</span>",
-      heroSceneAria: "AI without judgment is worthless.",
-      heroSubtitle: "TODO_SUBTITULO",
+      heroTitleLine1: "I MAKE PROGRAMS<span class=\"hero-v2-dot\">.</span>",
+      heroTitleLine2: "MAYBE ONE SOLVES YOUR PROBLEM<span class=\"hero-v2-dot\">.</span>",
+      heroSceneAria: "I make programs. Maybe one solves your problem.",
       socialProofEyebrow: "Experience with brands like",
       qsCaption1: "TODO_CAPTION_1",
       qsCaption2: "TODO_CAPTION_2",
@@ -1843,7 +1819,6 @@
     const video    = document.getElementById('featuredScrollVideo');
     const scrim    = document.querySelector('.hero-scene__scrim');
     const title    = document.getElementById('heroV2Title');
-    const subtitle = document.getElementById('heroV2Subtitle');
     const layer    = document.querySelector('.hero-scene__title');
     const endFade  = document.querySelector('.hero-scene .hero-v2-end-fade');
     const p = _clamp01(progress);
@@ -1866,13 +1841,6 @@
       const rot = tZoom * 22;
       if (typeof gsap !== 'undefined') gsap.set(title, { scale, rotationZ: rot });
       else title.style.transform = `scale(${scale}) rotate(${rot}deg)`;
-    }
-
-    // 3b) El subtítulo no tiene el zoom del titular: se apaga en cuanto este
-    // empieza a crecer para que no quede solapado debajo de las letras gigantes.
-    if (subtitle) {
-      const tSubOut = _clamp01(tZoom / 0.05);
-      subtitle.style.opacity = (1 - tSubOut).toFixed(3);
     }
 
     // 4) Fundido a blanco.
@@ -1948,8 +1916,6 @@
 
   function killHeroScene() {
     const video = document.getElementById('featuredScrollVideo');
-    const subtitle = document.getElementById('heroV2Subtitle');
-    if (subtitle) subtitle.style.opacity = '';
     if (heroSceneNativeCleanup) { heroSceneNativeCleanup(); heroSceneNativeCleanup = null; }
     if (typeof gsap !== 'undefined') {
       gsap.killTweensOf('#heroV2Title');
@@ -2401,14 +2367,9 @@
     const lines = title.querySelectorAll('.hero-v2-line');
     if (!lines.length) return;
     const cs = getComputedStyle(sticky);
-    const subtitle = document.getElementById('heroV2Subtitle');
-    const subtitleH = subtitle
-      ? subtitle.offsetHeight + parseFloat(getComputedStyle(subtitle).marginTop)
-      : 0;
     const H = sticky.clientHeight
       - parseFloat(cs.paddingTop)
-      - parseFloat(cs.paddingBottom)
-      - subtitleH;
+      - parseFloat(cs.paddingBottom);
     if (H < 16) return;
 
     /* Reset de sobreescrituras de iteraciones anteriores. */
