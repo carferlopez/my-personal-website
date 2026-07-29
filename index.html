@@ -1027,16 +1027,6 @@
   @media (min-width: 768px) { .contact-box { padding: 0 0 3rem 0; gap: 3rem; min-height: 500px; } }
   @media (min-width: 1024px) { .contact-box { padding: 0 0 5rem 0; } }
 
-  #contacto .section-head {
-    border-top-color: var(--ink);
-  }
-  #contacto .section-head__index {
-    color: var(--accent);
-  }
-  #contacto .section-head__name {
-    color: var(--ink);
-  }
-
   .contact-sub { color: var(--ink-2); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
   #contacto .contact-sub {
     color: var(--ink-2);
@@ -1285,105 +1275,8 @@
       transition: transform 0.05s ease-out;
   }
 
-  /* ==================== SECTION HEAD (sistema reutilizable) ==================== */
-  .section-head {
-    display: flex;
-    align-items: baseline;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    border-top: 3px solid var(--ink);
-    padding-top: 0.9rem;
-    margin: 0 0 2.5rem;
-  }
-  .section-head__index {
-    color: var(--accent);
-    font-family: var(--font-mono);
-    font-weight: 700;
-    font-size: 0.8rem;
-    letter-spacing: 0.02em;
-  }
-  .section-head__name {
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    font-size: 0.95rem;
-  }
-  .section-head__meta {
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    opacity: 0.7;
-    margin-left: auto;
-  }
-
-  /* ==================== QUIÉN SOY / PROYECTOS ==================== */
-  #quien-soy, #proyectos { overflow-x: clip; }
-
-  .qs-headline { margin: 0 0 1.1rem; }
-  .qs-headline .accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
-  @media (min-width: 1024px) {
-    .qs-headline { font-size: clamp(3.4rem, 5.35vw, 5.35rem); }
-  }
-  .qs-lead {
-    max-width: 48ch;
-    font-size: 0.72rem;
-    font-weight: 500;
-    margin: 0 0 2.35rem;
-    line-height: 1.5;
-    color: var(--ink-2);
-  }
-  @media (min-width: 768px) {
-    .qs-lead {
-      max-width: 54ch;
-      font-size: 0.78rem;
-      margin-bottom: 3rem;
-    }
-  }
-  @media (min-width: 1200px) { .qs-lead { font-size: 0.8rem; } }
-
-  /* ==================== PRUEBA SOCIAL: franja de marcas ==================== */
-  .social-proof {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    column-gap: 1.5rem;
-    row-gap: 0.5rem;
-    margin: 0 0 2.25rem;
-    padding-bottom: 1.4rem;
-    border-bottom: 1px solid var(--hairline);
-  }
-  .social-proof__eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.66rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--ink-3);
-    white-space: nowrap;
-  }
-  .social-proof__list {
-    display: flex;
-    flex-wrap: wrap;
-    column-gap: 1.5rem;
-    row-gap: 0.4rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-  .social-proof__list li {
-    font-size: 0.82rem;
-    font-weight: 700;
-    letter-spacing: 0.01em;
-    color: var(--ink-2);
-    filter: grayscale(1);
-    opacity: 0.75;
-  }
-  @media (min-width: 768px) {
-    .social-proof { margin-bottom: 2.75rem; }
-    .social-proof__list li { font-size: 0.9rem; }
-  }
+  /* ==================== PROYECTOS ==================== */
+  #proyectos { overflow-x: clip; }
 
   /* ==================== PROYECTOS: tarjetas (initQsPinCards) ==================== */
   /* Wrapper que dispara el reveal-on-scroll (initQsPinCards). */
@@ -1419,21 +1312,7 @@
   .qs-card-link:hover .qs-card {
     transform: scale(1.05);
   }
-  .qs-card__caption {
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    padding: 1.1rem 1rem 0.85rem;
-    font-size: 0.72rem;
-    font-weight: 500;
-    line-height: 1.4;
-    color: #FFFFFF;
-    background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
-    pointer-events: none;
-  }
-  /* Escritorio: 2 columnas, motion de reveal-on-scroll + caption solo al hover
-     (en móvil, sin hover, la caption queda siempre visible). */
+  /* Escritorio: 2 columnas + motion de reveal-on-scroll. */
   @media (min-width: 900px) {
     .proyectos-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -1448,16 +1327,6 @@
     }
     .qs-card-link:hover {
       transform: translateY(-4px) !important;
-    }
-    .qs-card__caption {
-      opacity: 0;
-      transform: translateY(6px);
-      transition: opacity 0.25s ease, transform 0.25s ease;
-    }
-    .qs-card-link:hover .qs-card__caption,
-    .qs-card-link:focus-visible .qs-card__caption {
-      opacity: 1;
-      transform: translateY(0);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1510,35 +1379,6 @@
     }
   }
 
-  #quienSoyLead,
-  #contactSub {
-    max-width: 20ch;
-    color: var(--ink-2);
-    font-family: var(--font-sans);
-    font-size: 1.18rem;
-    font-weight: 500;
-    line-height: 1.16;
-    letter-spacing: 0;
-    text-wrap: balance;
-  }
-  @media (min-width: 768px) {
-    #quienSoyLead,
-    #contactSub {
-      max-width: 21ch;
-      font-size: 1.25rem;
-      line-height: 1.14;
-    }
-  }
-  @media (min-width: 1200px) {
-    #quienSoyLead,
-    #contactSub {
-      font-size: 1.5rem;
-    }
-  }
-  /* "Quién soy": el párrafo de intro va algo más pequeño (era demasiado grande). */
-  #quienSoyLead { font-size: 0.98rem; max-width: 30ch; }
-  @media (min-width: 768px) { #quienSoyLead { font-size: 1.02rem; max-width: 32ch; } }
-  @media (min-width: 1200px) { #quienSoyLead { font-size: 1.18rem; max-width: 34ch; } }
 
 </style>
 </head>
@@ -1624,49 +1464,21 @@
     </div>
   </section>
 
-  <!-- ==================== QUIÉN SOY ==================== -->
-  <section id="quien-soy" class="section-pad">
-    <div class="container">
-      <div class="social-proof" id="socialProof" aria-label="Marcas con las que he trabajado">
-        <span class="social-proof__eyebrow" id="socialProofEyebrow">Experiencia con marcas como</span>
-        <ul class="social-proof__list">
-          <li>Starbucks</li>
-          <li>Kia</li>
-          <li>Philips</li>
-        </ul>
-      </div>
-      <div class="section-head">
-        <span class="section-head__index">(01)</span>
-        <span class="section-head__name" id="secHeadServices">QUIÉN SOY</span>
-      </div>
-      <p class="big-heading qs-headline"><span id="quienSoyHeadline">CREATIVE DEVELOPER<span class="accent">.</span></span></p>
-      <p class="qs-lead" id="quienSoyLead">Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style="font-weight:700;color:var(--ink)">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span></p>
-    </div>
-  </section>
-
   <!-- ==================== PROYECTOS ==================== -->
   <section id="proyectos" class="section-pad qs-pin-wrapper">
     <div class="container">
-      <div class="section-head">
-        <span class="section-head__index">(02)</span>
-        <span class="section-head__name" id="secHeadProyectos">PROYECTOS</span>
-      </div>
       <div class="proyectos-grid">
         <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
           <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
-          <span class="qs-card__caption" id="qsCaption1">TODO_CAPTION_1</span>
         </a>
         <a href="https://lurex-real-estate.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
           <img class="qs-card" src="assets/projects/lurex-real-estate.webp" alt="Lurex Real Estate" loading="lazy">
-          <span class="qs-card__caption" id="qsCaption2">TODO_CAPTION_2</span>
         </a>
         <a href="https://be-the-bat.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link qs-card-link--wide">
           <img class="qs-card" src="assets/projects/batman-arkham-asylum.webp" alt="Be The Bat" loading="lazy">
-          <span class="qs-card__caption" id="qsCaption3">TODO_CAPTION_3</span>
         </a>
         <div class="qs-card-link" data-slot="app-1" hidden>
           <img class="qs-card" src="" alt="" loading="lazy">
-          <span class="qs-card__caption"></span>
         </div>
       </div>
     </div>
@@ -1676,10 +1488,6 @@
   <section id="contacto" class="section-pad">
     <div class="container">
       <div class="contact-box">
-        <div class="section-head">
-          <span class="section-head__index">(03)</span>
-          <span class="section-head__name" id="secHeadContact">CONTACTO</span>
-        </div>
         <div class="contact-divider">
           <div class="contact-ojitos-row">
             <!-- ==================== OJITOS ==================== -->
@@ -1737,14 +1545,6 @@
       heroTitleLine1: "CREO PROGRAMAS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "Creo programas. Quizá alguno solucione tu problema.",
-      socialProofEyebrow: "Experiencia con marcas como",
-      qsCaption1: "TODO_CAPTION_1",
-      qsCaption2: "TODO_CAPTION_2",
-      qsCaption3: "TODO_CAPTION_3",
-      quienSoyHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
-      quienSoyLead: "Crecí amando el cine y los videojuegos. Estudié comunicación audiovisual y trabajé orquestando estrategias de marketing y publicidad para grandes marcas internacionales. Hoy, me ayudo de la IA para unirlo todo y poner todo mi bagaje en un único lugar: <span style=\"font-weight:700;color:var(--ink)\">Dirección creativa y estratégica para cerrar la brecha entre lo que las marcas dicen ser y lo que hacen sentir.</span>",
-      secHeadServices: "QUIÊN SOY",
-      secHeadProyectos: "PROYECTOS",
       secHeadContact: "CONTACTO",
       navInicio: "Inicio",
       navProyectos: "Proyectos",
@@ -1761,14 +1561,6 @@
       heroTitleLine1: "I MAKE PROGRAMS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "MAYBE ONE SOLVES YOUR PROBLEM<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "I make programs. Maybe one solves your problem.",
-      socialProofEyebrow: "Experience with brands like",
-      qsCaption1: "TODO_CAPTION_1",
-      qsCaption2: "TODO_CAPTION_2",
-      qsCaption3: "TODO_CAPTION_3",
-      quienSoyHeadline: "CREATIVE DEVELOPER<span class=\"accent\">.</span>",
-      quienSoyLead: "I grew up playing video games, studied cinema and worked in marketing and advertising for major international brands. Today I bring together all my background and experience and work at the intersection of design, technology and business: I turn ideas into products and experiences people remember.",
-      secHeadServices: "WHO I AM",
-      secHeadProyectos: "PROJECTS",
       secHeadContact: "CONTACT",
       navInicio: "Home",
       navProyectos: "Projects",
@@ -2060,7 +1852,6 @@
        limpia transform/willChange del titular. */
     fitHeroV2Lines();
     fitContactLines();
-    fitServicesHeadline();
     initQsIframes();
     initQsPinCards();
     if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
@@ -2069,20 +1860,6 @@
   // ============================================
   // Idioma
   // ============================================
-  function applyServicesI18n(d) {
-    const setText = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.textContent = val; };
-    const setHTML = (id, val) => { const el = document.getElementById(id); if (el && val != null) el.innerHTML = val; };
-    setText('heroV2Subtitle', d.heroSubtitle);
-    setText('socialProofEyebrow', d.socialProofEyebrow);
-    setText('qsCaption1', d.qsCaption1);
-    setText('qsCaption2', d.qsCaption2);
-    setText('qsCaption3', d.qsCaption3);
-    setHTML('quienSoyHeadline', d.quienSoyHeadline);
-    setHTML('quienSoyLead', d.quienSoyLead);
-    setText('secHeadServices', d.secHeadServices);
-    setText('secHeadProyectos', d.secHeadProyectos);
-  }
-
   function applyLang() {
     const d = t[lang];
     document.documentElement.lang = lang;
@@ -2101,8 +1878,6 @@
 
     const contactAltL = document.getElementById('contactAltLabel');
     if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
-    const secHeadContactEl = document.getElementById('secHeadContact');
-    if (secHeadContactEl && d.secHeadContact) secHeadContactEl.textContent = d.secHeadContact;
     [['navInicio', d.navInicio], ['navProyectos', d.navProyectos], ['navContacto', d.navContacto]]
       .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
     const contactMetaEl = document.getElementById('contactMeta');
@@ -2129,7 +1904,6 @@
     if (contactSubEl && d.contactSub) contactSubEl.innerHTML = d.contactSub;
     const dividerEscribeme = document.getElementById('contactDividerTextEscribeme');
     if (dividerEscribeme) dividerEscribeme.innerHTML = d.contactDividerEscribeme;
-    applyServicesI18n(d);
     if (pageInitialized) {
       setTimeout(() => {
         initQsPinCards();
@@ -2398,24 +2172,6 @@
     }
     const best = Math.floor(lo) - 1;
     lines.forEach((line) => { line.style.fontSize = best + 'px'; });
-  }
-
-  function fitServicesHeadline() {
-    const headline = document.getElementById('quienSoyHeadline');
-    if (!headline) return;
-    const container = headline.closest('.big-heading');
-    if (!container) return;
-    if (window.innerWidth >= 640) { container.style.fontSize = ''; return; }
-    const availableWidth = container.clientWidth;
-    if (availableWidth < 16) return;
-    const probe = document.createElement('span');
-    probe.style.cssText = 'position:absolute;top:-9999px;left:-9999px;visibility:hidden;white-space:nowrap;font-weight:900;text-transform:uppercase;letter-spacing:0;font-family:inherit;font-size:100px;';
-    probe.textContent = 'DIRECTOR DE CONTENIDO DIGITAL';
-    document.body.appendChild(probe);
-    const refWidth = probe.offsetWidth;
-    document.body.removeChild(probe);
-    if (refWidth <= 0) return;
-    container.style.fontSize = Math.floor(availableWidth / refWidth * 100) + 'px';
   }
 
   function fitContactLines() {
