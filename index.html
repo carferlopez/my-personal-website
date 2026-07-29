@@ -1027,15 +1027,6 @@
   @media (min-width: 768px) { .contact-box { padding: 0 0 3rem 0; gap: 3rem; min-height: 500px; } }
   @media (min-width: 1024px) { .contact-box { padding: 0 0 5rem 0; } }
 
-  .contact-sub { color: var(--ink-2); max-width: 42rem; font-size: 1rem; transition: color 0.1s; word-break: normal; overflow-wrap: normal; hyphens: none; }
-  #contacto .contact-sub {
-    color: var(--ink-2);
-    margin-left: auto;
-    text-align: right;
-  }
-  @media (min-width: 640px) { .contact-sub { font-size: 1.125rem; } }
-  @media (min-width: 768px) { .contact-sub { font-size: 1.25rem; } }
-
   .contact-buttons { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
   @media (min-width: 640px) { .contact-buttons { gap: 1rem; margin-top: 1.5rem; } }
 
@@ -1070,46 +1061,8 @@
     text-align: center;
     box-sizing: border-box;
   }
-  /* Email + redes en la misma línea en escritorio (email izq. ~50%, redes der.) */
   .contact-cta-row { display: flex; flex-direction: column; gap: 1rem; }
   .contact-cta-row .contact-buttons { margin-top: 0; }
-  .contact-cta-row .contact-alt { margin-top: 0; }
-  @media (min-width: 768px) {
-    .contact-cta-row { flex-direction: row; align-items: center; gap: 1.5rem; }
-    .contact-cta-row .contact-buttons { flex: 0 0 calc(50% - 0.75rem); }
-    .contact-cta-row .contact-alt { flex: 1; justify-content: flex-end; }
-  }
-
-
-  .contact-alt {
-    margin-top: 0.25rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.65rem;
-  }
-  .contact-alt-label {
-    font-size: 0.85rem;
-    color: inherit;
-    opacity: 0.85;
-  }
-  .contact-alt-link {
-    border: 2px solid var(--accent);
-    background: var(--accent);
-    color: #FFFFFF;
-    padding: 0.25rem 0.55rem;
-    font-size: 0.78rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    transition: background-color 0.15s, color 0.15s, border-color 0.15s;
-  }
-  .contact-alt-link:hover {
-    background: var(--ink);
-    color: var(--paper);
-    border-color: var(--ink);
-  }
-
 
 
   .contact-divider {
@@ -1215,10 +1168,6 @@
     }
     .contact-ojitos-row > .contact-ojitos-text > p.big-heading {
       text-align: right;
-    }
-    .contact-ojitos-row > .contact-ojitos-text > #contactSub {
-      margin-top: auto;
-      margin-bottom: 0;
     }
   }
 
@@ -1506,7 +1455,6 @@
             <div class="contact-ojitos-text">
               <p class="big-heading"><span id="contactDividerTextTop">SOY TODO OÍDOS</span></p>
               <p class="big-heading"><span id="contactDividerTextBottom">(Y OJOS)</span><span class="contact-divider-mark">.</span></p>
-              <p class="contact-sub" id="contactSub">TODO_CONTACTO</p>
             </div>
           </div>
         </div>
@@ -1514,12 +1462,6 @@
         <div class="contact-cta-row">
           <div class="contact-buttons">
             <a class="contact-btn" href="mailto:hola@carlosmakes.com" id="contactEmailBtn">hola@carlosmakes.com</a>
-          </div>
-
-          <div class="contact-alt">
-            <span class="contact-alt-label" id="contactAltLabel">O encuéntrame en:</span>
-            <a class="contact-alt-link" href="https://x.com/carlos_makes" target="_blank" rel="noopener noreferrer">X</a>
-            <a class="contact-alt-link" href="https://www.instagram.com/carlos.makes/" target="_blank" rel="noopener noreferrer">Instagram</a>
           </div>
         </div>
       </div>
@@ -1539,9 +1481,7 @@
       langMenuAria: "Menú de idioma",
       contactDividerTop: "SOY TODO OÍDOS",
       contactDividerBottom: "(Y OJOS)",
-      contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "ESCRÍBEME",
-      contactAltLabel: "O encuéntrame en:",
       heroTitleLine1: "CREO PROGRAMAS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "Creo programas. Quizá alguno solucione tu problema.",
@@ -1555,9 +1495,7 @@
       langMenuAria: "Language menu",
       contactDividerTop: "I LISTEN TO YOU",
       contactDividerBottom: "(AND I SEE YOU)",
-      contactSub: "TODO_CONTACTO",
       contactDividerEscribeme: "WRITE TO ME",
-      contactAltLabel: "Or find me on:",
       heroTitleLine1: "I MAKE PROGRAMS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "MAYBE ONE SOLVES YOUR PROBLEM<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "I make programs. Maybe one solves your problem.",
@@ -1876,8 +1814,6 @@
     const heroSceneEl = document.getElementById('inicio');
     if (heroSceneEl && d.heroSceneAria) heroSceneEl.setAttribute('aria-label', d.heroSceneAria);
 
-    const contactAltL = document.getElementById('contactAltLabel');
-    if (contactAltL && d.contactAltLabel) contactAltL.textContent = d.contactAltLabel;
     [['navInicio', d.navInicio], ['navProyectos', d.navProyectos], ['navContacto', d.navContacto]]
       .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
     const contactMetaEl = document.getElementById('contactMeta');
@@ -1900,8 +1836,6 @@
     if (dividerTop) dividerTop.innerHTML = d.contactDividerTop;
     const dividerBottom = document.getElementById('contactDividerTextBottom');
     if (dividerBottom) dividerBottom.innerHTML = d.contactDividerBottom;
-    const contactSubEl = document.getElementById('contactSub');
-    if (contactSubEl && d.contactSub) contactSubEl.innerHTML = d.contactSub;
     const dividerEscribeme = document.getElementById('contactDividerTextEscribeme');
     if (dividerEscribeme) dividerEscribeme.innerHTML = d.contactDividerEscribeme;
     if (pageInitialized) {
@@ -2186,16 +2120,13 @@
 
     if (window.innerWidth < 768) return;
     if (!pTop || !pBot) return;
-    const sub = document.getElementById('contactSub');
-    if (!sub) return;
 
     // Leer el alto natural del contenedor (forzar reflow tras el reset)
     const H = textCol.clientHeight;
     if (H < 16) return;
 
-    const subH = sub.offsetHeight;
     const colGap = parseFloat(getComputedStyle(textCol).gap) || 0;
-    const available = H - subH - 2 * colGap;
+    const available = H - colGap;
     const maxW = textCol.clientWidth;
     if (available < 16 || maxW < 16) return;
 
