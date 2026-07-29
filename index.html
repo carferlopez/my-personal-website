@@ -1070,8 +1070,7 @@
     padding: 0;
   }
   .contact-divider p:has(#contactDividerTextTop),
-  .contact-divider p:has(#contactDividerTextBottom),
-  .contact-divider p:has(#contactDividerTextEscribeme) {
+  .contact-divider p:has(#contactDividerTextBottom) {
     font-size: 7.5vw !important;
     line-height: 0.9;
     letter-spacing: 0;
@@ -1079,31 +1078,26 @@
   }
   @media (min-width: 768px) {
     .contact-divider p:has(#contactDividerTextTop),
-    .contact-divider p:has(#contactDividerTextBottom),
-    .contact-divider p:has(#contactDividerTextEscribeme) { text-align: right !important; }
+    .contact-divider p:has(#contactDividerTextBottom) { text-align: right !important; }
   }
   .contact-divider p:has(#contactDividerTextBottom) {
     margin-top: 0;
   }
   @media (min-width: 640px) {
     .contact-divider p:has(#contactDividerTextTop),
-    .contact-divider p:has(#contactDividerTextBottom),
-    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 7vw !important; }
+    .contact-divider p:has(#contactDividerTextBottom) { font-size: 7vw !important; }
   }
   @media (min-width: 768px) {
     .contact-divider p:has(#contactDividerTextTop),
-    .contact-divider p:has(#contactDividerTextBottom),
-    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 6.5vw !important; }
+    .contact-divider p:has(#contactDividerTextBottom) { font-size: 6.5vw !important; }
   }
   @media (min-width: 1024px) {
     .contact-divider p:has(#contactDividerTextTop),
-    .contact-divider p:has(#contactDividerTextBottom),
-    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 6vw !important; }
+    .contact-divider p:has(#contactDividerTextBottom) { font-size: 6vw !important; }
   }
   @media (min-width: 1280px) {
     .contact-divider p:has(#contactDividerTextTop),
-    .contact-divider p:has(#contactDividerTextBottom),
-    .contact-divider p:has(#contactDividerTextEscribeme) { font-size: 72px !important; }
+    .contact-divider p:has(#contactDividerTextBottom) { font-size: 72px !important; }
   }
   .contact-divider .big-heading--mid {
     display: block;
@@ -1481,29 +1475,23 @@
       langMenuAria: "Menú de idioma",
       contactDividerTop: "SOY TODO OÍDOS",
       contactDividerBottom: "(Y OJOS)",
-      contactDividerEscribeme: "ESCRÍBEME",
       heroTitleLine1: "CREO PROGRAMAS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "QUIZÁ ALGUNO SOLUCIONE TU PROBLEMA<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "Creo programas. Quizá alguno solucione tu problema.",
-      secHeadContact: "CONTACTO",
       navInicio: "Inicio",
       navProyectos: "Proyectos",
       navContacto: "Contacto",
-      contactMeta: "RESPUESTA EN 24H",
     },
     en: {
       langMenuAria: "Language menu",
       contactDividerTop: "I LISTEN TO YOU",
       contactDividerBottom: "(AND I SEE YOU)",
-      contactDividerEscribeme: "WRITE TO ME",
       heroTitleLine1: "I MAKE PROGRAMS<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "MAYBE ONE SOLVES YOUR PROBLEM<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "I make programs. Maybe one solves your problem.",
-      secHeadContact: "CONTACT",
       navInicio: "Home",
       navProyectos: "Projects",
       navContacto: "Contact",
-      contactMeta: "REPLY WITHIN 24H",
     }
   };
 
@@ -1804,8 +1792,6 @@
     try { localStorage.setItem('carlosmakes_lang', lang); } catch (e) {}
     const logoLink = document.getElementById('siteLogo');
     if (logoLink && d.siteLogoAria) logoLink.setAttribute('aria-label', d.siteLogoAria);
-    const introH = document.getElementById('introHeading');
-    if (introH && d.introHeadingLabel) introH.textContent = d.introHeadingLabel;
 
     const heroLine1 = document.getElementById('heroV2Line1');
     if (heroLine1 && d.heroTitleLine1) heroLine1.innerHTML = d.heroTitleLine1;
@@ -1816,8 +1802,6 @@
 
     [['navInicio', d.navInicio], ['navProyectos', d.navProyectos], ['navContacto', d.navContacto]]
       .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
-    const contactMetaEl = document.getElementById('contactMeta');
-    if (contactMetaEl && d.contactMeta) contactMetaEl.textContent = d.contactMeta;
 
     const langSelCur = document.getElementById('langSelectCurrent');
     const langSelBtn = document.getElementById('langSelectBtn');
@@ -1836,8 +1820,6 @@
     if (dividerTop) dividerTop.innerHTML = d.contactDividerTop;
     const dividerBottom = document.getElementById('contactDividerTextBottom');
     if (dividerBottom) dividerBottom.innerHTML = d.contactDividerBottom;
-    const dividerEscribeme = document.getElementById('contactDividerTextEscribeme');
-    if (dividerEscribeme) dividerEscribeme.innerHTML = d.contactDividerEscribeme;
     if (pageInitialized) {
       setTimeout(() => {
         initQsPinCards();
@@ -1997,7 +1979,7 @@
   // secciones quedan fuera de la lista, y la proximidad evita imantar desde lejos.
   function initSectionMagnet() {
     if (reduceMotion) return;
-    const calmIds = ['quien-soy', 'proyectos', 'contacto'];
+    const calmIds = ['proyectos', 'contacto'];
     const sections = calmIds.map((id) => document.getElementById(id)).filter(Boolean);
     if (!sections.length) return;
 
