@@ -960,12 +960,14 @@
     font-size: 7.5vw;
     font-weight: 900;
     letter-spacing: 0;
-    line-height: 0.9;
+    line-height: 0.98;
+    padding-block: 0.06em;
     text-transform: uppercase;
     text-wrap: pretty;
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;
+    overflow: visible;
   }
   @media (min-width: 640px) { .big-heading { font-size: 7vw; } }
   @media (min-width: 768px) { .big-heading { font-size: 6.5vw; } }
@@ -991,12 +993,14 @@
     font-size: 4.65vw;
     font-weight: 900;
     letter-spacing: -0.05em;
-    line-height: 0.92;
+    line-height: 0.98;
+    padding-block: 0.06em;
     text-transform: uppercase;
     text-wrap: pretty;
     word-break: normal;
     overflow-wrap: normal;
     hyphens: none;
+    overflow: visible;
   }
   @media (min-width: 640px) { .big-heading--mid { font-size: 4.35vw; } }
   @media (min-width: 768px) { .big-heading--mid { font-size: 4vw; } }
@@ -1021,7 +1025,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    overflow: hidden;
+    overflow: visible;
   }
   @media (min-width: 640px) { .contact-box { padding: 0 0 2rem 0; gap: 2rem; min-height: 400px; } }
   @media (min-width: 768px) { .contact-box { padding: 0 0 3rem 0; gap: 3rem; min-height: 500px; } }
@@ -1072,9 +1076,11 @@
   .contact-divider p:has(#contactDividerTextTop),
   .contact-divider p:has(#contactDividerTextBottom) {
     font-size: 7.5vw !important;
-    line-height: 0.9;
+    line-height: 0.98;
+    padding-top: 0.08em;
     letter-spacing: 0;
     text-align: left;
+    overflow: visible;
   }
   @media (min-width: 768px) {
     .contact-divider p:has(#contactDividerTextTop),
@@ -1107,8 +1113,9 @@
     text-align: left;
     white-space: normal;
     text-wrap: pretty;
-    line-height: 0.92;
+    line-height: 0.98;
     font-size: 7.5vw;
+    overflow: visible;
   }
   @media (min-width: 640px)  { .contact-divider .big-heading--mid { font-size: 7vw; } }
   @media (min-width: 768px)  { .contact-divider .big-heading--mid { font-size: 6.5vw; } }
@@ -1119,7 +1126,7 @@
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-    margin-top: -1.5rem;
+    margin-top: 0;
   }
   .contact-ojitos-text .big-heading--mid {
     color: var(--ink);
@@ -1133,10 +1140,15 @@
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding-top: 0.12em;
+    overflow: visible;
   }
   .contact-ojitos-text > p.big-heading {
     color: var(--ink);
     -webkit-text-fill-color: var(--ink);
+    line-height: 0.98;
+    padding-block: 0.08em;
+    overflow: visible;
   }
   #contacto .contact-ojitos-text [style*="--ink"] {
     color: var(--ink) !important;
