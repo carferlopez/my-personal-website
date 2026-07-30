@@ -1231,13 +1231,30 @@
     justify-content: center;
   }
   .proyectos-title {
-    margin-bottom: 2.5rem;
-    color: var(--ink);
+    font-size: clamp(3rem, 11vw, 10rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.95;
+    padding-block: 0.08em;
     text-align: center;
+    margin-inline: auto;
+    margin-bottom: clamp(2rem, 5vh, 4rem);
+    color: var(--ink);
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
   }
   @media (min-width: 768px) {
     .proyectos-title {
-      margin-bottom: 4rem;
+      font-size: clamp(4.5rem, 12.5vw, 13rem);
+      margin-bottom: clamp(3rem, 6vh, 5rem);
+      text-align: center;
+    }
+  }
+  @media (min-width: 1200px) {
+    .proyectos-title {
+      font-size: clamp(6rem, 13.5vw, 15rem);
       text-align: center;
     }
   }
