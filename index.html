@@ -1219,66 +1219,82 @@
   }
 
   /* ==================== PROYECTOS ==================== */
-  #proyectos { overflow-x: clip; }
+  #proyectos {
+    position: relative;
+    z-index: 5;
+    overflow-x: clip;
+    padding-top: clamp(4rem, 10vh, 8rem);
+    padding-bottom: clamp(5rem, 12vh, 10rem);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
   .proyectos-title {
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
     color: var(--ink);
+    text-align: center;
   }
   @media (min-width: 768px) {
     .proyectos-title {
-      margin-bottom: 3rem;
+      margin-bottom: 4rem;
+      text-align: center;
     }
   }
 
   /* ==================== PROYECTOS: tarjetas (initQsPinCards) ==================== */
   /* Wrapper que dispara el reveal-on-scroll (initQsPinCards). */
-  .qs-pin-wrapper { position: relative; }
+  .qs-pin-wrapper { position: relative; width: 100%; }
   .proyectos-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
+    width: 100%;
+    max-width: 100%;
+    margin-inline: auto;
   }
   .qs-card-link {
     position: relative;
     aspect-ratio: 16/9;
-    border-radius: 8px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.15), 0 4px 12px rgba(0,0,0,0.08);
+    border-radius: 12px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.18), 0 6px 16px rgba(0,0,0,0.10);
     background: var(--ink);
     display: block;
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .qs-card-link[hidden] { display: none; }
   .qs-card-link:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.25), 0 8px 16px rgba(0,0,0,0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 28px 56px rgba(0,0,0,0.30), 0 12px 24px rgba(0,0,0,0.15);
   }
   .qs-card-link .qs-card {
     width: 100%;
     height: 100%;
     object-fit: cover;
     display: block;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   }
   .qs-card-link:hover .qs-card {
-    transform: scale(1.05);
+    transform: scale(1.04);
   }
-  /* Escritorio: 2 columnas + motion de reveal-on-scroll. */
+  /* Escritorio: 1 COLUMNA HEROICA MASIVA (max-width 1500px) donde cada proyecto ocupa casi toda la pantalla */
   @media (min-width: 900px) {
     .proyectos-grid {
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1.5rem;
-      max-width: 960px;
+      grid-template-columns: 1fr;
+      gap: 4.5rem;
+      max-width: 1500px;
+      margin-inline: auto;
     }
     .qs-card-link--wide { grid-column: 1 / -1; }
     .qs-card-link {
-      opacity: 0;
-      transform: translateY(40px);
+      border-radius: 16px;
       will-change: transform, opacity;
     }
     .qs-card-link:hover {
-      transform: translateY(-4px) !important;
+      transform: translateY(-8px) !important;
+      box-shadow: 0 36px 72px rgba(0,0,0,0.35), 0 16px 32px rgba(0,0,0,0.18);
     }
   }
   @media (prefers-reduced-motion: reduce) {
@@ -1765,10 +1781,12 @@
 
     gsap.registerPlugin(ScrollTrigger);
 
+    gsap.set(cards, { opacity: 0, y: 40 });
+
     ScrollTrigger.create({
       id: 'qsPinCards',
       trigger: wrapper,
-      start: 'top 75%',
+      start: 'top 85%',
       once: true,
       onEnter: () => {
         gsap.to(cards, {
