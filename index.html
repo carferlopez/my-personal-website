@@ -1220,6 +1220,15 @@
 
   /* ==================== PROYECTOS ==================== */
   #proyectos { overflow-x: clip; }
+  .proyectos-title {
+    margin-bottom: 2rem;
+    color: var(--ink);
+  }
+  @media (min-width: 768px) {
+    .proyectos-title {
+      margin-bottom: 3rem;
+    }
+  }
 
   /* ==================== PROYECTOS: tarjetas (initQsPinCards) ==================== */
   /* Wrapper que dispara el reveal-on-scroll (initQsPinCards). */
@@ -1410,6 +1419,7 @@
   <!-- ==================== PROYECTOS ==================== -->
   <section id="proyectos" class="section-pad qs-pin-wrapper">
     <div class="container">
+      <h2 class="proyectos-title big-heading" id="proyectosTitle">PROYECTOS<span class="red">.</span></h2>
       <div class="proyectos-grid">
         <a href="https://brasa-17.vercel.app/" target="_blank" rel="noopener noreferrer" class="qs-card-link">
           <img class="qs-card" src="assets/projects/brasa-17.webp" alt="Brasa 17" loading="lazy">
@@ -1478,6 +1488,7 @@
       heroTitleLine1: "CREATIVE DEVELOPER<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "INDIE MAKER<span class=\"hero-v2-dot\">.</span> SOLOPRENEUR<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "Creative Developer. Indie Maker. Solopreneur.",
+      proyectosTitle: "PROYECTOS<span class=\"red\">.</span>",
       navInicio: "Inicio",
       navProyectos: "Proyectos",
       navContacto: "Contacto",
@@ -1489,6 +1500,7 @@
       heroTitleLine1: "CREATIVE DEVELOPER<span class=\"hero-v2-dot\">.</span>",
       heroTitleLine2: "INDIE MAKER<span class=\"hero-v2-dot\">.</span> SOLOPRENEUR<span class=\"hero-v2-dot\">.</span>",
       heroSceneAria: "Creative Developer. Indie Maker. Solopreneur.",
+      proyectosTitle: "PROJECTS<span class=\"red\">.</span>",
       navInicio: "Home",
       navProyectos: "Projects",
       navContacto: "Contact",
@@ -1799,6 +1811,8 @@
     if (heroLine2 && d.heroTitleLine2) heroLine2.innerHTML = d.heroTitleLine2;
     const heroSceneEl = document.getElementById('inicio');
     if (heroSceneEl && d.heroSceneAria) heroSceneEl.setAttribute('aria-label', d.heroSceneAria);
+    const proyectosTitleEl = document.getElementById('proyectosTitle');
+    if (proyectosTitleEl && d.proyectosTitle) proyectosTitleEl.innerHTML = d.proyectosTitle;
 
     [['navInicio', d.navInicio], ['navProyectos', d.navProyectos], ['navContacto', d.navContacto]]
       .forEach(([id, val]) => { const el = document.getElementById(id); if (el && val) el.textContent = val; });
